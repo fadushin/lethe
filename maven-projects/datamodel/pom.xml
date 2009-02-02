@@ -57,7 +57,7 @@
                 <version>${cxf.version}</version>
                 <executions>
                     <execution>
-                        <id>generate-sources</id>
+                        <id>generate-xsd-sources</id>
                         <phase>generate-sources</phase>
                         <configuration>
                             <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
@@ -74,6 +74,60 @@
                 </executions>
                 <dependencies/>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-corbatools-maven-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-wsdl</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <outputDir>${basedir}/target/generated/wsdl/</outputDir>
+                            <idltowsdlOptions>
+                                <idltowsdlOption>
+                                    <idl>${basedir}/src/main/resources/idl/message.idl</idl>
+                                    <extraargs>
+                                        <extraarg>-L</extraarg>
+                                        <extraarg>message-logical.wsdl</extraarg>
+                                        <extraarg>-w</extraarg>
+                                        <extraarg>http://lethe.dushin.net/message</extraarg>
+                                    </extraargs>
+                                </idltowsdlOption>
+                            </idltowsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>idl2wsdl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-wsdl-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>target/generated/src/main/java</sourceRoot>
+                            <wsdlRoot>${basedir}/target/generated/wsdl/dummy</wsdlRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>target/generated/wsdl/message-logical.wsdl</wsdl>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
     
@@ -95,6 +149,20 @@
             <artifactId>jaxb-impl</artifactId>
             <version>${jaxb.impl.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-ws-metadata_2.0_spec</artifactId>
+            <version>1.1.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jaxws_2.1_spec</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
