@@ -87,7 +87,7 @@
                     </configuration>
                 </plugin>
                 <!-- -->
-                <!-- Enforce checkstyle rules (use Maven conventions, for consistency) -->
+                <!-- Enforce checkstyle rules -->
                 <!-- -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

@@ -24,28 +24,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-// module net_dushin_lethe_message
-// {
-    struct Message
-    {
-        long ordinal;
-        string message;
-    };
+
+//
+// Note: for now, now IDL module (namespace) is defined, as it is
+// causing types to get mapped to '.'-separated identifiers in WSDL
+//
+
+struct Message
+{
+    long ordinal;
+    string message;
+};
+
+typedef sequence<Message> MessageList;
+
+interface Messenger
+{
+    void postMessage(
+        in string group,
+        in string message
+    );
     
-    typedef sequence<Message> MessageList;
-    
-    interface Messenger
-    {
-        void postMessage(
-            in string group,
-            in string message
-        );
-        
-        MessageList 
-        getMessages(
-            in string group,
-            in long lowerBound,
-            in long upperBound
-        );
-    };
-// };
+    MessageList 
+    getMessages(
+        in string group,
+        in long lowerBound,
+        in long upperBound
+    );
+};
