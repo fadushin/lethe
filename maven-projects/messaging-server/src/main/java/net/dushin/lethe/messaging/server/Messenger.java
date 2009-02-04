@@ -24,39 +24,31 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.keys;
+package net.dushin.lethe.messaging.server;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
+import net.dushin.lethe.messaging.interfaces.MessageList;
 
-/**
- * Simple test to illustrate using junit in maven, jaxb, etc.
- */
-public class SchemaTest {
+public class Messenger
+    implements net.dushin.lethe.messaging.interfaces.Messenger {
 
-    /**
-     * @throws      Exception if an error occurred
-     */
-    @org.junit.Test
+    public
+    Messenger() {
+    }
+
+    public final MessageList
+    getMessages(
+        final java.lang.String group,
+        final int lowerBound,
+        final int upperBound
+    ) {
+        throw new RuntimeException("unimplemented");
+    }
+
     public final void
-    testLoadSchema() throws Exception {
-        try {
-            final JAXBContext ctx =
-                JAXBContext.newInstance(
-                    PublicKeyType.class.getPackage().getName().toString()
-                );
-            final Unmarshaller u = ctx.createUnmarshaller();
-            final java.net.URL url = getClass().getClassLoader().getResource(
-                "data/test.xml"
-            );
-            final Object o = u.unmarshal(url);
-            org.junit.Assert.assertTrue(
-                o instanceof PublicKeyType || o instanceof JAXBElement
-            );
-        } catch (final Exception e) {
-            e.printStackTrace();
-            org.junit.Assert.fail("unexpected exception");
-        }
+    postMessage(
+        final java.lang.String group,
+        final java.lang.String message
+    ) {
+        throw new RuntimeException("unimplemented");
     }
 }
