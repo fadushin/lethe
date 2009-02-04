@@ -63,7 +63,7 @@
                             <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
                             <xsdOptions>
                                 <xsdOption>
-                                    <xsd>${basedir}/src/main/resources/schema/datamodel.xsd</xsd>
+                                    <xsd>${basedir}/src/main/resources/schema/keys.xsd</xsd>
                                 </xsdOption>
                             </xsdOptions>
                         </configuration>
@@ -87,12 +87,12 @@
                             <outputDir>${basedir}/target/generated/wsdl/</outputDir>
                             <idltowsdlOptions>
                                 <idltowsdlOption>
-                                    <idl>${basedir}/src/main/resources/idl/message.idl</idl>
+                                    <idl>${basedir}/src/main/resources/idl/messaging.idl</idl>
                                     <extraargs>
                                         <extraarg>-L</extraarg>
-                                        <extraarg>message-logical.wsdl</extraarg>
+                                        <extraarg>messaging-logical.wsdl</extraarg>
                                         <extraarg>-w</extraarg>
-                                        <extraarg>http://lethe.dushin.net/message</extraarg>
+                                        <extraarg>http://lethe.dushin.net/messaging/interfaces</extraarg>
                                     </extraargs>
                                 </idltowsdlOption>
                             </idltowsdlOptions>
@@ -117,7 +117,7 @@
                             <wsdlRoot>${basedir}/target/generated/wsdl/dummy</wsdlRoot>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>target/generated/wsdl/message-logical.wsdl</wsdl>
+                                    <wsdl>target/generated/wsdl/messaging-logical.wsdl</wsdl>
                                 </wsdlOption>
                             </wsdlOptions>
                         </configuration>

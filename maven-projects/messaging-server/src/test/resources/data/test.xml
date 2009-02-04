@@ -26,8 +26,8 @@
 <!-- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                       -->
 <!--                                                                                    -->
 <lethe:PublicKey 
-    xmlns="http://lethe.dushin.net/datamodel"
-    xmlns:lethe="http://lethe.dushin.net/datamodel"
+    xmlns="http://lethe.dushin.net/keys"
+    xmlns:lethe="http://lethe.dushin.net/keys"
     algorithmIdentifier="RSA"
     >
     <lethe:Version major="1" minor="0"/>

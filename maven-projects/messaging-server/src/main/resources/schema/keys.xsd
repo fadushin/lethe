@@ -27,8 +27,8 @@
 <!--                                                                                    -->
 <schema 
     xmlns="http://www.w3.org/2001/XMLSchema" 
-    targetNamespace="http://lethe.dushin.net/datamodel" 
-    xmlns:tns="http://lethe.dushin.net/datamodel" 
+    targetNamespace="http://lethe.dushin.net/keys" 
+    xmlns:tns="http://lethe.dushin.net/keys" 
     elementFormDefault="qualified"
     >
 
