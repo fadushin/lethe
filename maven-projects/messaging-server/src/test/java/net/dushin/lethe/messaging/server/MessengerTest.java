@@ -32,15 +32,58 @@ import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
 
 public class MessengerTest extends AbstractBusClientServerTestBase {
 
+    private static final java.net.URL WSDL_LOC;
+    static {
+        java.net.URL tmp = null;
+        try {
+            tmp = new java.net.URL(
+                "http://localhost:18066/MessengerService/SOAPPort?wsdl"
+            );
+        } catch (final Exception e) {
+            tmp = null;
+        }
+        WSDL_LOC = tmp;
+    }
+    
+    private static final javax.xml.namespace.QName MESSENGER_SERVICE_QNAME =
+        new javax.xml.namespace.QName(
+            "http://lethe.dushin.net/messaging/server",
+            "MessengerService"
+        );
+    
+    private static final javax.xml.namespace.QName MESSENGER_SOAP_PORT_QNAME =
+        new javax.xml.namespace.QName(
+            "http://lethe.dushin.net/messaging/server",
+            "SOAPPort"
+        );
+
     @org.junit.Test
     public final void
     testMessender() throws Exception {
         
-        BusFactory.setDefaultBus(
-            new SpringBusFactory().createBus(
-                "net/dushin/lethe/messaging/server/cxf-server.xml"
-            )
-        );
-        
+        try {
+            BusFactory.setDefaultBus(
+                new SpringBusFactory().createBus(
+                    "net/dushin/lethe/messaging/server/cxf-server.xml"
+                )
+            );
+            
+            final javax.xml.ws.Service svc = 
+                javax.xml.ws.Service.create(
+                    WSDL_LOC,
+                    MESSENGER_SERVICE_QNAME
+                );
+            final net.dushin.lethe.messaging.interfaces.Messenger messenger = svc.getPort(
+                MESSENGER_SOAP_PORT_QNAME,
+                net.dushin.lethe.messaging.interfaces.Messenger.class
+            );
+            messenger.postMessage(
+                "foo",
+                "bar"
+            );
+        } catch (final Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
