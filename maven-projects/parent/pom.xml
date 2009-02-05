@@ -110,7 +110,7 @@
                                 <consoleOutput>true</consoleOutput>
                                 <failsOnError>true</failsOnError>
                                 <linkXRef>false</linkXRef>
-                                <suppressionsLocation>cxf-checkstyle-suppressions.xml</suppressionsLocation>
+                                <!-- <suppressionsLocation>cxf-checkstyle-suppressions.xml</suppressionsLocation> -->
                                 <sourceDirectory>${basedir}/src</sourceDirectory>
                             </configuration>
                             <goals>

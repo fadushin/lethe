@@ -26,8 +26,7 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import org.apache.cxf.BusFactory;
-import org.apache.cxf.bus.spring.SpringBusFactory;
+import net.dushin.lethe.messaging.interfaces.MessageList;
 import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
 
 public class MessengerTest extends AbstractBusClientServerTestBase {
@@ -57,17 +56,30 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
             "SOAPPort"
         );
 
+    private static final java.util.Map<String, String> EMPTY_MAP =
+        java.util.Collections.emptyMap();
+    
+    @org.junit.BeforeClass
+    public static void
+    startServers() {
+        assertTrue(
+            "Server failed to launch",
+            launchServer(
+                BusServer.class, 
+                EMPTY_MAP,
+                new String[] {
+                    "net/dushin/lethe/messaging/server/cxf-server.xml"
+                },
+                true
+            )
+        );
+    }
+
     @org.junit.Test
     public final void
     testMessender() throws Exception {
         
         try {
-            BusFactory.setDefaultBus(
-                new SpringBusFactory().createBus(
-                    "net/dushin/lethe/messaging/server/cxf-server.xml"
-                )
-            );
-            
             final javax.xml.ws.Service svc = 
                 javax.xml.ws.Service.create(
                     WSDL_LOC,
@@ -77,10 +89,40 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
                 MESSENGER_SOAP_PORT_QNAME,
                 net.dushin.lethe.messaging.interfaces.Messenger.class
             );
+            //
+            // Check to see that the channel is empty
+            //
+            assertSame(messenger.getMessages("foo", 0).getItem().size(), 0);
+            //
+            // post a message to the channel, and then check to see it's there
+            //
             messenger.postMessage(
                 "foo",
                 "bar"
             );
+            MessageList foo = messenger.getMessages("foo", 0);
+            assertSame(foo.getItem().size(), 1);
+            assertSame(foo.getItem().get(0).getOrdinal(), 0);
+            assertEquals(foo.getItem().get(0).getMessage(), "bar");
+            //
+            // Check the logic of get
+            //
+            assertSame(messenger.getMessages("foo", 1).getItem().size(), 0);
+            assertSame(messenger.getMessages("gnu", 0).getItem().size(), 0);
+            //
+            // Post another message, and check that it arrived, as well
+            //
+            messenger.postMessage(
+                "foo",
+                "bar2"
+            );
+            foo = messenger.getMessages("foo", 0);
+            assertSame(foo.getItem().size(), 2);
+            assertSame(foo.getItem().get(0).getOrdinal(), 0);
+            assertEquals(foo.getItem().get(0).getMessage(), "bar");
+            assertSame(foo.getItem().get(1).getOrdinal(), 1);
+            assertEquals(foo.getItem().get(1).getMessage(), "bar2");
+            //
         } catch (final Exception e) {
             e.printStackTrace();
             throw e;

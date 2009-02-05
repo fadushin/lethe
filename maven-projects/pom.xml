@@ -34,7 +34,7 @@
     <groupId>net.dushin.lethe</groupId>
     <artifactId>lethe</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <name>Lethe root POM</name>
+    <name>Lethe Root POM</name>
     <url>http://lethe.dushin.net</url>
     <packaging>pom</packaging>
     
