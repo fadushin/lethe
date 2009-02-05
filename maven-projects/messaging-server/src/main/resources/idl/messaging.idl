@@ -41,14 +41,13 @@ typedef sequence<Message> MessageList;
 interface Messenger
 {
     void postMessage(
-        in string group,
+        in string channel,
         in string message
     );
     
     MessageList 
     getMessages(
-        in string group,
-        in long lowerBound,
-        in long upperBound
+        in string channel,
+        in long since
     );
 };

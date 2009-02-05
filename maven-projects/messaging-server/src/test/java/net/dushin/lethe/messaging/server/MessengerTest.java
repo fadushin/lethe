@@ -26,34 +26,21 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import net.dushin.lethe.messaging.interfaces.MessageList;
+import org.apache.cxf.BusFactory;
+import org.apache.cxf.bus.spring.SpringBusFactory;
+import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
 
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
-    
-    private final ChannelManager channelMgr = new ChannelManager();
+public class MessengerTest extends AbstractBusClientServerTestBase {
 
-    public
-    Messenger() {
-    }
-
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final int since
-    ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
+    @org.junit.Test
+    public final void
+    testMessender() throws Exception {
+        
+        BusFactory.setDefaultBus(
+            new SpringBusFactory().createBus(
+                "net/dushin/lethe/messaging/server/cxf-server.xml"
+            )
         );
-    }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final java.lang.String message
-    ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
+        
     }
 }

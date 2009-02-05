@@ -24,11 +24,29 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging;
+package net.dushin.lethe.messaging.server;
 
 
-/**
- *
- */
-public class Dummy {
+public class ChannelManager {
+
+    private static java.util.Map<String, Channel> channelMap =
+        new java.util.HashMap<String, Channel>();
+
+    public
+    ChannelManager() {
+    }
+    
+    public Channel
+    getOrCreateChannel(
+        final String channelID
+    ) {
+        synchronized (channelMap) {
+            Channel ret = channelMap.get(channelID);
+            if (ret == null) {
+                ret = new Channel(channelID);
+                channelMap.put(channelID, ret);
+            }
+            return ret;
+        }
+    }
 }

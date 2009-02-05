@@ -118,6 +118,18 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- -->
+                <!-- Eclipse plugin configuration -->
+                <!-- -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <downloadSources>true</downloadSources>
+                        <downloadJavadocs>true</downloadJavadocs>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>

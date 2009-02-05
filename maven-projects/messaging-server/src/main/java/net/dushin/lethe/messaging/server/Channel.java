@@ -26,34 +26,62 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
+public class Channel {
+
+    private final String id;
     
-    private final ChannelManager channelMgr = new ChannelManager();
+    private final MessageList messages =
+        new MessageList();
 
     public
-    Messenger() {
+    Channel(
+        final String id
+    ) {
+        this.id = id;
     }
 
     public MessageList
     getMessages(
-        final java.lang.String channelID,
         final int since
     ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
-        );
+        synchronized (messages) {
+            if (since <= 0) {
+                return messages;
+            } else {
+                return getSince(since);
+            }
+        }
     }
 
     public void
     postMessage(
-        final java.lang.String channelID,
         final java.lang.String message
     ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
+        synchronized (messages) {
+            final Message msg = new Message();
+            msg.setOrdinal(messages.getItem().size());
+            msg.setMessage(message);
+            messages.getItem().add(msg);
+        }
+    }
+    
+    private MessageList
+    getSince(
+        final int since
+    ) {
+        final MessageList ret = new MessageList();
+        final java.util.List<Message> src = messages.getItem();
+        final java.util.List<Message> dst = ret.getItem();
+        int i = 0;
+        for (Message msg : src) {
+            if (i >= since) {
+                dst.add(msg);
+            }
+            ++i;
+        }
+        return ret;
     }
 }
