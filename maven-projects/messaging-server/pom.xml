@@ -192,7 +192,7 @@
         
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-js</artifactId>
+            <artifactId>cxf-rt-javascript</artifactId>
             <version>${cxf.version}</version>
         </dependency>
         
