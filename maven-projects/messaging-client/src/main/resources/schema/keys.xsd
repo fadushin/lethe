@@ -27,8 +27,8 @@
 <!--                                                                                    -->
 <schema 
     xmlns="http://www.w3.org/2001/XMLSchema" 
-    targetNamespace="http://lethe.dushin.net/messaging/rt/keys" 
-    xmlns:tns="http://lethe.dushin.net/messaging/rt/keys" 
+    targetNamespace="http://lethe.dushin.net/messaging/client/types/keys" 
+    xmlns:tns="http://lethe.dushin.net/messaging/client/types/keys" 
     elementFormDefault="qualified"
     >
 

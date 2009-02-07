@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.rt.keys;
+package net.dushin.lethe.messaging.client.types.keys;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
