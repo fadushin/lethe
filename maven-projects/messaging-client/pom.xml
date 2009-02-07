@@ -32,10 +32,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe-messaging-server</artifactId>
+    <artifactId>lethe-messaging-client</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Lethe Messenging Server</name>
+    <name>Lethe Messenging Client</name>
     <url>http://lethe.dushin.net/</url>
 
     <!-- -->
@@ -49,6 +49,32 @@
 
     <build>
         <plugins>
+            <!-- -->
+            <!-- Generate Java types from data model schema -->
+            <!-- -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-common-xsd</artifactId>
+                <version>${cxf.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-xsd-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+                            <xsdOptions>
+                                <xsdOption>
+                                    <xsd>${basedir}/src/main/resources/schema/keys.xsd</xsd>
+                                </xsdOption>
+                            </xsdOptions>
+                        </configuration>
+                        <goals>
+                            <goal>xsdtojava</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies/>
+            </plugin>
         </plugins>
     </build>
     

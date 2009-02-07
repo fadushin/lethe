@@ -32,8 +32,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <artifactId>lethe-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <name>Lethe Root POM</name>
     <url>http://lethe.dushin.net</url>
     <packaging>pom</packaging>
@@ -41,7 +41,9 @@
     <modules>
         <module>build-config</module>
         <module>parent</module>
+        <module>messaging-interfaces</module>
         <module>messaging-server</module>
+        <module>messaging-client</module>
     </modules>
 
     <profiles>

@@ -25,32 +25,14 @@
 <!-- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS      -->
 <!-- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                       -->
 <!--                                                                                    -->
-<schema 
-    xmlns="http://www.w3.org/2001/XMLSchema" 
-    targetNamespace="http://lethe.dushin.net/keys" 
-    xmlns:tns="http://lethe.dushin.net/keys" 
-    elementFormDefault="qualified"
+<lethe:PublicKey 
+    xmlns="http://lethe.dushin.net/messaging/rt/keys"
+    xmlns:lethe="http://lethe.dushin.net/messaging/rt/keys"
+    algorithmIdentifier="RSA"
     >
-
-    <element name="PublicKey" type="tns:PublicKeyType"/>
-    <complexType name="PublicKeyType">
-    	<sequence>
-    		<element name="Version" type="tns:VersionType"/>
-    		<any namespace="##any" processContents="lax"/>
-    	</sequence>
-    	<attribute name="algorithmIdentifier" type="string"/>
-    </complexType>
-
-    <complexType name="VersionType">
-    	<attribute name="major" type="integer"/>
-    	<attribute name="minor" type="integer"/>
-    </complexType>
-
-    <element name="RSAPublicKey" type="tns:RSAPublicKeyType"/>
-    <complexType name="RSAPublicKeyType">
-    	<sequence>
-    		<element name="e" type="integer"/>
-    		<element name="n" type="base64Binary"/>
-    	</sequence>
-    </complexType>
-</schema>
+    <lethe:Version major="1" minor="0"/>
+    <lethe:RSAPublicKey>
+        <lethe:e>3</lethe:e>
+        <lethe:n>1234</lethe:n>
+    </lethe:RSAPublicKey>
+</lethe:PublicKey>

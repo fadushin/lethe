@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.keys;
+package net.dushin.lethe.messaging.rt.keys;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -47,8 +47,8 @@ public class SchemaTest {
                     PublicKeyType.class.getPackage().getName().toString()
                 );
             final Unmarshaller u = ctx.createUnmarshaller();
-            final java.net.URL url = getClass().getClassLoader().getResource(
-                "data/test.xml"
+            final java.net.URL url = getClass().getResource(
+                "keys.xml"
             );
             final Object o = u.unmarshal(url);
             org.junit.Assert.assertTrue(
