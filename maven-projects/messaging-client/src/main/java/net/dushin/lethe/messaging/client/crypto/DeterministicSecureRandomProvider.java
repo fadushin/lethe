@@ -26,29 +26,18 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-public class KeyPairGenerator {
-
-	private static final java.security.Provider PROVIDER =
-	    new DeterministicSecureRandomProvider();
-	
-    private final int keySize;
-
-    public
-    KeyPairGenerator(
-        final int keySize
-    ) {
-        this.keySize = keySize;
-    }
-
-    public final java.security.KeyPair
-    generateKeyPair(String password) throws Exception {
-        java.security.KeyPairGenerator generator =
-            java.security.KeyPairGenerator.getInstance("RSA");
-        java.security.SecureRandom rand = 
-            // java.security.SecureRandom.getInstance("DPRNG", PROVIDER);
-            java.security.SecureRandom.getInstance("SHA1PRNG", "SUN");
-        rand.setSeed(password.getBytes());
-        generator.initialize(keySize, rand);
-        return generator.generateKeyPair();
+class DeterministicSecureRandomProvider 
+    extends java.security.Provider {
+    
+    DeterministicSecureRandomProvider() {
+        super(
+            "net.dushin.dprng",
+            1.0,
+            "Not recommended for household use"
+        );
+        put(
+            "SecureRandom.DPRNG",
+            DeterministicSecureRandom.class.getName()
+        );
     }
 }

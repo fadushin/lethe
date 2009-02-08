@@ -63,6 +63,24 @@ public class KeyPairGeneratorTest extends org.junit.Assert {
                 new KeyPairGenerator(512).generateKeyPair(PASS1),
                 pair5121
             );
+            assertTrue(
+                keyPairsEqual(
+                    new KeyPairGenerator(512).generateKeyPair(PASS1),
+                    pair5121
+                )
+            );
+            assertTrue(
+                keyPairsEqual(
+                    pair5121,
+                    new KeyPairGenerator(512).generateKeyPair(PASS1)
+                )
+            );
+            assertFalse(
+                keyPairsEqual(
+                    pair5121,
+                    pair5122
+                )
+            );
             /*
             assertEquals(
                 pair5121,
@@ -72,13 +90,57 @@ public class KeyPairGeneratorTest extends org.junit.Assert {
                 new KeyPairGenerator(512).generateKeyPair(PASS1),
                 pair5121
             );
-            */
             assertTrue(
                 !pair5121.equals(pair5122)
             );
+            System.out.println(
+                    pair5121.getPublic().getEncoded().equals(
+                        new KeyPairGenerator(512).generateKeyPair(PASS1).getPublic().getEncoded()
+                    )
+                );
+            */
         } catch (final Exception e) {
             e.printStackTrace();
             org.junit.Assert.fail("unexpected exception");
         }
+    }
+    
+    private boolean
+    keyPairsEqual(
+        final java.security.KeyPair kp1,
+        final java.security.KeyPair kp2
+    ) {
+        return publicKeysEqual(kp1.getPublic(), kp2.getPublic())
+            && privateKeysEqual(kp1.getPrivate(), kp2.getPrivate());
+    }
+    
+    private boolean
+    publicKeysEqual(
+        final java.security.PublicKey pub1,
+        final java.security.PublicKey pub2
+    ) {
+        assert pub1 instanceof java.security.interfaces.RSAPublicKey;
+        final java.security.interfaces.RSAPublicKey rsa1 =
+            (java.security.interfaces.RSAPublicKey) pub1;
+        assert pub2 instanceof java.security.interfaces.RSAPublicKey;
+        final java.security.interfaces.RSAPublicKey rsa2 =
+            (java.security.interfaces.RSAPublicKey) pub2;
+        return rsa1.getModulus().equals(rsa2.getModulus())
+            && rsa1.getPublicExponent().equals(rsa2.getPublicExponent());
+    }
+    
+    private boolean
+    privateKeysEqual(
+        final java.security.PrivateKey priv1,
+        final java.security.PrivateKey priv2
+    ) {
+        assert priv1 instanceof java.security.interfaces.RSAPrivateKey;
+        final java.security.interfaces.RSAPrivateKey rsa1 =
+            (java.security.interfaces.RSAPrivateKey) priv1;
+        assert priv2 instanceof java.security.interfaces.RSAPrivateKey;
+        final java.security.interfaces.RSAPrivateKey rsa2 =
+            (java.security.interfaces.RSAPrivateKey) priv2;
+        return rsa1.getModulus().equals(rsa2.getModulus())
+            && rsa1.getPrivateExponent().equals(rsa2.getPrivateExponent());
     }
 }
