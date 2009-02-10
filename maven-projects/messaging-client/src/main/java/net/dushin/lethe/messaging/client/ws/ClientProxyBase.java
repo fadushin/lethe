@@ -24,55 +24,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.crypto;
+package net.dushin.lethe.messaging.client.ws;
 
-public class DeterministicSecureRandom extends java.security.SecureRandomSpi {
+/**
+ * This base proxy type caches the proxy created through its constructor.
+ * Typically, the proxy itself will be created by a derived ctor via the
+ * createProxy operation
+ */
+abstract class ClientProxyBase<ProxyType> {
+
+    protected static final short NO_PORT = -1;
     
-    final java.util.Random rand = new java.util.Random();
-    
-    public
-    DeterministicSecureRandom() {
-        System.out.println("foo");
+    protected final ProxyType proxy;
+
+    protected
+    ClientProxyBase(
+        final ProxyType proxy
+    ) {
+        this.proxy = proxy;
     }
     
-    protected void 
-    engineSetSeed(
-        final byte[] seed
-    ) {
-        rand.setSeed(mosh(seed));
+    public ProxyType
+    getProxy() {
+        return proxy;
     }
     
-    protected void 
-    engineNextBytes(
-        final byte[] bytes
+    protected static <ProxyType> ProxyType
+    createProxy(
+        final java.net.URL wsdlLoc,
+        final javax.xml.namespace.QName serviceQName,
+        final javax.xml.namespace.QName portQName,
+        final Class<ProxyType> cls
     ) {
-        rand.nextBytes(bytes);
-    }
-    
-    protected byte[] 
-    engineGenerateSeed(
-        final int numBytes
-    ) {
-        throw new RuntimeException("unimplemented");
-    }
-    
-    private static long
-    mosh(
-        final byte[] seed
-    ) {
-        long ret = 0;
-        final int seedDiv8 = seed.length / 8;
-        for (int i = 0;  i < seedDiv8;  ++i) {
-            final int iTimes8 = i * 8;
-            for (int j = 0;  j < 8;  ++j) {
-                ret ^= seed[iTimes8 + j] << (j * 8);
-            }
-        }
-        final int seedMod8 = seed.length % 8;
-        final int seedDiv8Times8 = seedDiv8 * 8;
-        for (int j = 0;  j < seedMod8;  ++j) {
-            ret ^= seed[seedDiv8Times8 + j] << (j * 8);
-        }
-        return ret;
+        final javax.xml.ws.Service svc = 
+            javax.xml.ws.Service.create(
+                wsdlLoc,
+                serviceQName
+            );
+        return svc.getPort(
+            portQName,
+            cls
+        );
     }
 }

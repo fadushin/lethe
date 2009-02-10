@@ -81,24 +81,6 @@ public class KeyPairGeneratorTest extends org.junit.Assert {
                     pair5122
                 )
             );
-            /*
-            assertEquals(
-                pair5121,
-                new KeyPairGenerator(512).generateKeyPair(PASS1)
-            );
-            assertEquals(
-                new KeyPairGenerator(512).generateKeyPair(PASS1),
-                pair5121
-            );
-            assertTrue(
-                !pair5121.equals(pair5122)
-            );
-            System.out.println(
-                    pair5121.getPublic().getEncoded().equals(
-                        new KeyPairGenerator(512).generateKeyPair(PASS1).getPublic().getEncoded()
-                    )
-                );
-            */
         } catch (final Exception e) {
             e.printStackTrace();
             org.junit.Assert.fail("unexpected exception");

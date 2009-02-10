@@ -28,9 +28,9 @@ package net.dushin.lethe.messaging.client.crypto;
 
 public class KeyPairGenerator {
 
-	private static final java.security.Provider PROVIDER =
-	    new DeterministicSecureRandomProvider();
-	
+    private static final java.security.Provider PROVIDER =
+        new DeterministicSecureRandomProvider();
+    
     private final int keySize;
 
     public

@@ -24,55 +24,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.crypto;
+package net.dushin.lethe.messaging.client.ws;
 
-public class DeterministicSecureRandom extends java.security.SecureRandomSpi {
+/**
+ *
+ */
+public final class MessagingConstants {
     
-    final java.util.Random rand = new java.util.Random();
+    /**
+     * The Messaging XML namespace
+     */
+    public static final String MESSAGING_NS = 
+        "http://lethe.dushin.net/messaging/server";
     
-    public
-    DeterministicSecureRandom() {
-        System.out.println("foo");
-    }
+    //
+    // Archer "General" WebService
+    //
     
-    protected void 
-    engineSetSeed(
-        final byte[] seed
-    ) {
-        rand.setSeed(mosh(seed));
-    }
+    /**
+     * Messenger service QName
+     */
+    public static final javax.xml.namespace.QName MESSENGER_SERVICE_QNAME =
+        new javax.xml.namespace.QName(
+            MESSAGING_NS,
+            "MessengerService"
+        );
     
-    protected void 
-    engineNextBytes(
-        final byte[] bytes
-    ) {
-        rand.nextBytes(bytes);
-    }
-    
-    protected byte[] 
-    engineGenerateSeed(
-        final int numBytes
-    ) {
-        throw new RuntimeException("unimplemented");
-    }
-    
-    private static long
-    mosh(
-        final byte[] seed
-    ) {
-        long ret = 0;
-        final int seedDiv8 = seed.length / 8;
-        for (int i = 0;  i < seedDiv8;  ++i) {
-            final int iTimes8 = i * 8;
-            for (int j = 0;  j < 8;  ++j) {
-                ret ^= seed[iTimes8 + j] << (j * 8);
-            }
-        }
-        final int seedMod8 = seed.length % 8;
-        final int seedDiv8Times8 = seedDiv8 * 8;
-        for (int j = 0;  j < seedMod8;  ++j) {
-            ret ^= seed[seedDiv8Times8 + j] << (j * 8);
-        }
-        return ret;
+    /**
+     * SOAP port used for access
+     */
+    public static final javax.xml.namespace.QName MESSENGER_SOAP_PORT_QNAME =
+        new javax.xml.namespace.QName(
+            MESSAGING_NS,
+            "SOAPPort"
+        );
+
+    private
+    MessagingConstants() {
+        // complete
     }
 }
