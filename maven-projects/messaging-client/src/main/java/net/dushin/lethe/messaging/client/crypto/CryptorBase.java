@@ -24,37 +24,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.server;
+package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.MessageList;
+abstract class CryptorBase extends SerializationBase {
 
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
-    
-    private final ChannelManager channelMgr = new ChannelManager();
+    protected final javax.crypto.Cipher cipher;
 
-    public
-    Messenger() {
-    }
-
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final int since
+    protected
+    CryptorBase(
+        final int mode,
+        final java.security.Key key
     ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
-        );
-    }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final Contents message
-    ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
+        try {
+            this.cipher = javax.crypto.Cipher.getInstance("RSA");
+            cipher.init(
+                mode,
+                key
+            );
+        } catch (final Exception e) {
+            throw new RuntimeException("Error initializing RSA Cipher", e);
+        }
     }
 }

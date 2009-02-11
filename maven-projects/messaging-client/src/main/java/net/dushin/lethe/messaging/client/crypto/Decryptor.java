@@ -24,37 +24,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.server;
+package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.MessageList;
-
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
-    
-    private final ChannelManager channelMgr = new ChannelManager();
+public class Decryptor extends CryptorBase {
 
     public
-    Messenger() {
-    }
-
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final int since
+    Decryptor(
+        final java.security.PrivateKey key
     ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
-        );
-    }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final Contents message
-    ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
+        super(
+            javax.crypto.Cipher.DECRYPT_MODE,
+            key
         );
     }
 }

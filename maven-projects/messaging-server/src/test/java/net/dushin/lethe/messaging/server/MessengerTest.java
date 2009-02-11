@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
 
@@ -98,12 +99,12 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
             //
             messenger.postMessage(
                 "foo",
-                "bar"
+                createContents("bar")
             );
             MessageList foo = messenger.getMessages("foo", 0);
             assertSame(foo.getItem().size(), 1);
             assertSame(foo.getItem().get(0).getOrdinal(), 0);
-            assertEquals(foo.getItem().get(0).getMessage(), "bar");
+            assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             //
             // Check the logic of get
             //
@@ -114,18 +115,26 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
             //
             messenger.postMessage(
                 "foo",
-                "bar2"
+                createContents("bar2")
             );
             foo = messenger.getMessages("foo", 0);
             assertSame(foo.getItem().size(), 2);
             assertSame(foo.getItem().get(0).getOrdinal(), 0);
-            assertEquals(foo.getItem().get(0).getMessage(), "bar");
+            assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             assertSame(foo.getItem().get(1).getOrdinal(), 1);
-            assertEquals(foo.getItem().get(1).getMessage(), "bar2");
+            assertEquals(foo.getItem().get(1).getMessage().getMsg(), "bar2");
             //
         } catch (final Exception e) {
             e.printStackTrace();
             throw e;
         }
+    }
+    
+    private static Contents
+    createContents(final String msg) {
+        final Contents ret = new Contents();
+        ret.setDescriptor("java.lang.String");
+        ret.setMsg(msg);
+        return ret;
     }
 }

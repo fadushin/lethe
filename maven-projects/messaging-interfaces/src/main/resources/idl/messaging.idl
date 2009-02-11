@@ -30,10 +30,36 @@
 // causing types to get mapped to '.'-separated identifiers in WSDL
 //
 
+const string PROTECTED_MSG = "protected";
+const string PLAINTEXT_MSG = "plaintext";
+
+struct Contents
+{
+    string descriptor;
+    any msg;
+};
+
+struct PlaintextMessage
+{
+    string from;
+    string data;
+};
+
+struct SignedMessage
+{
+    PlaintextMessage plaintextMessage;
+    sequence<octet> signature;
+};
+
+struct EncryptedMessage
+{
+    sequence<octet> data;
+};
+
 struct Message
 {
     long ordinal;
-    string message;
+    Contents message;
 };
 
 typedef sequence<Message> MessageList;
@@ -42,7 +68,7 @@ interface Messenger
 {
     void postMessage(
         in string channel,
-        in string message
+        in Contents message
     );
     
     MessageList 

@@ -24,37 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.server;
+package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.MessageList;
+abstract class SerializationBase {
 
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
+    protected byte[]
+    serialize(
+        final Package pkg,
+        final Object jaxbelement
+    ) {
+        try {
+            final javax.xml.bind.JAXBContext ctx =
+                javax.xml.bind.JAXBContext.newInstance(
+                    pkg.getName()
+                );
+            final javax.xml.bind.Marshaller marshaller = ctx.createMarshaller();
+            final java.io.ByteArrayOutputStream os =
+                new java.io.ByteArrayOutputStream();
+            marshaller.marshal(jaxbelement, os);
+            return os.toByteArray();
+        } catch (final Exception e) {
+            throw new RuntimeException("Error marshalling " + jaxbelement, e);
+        }
+    }
     
-    private final ChannelManager channelMgr = new ChannelManager();
-
-    public
-    Messenger() {
-    }
-
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final int since
-    ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
-        );
-    }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final Contents message
-    ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
-    }
 }

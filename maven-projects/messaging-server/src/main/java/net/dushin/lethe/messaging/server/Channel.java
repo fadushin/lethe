@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
@@ -58,7 +59,7 @@ public class Channel {
 
     public void
     postMessage(
-        final java.lang.String message
+        final Contents message
     ) {
         synchronized (messages) {
             final Message msg = new Message();

@@ -24,37 +24,47 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.server;
+package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
+import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
-public class Messenger
-    implements net.dushin.lethe.messaging.interfaces.Messenger {
-    
-    private final ChannelManager channelMgr = new ChannelManager();
+public class Encryptor extends CryptorBase {
 
     public
-    Messenger() {
-    }
-
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final int since
+    Encryptor(
+        final java.security.PublicKey key
     ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
+        super(
+            javax.crypto.Cipher.ENCRYPT_MODE,
+            key
         );
     }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final Contents message
+    
+    EncryptedMessage
+    encrypt(final PlaintextMessage plaintext) {
+        return encrypt(PlaintextMessage.class.getPackage(), plaintext);
+    }
+    
+    EncryptedMessage
+    encrypt(final SignedMessage signed) {
+        return encrypt(SignedMessage.class.getPackage(), signed);
+    }
+    
+    private EncryptedMessage
+    encrypt(
+        final Package pkg,
+        final Object obj
     ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
+        try {
+            final EncryptedMessage ret = new EncryptedMessage();
+            ret.setData(
+                this.cipher.doFinal(serialize(pkg, obj))
+            );
+            return ret;
+        } catch (final Exception e) {
+            throw new RuntimeException("Error attempting to encrypt", e);
+        }
     }
 }
