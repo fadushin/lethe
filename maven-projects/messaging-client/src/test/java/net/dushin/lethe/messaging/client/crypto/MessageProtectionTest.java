@@ -26,44 +26,42 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-abstract class SerializationBase {
+// import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
+import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 
-    protected byte[]
-    serialize(
-        final Package pkg,
-        final Object jaxbelement
-    ) {
-        try {
-            final javax.xml.bind.JAXBContext ctx =
-                javax.xml.bind.JAXBContext.newInstance(
-                    pkg.getName()
-                );
-            final javax.xml.bind.Marshaller marshaller = ctx.createMarshaller();
-            final java.io.ByteArrayOutputStream os =
-                new java.io.ByteArrayOutputStream();
-            marshaller.marshal(jaxbelement, os);
-            return os.toByteArray();
-        } catch (final Exception e) {
-            throw new RuntimeException("Error marshalling " + jaxbelement, e);
-        }
-    }
+/**
+ *
+ */
+public class MessageProtectionTest extends org.junit.Assert {
     
-    protected Object
-    deserialize(
-        final Package pkg,
-        final byte[] data
-    ) {
+    private static final String PASS1 = "To be, or not to be";
+    // private static final String PASS2 = "That is the question";
+    
+    private static final PlaintextMessage PLAINTEXT_MSG = new PlaintextMessage();
+    static {
+        PLAINTEXT_MSG.setFrom("alice");
+        PLAINTEXT_MSG.setData("All whimsy were the borogroves");
+    }
+
+    /**
+     * @throws      Exception if an error occurred
+     */
+    @org.junit.Test
+    public final void
+    testPlaintextEncryption() throws Exception {
         try {
-            final javax.xml.bind.JAXBContext ctx =
-                javax.xml.bind.JAXBContext.newInstance(
-                    pkg.getName()
-                );
-            final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
-            final java.io.ByteArrayInputStream is =
-                new java.io.ByteArrayInputStream(data);
-            return unmarshaller.unmarshal(is);
+            final java.security.KeyPair pair =
+                new KeyPairGenerator(512).generateKeyPair(PASS1);
+            final Encryptor encryptor = new Encryptor(pair.getPublic());
+            assertNotNull(encryptor);
+            //
+            //
+            //
+            // EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG);
+            // assertNotNull(msg);
         } catch (final Exception e) {
-            throw new RuntimeException("Error unmarshalling " + data, e);
+            e.printStackTrace();
+            fail("testEncryption failed for the above reason");
         }
     }
 }

@@ -26,6 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
+
 public class Decryptor extends CryptorBase {
 
     public
@@ -36,5 +38,17 @@ public class Decryptor extends CryptorBase {
             javax.crypto.Cipher.DECRYPT_MODE,
             key
         );
+    }
+    
+    Object
+    decrypt(final EncryptedMessage encrypted) {
+        try {
+            return deserialize(
+                EncryptedMessage.class.getPackage(),
+                this.cipher.doFinal(encrypted.getData())
+            );
+        } catch (final Exception e) {
+            throw new RuntimeException("Error decrypting", e);
+        }
     }
 }
