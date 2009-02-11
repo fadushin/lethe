@@ -45,7 +45,7 @@
     <!-- NOTE: Please keep in alphabetical order -->
     <!-- -->
     <properties>
-        <cxf.version>2.1.3</cxf.version>
+        <cxf.version>2.1.4</cxf.version>
         <jaxb.api.version>2.1</jaxb.api.version>
         <jaxb.impl.version>2.1.9</jaxb.impl.version>
         <junit.version>4.4</junit.version>
