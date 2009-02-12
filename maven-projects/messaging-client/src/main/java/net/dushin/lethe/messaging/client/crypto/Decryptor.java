@@ -35,6 +35,7 @@ public class Decryptor extends CryptorBase {
         final java.security.PrivateKey key
     ) {
         super(
+            "RSA/ECB/NoPadding",
             javax.crypto.Cipher.DECRYPT_MODE,
             key
         );
@@ -45,7 +46,8 @@ public class Decryptor extends CryptorBase {
         try {
             return deserialize(
                 EncryptedMessage.class.getPackage(),
-                this.cipher.doFinal(encrypted.getData())
+                new byte[0]
+                // this.cipher.doFinal(encrypted.getData())
             );
         } catch (final Exception e) {
             throw new RuntimeException("Error decrypting", e);

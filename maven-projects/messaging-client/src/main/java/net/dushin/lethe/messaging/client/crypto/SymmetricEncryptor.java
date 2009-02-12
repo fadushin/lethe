@@ -26,45 +26,50 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
-import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
-import net.dushin.lethe.messaging.interfaces.SignedMessage;
+class SymmetricEncryptor extends CryptorBase {
 
-public class Encryptor extends CryptorBase {
+    private final java.security.Key key;
 
-    public
-    Encryptor(
-        final java.security.PublicKey key
+    SymmetricEncryptor() {
+        this(generateSymmetricKey());
+    }
+
+    SymmetricEncryptor(
+        final javax.crypto.SecretKey key
     ) {
         super(
+            "AES",
             javax.crypto.Cipher.ENCRYPT_MODE,
             key
         );
+        this.key = key;
     }
     
-    EncryptedMessage
-    encrypt(final PlaintextMessage plaintext) {
-        return encrypt(PlaintextMessage.class.getPackage(), plaintext);
-    }
-    
-    EncryptedMessage
-    encrypt(final SignedMessage signed) {
-        return encrypt(SignedMessage.class.getPackage(), signed);
-    }
-    
-    private EncryptedMessage
+    byte[]
     encrypt(
-        final Package pkg,
-        final Object obj
+        final byte[] data
     ) {
         try {
-            final EncryptedMessage ret = new EncryptedMessage();
-            ret.setData(
-                this.cipher.doFinal(serialize(pkg, obj))
-            );
-            return ret;
+            return this.cipher.doFinal(data);
         } catch (final Exception e) {
-            throw new RuntimeException("Error attempting to encrypt", e);
+            throw new RuntimeException("Error encrypting data", e);
+        }
+    }
+    
+    java.security.Key
+    getSymmetricKey() {
+        return this.key;
+    }
+    
+    private static javax.crypto.SecretKey
+    generateSymmetricKey() {
+        try {
+            final javax.crypto.KeyGenerator generator =
+                javax.crypto.KeyGenerator.getInstance("AES");
+            generator.init(256);
+            return generator.generateKey();
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

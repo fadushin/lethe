@@ -41,7 +41,10 @@ abstract class SerializationBase {
             final javax.xml.bind.Marshaller marshaller = ctx.createMarshaller();
             final java.io.ByteArrayOutputStream os =
                 new java.io.ByteArrayOutputStream();
-            marshaller.marshal(jaxbelement, os);
+            marshaller.marshal(
+                jaxbelement, 
+                os
+            );
             return os.toByteArray();
         } catch (final Exception e) {
             throw new RuntimeException("Error marshalling " + jaxbelement, e);

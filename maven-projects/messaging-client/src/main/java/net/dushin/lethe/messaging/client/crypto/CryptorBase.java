@@ -32,11 +32,12 @@ abstract class CryptorBase extends SerializationBase {
 
     protected
     CryptorBase(
+        final String spec,
         final int mode,
         final java.security.Key key
     ) {
         try {
-            this.cipher = javax.crypto.Cipher.getInstance("RSA");
+            this.cipher = javax.crypto.Cipher.getInstance(spec);
             cipher.init(
                 mode,
                 key

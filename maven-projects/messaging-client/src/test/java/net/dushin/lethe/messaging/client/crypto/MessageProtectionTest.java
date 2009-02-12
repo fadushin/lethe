@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-// import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
+import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 
 /**
@@ -52,13 +52,13 @@ public class MessageProtectionTest extends org.junit.Assert {
         try {
             final java.security.KeyPair pair =
                 new KeyPairGenerator(512).generateKeyPair(PASS1);
-            final Encryptor encryptor = new Encryptor(pair.getPublic());
+            final AsymmetricEncryptor encryptor = new AsymmetricEncryptor(pair.getPublic());
             assertNotNull(encryptor);
             //
             //
             //
-            // EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG);
-            // assertNotNull(msg);
+            EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG);
+            assertNotNull(msg);
         } catch (final Exception e) {
             e.printStackTrace();
             fail("testEncryption failed for the above reason");

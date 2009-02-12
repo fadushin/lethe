@@ -47,13 +47,14 @@ struct PlaintextMessage
 
 struct SignedMessage
 {
-    PlaintextMessage plaintextMessage;
+    sequence<octet> serializedMessage;
     sequence<octet> signature;
 };
 
 struct EncryptedMessage
 {
-    sequence<octet> data;
+    sequence<octet> encryptedKey;
+    sequence<octet> encryptedData;
 };
 
 struct Message
