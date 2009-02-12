@@ -26,48 +26,26 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
-import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+class SymmetricDecryptor extends CryptorBase {
 
-/**
- *
- */
-public class MessageProtectionTest extends org.junit.Assert {
-    
-    private static final String PASS1 = "To be, or not to be";
-    // private static final String PASS2 = "That is the question";
-    
-    private static final PlaintextMessage PLAINTEXT_MSG = new PlaintextMessage();
-    static {
-        PLAINTEXT_MSG.setFrom("alice");
-        PLAINTEXT_MSG.setData("All whimsy were the borogroves");
+    SymmetricDecryptor(
+        final javax.crypto.SecretKey key
+    ) {
+        super(
+            "AES",
+            javax.crypto.Cipher.DECRYPT_MODE,
+            key
+        );
     }
-
-    /**
-     * @throws      Exception if an error occurred
-     */
-    @org.junit.Test
-    public final void
-    testPlaintextEncryption() throws Exception {
+    
+    byte[]
+    decrypt(
+        final byte[] data
+    ) {
         try {
-            final java.security.KeyPair pair =
-                new KeyPairGenerator(512).generateKeyPair(PASS1);
-            final AsymmetricEncryptor encryptor = new AsymmetricEncryptor(pair.getPublic());
-            assertNotNull(encryptor);
-            //
-            //
-            //
-            EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG);
-            assertNotNull(msg);
-            //
-            //
-            //
-            Decryptor decryptor = new Decryptor(pair.getPrivate());
-            Object obj = decryptor.decrypt(msg);
-            assertNotNull(obj);
+            return this.cipher.doFinal(data);
         } catch (final Exception e) {
-            e.printStackTrace();
-            fail("testEncryption failed for the above reason");
+            throw new RuntimeException("Error encrypting data", e);
         }
     }
 }

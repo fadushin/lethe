@@ -26,6 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+
 abstract class SerializationBase {
 
     protected byte[]
@@ -64,7 +66,7 @@ abstract class SerializationBase {
             final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
             final java.io.ByteArrayInputStream is =
                 new java.io.ByteArrayInputStream(data);
-            return unmarshaller.unmarshal(is);
+            return unmarshaller.unmarshal(new javax.xml.transform.stream.StreamSource(is), PlaintextMessage.class);
         } catch (final Exception e) {
             throw new RuntimeException("Error unmarshalling " + data, e);
         }

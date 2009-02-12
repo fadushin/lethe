@@ -43,7 +43,7 @@ abstract class CryptorBase extends SerializationBase {
                 key
             );
         } catch (final Exception e) {
-            throw new RuntimeException("Error initializing RSA Cipher", e);
+            throw new RuntimeException("Error initializing Cipher", e);
         }
     }
 }

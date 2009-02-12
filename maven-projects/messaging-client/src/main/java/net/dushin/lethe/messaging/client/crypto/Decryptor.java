@@ -44,11 +44,45 @@ public class Decryptor extends CryptorBase {
     Object
     decrypt(final EncryptedMessage encrypted) {
         try {
+            final javax.crypto.SecretKey decryptedKey = decryptKey(encrypted.getEncryptedKey());
+            final byte[] decryptedData = decryptData(decryptedKey, encrypted.getEncryptedData());
+            System.out.println(new String(decryptedData));
             return deserialize(
                 EncryptedMessage.class.getPackage(),
-                new byte[0]
-                // this.cipher.doFinal(encrypted.getData())
+                decryptedData
             );
+        } catch (final Exception e) {
+            throw new RuntimeException("Error decrypting", e);
+        }
+    }
+    
+    private javax.crypto.SecretKey
+    decryptKey(
+        final byte[] encryptedKey
+    ) {
+        try {
+            final byte[] decryptedKey = this.cipher.doFinal(encryptedKey);
+            final javax.crypto.spec.SecretKeySpec spec = 
+                new javax.crypto.spec.SecretKeySpec(decryptedKey, 32, 32, "AES");
+            return spec;
+            /*
+            final javax.crypto.SecretKeyFactory factory =
+                javax.crypto.SecretKeyFactory.getInstance("AES");
+            return factory.generateSecret(spec);
+            */
+        } catch (final Exception e) {
+            throw new RuntimeException("Error decrypting", e);
+        }
+    }
+    
+    private static byte[]
+    decryptData(
+        final javax.crypto.SecretKey key,
+        final byte[] data
+    ) {
+        try {
+            final SymmetricDecryptor decryptor = new SymmetricDecryptor(key);
+            return decryptor.decrypt(data);
         } catch (final Exception e) {
             throw new RuntimeException("Error decrypting", e);
         }
