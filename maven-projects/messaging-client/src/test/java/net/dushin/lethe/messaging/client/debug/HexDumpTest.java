@@ -24,65 +24,28 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package net.dushin.lethe.messaging.client.debug;
 
-//
-// Note: for now, now IDL module (namespace) is defined, as it is
-// causing types to get mapped to '.'-separated identifiers in WSDL
-//
 
-const string PROTECTED_MSG = "protected";
-const string PLAINTEXT_MSG = "plaintext";
-
-struct Contents
-{
-    string descriptor;
-    any msg;
-};
-
-struct PlaintextMessage
-{
-    string from;
-    string data;
-};
-
-struct SignedMessage
-{
-    sequence<octet> serializedMessage;
-    sequence<octet> signature;
-};
-
-struct EncryptedKey
-{
-    sequence<octet> data;
-};
-
-typedef sequence<EncryptedKey> EncryptedKeyList;
-
-struct EncryptedMessage
-{
-    EncryptedKeyList recipients;
-    string algorithm;
-    sequence<octet> encryptedData;
-};
-
-struct Message
-{
-    long ordinal;
-    Contents message;
-};
-
-typedef sequence<Message> MessageList;
-
-interface Messenger
-{
-    void postMessage(
-        in string channel,
-        in Contents message
-    );
+/**
+ *
+ */
+public class HexDumpTest extends org.junit.Assert {
     
-    MessageList 
-    getMessages(
-        in string channel,
-        in long since
-    );
-};
+    @org.junit.Test
+    public void
+    testHexDump() {
+        System.out.println(
+            HexDump.dump(
+                "Now is the time for all great me to come to the aid of their country".getBytes()
+            )
+        );
+
+        byte[] data1 = {0x00, 0x01, 0x02};
+        System.out.println(HexDump.dump(data1));
+        
+        byte[] data2 = {0x10, 0x11, 0x12};
+        System.out.println(HexDump.dump(data2));
+        
+    }
+}

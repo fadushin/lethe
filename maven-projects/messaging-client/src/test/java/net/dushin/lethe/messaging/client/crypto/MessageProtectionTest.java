@@ -52,12 +52,15 @@ public class MessageProtectionTest extends org.junit.Assert {
         try {
             final java.security.KeyPair pair =
                 new KeyPairGenerator(512).generateKeyPair(PASS1);
-            final AsymmetricEncryptor encryptor = new AsymmetricEncryptor(pair.getPublic());
+            final Encryptor encryptor = new Encryptor();
+            final java.util.List<java.security.PublicKey> keys =
+                new java.util.ArrayList<java.security.PublicKey>();
+            keys.add(pair.getPublic());
             assertNotNull(encryptor);
             //
             //
             //
-            EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG);
+            EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG, keys);
             assertNotNull(msg);
             //
             //

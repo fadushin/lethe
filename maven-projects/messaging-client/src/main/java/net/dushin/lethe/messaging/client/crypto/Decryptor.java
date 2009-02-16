@@ -26,6 +26,9 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.debug.HexDump;
+import net.dushin.lethe.messaging.interfaces.EncryptedKey;
+import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 
 public class Decryptor extends CryptorBase {
@@ -44,7 +47,10 @@ public class Decryptor extends CryptorBase {
     Object
     decrypt(final EncryptedMessage encrypted) {
         try {
-            final javax.crypto.SecretKey decryptedKey = decryptKey(encrypted.getEncryptedKey());
+            final javax.crypto.SecretKey decryptedKey = 
+                findDecryptedKey(
+                    encrypted.getRecipients(), encrypted.getAlgorithm()
+                );
             final byte[] decryptedData = decryptData(decryptedKey, encrypted.getEncryptedData());
             System.out.println(new String(decryptedData));
             return deserialize(
@@ -57,13 +63,35 @@ public class Decryptor extends CryptorBase {
     }
     
     private javax.crypto.SecretKey
+    findDecryptedKey(
+        final EncryptedKeyList encryptedKeys,
+        final String algorithm
+    ) {
+        for (EncryptedKey encryptedKey : encryptedKeys.getItem()) {
+            try {
+                return decryptKey(encryptedKey, algorithm);
+            } catch (final Exception e) {
+                continue;
+            }
+        }
+        throw new RuntimeException("Key not found");
+    }
+    
+    private javax.crypto.SecretKey
     decryptKey(
-        final byte[] encryptedKey
+        final EncryptedKey encryptedKey,
+        final String algorithm
     ) {
         try {
-            final byte[] decryptedKey = this.cipher.doFinal(encryptedKey);
+            final byte[] decryptedKey = this.cipher.doFinal(encryptedKey.getData());
+            System.out.println("Decrypted Key:");
+            System.out.println(HexDump.dump(decryptedKey));
             final javax.crypto.spec.SecretKeySpec spec = 
-                new javax.crypto.spec.SecretKeySpec(decryptedKey, 32, 32, "AES");
+                new javax.crypto.spec.SecretKeySpec(
+                    decryptedKey, 
+                    32, 32, 
+                    algorithm
+                );
             return spec;
             /*
             final javax.crypto.SecretKeyFactory factory =

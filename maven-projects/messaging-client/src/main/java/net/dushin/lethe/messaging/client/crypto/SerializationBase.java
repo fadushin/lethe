@@ -66,7 +66,10 @@ abstract class SerializationBase {
             final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
             final java.io.ByteArrayInputStream is =
                 new java.io.ByteArrayInputStream(data);
-            return unmarshaller.unmarshal(new javax.xml.transform.stream.StreamSource(is), PlaintextMessage.class);
+            return unmarshaller.unmarshal(
+                new javax.xml.transform.stream.StreamSource(is), 
+                PlaintextMessage.class
+            );
         } catch (final Exception e) {
             throw new RuntimeException("Error unmarshalling " + data, e);
         }

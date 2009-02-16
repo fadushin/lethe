@@ -38,16 +38,25 @@ public final class Constants {
         "http://lethe.dushin.net/messaging/interfaces";
     
     //
-    // Archer "General" WebService
+    // 
     //
     
     /**
-     * Messenger service QName
+     * PlaintextMessage QName
      */
     public static final javax.xml.namespace.QName PLAINTEXT_MESSAGE_QNAME =
         new javax.xml.namespace.QName(
             MESSAGING_NS,
             "PlaintextMessage"
+        );
+    
+    /**
+     * PlaintextMessage QName
+     */
+    public static final javax.xml.namespace.QName ENCRYPTED_KEY_QNAME =
+        new javax.xml.namespace.QName(
+            MESSAGING_NS,
+            "EncryptedKey"
         );
 
     private

@@ -26,14 +26,18 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.debug.HexDump;
+import net.dushin.lethe.messaging.interfaces.EncryptedKey;
+import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
-public class AsymmetricEncryptor extends CryptorBase {
+public class Encryptor extends SerializationBase {
 
+    /*
     public
-    AsymmetricEncryptor(
+    Encryptor(
         final java.security.PublicKey key
     ) {
         super(
@@ -42,76 +46,91 @@ public class AsymmetricEncryptor extends CryptorBase {
             key
         );
     }
+    */
     
     EncryptedMessage
-    encrypt(final PlaintextMessage plaintext) {
+    encrypt(
+        final PlaintextMessage plaintext,
+        final java.util.List<java.security.PublicKey> recipients
+    ) {
         return encrypt(
             PlaintextMessage.class.getPackage(), 
             new javax.xml.bind.JAXBElement<PlaintextMessage>(
                 net.dushin.lethe.messaging.interfaces.Constants.PLAINTEXT_MESSAGE_QNAME,
                 PlaintextMessage.class,
                 plaintext
-            )
+            ),
+            recipients
         );
     }
     
     EncryptedMessage
-    encrypt(final SignedMessage signed) {
-        return encrypt(SignedMessage.class.getPackage(), signed);
+    encrypt(
+        final SignedMessage signed,
+        final java.util.List<java.security.PublicKey> recipients
+    ) {
+        return encrypt(
+            SignedMessage.class.getPackage(), 
+            signed,
+            recipients
+        );
     }
     
     private EncryptedMessage
     encrypt(
         final Package pkg,
-        final Object obj
+        final Object obj,
+        final java.util.List<java.security.PublicKey> recipients
     ) {
         try {
             final EncryptedMessage ret = new EncryptedMessage();
             final byte[] serialized = serialize(pkg, obj);
             final SymmetricEncryptor encryptor = new SymmetricEncryptor();
+            ret.setAlgorithm(encryptor.getSymmetricKey().getAlgorithm());
             final byte[] encrypted = encryptor.encrypt(serialized);
-            ret.setEncryptedKey(encryptKey(encryptor.getSymmetricKey()));
+            final java.security.Key symmetricKey = encryptor.getSymmetricKey();
+            ret.setRecipients(encryptKeyForRecipients(symmetricKey, recipients));
             ret.setEncryptedData(encrypted);
-            /*
-            final java.io.ByteArrayOutputStream buf =
-                new java.io.ByteArrayOutputStream();
-            final int blockSize = this.cipher.getBlockSize();
-            final int n = serialized.length/64;
-            for (int i = 0; i < n;  ++i) {
-                final byte[] encrypted = this.cipher.update(serialized, i * 64, 64);
-                buf.write(encrypted, 0, encrypted.length);
-            }
-            int idx = n * 64;
-            int len = serialized.length % 64;
-            byte[] rem = new byte[64];
-            System.arraycopy(serialized, idx, rem, 0, len);
-            final byte[] encrypted = this.cipher.doFinal(rem, 0, 64);
-            buf.write(encrypted, 0, encrypted.length);
-            ret.setEncryptedData(
-                buf.toByteArray()
-            );
-            */
             return ret;
         } catch (final Exception e) {
             throw new RuntimeException("Error attempting to encrypt", e);
         }
     }
     
-    private byte[]
-    encryptKey(
-        final java.security.Key key
+    private EncryptedKeyList
+    encryptKeyForRecipients(
+        final java.security.Key symmetricKey,
+        final java.util.List<java.security.PublicKey> recipients
     ) {
-        return encrypt(key.getEncoded());
+        EncryptedKeyList ret = new EncryptedKeyList();
+        for (java.security.PublicKey recipient : recipients) {
+            ret.getItem().add(encryptKey(symmetricKey, recipient));
+        }
+        return ret;
     }
     
-    private byte[]
-    encrypt(
-        final byte[] data
+    private EncryptedKey
+    encryptKey(
+        final java.security.Key key,
+        final java.security.PublicKey recipient
     ) {
         try {
-            return this.cipher.doFinal(data);
+            final javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("RSA/ECB/NoPadding");
+            cipher.init(
+                javax.crypto.Cipher.ENCRYPT_MODE,
+                recipient
+            );
+            final byte[] unencryptedKey = key.getEncoded();
+            System.out.println("Unencrypted symmetric key:");
+            System.out.println(HexDump.dump(unencryptedKey));
+            final byte[] encryptedKey = cipher.doFinal(unencryptedKey);
+            System.out.println("Encrypted symmetric key:");
+            System.out.println(HexDump.dump(encryptedKey));
+            final EncryptedKey ret = new EncryptedKey();
+            ret.setData(encryptedKey);
+            return ret;
         } catch (final Exception e) {
-            throw new RuntimeException("Error encrypting data", e);
+            throw new RuntimeException(e);
         }
     }
 }

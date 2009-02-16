@@ -28,17 +28,19 @@ package net.dushin.lethe.messaging.client.crypto;
 
 class SymmetricEncryptor extends CryptorBase {
 
+    private static final String DEFAULT_ALGORITHM = "AES"; // "DESede/CBC/PKCS5Padding";
+    
     private final java.security.Key key;
 
     SymmetricEncryptor() {
-        this(generateSymmetricKey());
+        this(generateSymmetricKey(DEFAULT_ALGORITHM));
     }
 
     SymmetricEncryptor(
         final javax.crypto.SecretKey key
     ) {
         super(
-            "AES",
+            DEFAULT_ALGORITHM,
             javax.crypto.Cipher.ENCRYPT_MODE,
             key
         );
@@ -62,10 +64,12 @@ class SymmetricEncryptor extends CryptorBase {
     }
     
     private static javax.crypto.SecretKey
-    generateSymmetricKey() {
+    generateSymmetricKey(
+        final String algorithm
+    ) {
         try {
             final javax.crypto.KeyGenerator generator =
-                javax.crypto.KeyGenerator.getInstance("AES");
+                javax.crypto.KeyGenerator.getInstance(algorithm);
             generator.init(256);
             return generator.generateKey();
         } catch (final Exception e) {
