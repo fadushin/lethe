@@ -127,6 +127,11 @@ public class Decryptor extends CryptorBase {
                 "Decrypted key:",
                 decryptedKey
             );
+            //
+            // TODO something is awry here -- I need to ignore the first
+            // 32 bytes of the decrypted data -- they are all 0 for some
+            // reason I need to look into
+            //
             final javax.crypto.spec.SecretKeySpec spec = 
                 new javax.crypto.spec.SecretKeySpec(
                     decryptedKey, 
