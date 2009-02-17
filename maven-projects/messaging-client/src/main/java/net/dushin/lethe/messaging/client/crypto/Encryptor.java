@@ -26,32 +26,44 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.client.debug.HexDump;
 import net.dushin.lethe.messaging.interfaces.EncryptedKey;
 import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
+/**
+ * An Encryptor is responsible for encrypting a message to a
+ * collection of recipients, where each recipient is encapsulated
+ * by a java.security.PublicKey.
+ *
+ * Unlike other cryptographic objects in this package, this object
+ * effectively has no state associated with it, and can be constructed
+ * with no initial data; however, note that the encryption operations on
+ * this type do require a collection of public keys.
+ */
 public class Encryptor extends SerializationBase {
-
-    /*
-    public
-    Encryptor(
-        final java.security.PublicKey key
-    ) {
-        super(
-            "RSA/ECB/NoPadding",
-            javax.crypto.Cipher.ENCRYPT_MODE,
-            key
-        );
-    }
-    */
     
+    /**
+     * Encrypt a plaintext message for a collection of recipients.
+     *
+     * @param       plaintext
+     *              The PlaintextMessage to encrypt
+     *
+     * @param       recipients
+     *              The list of recipients to whom the message should
+     *              be encrypted
+     *
+     * @return      the result of encrypting the supplied message
+     *              for the collection of intended recipients, encapsulated
+     *              by a collection of public keys.  The resulting 
+     *              EncryptedMessage is as described in the corresponding
+     *              message.idl, from which this type is derived.
+     */
     EncryptedMessage
     encrypt(
         final PlaintextMessage plaintext,
-        final java.util.List<java.security.PublicKey> recipients
+        final java.util.Collection<java.security.PublicKey> recipients
     ) {
         return encrypt(
             PlaintextMessage.class.getPackage(), 
@@ -64,43 +76,88 @@ public class Encryptor extends SerializationBase {
         );
     }
     
+    /**
+     * Encrypt a signed message for a collection of recipients.
+     *
+     * @param       signed
+     *              The SignedMessage to encrypt
+     *
+     * @param       recipients
+     *              The list of recipients to whom the message should
+     *              be encrypted
+     *
+     * @return      the result of encrypting the supplied message
+     *              for the collection of intended recipients, encapsulated
+     *              by a collection of public keys.  The resulting 
+     *              EncryptedMessage is as described in the corresponding
+     *              message.idl, from which this type is derived.
+     */
     EncryptedMessage
     encrypt(
         final SignedMessage signed,
-        final java.util.List<java.security.PublicKey> recipients
+        final java.util.Collection<java.security.PublicKey> recipients
     ) {
         return encrypt(
             SignedMessage.class.getPackage(), 
-            signed,
+            new javax.xml.bind.JAXBElement<SignedMessage>(
+                net.dushin.lethe.messaging.interfaces.Constants.SIGNED_MESSAGE_QNAME,
+                SignedMessage.class,
+                signed
+            ),
             recipients
         );
     }
     
+    //
+    // internal operations
+    //
+    
+    /**
+     * Encrypt the object defined in the supplied package for the intended
+     * recipients.
+     */
     private EncryptedMessage
     encrypt(
         final Package pkg,
         final Object obj,
-        final java.util.List<java.security.PublicKey> recipients
+        final java.util.Collection<java.security.PublicKey> recipients
     ) {
         try {
             final EncryptedMessage ret = new EncryptedMessage();
-            final byte[] serialized = serialize(pkg, obj);
+            //
+            // Create a transient symmetric key to encrypt the message
+            //
             final SymmetricEncryptor encryptor = new SymmetricEncryptor();
             ret.setAlgorithm(encryptor.getSymmetricKey().getAlgorithm());
+            //
+            // Serialize the message to be encrypted, and encrypt it using
+            // the symmetric key
+            //
+            final byte[] serialized = serialize(pkg, obj);
             final byte[] encrypted = encryptor.encrypt(serialized);
-            final java.security.Key symmetricKey = encryptor.getSymmetricKey();
-            ret.setRecipients(encryptKeyForRecipients(symmetricKey, recipients));
             ret.setEncryptedData(encrypted);
+            //
+            // Encrypt the symmetric key for the recipients
+            //
+            ret.setRecipients(
+                encryptKeyForRecipients(encryptor.getSymmetricKey(), recipients)
+            );
             return ret;
         } catch (final Exception e) {
             throw new RuntimeException("Error attempting to encrypt", e);
         }
     }
     
+    /**
+     * Encrypt the specified symmetric key for the collection of
+     * recipients.  The result will be a list of encrypt keys, each of
+     * which is the encrypted form of the symmetric key used to encrypt
+     * the actual message.
+     */
     private EncryptedKeyList
     encryptKeyForRecipients(
         final java.security.Key symmetricKey,
-        final java.util.List<java.security.PublicKey> recipients
+        final java.util.Collection<java.security.PublicKey> recipients
     ) {
         EncryptedKeyList ret = new EncryptedKeyList();
         for (java.security.PublicKey recipient : recipients) {
@@ -109,28 +166,46 @@ public class Encryptor extends SerializationBase {
         return ret;
     }
     
+    /**
+     * Encrypt a (symmetric) key using the public key representing the
+     * recipient.
+     */
     private EncryptedKey
     encryptKey(
         final java.security.Key key,
         final java.security.PublicKey recipient
     ) {
         try {
-            final javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance("RSA/ECB/NoPadding");
+            //
+            // Create the Cipher from the public key
+            //
+            final javax.crypto.Cipher cipher = 
+                javax.crypto.Cipher.getInstance("RSA/ECB/NoPadding");
             cipher.init(
                 javax.crypto.Cipher.ENCRYPT_MODE,
                 recipient
             );
+            //
+            // Encrypt the encoded form of the (symmetric) key
+            //
             final byte[] unencryptedKey = key.getEncoded();
-            System.out.println("Unencrypted symmetric key:");
-            System.out.println(HexDump.dump(unencryptedKey));
+            Logger.logBuffer(
+                "Encrypting symmetric key:",
+                unencryptedKey
+            );
             final byte[] encryptedKey = cipher.doFinal(unencryptedKey);
-            System.out.println("Encrypted symmetric key:");
-            System.out.println(HexDump.dump(encryptedKey));
+            Logger.logBuffer(
+                "Encrypted symmetric key:",
+                encryptedKey
+            );
+            //
+            // Wrap the encrypted key in an EncryptedKey struct
+            //
             final EncryptedKey ret = new EncryptedKey();
             ret.setData(encryptedKey);
             return ret;
         } catch (final Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error encrypting symmetric key", e);
         }
     }
 }

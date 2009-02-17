@@ -26,16 +26,34 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+/**
+ * This class is used to encrypt data using a secret key.
+ *
+ * This class supports a default constructor, which will initialize
+ * an instance using a randmly generated secret key.
+ */
 class SymmetricEncryptor extends CryptorBase {
 
+    /**
+     * the default symmetric key algorithm to use
+     */
     private static final String DEFAULT_ALGORITHM = "AES"; // "DESede/CBC/PKCS5Padding";
     
+    /**
+     * The secret key with which this class was initialized
+     */
     private final java.security.Key key;
 
+    /**
+     * Create an instance using a randomly generated secret key.
+     */
     SymmetricEncryptor() {
         this(generateSymmetricKey(DEFAULT_ALGORITHM));
     }
 
+    /**
+     * Create an instance using the specified secret key.
+     */
     SymmetricEncryptor(
         final javax.crypto.SecretKey key
     ) {
@@ -47,22 +65,46 @@ class SymmetricEncryptor extends CryptorBase {
         this.key = key;
     }
     
-    byte[]
-    encrypt(
-        final byte[] data
-    ) {
-        try {
-            return this.cipher.doFinal(data);
-        } catch (final Exception e) {
-            throw new RuntimeException("Error encrypting data", e);
-        }
-    }
-    
+    /**
+     * @return      a reference to the secret key with which this
+     *              class instance was initialized.
+     */
     java.security.Key
     getSymmetricKey() {
         return this.key;
     }
     
+    /**
+     * @param       data
+     *              the data to encrypt
+     *
+     * @return      the result of encrypting the specified data
+     *              using the secret key with which this class instance
+     *              was initialized.
+     */
+    byte[]
+    encrypt(
+        final byte[] data
+    ) {
+        try {
+            final byte[] ret = this.cipher.doFinal(data);
+            Logger.logBuffer(
+                "Data prior to encryption:",
+                data
+            );
+            Logger.logBuffer(
+                "Encrypted data:",
+                ret
+            );
+            return ret;
+        } catch (final Exception e) {
+            throw new RuntimeException("Error encrypting data", e);
+        }
+    }
+    
+    /**
+     * @return      a randomly generated secret key
+     */
     private static javax.crypto.SecretKey
     generateSymmetricKey(
         final String algorithm

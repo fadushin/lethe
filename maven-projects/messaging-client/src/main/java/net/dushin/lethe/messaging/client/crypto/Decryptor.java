@@ -26,13 +26,21 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.client.debug.HexDump;
 import net.dushin.lethe.messaging.interfaces.EncryptedKey;
 import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 
+/**
+ * This class is used to decrypt encrypted messages.  It must be initialized
+ * with a private key, which must correspond with the public key used to
+ * encrypt the message.
+ */
 public class Decryptor extends CryptorBase {
 
+    /**
+     * @param       key
+     *              The private key used to decrypt messages
+     */
     public
     Decryptor(
         final java.security.PrivateKey key
@@ -44,7 +52,18 @@ public class Decryptor extends CryptorBase {
         );
     }
     
-    Object
+    /**
+     * Decrypt an EncryptedMessage.
+     *
+     * @param       encrypted
+     *              The EncryptedMessage to decrypt.
+     *
+     * @return      the decrypted message.  Typically, this object will
+     *              be an instance of a PlaintextMessage or a SignedMessage,
+     *              depending on whether the sender has signed the encrypted
+     *              message.
+     */
+    public Object
     decrypt(final EncryptedMessage encrypted) {
         try {
             final javax.crypto.SecretKey decryptedKey = 
@@ -52,7 +71,6 @@ public class Decryptor extends CryptorBase {
                     encrypted.getRecipients(), encrypted.getAlgorithm()
                 );
             final byte[] decryptedData = decryptData(decryptedKey, encrypted.getEncryptedData());
-            System.out.println(new String(decryptedData));
             return deserialize(
                 EncryptedMessage.class.getPackage(),
                 decryptedData
@@ -62,6 +80,18 @@ public class Decryptor extends CryptorBase {
         }
     }
     
+    //
+    // internal operations
+    //
+    
+    /**
+     * @return      the decrypted secret key, from a list of encrypted keys.
+     *              This operation will return a non-null value if there is
+     *              an encrypted key in the specified list that was encrypted
+     *              using the public key corresponding to the private key
+     *              with which this Decryptor was initialized.  Otherwise,
+     *              the operation will raise an exception.
+     */
     private javax.crypto.SecretKey
     findDecryptedKey(
         final EncryptedKeyList encryptedKeys,
@@ -77,15 +107,26 @@ public class Decryptor extends CryptorBase {
         throw new RuntimeException("Key not found");
     }
     
+    /**
+     * @return      the decrypted secret key, from the specified EncryptedKey.
+     *              This operation will raise an exception if decryption fails.
+     */
     private javax.crypto.SecretKey
     decryptKey(
         final EncryptedKey encryptedKey,
         final String algorithm
     ) {
         try {
-            final byte[] decryptedKey = this.cipher.doFinal(encryptedKey.getData());
-            System.out.println("Decrypted Key:");
-            System.out.println(HexDump.dump(decryptedKey));
+            final byte[] encryptedKeyData = encryptedKey.getData();
+            final byte[] decryptedKey = this.cipher.doFinal(encryptedKeyData);
+            Logger.logBuffer(
+                "Encrypted key prior to decryption:",
+                encryptedKeyData
+            );
+            Logger.logBuffer(
+                "Decrypted key:",
+                decryptedKey
+            );
             final javax.crypto.spec.SecretKeySpec spec = 
                 new javax.crypto.spec.SecretKeySpec(
                     decryptedKey, 
@@ -93,16 +134,15 @@ public class Decryptor extends CryptorBase {
                     algorithm
                 );
             return spec;
-            /*
-            final javax.crypto.SecretKeyFactory factory =
-                javax.crypto.SecretKeyFactory.getInstance("AES");
-            return factory.generateSecret(spec);
-            */
         } catch (final Exception e) {
             throw new RuntimeException("Error decrypting", e);
         }
     }
     
+    /**
+     * @return      the result of decrypting the specified data with the
+     *              specified secret key.
+     */
     private static byte[]
     decryptData(
         final javax.crypto.SecretKey key,

@@ -65,7 +65,9 @@ public class MessageProtectionTest extends org.junit.Assert {
             //
             //
             //
-            Decryptor decryptor = new Decryptor(pair.getPrivate());
+            Decryptor decryptor = new Decryptor(
+                new KeyPairGenerator(512).generateKeyPair(PASS1).getPrivate()
+            );
             Object obj = decryptor.decrypt(msg);
             assertNotNull(obj);
         } catch (final Exception e) {

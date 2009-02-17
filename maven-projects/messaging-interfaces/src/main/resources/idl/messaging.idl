@@ -65,14 +65,23 @@ struct EncryptedMessage
     sequence<octet> encryptedData;
 };
 
+/**
+ * 
+ */
 struct Message
 {
     long ordinal;
     Contents message;
 };
 
+/**
+ * A MessageList is a sequence of Messages
+ */
 typedef sequence<Message> MessageList;
 
+/**
+ *
+ */
 interface Messenger
 {
     void postMessage(

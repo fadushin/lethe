@@ -26,10 +26,28 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+/**
+ * This class forms a base class for cryptographic types that require
+ * access to a single Cipher instance, which is initialized in this
+ * class's constructor.
+ */
 abstract class CryptorBase extends SerializationBase {
 
+    /**
+     * The Cipher instance used by this Cryptor
+     */
     protected final javax.crypto.Cipher cipher;
 
+    /**
+     * @param       spec
+     *              The cipher algorithm/block/pad spec
+     *
+     * @param       mode
+     *              The cryptographic mode (encrypt or decrypt)
+     *
+     * @param       key
+     *              The cryptographic key used to initialize the Cipher
+     */
     protected
     CryptorBase(
         final String spec,

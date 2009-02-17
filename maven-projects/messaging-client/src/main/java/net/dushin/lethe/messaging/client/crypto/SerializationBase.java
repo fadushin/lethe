@@ -28,16 +28,33 @@ package net.dushin.lethe.messaging.client.crypto;
 
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 
+/**
+ * Base type for ojects that require serializationa and deserialization
+ * operations, such as for marshalling and unmarshalling encrypted or signed
+ * data.
+ *
+ * Operations on this class are static.
+ */
 abstract class SerializationBase {
-
-    protected byte[]
+    
+    /**
+     * a map from package names to JAXBContext instances which can be used to
+     * obtain JAXB marshallers and unmarshallers.
+     */
+    private static final java.util.Map<String, javax.xml.bind.JAXBContext> CONTEXT_MAP =
+        new java.util.HashMap<String, javax.xml.bind.JAXBContext>();
+    
+    /**
+     * Serialize a jaxb element in the specified package into a byte array.
+     */
+    protected static byte[]
     serialize(
         final Package pkg,
         final Object jaxbelement
     ) {
         try {
             final javax.xml.bind.JAXBContext ctx =
-                javax.xml.bind.JAXBContext.newInstance(
+                getJAXBContext(
                     pkg.getName()
                 );
             final javax.xml.bind.Marshaller marshaller = ctx.createMarshaller();
@@ -53,14 +70,17 @@ abstract class SerializationBase {
         }
     }
     
-    protected Object
+    /**
+     * Deserialize a serialized structure from a serialized structure.
+     */
+    protected static Object
     deserialize(
         final Package pkg,
         final byte[] data
     ) {
         try {
             final javax.xml.bind.JAXBContext ctx =
-                javax.xml.bind.JAXBContext.newInstance(
+                getJAXBContext(
                     pkg.getName()
                 );
             final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
@@ -73,5 +93,37 @@ abstract class SerializationBase {
         } catch (final Exception e) {
             throw new RuntimeException("Error unmarshalling " + data, e);
         }
+    }
+    
+    /**
+     * @return      a cached JAXBContext for the specified package name,
+     *              or a new one, if one has not been created.
+     */
+    private static javax.xml.bind.JAXBContext
+    getJAXBContext(
+        final String pkgname
+    ) {
+        synchronized (CONTEXT_MAP) {
+            javax.xml.bind.JAXBContext ret = CONTEXT_MAP.get(pkgname);
+            if (ret == null) {
+                try {
+                    ret = javax.xml.bind.JAXBContext.newInstance(
+                        pkgname
+                    );
+                    CONTEXT_MAP.put(pkgname, ret);
+                } catch (final Exception e) {
+                    throw new RuntimeException("Error resolving " + pkgname, e);
+                }
+            }
+            return ret;
+        }
+    }
+    
+    /**
+     * placate checkstyle
+     */
+    protected final void
+    dummy() {
+        // complete
     }
 }

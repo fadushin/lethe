@@ -24,54 +24,48 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.interfaces;
+package net.dushin.lethe.messaging.client.crypto;
+
+import net.dushin.lethe.messaging.client.debug.HexDump;
 
 /**
- * The following constants are used for serialization and deserialization
- * of JAXB types.
+ * 
  */
-public final class Constants {
-    
-    /**
-     * The Messaging XML namespace
-     */
-    public static final String MESSAGING_NS = 
-        "http://lethe.dushin.net/messaging/interfaces";
-    
-    //
-    // 
-    //
-    
-    /**
-     * PlaintextMessage QName
-     */
-    public static final javax.xml.namespace.QName PLAINTEXT_MESSAGE_QNAME =
-        new javax.xml.namespace.QName(
-            MESSAGING_NS,
-            "PlaintextMessage"
-        );
-    
-    /**
-     * SignedMessage QName
-     */
-    public static final javax.xml.namespace.QName SIGNED_MESSAGE_QNAME =
-        new javax.xml.namespace.QName(
-            MESSAGING_NS,
-            "SignedMessage"
-        );
-    
-    /**
-     * EncryptedKey QName
-     */
-    public static final javax.xml.namespace.QName ENCRYPTED_KEY_QNAME =
-        new javax.xml.namespace.QName(
-            MESSAGING_NS,
-            "EncryptedKey"
-        );
+abstract class Logger {
 
+    /**
+     * The Logger instance used by this class
+     */
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(Logger.class.getName());
+    
+    /**
+     * the log level at which we log buffers
+     */
+    private static final java.util.logging.Level DUMP_LEVEL =
+        java.util.logging.Level.FINE;
+    
+    /**
+     * the newline chars for this platform
+     */
+    private static final String NL = System.getProperty("line.separator");
+    
     private
-    Constants() {
-        // complete
+    Logger() {
+    }
+
+    static void
+    logBuffer(
+        final String header,
+        final byte[] buffer
+    ) {
+        if (LOGGER.isLoggable(DUMP_LEVEL)) {
+            LOGGER.log(
+                DUMP_LEVEL,
+                header + NL
+                + "Buffer size (bytes): " + buffer.length + NL
+                + HexDump.dump(buffer)
+            );
+        }
     }
 }
-

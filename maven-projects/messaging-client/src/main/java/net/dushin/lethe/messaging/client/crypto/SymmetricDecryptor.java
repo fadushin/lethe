@@ -26,8 +26,17 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+/**
+ * This decryptor is used to decrypt data using a secret key.
+ * An instance of this class must be initialized with a secret
+ * key, the key used to decrypt the data.
+ */
 class SymmetricDecryptor extends CryptorBase {
 
+    /**
+     * @param       key
+     *              A secret key used to decrypt the data
+     */
     SymmetricDecryptor(
         final javax.crypto.SecretKey key
     ) {
@@ -38,14 +47,31 @@ class SymmetricDecryptor extends CryptorBase {
         );
     }
     
+    /**
+     * @param       data
+     *              the data to decrypt
+     *
+     * @return      the result of decrypting the specified
+     *              data using the secret key which which this
+     *              instance was initialized.
+     */
     byte[]
     decrypt(
         final byte[] data
     ) {
         try {
-            return this.cipher.doFinal(data);
+            final byte[] ret = this.cipher.doFinal(data);
+            Logger.logBuffer(
+                "Data prior to decryption:",
+                data
+            );
+            Logger.logBuffer(
+                "Decrypted data:",
+                ret
+            );
+            return ret;
         } catch (final Exception e) {
-            throw new RuntimeException("Error encrypting data", e);
+            throw new RuntimeException("Error decrypting data", e);
         }
     }
 }
