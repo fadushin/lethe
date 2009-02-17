@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.client.crypto;
 
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 /**
  *
@@ -70,6 +71,32 @@ public class MessageProtectionTest extends org.junit.Assert {
             );
             Object obj = decryptor.decrypt(msg);
             assertNotNull(obj);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testEncryption failed for the above reason");
+        }
+    }
+
+    /**
+     * @throws      Exception if an error occurred
+     */
+    @org.junit.Test
+    public final void
+    testSignature() throws Exception {
+        try {
+            final java.security.KeyPair pair =
+                new KeyPairGenerator(512).generateKeyPair(PASS1);
+            final Signer signer = new Signer(pair.getPrivate());
+            assertNotNull(signer);
+            //
+            //
+            //
+            SignedMessage msg = signer.sign(PLAINTEXT_MSG);
+            assertNotNull(msg);
+            
+            
+            
+            
         } catch (final Exception e) {
             e.printStackTrace();
             fail("testEncryption failed for the above reason");
