@@ -33,44 +33,120 @@
 const string PROTECTED_MSG = "protected";
 const string PLAINTEXT_MSG = "plaintext";
 
+/**
+ * A Contents is a wrapper around a set of data that
+ * holds the actual message data.
+ */
 struct Contents
 {
+    /**
+     * An optional descriptor for the message contents
+     */
     string descriptor;
+
+    /**
+     * The message contents.  Currently, this can be one of:
+     *   * PlaintextMessage
+     *   * SignedMessage
+     *   * EncryptedMessage
+     */
     any msg;
 };
 
+/**
+ * A PlaintextMessage contains a from field and an opaque
+ * message, expressed as a string.  The intention is that the
+ * data is not cryptographically protected.
+ */
 struct PlaintextMessage
 {
+    /**
+     * Who the message is from
+     */
     string from;
+    
+    /**
+     * The message itself
+     */
     string data;
 };
 
+/**
+ * A signed message contains the serialized form of a
+ * message, together with a signature over a hash computed
+ * over the serialized form of the message.  The hash value
+ * is not conveyed, but must be computed by both the
+ * message signer and message verifier.
+ */
 struct SignedMessage
 {
+    /**
+     * The message in serialized form
+     */
     sequence<octet> serializedMessage;
+    
+    /**
+     * The signature over a hash value computed over the serialized
+     * form of the message
+     */
     sequence<octet> signature;
 };
 
+/**
+ * An EncryptedKey is a wrapper object around
+ * an encrypted key.  Typically, the data in this
+ * structure is a symmetric key encrypted using a
+ * public key.
+ */
 struct EncryptedKey
 {
     sequence<octet> data;
 };
 
+/**
+ * An EncryptedKeyList is a sequence of EncryptedKeys
+ */
 typedef sequence<EncryptedKey> EncryptedKeyList;
 
+/**
+ * An EncryptedMessage contains a blob of data which has been
+ * encrypted with a transient symmetric key.  The algorithm field 
+ * describes the symmetric key algorithm used, and the key
+ * itself is encrypted once for each intended recipient.
+ */
 struct EncryptedMessage
 {
+    /**
+     * The symmetric key encrypted for a list of intended recipients
+     */
     EncryptedKeyList recipients;
+
+    /**
+     * The symmetric key algorithm used
+     */
     string algorithm;
+
+    /**
+     * The symmetrically encrypted data (typically the serialized form
+     * of some other message type)
+     */
     sequence<octet> encryptedData;
 };
 
 /**
- * 
+ * A Message is a wrapper around a Contents strucuture, which in turn
+ * embodies the message contents.
  */
 struct Message
 {
+    /**
+     * The order in which this message was recieved (set by the server)
+     */
     long ordinal;
+    
+    /**
+     * The message contents
+     */
     Contents message;
 };
 
@@ -80,15 +156,37 @@ struct Message
 typedef sequence<Message> MessageList;
 
 /**
- *
+ * A Messenger is a service interface responsible for having messages
+ * posted to and received from.
  */
 interface Messenger
 {
+    /**
+     * Post a message to a channel
+     *
+     * @param       channel
+     *              the channel to which to post the message
+     *
+     * @param       message
+     *              the message to post
+     */
     void postMessage(
         in string channel,
         in Contents message
     );
     
+    /**
+     * Get a sequence of message off a channel since the specified ordinal
+     *
+     * @param       channel
+     *              the channel from which to get the message
+     *
+     * @param       since
+     *              the ordinal from which to get the message.
+     *
+     * @return      a list of messages posted to the specified channel
+     *              since the specified ordinal.
+     */
     MessageList 
     getMessages(
         in string channel,

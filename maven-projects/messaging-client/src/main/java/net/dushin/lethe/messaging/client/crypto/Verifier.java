@@ -29,11 +29,16 @@ package net.dushin.lethe.messaging.client.crypto;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 /**
- * 
+ * This object is used to verify signatures over signed messages.
+ * It must be initialized with the public key used to validate
+ * the signatures.
  */
 public class Verifier extends SignatoryBase {
 
-
+    /**
+     * @param       key
+     *              The public key with which signatures will be validated.
+     */
     public 
     Verifier(
         final java.security.PublicKey key
@@ -46,8 +51,18 @@ public class Verifier extends SignatoryBase {
         }
     }
 
-
-    public Object
+    /**
+     * Verify the signature on a signed message
+     *
+     * @param       signed
+     *              The SignedMessage to verify the signature over
+     *
+     * @return      the deserialized form of the serialized object stored in the
+     *              SignedMessage, if verification succeds.
+     *
+     * @throws      a runtime exception, if verification or deserialization fails
+     */
+    public final Object
     verify(
         final SignedMessage signed
     ) {
@@ -80,6 +95,13 @@ public class Verifier extends SignatoryBase {
         }
     }
     
+    //
+    // internal operations
+    //
+    
+    /**
+     * verify the signature over the (hashed) data
+     */
     private boolean
     verify(
         final byte[] data,

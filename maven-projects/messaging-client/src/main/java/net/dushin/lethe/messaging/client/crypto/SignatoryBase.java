@@ -27,20 +27,39 @@
 package net.dushin.lethe.messaging.client.crypto;
 
 /**
- * 
+ * This class forms the base type for classes that operate
+ * on signed messages (signing them and verifying signatures
+ * over them).  It contains references to the JCA cryptographic
+ * objects associated with these operations.
  */
 abstract class SignatoryBase extends SerializationBase {
 
+    /**
+     * default signature algorithm
+     */
     private static final String DEFAULT_SIGNATURE_ALGORITHM =
         "MD5withRSA";
-
+    
+    /**
+     * default digest algorithms
+     */
     private static final String DEFAULT_DIGEST_ALGORITHM =
         "SHA1";
 
+    /**
+     * JCA signature object used for signature creation and validation
+     */
     protected final java.security.Signature signature;
 
+    /**
+     * JCA digest object used for hashing data.  Note that it's the
+     * hashed data that's signed, not the data itself.
+     */
     protected final java.security.MessageDigest digest;
     
+    /**
+     * default ctor instantiates member defaults
+     */
     protected
     SignatoryBase() {
         try {
@@ -51,7 +70,10 @@ abstract class SignatoryBase extends SerializationBase {
         }
     }
     
-    protected byte[]
+    /**
+     * Hash the input data
+     */
+    protected final byte[]
     hash(
         final byte[] data
     ) {
