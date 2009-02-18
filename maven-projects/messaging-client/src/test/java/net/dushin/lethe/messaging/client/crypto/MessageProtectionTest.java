@@ -31,9 +31,14 @@ import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 /**
- *
+ * This test exercices the message protection operations
+ * in the crypto package (encryption and signature over messages)
  */
 public class MessageProtectionTest extends org.junit.Assert {
+    
+    //
+    // test data
+    //
     
     private static final String ALICE_PW = "alice";
     private static final java.security.KeyPair ALICE;
@@ -59,10 +64,16 @@ public class MessageProtectionTest extends org.junit.Assert {
         BOB = tmp;
     }
 
-    private static final PlaintextMessage PLAINTEXT_MSG = new PlaintextMessage();
+    private static final PlaintextMessage ALICE_MSG = new PlaintextMessage();
     static {
-        PLAINTEXT_MSG.setFrom("alice");
-        PLAINTEXT_MSG.setData("All whimsy were the borogroves");
+        ALICE_MSG.setFrom("alice");
+        ALICE_MSG.setData("'Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;");
+    }
+
+    private static final PlaintextMessage BOB_MSG = new PlaintextMessage();
+    static {
+        ALICE_MSG.setFrom("bob");
+        ALICE_MSG.setData("All mimsy were the borogoves,\nAnd the mome raths outgrabe.");
     }
     
 
@@ -73,34 +84,46 @@ public class MessageProtectionTest extends org.junit.Assert {
     public final void
     testPlaintextEncryption() throws Exception {
         try {
+            //
+            // success scenarios
+            //
             testPlaintextEncryption(
                 ALICE.getPublic(),
                 ALICE.getPrivate(),
-                PLAINTEXT_MSG,
+                ALICE_MSG,
                 true
             );
             testPlaintextEncryption(
                 ALICE.getPublic(),
                 new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPrivate(),
-                PLAINTEXT_MSG,
+                ALICE_MSG,
                 true
             );
             testPlaintextEncryption(
                 new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPublic(),
                 ALICE.getPrivate(),
-                PLAINTEXT_MSG,
+                ALICE_MSG,
                 true
             );
+            //
+            // failure scenarios
+            //
             testPlaintextEncryption(
                 new KeyPairGenerator(1024).generateKeyPair(ALICE_PW).getPublic(),
                 ALICE.getPrivate(),
-                PLAINTEXT_MSG,
+                ALICE_MSG,
                 false
             );
             testPlaintextEncryption(
                 ALICE.getPublic(),
                 BOB.getPrivate(),
-                PLAINTEXT_MSG,
+                ALICE_MSG,
+                false
+            );
+            testPlaintextEncryption(
+                BOB.getPublic(),
+                ALICE.getPrivate(),
+                ALICE_MSG,
                 false
             );
         } catch (final Exception e) {
@@ -112,7 +135,7 @@ public class MessageProtectionTest extends org.junit.Assert {
     /**
      * @throws      Exception if an error occurred
      */
-    private void
+    private static void
     testPlaintextEncryption(
         final java.security.PublicKey encryptionKey,
         final java.security.PrivateKey decryptionKey,
@@ -124,14 +147,13 @@ public class MessageProtectionTest extends org.junit.Assert {
             final java.util.List<java.security.PublicKey> keys =
                 new java.util.ArrayList<java.security.PublicKey>();
             keys.add(encryptionKey);
-            assertNotNull(encryptor);
             //
-            //
+            // encrypt the message
             //
             EncryptedMessage msg = encryptor.encrypt(message, keys);
             assertNotNull(msg);
             //
-            //
+            // decrypt the message and check the results
             //
             Decryptor decryptor = new Decryptor(
                 decryptionKey
@@ -139,6 +161,104 @@ public class MessageProtectionTest extends org.junit.Assert {
             Object obj = decryptor.decrypt(msg);
             assertNotNull(obj);
             assertTrue(messageEquals(message, obj));
+            if (!expectSuccess) {
+                fail("Expected failure");
+            }
+        } catch (final Exception e) {
+            if (expectSuccess) {
+                e.printStackTrace();
+                fail("testEncryption failed for the above reason");
+            }
+        }
+    }
+
+    /**
+     * @throws      Exception if an error occurred
+     */
+    @org.junit.Test
+    public final void
+    testPlaintextSignature() throws Exception {
+        try {
+            //
+            // success scenarios
+            //
+            testPlaintextSignature(
+                ALICE.getPrivate(),
+                ALICE.getPublic(),
+                ALICE_MSG,
+                true
+            );
+            testPlaintextSignature(
+                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPrivate(),
+                ALICE.getPublic(),
+                ALICE_MSG,
+                true
+            );
+            testPlaintextSignature(
+                ALICE.getPrivate(),
+                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPublic(),
+                ALICE_MSG,
+                true
+            );
+            //
+            // failure scenarios
+            //
+            testPlaintextSignature(
+                ALICE.getPrivate(),
+                new KeyPairGenerator(1024).generateKeyPair(ALICE_PW).getPublic(),
+                ALICE_MSG,
+                false
+            );
+            testPlaintextSignature(
+                ALICE.getPrivate(),
+                BOB.getPublic(),
+                ALICE_MSG,
+                false
+            );
+            testPlaintextSignature(
+                BOB.getPrivate(),
+                ALICE.getPublic(),
+                ALICE_MSG,
+                false
+            );
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testPlaintextSignature failed for the above reason");
+        }
+    }
+    
+    private static void
+    testPlaintextSignature(
+        final java.security.PrivateKey signingKey,
+        final java.security.PublicKey verificationKey,
+        final PlaintextMessage message,
+        final boolean expectSuccess
+    ) {
+        try {
+            final Signer signer = new Signer(signingKey);
+            //
+            // sign the message
+            //
+            final SignedMessage signed = signer.sign(message);
+            assertNotNull(signed);
+            //
+            // Check that it verifies
+            //
+            final Verifier verifier = new Verifier(verificationKey);
+            final Object obj = verifier.verify(signed);
+            assertNotNull(obj);
+            assertTrue(messageEquals(message, obj));
+            //
+            // Check that tampering fails
+            //
+            final byte[] bra = signed.getSerializedMessage();
+            bra[0] = (byte) (bra[0] ^ 0xFF);
+            try {
+                verifier.verify(signed);
+                fail("expected failure on tampering");
+            } catch (final Exception e) {
+                // ok
+            }
             if (!expectSuccess) {
                 fail("Expected failure");
             }
@@ -161,33 +281,5 @@ public class MessageProtectionTest extends org.junit.Assert {
         final PlaintextMessage m2 = (PlaintextMessage) obj;
         return msg.getFrom().equals(m2.getFrom()) 
             && msg.getData().equals(m2.getData());
-    }
-
-    /**
-     * @throws      Exception if an error occurred
-     */
-    @org.junit.Test
-    public final void
-    testSignature() throws Exception {
-        try {
-            final java.security.KeyPair pair =
-                new KeyPairGenerator(512).generateKeyPair(ALICE_PW);
-            final Signer signer = new Signer(pair.getPrivate());
-            assertNotNull(signer);
-            //
-            //
-            //
-            SignedMessage signed = signer.sign(PLAINTEXT_MSG);
-            assertNotNull(signed);
-            
-            final Verifier verifier = new Verifier(pair.getPublic());
-            final Object obj = verifier.verify(signed);
-            assertNotNull(obj);
-            
-            
-        } catch (final Exception e) {
-            e.printStackTrace();
-            fail("testEncryption failed for the above reason");
-        }
     }
 }
