@@ -72,13 +72,13 @@ public class MessageProtectionTest extends org.junit.Assert {
 
     private static final PlaintextMessage BOB_MSG = new PlaintextMessage();
     static {
-        ALICE_MSG.setFrom("bob");
-        ALICE_MSG.setData("All mimsy were the borogoves,\nAnd the mome raths outgrabe.");
+        BOB_MSG.setFrom("bob");
+        BOB_MSG.setData("All mimsy were the borogoves,\nAnd the mome raths outgrabe.");
     }
     
 
     /**
-     * @throws      Exception if an error occurred
+     * test plaintext encryption
      */
     @org.junit.Test
     public final void
@@ -132,9 +132,6 @@ public class MessageProtectionTest extends org.junit.Assert {
         }
     }
 
-    /**
-     * @throws      Exception if an error occurred
-     */
     private static void
     testPlaintextEncryption(
         final java.security.PublicKey encryptionKey,
@@ -173,7 +170,7 @@ public class MessageProtectionTest extends org.junit.Assert {
     }
 
     /**
-     * @throws      Exception if an error occurred
+     * test plaintext signature
      */
     @org.junit.Test
     public final void
@@ -259,6 +256,78 @@ public class MessageProtectionTest extends org.junit.Assert {
             } catch (final Exception e) {
                 // ok
             }
+            if (!expectSuccess) {
+                fail("Expected failure");
+            }
+        } catch (final Exception e) {
+            if (expectSuccess) {
+                e.printStackTrace();
+                fail("testEncryption failed for the above reason");
+            }
+        }
+    }
+    @org.junit.Test
+    public final void
+    testSignedEncryption() throws Exception {
+        try {
+            //
+            // success scenarios
+            //
+            testSignedEncryption(
+                ALICE.getPrivate(),
+                BOB.getPublic(),
+                BOB.getPrivate(),
+                ALICE.getPublic(),
+                ALICE_MSG,
+                true
+            );
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testEncryption failed for the above reason");
+        }
+    }
+
+    private static void
+    testSignedEncryption(
+        final java.security.PrivateKey signingKey,
+        final java.security.PublicKey encryptionKey,
+        final java.security.PrivateKey decryptionKey,
+        final java.security.PublicKey verificationKey,
+        final PlaintextMessage message,
+        final boolean expectSuccess
+    ) {
+        try {
+            //
+            // sign the message
+            //
+            final Signer signer = new Signer(signingKey);
+            final SignedMessage signed = signer.sign(message);
+            assertNotNull(signed);
+            //
+            // encrypt the signed message
+            //
+            final Encryptor encryptor = new Encryptor();
+            final java.util.List<java.security.PublicKey> keys =
+                new java.util.ArrayList<java.security.PublicKey>();
+            keys.add(encryptionKey);
+            EncryptedMessage encrypted = encryptor.encrypt(signed, keys);
+            assertNotNull(encrypted);
+            //
+            // decrypt the signed message and check the results
+            //
+            Decryptor decryptor = new Decryptor(
+                decryptionKey
+            );
+            Object decrypted = decryptor.decrypt(encrypted);
+            assertTrue(decrypted instanceof SignedMessage);
+            SignedMessage decryptedSigned = (SignedMessage) decrypted;
+            //
+            // Check that it verifies
+            //
+            final Verifier verifier = new Verifier(verificationKey);
+            final Object obj = verifier.verify(decryptedSigned);
+            assertNotNull(obj);
+            assertTrue(messageEquals(message, obj));
             if (!expectSuccess) {
                 fail("Expected failure");
             }

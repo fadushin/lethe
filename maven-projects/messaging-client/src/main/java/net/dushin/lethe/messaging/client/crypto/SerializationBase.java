@@ -26,7 +26,9 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 /**
  * Base type for ojects that require serializationa and deserialization
@@ -44,6 +46,12 @@ abstract class SerializationBase {
     private static final java.util.Map<String, javax.xml.bind.JAXBContext> CONTEXT_MAP =
         new java.util.HashMap<String, javax.xml.bind.JAXBContext>();
     
+    private static final javax.xml.parsers.DocumentBuilderFactory DOC_BUILDER_FACTORY = 
+        javax.xml.parsers.DocumentBuilderFactory.newInstance();
+    static {
+        DOC_BUILDER_FACTORY.setNamespaceAware(true);        
+    }
+
     /**
      * Serialize a jaxb element in the specified package into a byte array.
      */
@@ -86,10 +94,26 @@ abstract class SerializationBase {
             final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
             final java.io.ByteArrayInputStream is =
                 new java.io.ByteArrayInputStream(data);
-            final Object obj = unmarshaller.unmarshal(
-                new javax.xml.transform.stream.StreamSource(is), 
-                PlaintextMessage.class
-            );
+            final javax.xml.parsers.DocumentBuilder builder = DOC_BUILDER_FACTORY.newDocumentBuilder();
+            final org.w3c.dom.Document doc = builder.parse(is);
+            final org.w3c.dom.Element root = doc.getDocumentElement();
+            final javax.xml.namespace.QName qn =
+                new javax.xml.namespace.QName(
+                    root.getNamespaceURI(),
+                    root.getLocalName()
+                );
+            Object obj = null;
+            if (Constants.PLAINTEXT_MESSAGE_QNAME.equals(qn)) {
+                obj = unmarshaller.unmarshal(
+                    root, 
+                    PlaintextMessage.class
+                );                
+            } else if (Constants.SIGNED_MESSAGE_QNAME.equals(qn)) {
+                obj = unmarshaller.unmarshal(
+                    doc, 
+                    SignedMessage.class
+                );
+            }
             if (obj instanceof javax.xml.bind.JAXBElement) {
                 return ((javax.xml.bind.JAXBElement) obj).getValue();
             } else {
