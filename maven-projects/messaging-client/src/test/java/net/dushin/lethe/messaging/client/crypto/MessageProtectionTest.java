@@ -35,14 +35,36 @@ import net.dushin.lethe.messaging.interfaces.SignedMessage;
  */
 public class MessageProtectionTest extends org.junit.Assert {
     
-    private static final String PASS1 = "To be, or not to be";
-    // private static final String PASS2 = "That is the question";
-    
+    private static final String ALICE_PW = "alice";
+    private static final java.security.KeyPair ALICE;
+    static {
+        java.security.KeyPair tmp = null;
+        try {
+            tmp = new KeyPairGenerator(512).generateKeyPair(ALICE_PW);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        ALICE = tmp;
+    }
+
+    private static final String BOB_PW = "bob";
+    private static final java.security.KeyPair BOB;
+    static {
+        java.security.KeyPair tmp = null;
+        try {
+            tmp = new KeyPairGenerator(512).generateKeyPair(BOB_PW);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+        BOB = tmp;
+    }
+
     private static final PlaintextMessage PLAINTEXT_MSG = new PlaintextMessage();
     static {
         PLAINTEXT_MSG.setFrom("alice");
         PLAINTEXT_MSG.setData("All whimsy were the borogroves");
     }
+    
 
     /**
      * @throws      Exception if an error occurred
@@ -51,30 +73,94 @@ public class MessageProtectionTest extends org.junit.Assert {
     public final void
     testPlaintextEncryption() throws Exception {
         try {
-            final java.security.KeyPair pair =
-                new KeyPairGenerator(512).generateKeyPair(PASS1);
+            testPlaintextEncryption(
+                ALICE.getPublic(),
+                ALICE.getPrivate(),
+                PLAINTEXT_MSG,
+                true
+            );
+            testPlaintextEncryption(
+                ALICE.getPublic(),
+                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPrivate(),
+                PLAINTEXT_MSG,
+                true
+            );
+            testPlaintextEncryption(
+                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPublic(),
+                ALICE.getPrivate(),
+                PLAINTEXT_MSG,
+                true
+            );
+            testPlaintextEncryption(
+                new KeyPairGenerator(1024).generateKeyPair(ALICE_PW).getPublic(),
+                ALICE.getPrivate(),
+                PLAINTEXT_MSG,
+                false
+            );
+            testPlaintextEncryption(
+                ALICE.getPublic(),
+                BOB.getPrivate(),
+                PLAINTEXT_MSG,
+                false
+            );
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testEncryption failed for the above reason");
+        }
+    }
+
+    /**
+     * @throws      Exception if an error occurred
+     */
+    private void
+    testPlaintextEncryption(
+        final java.security.PublicKey encryptionKey,
+        final java.security.PrivateKey decryptionKey,
+        final PlaintextMessage message,
+        final boolean expectSuccess
+    ) {
+        try {
             final Encryptor encryptor = new Encryptor();
             final java.util.List<java.security.PublicKey> keys =
                 new java.util.ArrayList<java.security.PublicKey>();
-            keys.add(pair.getPublic());
+            keys.add(encryptionKey);
             assertNotNull(encryptor);
             //
             //
             //
-            EncryptedMessage msg = encryptor.encrypt(PLAINTEXT_MSG, keys);
+            EncryptedMessage msg = encryptor.encrypt(message, keys);
             assertNotNull(msg);
             //
             //
             //
             Decryptor decryptor = new Decryptor(
-                new KeyPairGenerator(512).generateKeyPair(PASS1).getPrivate()
+                decryptionKey
             );
             Object obj = decryptor.decrypt(msg);
             assertNotNull(obj);
+            assertTrue(messageEquals(message, obj));
+            if (!expectSuccess) {
+                fail("Expected failure");
+            }
         } catch (final Exception e) {
-            e.printStackTrace();
-            fail("testEncryption failed for the above reason");
+            if (expectSuccess) {
+                e.printStackTrace();
+                fail("testEncryption failed for the above reason");
+            }
         }
+    }
+    
+    private static boolean
+    messageEquals(
+        final PlaintextMessage msg,
+        final Object obj
+    ) {
+        if (obj == null || !(obj instanceof PlaintextMessage)) {
+            return false;
+        }
+        final PlaintextMessage m2 = (PlaintextMessage) obj;
+        return msg.getFrom().equals(m2.getFrom()) 
+            && msg.getData().equals(m2.getData());
     }
 
     /**
@@ -85,16 +171,18 @@ public class MessageProtectionTest extends org.junit.Assert {
     testSignature() throws Exception {
         try {
             final java.security.KeyPair pair =
-                new KeyPairGenerator(512).generateKeyPair(PASS1);
+                new KeyPairGenerator(512).generateKeyPair(ALICE_PW);
             final Signer signer = new Signer(pair.getPrivate());
             assertNotNull(signer);
             //
             //
             //
-            SignedMessage msg = signer.sign(PLAINTEXT_MSG);
-            assertNotNull(msg);
+            SignedMessage signed = signer.sign(PLAINTEXT_MSG);
+            assertNotNull(signed);
             
-            
+            final Verifier verifier = new Verifier(pair.getPublic());
+            final Object obj = verifier.verify(signed);
+            assertNotNull(obj);
             
             
         } catch (final Exception e) {
