@@ -49,32 +49,6 @@
 
     <build>
         <plugins>
-            <!-- -->
-            <!-- Generate Java types from data model schema -->
-            <!-- -->
-            <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-common-xsd</artifactId>
-                <version>${cxf.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-xsd-sources</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
-                            <xsdOptions>
-                                <xsdOption>
-                                    <xsd>${basedir}/src/main/resources/schema/keys.xsd</xsd>
-                                </xsdOption>
-                            </xsdOptions>
-                        </configuration>
-                        <goals>
-                            <goal>xsdtojava</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies/>
-            </plugin>
         </plugins>
     </build>
     

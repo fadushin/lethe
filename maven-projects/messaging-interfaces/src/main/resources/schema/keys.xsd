@@ -27,17 +27,18 @@
 <!--                                                                                    -->
 <schema 
     xmlns="http://www.w3.org/2001/XMLSchema" 
-    targetNamespace="http://lethe.dushin.net/messaging/client/types/keys" 
-    xmlns:tns="http://lethe.dushin.net/messaging/client/types/keys" 
+    targetNamespace="http://lethe.dushin.net/messaging/interfaces/keys" 
+    xmlns:tns="http://lethe.dushin.net/messaging/interfaces/keys" 
     elementFormDefault="qualified"
     >
 
     <element name="PublicKey" type="tns:PublicKeyType"/>
     <complexType name="PublicKeyType">
     	<sequence>
-    		<element name="Version" type="tns:VersionType"/>
+    		<element name="version" type="tns:VersionType"/>
     		<any namespace="##any" processContents="lax"/>
     	</sequence>
+    	<attribute name="name" type="string"/>
     	<attribute name="algorithmIdentifier" type="string"/>
     </complexType>
 
@@ -49,8 +50,7 @@
     <element name="RSAPublicKey" type="tns:RSAPublicKeyType"/>
     <complexType name="RSAPublicKeyType">
     	<sequence>
-    		<element name="e" type="integer"/>
-    		<element name="n" type="base64Binary"/>
+    		<element name="encoded" type="base64Binary"/>
     	</sequence>
     </complexType>
 </schema>
