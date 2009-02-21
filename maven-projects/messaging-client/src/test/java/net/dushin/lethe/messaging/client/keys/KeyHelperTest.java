@@ -46,25 +46,45 @@ public class KeyHelperTest extends org.junit.Assert {
         ALICE = tmp;
     }
 
-    private static final String BOB_PW = "bob";
-    private static final java.security.KeyPair BOB;
-    static {
-        java.security.KeyPair tmp = null;
-        try {
-            tmp = new KeyPairGenerator(512).generateKeyPair(BOB_PW);
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-        BOB = tmp;
-    }
-
     @org.junit.Test
     public void
     testKeyHelper() {
+        //
+        // Try serialization; not much negative to test
+        //
         final String str = KeyHelper.toString("alice", ALICE.getPublic());
-        System.out.println(str);
+        assertNotNull(str);
+        //
+        // parse the string back into a PublicKeyType and test the bits
+        // we can
+        //
         final PublicKeyType key = KeyHelper.parse(str);
+        assertNotNull(key);
+        assertEquals(key.getName(), "alice");
+        //
+        // parse the key data and check the results are the same
+        //
         final java.security.PublicKey pub = KeyHelper.getPublicKey(key);
         assertNotNull(pub);
+        assertTrue(publicKeysEqual(ALICE.getPublic(), pub));
+        
+        //
+        // TODO add alot more negative tests
+        //
+    }
+    
+    private static boolean
+    publicKeysEqual(
+        final java.security.PublicKey pub1,
+        final java.security.PublicKey pub2
+    ) {
+        assert pub1 instanceof java.security.interfaces.RSAPublicKey;
+        final java.security.interfaces.RSAPublicKey rsa1 =
+            (java.security.interfaces.RSAPublicKey) pub1;
+        assert pub2 instanceof java.security.interfaces.RSAPublicKey;
+        final java.security.interfaces.RSAPublicKey rsa2 =
+            (java.security.interfaces.RSAPublicKey) pub2;
+        return rsa1.getModulus().equals(rsa2.getModulus())
+            && rsa1.getPublicExponent().equals(rsa2.getPublicExponent());
     }
 }

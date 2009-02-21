@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.keys;
 
+import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.keys.ObjectFactory;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 import net.dushin.lethe.messaging.interfaces.keys.RSAPublicKeyType;
@@ -51,19 +52,6 @@ public abstract class KeyHelper {
     
     private static final int COL_WRAP = 72;
     
-    /**
-     * a map from package names to JAXBContext instances which can be used to
-     * obtain JAXB marshallers and unmarshallers.
-     */
-    private static final java.util.Map<String, javax.xml.bind.JAXBContext> CONTEXT_MAP =
-        new java.util.HashMap<String, javax.xml.bind.JAXBContext>();
-    
-    private static final javax.xml.parsers.DocumentBuilderFactory DOC_BUILDER_FACTORY = 
-        javax.xml.parsers.DocumentBuilderFactory.newInstance();
-    static {
-        DOC_BUILDER_FACTORY.setNamespaceAware(true);
-    }
-    
     private static final ObjectFactory KEYS_OBJ_FACTORY = new ObjectFactory();
     
     
@@ -78,15 +66,11 @@ public abstract class KeyHelper {
     ) {
         final PublicKeyType ret = new PublicKeyType();
         ret.setName(name);
-        try {
-            RSAPublicKeyType pubkey = new RSAPublicKeyType();
-            pubkey.setEncoded(
-                key.getEncoded()
-            );
-            ret.setAny(KEYS_OBJ_FACTORY.createRSAPublicKey(pubkey));
-        } catch (final Exception e) {
-            throw new RuntimeException("Error encoding key", e);
-        }
+        final RSAPublicKeyType pubkey = new RSAPublicKeyType();
+        pubkey.setEncoded(
+            key.getEncoded()
+        );
+        ret.setAny(KEYS_OBJ_FACTORY.createRSAPublicKey(pubkey));
         return ret;
     }
     
@@ -119,7 +103,7 @@ public abstract class KeyHelper {
     ) {
         int startidx = pkg.indexOf(BEGIN_LETHE_PUBLIC_KEY);
         if (startidx == -1) {
-            // error
+            throw new RuntimeException("Could not find start of key");
         }
         int endidx = pkg.indexOf(END_LETHE_PUBLIC_KEY);
         final String encoded = pkg.substring(
@@ -129,11 +113,10 @@ public abstract class KeyHelper {
         byte[] serialized = null;
         try {
             serialized = Base64Utility.decode(encoded);
-        } catch (final Exception e) {
-            // error
+        } catch (final org.apache.cxf.common.util.Base64Exception e) {
+            throw new RuntimeException("Error base64 decoding the data", e);
         }
-        Object obj = deserialize(serialized);
-        return (PublicKeyType) obj;
+        return deserialize(serialized);
     }
     
     public static java.security.PublicKey
@@ -156,8 +139,10 @@ public abstract class KeyHelper {
             final java.security.KeyFactory factory = 
                 java.security.KeyFactory.getInstance("RSA");
             return factory.generatePublic(new java.security.spec.X509EncodedKeySpec(encoded));
-        } catch (final Exception e) {
-            throw new RuntimeException("Error decoding public key", e);
+        } catch (final java.security.NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error finding RSA algorithm", e);
+        } catch (final java.security.spec.InvalidKeySpecException e) {
+            throw new RuntimeException("Could not generate public key", e);
         }
     }
     
@@ -189,82 +174,20 @@ public abstract class KeyHelper {
     serialize(
         final Object jaxbelement
     ) {
-        try {
-            final javax.xml.bind.JAXBContext ctx =
-                getJAXBContext(
-                    PublicKeyType.class.getPackage().getName()
-                );
-            final javax.xml.bind.Marshaller marshaller = ctx.createMarshaller();
-            final java.io.ByteArrayOutputStream os =
-                new java.io.ByteArrayOutputStream();
-            marshaller.marshal(
-                jaxbelement, 
-                os
-            );
-            return os.toByteArray();
-        } catch (final Exception e) {
-            throw new RuntimeException("Error marshalling " + jaxbelement, e);
-        }
+        return JaxbSerialization.serialize(PublicKeyType.class.getPackage(), jaxbelement);
     }
     
     /**
      * Deserialize a serialized structure from a serialized structure.
      */
-    private static Object
+    private static PublicKeyType
     deserialize(
         final byte[] data
     ) {
-        try {
-            final javax.xml.bind.JAXBContext ctx =
-                getJAXBContext(
-                    PublicKeyType.class.getPackage().getName()
-                );
-            final javax.xml.bind.Unmarshaller unmarshaller = ctx.createUnmarshaller();
-            final java.io.ByteArrayInputStream is =
-                new java.io.ByteArrayInputStream(data);
-            final javax.xml.parsers.DocumentBuilder builder = DOC_BUILDER_FACTORY.newDocumentBuilder();
-            final org.w3c.dom.Document doc = builder.parse(is);
-            final org.w3c.dom.Element root = doc.getDocumentElement();
-            final javax.xml.namespace.QName qn =
-                new javax.xml.namespace.QName(
-                    root.getNamespaceURI(),
-                    root.getLocalName()
-                );
-            Object obj = unmarshaller.unmarshal(
-                root, 
-                PublicKeyType.class
-            );                
-            if (obj instanceof javax.xml.bind.JAXBElement) {
-                return ((javax.xml.bind.JAXBElement) obj).getValue();
-            } else {
-                return obj;
-            }
-        } catch (final Exception e) {
-            throw new RuntimeException("Error unmarshalling " + data, e);
-        }
-    }
-    
-    /**
-     * @return      a cached JAXBContext for the specified package name,
-     *              or a new one, if one has not been created.
-     */
-    private static javax.xml.bind.JAXBContext
-    getJAXBContext(
-        final String pkgname
-    ) {
-        synchronized (CONTEXT_MAP) {
-            javax.xml.bind.JAXBContext ret = CONTEXT_MAP.get(pkgname);
-            if (ret == null) {
-                try {
-                    ret = javax.xml.bind.JAXBContext.newInstance(
-                        pkgname
-                    );
-                    CONTEXT_MAP.put(pkgname, ret);
-                } catch (final Exception e) {
-                    throw new RuntimeException("Error resolving " + pkgname, e);
-                }
-            }
-            return ret;
-        }
+        return JaxbSerialization.deserialize(
+            PublicKeyType.class.getPackage(), 
+            data, 
+            PublicKeyType.class
+        );
     }
 }
