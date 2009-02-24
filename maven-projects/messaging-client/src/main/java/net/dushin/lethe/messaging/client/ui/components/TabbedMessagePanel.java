@@ -28,14 +28,27 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
-class TabbedMessagePanel extends javax.swing.JTabbedPane {
+class TabbedMessagePanel extends javax.swing.JPanel {
 
     private final LetheController controller;
+    private final javax.swing.JTabbedPane tabs;
     
     TabbedMessagePanel(
         final LetheController controller
     ) {
         this.controller = controller;
+        
+        this.setLayout(new java.awt.BorderLayout());
+        
+        //
+        // TODO fix layout
+        //
+        java.awt.Button newButton = new java.awt.Button("New Channel...");
+        newButton.addActionListener(new NewChannelListener(this));
+        this.add("North", newButton);
+        
+        this.tabs = new javax.swing.JTabbedPane();
+        this.add("Center", this.tabs);
     }
     
     void
@@ -43,7 +56,40 @@ class TabbedMessagePanel extends javax.swing.JTabbedPane {
         final String channel
     ) {
         final MessagePanel panel = new MessagePanel(controller, channel);
-        addTab(channel, panel);
+        final int index = this.tabs.getComponentCount();
+        this.tabs.addTab(channel, panel);
+        /*
+             REQUIRES 1.6 !!
+        this.tabs.setTabComponentAt(
+            index, 
+            new CloseableTabComponent(this.tabs)
+        );
+        */
+    }
+    
+    private class NewChannelListener 
+        implements java.awt.event.ActionListener {
+        
+        private final java.awt.Component parent;
+        
+        NewChannelListener(final java.awt.Component parent) {
+            this.parent = parent;
+        }
+        
+        public void 
+        actionPerformed(
+            final java.awt.event.ActionEvent event
+        ) {
+            final String channel = javax.swing.JOptionPane.showInputDialog(
+                parent, 
+                "Channel Name", 
+                "New Channel...",
+                javax.swing.JOptionPane.QUESTION_MESSAGE
+            );
+            if (channel != null) {
+                createTabbedPane(channel);
+            }
+        }        
     }
     
 }
