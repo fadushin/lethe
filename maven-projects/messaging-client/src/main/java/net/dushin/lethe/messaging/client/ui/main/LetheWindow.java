@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.main;
 
-import net.dushin.lethe.messaging.client.ui.components.MessagePanel;
+import net.dushin.lethe.messaging.client.ui.components.LethePanel;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class
@@ -71,7 +71,10 @@ LetheWindow extends javax.swing.JFrame {
             "fred",
             new java.net.URL("http://localhost:18066/MessengerService/SOAPPort?wsdl")
         );
-        add("Center", new MessagePanel("foo", controller));
+        LethePanel panel = new LethePanel(controller);
+        panel.createTabbedPane("foo");
+        panel.createTabbedPane("bar");
+        add("Center", panel);
         pack();
         setVisible(true);
     }

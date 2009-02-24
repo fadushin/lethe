@@ -34,38 +34,28 @@ import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 
 public class MessagePanel extends javax.swing.JPanel 
-    implements java.awt.event.ActionListener, MessageChangeListener {
+    implements MessageChangeListener {
 
     private final LetheController controller;
     private final String channel;
     
-    private final javax.swing.JTextField channelField;
     private final javax.swing.JTextArea messageDisplayArea;
     private final javax.swing.JTextField sendMessageField;
 
     public 
     MessagePanel(
-        final String channel,
-        final LetheController controller
+        final LetheController controller,
+        final String channel
     ) {
         this.controller = controller;
         this.channel = channel;
         
         setLayout(new java.awt.BorderLayout());
-
-        final javax.swing.JPanel statusPanel = new javax.swing.JPanel();
-        statusPanel.setLayout(new java.awt.FlowLayout());
-        final javax.swing.JLabel channelLabel = new javax.swing.JLabel("Channel:");
-        statusPanel.add(channelLabel);
-        this.channelField = new javax.swing.JTextField(20);
-        channelField.setEditable(false);
-        channelField.setText(this.channel);
-        statusPanel.add(channelField);
-        add("North", statusPanel);
         
         this.messageDisplayArea = new javax.swing.JTextArea(5, 30);
         this.messageDisplayArea.setLineWrap(true);
         this.messageDisplayArea.setWrapStyleWord(true);
+        this.messageDisplayArea.setEditable(false);
 
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
@@ -93,10 +83,11 @@ public class MessagePanel extends javax.swing.JPanel
         sendPanel.setLayout(new java.awt.FlowLayout());
 
         this.sendMessageField = new javax.swing.JTextField(20);
+        this.sendMessageField.addKeyListener(new SendMessageKeyListener());
         sendPanel.add(sendMessageField);
         
         final javax.swing.JButton sendButton = new javax.swing.JButton("Send");
-        sendButton.addActionListener(this);
+        sendButton.addActionListener(new SendMessageListener());
         sendPanel.add(sendButton);
         
         add("South", sendPanel);
@@ -104,19 +95,58 @@ public class MessagePanel extends javax.swing.JPanel
         this.controller.registerMessageChangedListener(channel, this);
     }
     
-    public void actionPerformed(java.awt.event.ActionEvent event) {
-        System.out.print(event);
-        final String channelText = channelField.getText();
+    private void
+    sendMessage() {
         final String sendText = sendMessageField.getText();
         if (sendText.length() > 0) {
             try {
-                controller.sendMessage(channelText, sendText);
+                controller.sendMessage(channel, sendText);
             } catch (final Exception e) {
                 e.printStackTrace();
                 return;
             }
         }
         sendMessageField.setText("");
+    }
+    
+    private class SendMessageListener 
+        implements java.awt.event.ActionListener {
+        
+        public void 
+        actionPerformed(
+            final java.awt.event.ActionEvent event
+        ) {
+            System.out.print(event);
+            sendMessage();
+        }        
+    }
+    
+    private class SendMessageKeyListener
+        implements java.awt.event.KeyListener {
+        public void 
+        keyTyped(
+            final java.awt.event.KeyEvent e
+        ) {
+            // complete
+        }
+
+        public void 
+        keyPressed(
+            final java.awt.event.KeyEvent event
+        ) {
+            System.out.print(event);
+            final int keyCode = event.getKeyCode();
+            if (keyCode == java.awt.event.KeyEvent.VK_ENTER) {
+                sendMessage();
+            }
+        }
+
+        public void 
+        keyReleased(
+            final java.awt.event.KeyEvent e
+        ) {
+            // complete
+        }
     }
     
     public void
