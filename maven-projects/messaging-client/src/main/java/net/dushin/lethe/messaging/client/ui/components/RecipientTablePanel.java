@@ -28,61 +28,73 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
-class TabbedMessagePanel extends javax.swing.JPanel {
+class RecipientTablePanel extends javax.swing.JPanel {
 
     private final LetheController controller;
-    private final javax.swing.JTabbedPane tabs;
+    private final javax.swing.JTable recipientTable;
     
-    TabbedMessagePanel(
+    RecipientTablePanel(
         final LetheController controller
     ) {
         this.controller = controller;
         
         this.setLayout(new java.awt.BorderLayout());
         
-        final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
-        buttonPanel.setLayout(new java.awt.BorderLayout());
-        final java.awt.Button newButton = new java.awt.Button("New Channel...");
-        newButton.addActionListener(new NewChannelListener(this));
-        buttonPanel.add("West", newButton);
-        this.add("North", buttonPanel);
+        //
+        // TODO fix layout
+        //
+        java.awt.Button newButton = new java.awt.Button("Add...");
+        newButton.addActionListener(new NewRecipientListener(this));
+        this.add("South", newButton);
         
-        this.tabs = new javax.swing.JTabbedPane();
-        this.add("Center", this.tabs);
+        this.recipientTable = createRecipientTable();
+        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.recipientTable);
+        // this.recipientTable.setFillsViewportHeight(true);
+        scrollPane.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                    javax.swing.BorderFactory.createTitledBorder("Recipients"),
+                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                ),
+                scrollPane.getBorder()
+            )
+        );        
+        this.add("Center", scrollPane);
+    }
+    
+    public void
+    setEnabled(final boolean enabled) {
+        super.setEnabled(enabled);
+        this.recipientTable.setEnabled(enabled);
+    }
+    
+    private static javax.swing.JTable
+    createRecipientTable() {
+        final String[] cols = {"Recipient", "Encrypt"};
+        Object[][] data = {
+            {"Mary", new Boolean(false)},
+            {"Alison", new Boolean(true)},
+            {"Kathy", new Boolean(false)},
+            {"Sharon", new Boolean(true)},
+            {"Philip", new Boolean(false)}
+        };
+        final javax.swing.JTable ret = new javax.swing.JTable(data, cols);
+        return ret;
     }
     
     void
-    createTabbedPane(
-        final String channel
+    addRecipient(
+        final String serializedInput
     ) {
-        final MessagePanel panel = new MessagePanel(controller, channel, this);
-        final int index = this.tabs.getComponentCount();
-        this.tabs.addTab(channel, panel);
-        /*
-             REQUIRES 1.6 !!
-        this.tabs.setTabComponentAt(
-            index, 
-            new CloseableTabComponent(this.tabs)
-        );
-        */
+        
     }
     
-    void
-    closeTab(
-        final MessagePanel panel
-    ) {
-        final int index = this.tabs.indexOfComponent(panel);
-        if (index != -1) {
-            this.tabs.remove(index);
-        }
-    }
-    
-    private class NewChannelListener 
+    private class NewRecipientListener 
         implements java.awt.event.ActionListener {
         
         private final java.awt.Component parent;
         
-        NewChannelListener(final java.awt.Component parent) {
+        NewRecipientListener(final java.awt.Component parent) {
             this.parent = parent;
         }
         
@@ -90,14 +102,14 @@ class TabbedMessagePanel extends javax.swing.JPanel {
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            final String channel = javax.swing.JOptionPane.showInputDialog(
+            final String serializedInput = javax.swing.JOptionPane.showInputDialog(
                 parent, 
-                "Channel Name", 
-                "New Channel...",
+                "Recipient Data", 
+                "Add Recipient...",
                 javax.swing.JOptionPane.QUESTION_MESSAGE
             );
-            if (channel != null) {
-                createTabbedPane(channel);
+            if (serializedInput != null) {
+                addRecipient(serializedInput);
             }
         }        
     }

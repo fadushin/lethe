@@ -32,6 +32,7 @@ import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 public class MessagePanel extends javax.swing.JPanel 
     implements MessageChangeListener {
@@ -41,14 +42,17 @@ public class MessagePanel extends javax.swing.JPanel
     
     private final javax.swing.JTextArea messageDisplayArea;
     private final javax.swing.JTextField sendMessageField;
+    private final TabbedMessagePanel parent;
 
     public 
     MessagePanel(
         final LetheController controller,
-        final String channel
+        final String channel,
+        final TabbedMessagePanel parent
     ) {
         this.controller = controller;
         this.channel = channel;
+        this.parent = parent;
         
         setLayout(new java.awt.BorderLayout());
         
@@ -56,6 +60,13 @@ public class MessagePanel extends javax.swing.JPanel
         this.messageDisplayArea.setLineWrap(true);
         this.messageDisplayArea.setWrapStyleWord(true);
         this.messageDisplayArea.setEditable(false);
+
+        final javax.swing.JPanel closeTabPanel = new javax.swing.JPanel();
+        final javax.swing.JButton closeTabButton = new javax.swing.JButton("Close");
+        closeTabButton.addActionListener(new CloseTabListener());
+        closeTabPanel.setLayout(new java.awt.BorderLayout());
+        closeTabPanel.add("West", closeTabButton);
+        add("North", closeTabPanel);
 
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
@@ -74,25 +85,28 @@ public class MessagePanel extends javax.swing.JPanel
                 messageScrollPane.getBorder()
             )
         );
-
-
         add("Center", messageScrollPane);
-        
 
         final javax.swing.JPanel sendPanel = new javax.swing.JPanel();
-        sendPanel.setLayout(new java.awt.FlowLayout());
+        sendPanel.setLayout(new java.awt.BorderLayout());
 
         this.sendMessageField = new javax.swing.JTextField(20);
         this.sendMessageField.addKeyListener(new SendMessageKeyListener());
-        sendPanel.add(sendMessageField);
+        sendPanel.add("Center", sendMessageField);
         
         final javax.swing.JButton sendButton = new javax.swing.JButton("Send");
         sendButton.addActionListener(new SendMessageListener());
-        sendPanel.add(sendButton);
+        sendPanel.add("East", sendButton);
         
         add("South", sendPanel);
         
         this.controller.registerMessageChangedListener(channel, this);
+    }
+    
+    void
+    closeTab() {
+        this.controller.removeMessageChangedListener(channel);
+        parent.closeTab(this);
     }
     
     private void
@@ -116,8 +130,18 @@ public class MessagePanel extends javax.swing.JPanel
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            System.out.print(event);
             sendMessage();
+        }        
+    }
+    
+    private class CloseTabListener 
+        implements java.awt.event.ActionListener {
+        
+        public void 
+        actionPerformed(
+            final java.awt.event.ActionEvent event
+        ) {
+            closeTab();
         }        
     }
     
@@ -162,10 +186,15 @@ public class MessagePanel extends javax.swing.JPanel
                 buf.append(": ");
                 buf.append(plaintext.getData());
                 buf.append('\n');
+            } else if (contents.getDescriptor().equals(SignedMessage.class.getName())) {
+                final SignedMessage signed = (SignedMessage) contents.getMsg();
+                buf.append(new String(signed.getSerializedMessage()));
+                buf.append('\n');
             }
         }
         this.messageDisplayArea.setText(
             buf.toString()
         );
+        
     }
 }

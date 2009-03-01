@@ -28,20 +28,37 @@ package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Contents;
+import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 public class LetheController {
 
-    final String from;
-    final MessengerClientProxy proxy;
+    final java.net.URL wsdlLoc;
+
+    MessengerClientProxy proxy;
+    Identity identity;
+    
+    private final java.util.Map<String, MessageChangeThread> messageChangeThreadMap =
+        new java.util.HashMap<String, MessageChangeThread>();
+    
+    private final java.util.List<Peer> peers =
+        new java.util.ArrayList<Peer>();
     
     public
     LetheController(
-        final String from,
         final java.net.URL wsdlLoc
     ) throws Exception {
-        this.from = from;
-        this.proxy = new MessengerClientProxy(wsdlLoc);
+        this(wsdlLoc, Identity.ANONYMOUS);
+    }
+    
+    public
+    LetheController(
+        final java.net.URL wsdlLoc,
+        final Identity identity
+    ) throws Exception {
+        this.wsdlLoc = wsdlLoc;
+        this.identity = identity;
     }
     
     public void
@@ -50,12 +67,43 @@ public class LetheController {
         final String message
     ) {
         final Contents contents = new Contents();
-        contents.setDescriptor(PlaintextMessage.class.getName());
-        final PlaintextMessage msg = new PlaintextMessage();
-        msg.setFrom(this.from);
-        msg.setData(message);
+        
+        Object msg = null;
+        
+        final PlaintextMessage plaintext = new PlaintextMessage();
+        plaintext.setFrom(this.identity.getName());
+        plaintext.setData(message);
+
+        if (this.identity.getSignMessages()) {
+            contents.setDescriptor(SignedMessage.class.getName());
+            final SignedMessage signed = this.identity.getSigner().sign(plaintext);
+            msg = signed;
+        } else {
+            contents.setDescriptor(PlaintextMessage.class.getName());
+            msg = plaintext;
+        }
         contents.setMsg(msg);
-        proxy.getProxy().postMessage(channel, contents);
+        try {
+            getProxy().postMessage(channel, contents);
+        } catch (final Exception e) {
+            // log
+            e.printStackTrace();
+        }
+    }
+    
+    Messenger
+    getProxy() {
+        synchronized (this) {
+            try {
+                if (this.proxy == null) {
+                    this.proxy = new MessengerClientProxy(this.wsdlLoc);
+                }
+                return this.proxy.getProxy();
+            } catch (final Exception e) {
+                // log it?
+                throw new RuntimeException("Unable to resolve proxy", e);
+            }
+        }
     }
     
     public void
@@ -63,11 +111,45 @@ public class LetheController {
         final String channel,
         final MessageChangeListener listener
     ) {
-        final MessageChangeThread thread = new MessageChangeThread(
-            channel, 
-            this.proxy,
-            listener
-        );
-        thread.start();
+        synchronized (messageChangeThreadMap) {
+            MessageChangeThread thread = messageChangeThreadMap.get(channel);
+            if (thread == null) {
+                thread = new MessageChangeThread(
+                    channel, 
+                    this,
+                    listener
+                );
+                thread.start();
+                messageChangeThreadMap.put(channel, thread);
+            }
+        }
+    }
+    
+    public void
+    removeMessageChangedListener(
+        final String channel
+    ) {
+        synchronized (messageChangeThreadMap) {
+            MessageChangeThread thread = messageChangeThreadMap.get(channel);
+            if (thread != null) {
+                thread.notifyHalt();
+                messageChangeThreadMap.remove(channel);
+            }
+        }
+    }
+    
+    public void
+    setIdentity(final Identity identity) {
+        this.identity = identity;
+    }
+    
+    public Identity
+    getIdentity() {
+        return this.identity;
+    }
+    
+    public java.util.List<Peer>
+    getPeers() {
+        return this.peers;
     }
 }

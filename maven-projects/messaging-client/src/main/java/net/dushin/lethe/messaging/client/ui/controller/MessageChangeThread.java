@@ -26,40 +26,49 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
 public class MessageChangeThread extends Thread {
 
-    final String channel;
-    final MessengerClientProxy proxy;
-    final MessageChangeListener listener;
-    
-    int since;
+    private final String channel;
+    private final LetheController controller;
+    private final MessageChangeListener listener;
+
+    private boolean halt;
+    private int since;
     
     MessageChangeThread(
         final String channel,
-        final MessengerClientProxy proxy,
+        final LetheController controller,
         final MessageChangeListener listener
     ) {
         this.channel = channel;
-        this.proxy = proxy;
+        this.controller = controller;
         this.listener = listener;
     }
     
     public void
     run() {
         while (true) {
-            final MessageList msgs = proxy.getProxy().getMessages(channel, since);
-            if (msgs.getItem().size() > 0) {
-                since += msgs.getItem().size();
-                this.listener.messageChanged(msgs);
+            if (halt) {
+                return;
             }
             try {
+                final MessageList msgs = controller.getProxy().getMessages(channel, since);
+                if (msgs.getItem().size() > 0) {
+                    since += msgs.getItem().size();
+                    this.listener.messageChanged(msgs);
+                }
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                // ok
+            } catch (final Exception e) {
+                // log it?
+                e.printStackTrace();
             }
         }
+    }
+    
+    void
+    notifyHalt() {
+        this.halt = true;
     }
 }

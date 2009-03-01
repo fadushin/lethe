@@ -24,44 +24,44 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.ui.components;
+package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+import net.dushin.lethe.messaging.client.keys.KeyHelper;
+import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 
-public class LethePanel extends javax.swing.JPanel {
+public class Peer {
 
-    private final LetheController controller;
+    private final String name;
+    private final java.security.PublicKey publicKey;
     
-    private final CryptoPanel cryptoPanel;
-    private final TabbedMessagePanel messagePanel;
+    private boolean encryptTo;
     
-    public 
-    LethePanel(
-        final LetheController controller
+    public
+    Peer(
+        final String pkg
     ) {
-        this.controller = controller;
-
-        setLayout(new java.awt.BorderLayout());
-        
-        this.cryptoPanel = new CryptoPanel(this.controller);
-        this.messagePanel = new TabbedMessagePanel(controller);
-        
-        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
-            this.cryptoPanel,
-            this.messagePanel
-        );
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(150);
-        
-        this.add("Center", splitPane);
+        PublicKeyType pkt = KeyHelper.parse(pkg);
+        this.name = pkt.getName();
+        this.publicKey = KeyHelper.getPublicKey(pkt);
+    }
+    
+    public String
+    getName() {
+        return this.name;
+    }
+    
+    public java.security.PublicKey
+    getPublicKey() {
+        return this.publicKey;
     }
     
     public void
-    createTabbedPane(
-        final String channel
-    ) {
-        this.messagePanel.createTabbedPane(channel);
+    setEncryptTo(final boolean encryptTo) {
+        this.encryptTo = encryptTo;
     }
     
+    public boolean
+    getEncryptTo() {
+        return this.encryptTo;
+    }
 }

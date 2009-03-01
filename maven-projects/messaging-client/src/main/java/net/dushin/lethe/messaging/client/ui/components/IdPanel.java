@@ -28,40 +28,21 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
-public class LethePanel extends javax.swing.JPanel {
+class IdPanel extends javax.swing.JPanel {
 
     private final LetheController controller;
     
-    private final CryptoPanel cryptoPanel;
-    private final TabbedMessagePanel messagePanel;
-    
-    public 
-    LethePanel(
+    IdPanel(
         final LetheController controller
     ) {
         this.controller = controller;
+        
+        this.setLayout(new java.awt.BorderLayout());
 
-        setLayout(new java.awt.BorderLayout());
-        
-        this.cryptoPanel = new CryptoPanel(this.controller);
-        this.messagePanel = new TabbedMessagePanel(controller);
-        
-        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
-            this.cryptoPanel,
-            this.messagePanel
-        );
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(150);
-        
-        this.add("Center", splitPane);
+        final javax.swing.JLabel idLabel = new javax.swing.JLabel("id: "); 
+
+        final javax.swing.JButton idSetButton = new javax.swing.JButton("set...");
+        final javax.swing.JButton idInfoButton = new javax.swing.JButton("info...");
+        final javax.swing.JButton idExportButton = new javax.swing.JButton("export...");
     }
-    
-    public void
-    createTabbedPane(
-        final String channel
-    ) {
-        this.messagePanel.createTabbedPane(channel);
-    }
-    
 }

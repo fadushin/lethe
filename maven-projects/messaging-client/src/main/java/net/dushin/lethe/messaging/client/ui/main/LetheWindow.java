@@ -68,7 +68,6 @@ LetheWindow extends javax.swing.JFrame {
         
         setLayout(new java.awt.BorderLayout());
         final LetheController controller = new LetheController(
-            "fred",
             new java.net.URL("http://localhost:18066/MessengerService/SOAPPort?wsdl")
         );
         LethePanel panel = new LethePanel(controller);

@@ -24,44 +24,61 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.ui.components;
+package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+import net.dushin.lethe.messaging.client.crypto.KeyPairGenerator;
+import net.dushin.lethe.messaging.client.crypto.Signer;
 
-public class LethePanel extends javax.swing.JPanel {
+public class Identity {
 
-    private final LetheController controller;
+    public static final Identity ANONYMOUS = new Identity("anonymous", "", true);
     
-    private final CryptoPanel cryptoPanel;
-    private final TabbedMessagePanel messagePanel;
+    private final String name;
+    private final java.security.KeyPair keyPair;
+    private final Signer signer;
     
-    public 
-    LethePanel(
-        final LetheController controller
+    private boolean signMessages;
+
+    public
+    Identity(
+        final String name,
+        final String password,
+        final boolean signMessages
     ) {
-        this.controller = controller;
-
-        setLayout(new java.awt.BorderLayout());
-        
-        this.cryptoPanel = new CryptoPanel(this.controller);
-        this.messagePanel = new TabbedMessagePanel(controller);
-        
-        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
-            this.cryptoPanel,
-            this.messagePanel
-        );
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(150);
-        
-        this.add("Center", splitPane);
+        this.name = name;
+        try {
+            this.keyPair = new KeyPairGenerator(512).generateKeyPair(password);
+        } catch (final Exception e) {
+            throw new RuntimeException("Error generating key pair", e);
+        }
+        this.signMessages = signMessages;
+        this.signer = new Signer(this.keyPair.getPrivate());
+    }
+    
+    public String
+    getName() {
+        return this.name;
+    }
+    
+    public java.security.KeyPair
+    getKeyPair() {
+        return this.keyPair;
+    }
+    
+    public Signer
+    getSigner() {
+        return this.signer;
+    }
+    
+    public boolean
+    getSignMessages() {
+        return this.signMessages;
     }
     
     public void
-    createTabbedPane(
-        final String channel
+    setSignMessages(
+        final boolean signMessages
     ) {
-        this.messagePanel.createTabbedPane(channel);
+        this.signMessages = signMessages;
     }
-    
 }
