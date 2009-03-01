@@ -61,6 +61,7 @@ public class LetheController {
     ) throws Exception {
         this.wsdlLoc = wsdlLoc;
         this.identity = identity;
+        this.peers.add(new Peer(this.identity.getName(), this.identity.getKeyPair().getPublic()));
     }
     
     public void
@@ -160,13 +161,35 @@ public class LetheController {
         if (descriptor.equals(PlaintextMessage.class.getName())) {
             final PlaintextMessage plaintext = (PlaintextMessage) contents.getMsg();
             return new ReceivedMessage(plaintext);
-        } /*else if (descriptor.equals(SignedMessage.class.getName()) {
+        } else if (descriptor.equals(SignedMessage.class.getName())) {
             final SignedMessage signed = (SignedMessage) contents.getMsg();
-            
-        }*/
+            try {
+                final Object obj = verifyMessageSignedBy(signed);
+                if (obj instanceof PlaintextMessage) {
+                    return new ReceivedMessage(signed, (PlaintextMessage) obj);
+                } else {
+                    throw new RuntimeException("Expected signed object to be plaintext");
+                }
+            } catch (final Exception e) {
+                return new ReceivedMessage(signed);
+            }
+        }
         throw new RuntimeException("Unsupported descriptor: " + descriptor);
     }
     
+    private Object
+    verifyMessageSignedBy(
+        final SignedMessage signed
+    ) {
+        for (Peer peer : this.peers) {
+            try {
+                return peer.getVerifier().verify(signed);
+            } catch (final Exception e) {
+                continue;
+            }
+        }
+        throw new RuntimeException("No public key found");
+    }
     
     public void
     setIdentity(final Identity identity) {

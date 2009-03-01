@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.Identity;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+import net.dushin.lethe.messaging.client.ui.controller.Peer;
 
 class CryptoPanel extends javax.swing.JPanel {
 
@@ -37,6 +38,7 @@ class CryptoPanel extends javax.swing.JPanel {
     private final javax.swing.JCheckBox signBox = new javax.swing.JCheckBox(
             "Sign messages"
     );
+    private final PeerTablePanel peerPanel;
     
     CryptoPanel(
         final LetheController controller
@@ -68,7 +70,7 @@ class CryptoPanel extends javax.swing.JPanel {
                 
         this.add("North", idPanel);
         
-        final PeerTablePanel peerPanel =
+        this.peerPanel =
             new PeerTablePanel(this.controller);
         this.add("Center", peerPanel);
     }
@@ -90,10 +92,13 @@ class CryptoPanel extends javax.swing.JPanel {
         final String name,
         final char[] passphrase
     ) {
+        final Identity identity =
+            new Identity(name, new String(passphrase), this.signBox.getSelectedObjects() != null);
         this.controller.setIdentity(
-            new Identity(name, new String(passphrase), this.signBox.getSelectedObjects() != null)
+            identity
         );
         this.idLabel.setText("id: " + name);
+        this.peerPanel.addPeer(new Peer(identity.getName(), identity.getKeyPair().getPublic()));
     }
     
     private void

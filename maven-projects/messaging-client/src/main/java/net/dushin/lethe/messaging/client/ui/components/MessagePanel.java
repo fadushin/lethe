@@ -28,11 +28,8 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 import net.dushin.lethe.messaging.client.ui.controller.MessageChangeListener;
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.Message;
-import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.client.ui.controller.ReceivedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
-import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 public class MessagePanel extends javax.swing.JPanel 
     implements MessageChangeListener {
@@ -174,23 +171,26 @@ public class MessagePanel extends javax.swing.JPanel
     }
     
     public void
-    messageChanged(final MessageList msgs) {
+    messageChanged(final java.util.List<ReceivedMessage> msgs) {
         final StringBuilder buf = new StringBuilder();
         buf.append(this.messageDisplayArea.getText());
-        for (Message msg : msgs.getItem()) {
+        for (ReceivedMessage msg : msgs) {
             buf.append("=========\n");
-            final Contents contents = msg.getMessage();
-            if (contents.getDescriptor().equals(PlaintextMessage.class.getName())) {
-                final PlaintextMessage plaintext = (PlaintextMessage) contents.getMsg();
+            if (!msg.getMessageEncrypted()) {
+                final PlaintextMessage plaintext = msg.getPlaintextMessage();
                 buf.append(plaintext.getFrom());
+                buf.append('(');
+                if (msg.getMessageSigned()) {
+                    buf.append('s');
+                }
+                if (msg.getMessageVerified()) {
+                    buf.append('v');
+                }
+                buf.append(')');
                 buf.append(": ");
                 buf.append(plaintext.getData());
                 buf.append('\n');
-            } else if (contents.getDescriptor().equals(SignedMessage.class.getName())) {
-                final SignedMessage signed = (SignedMessage) contents.getMsg();
-                buf.append(new String(signed.getSerializedMessage()));
-                buf.append('\n');
-            }
+            }            
         }
         this.messageDisplayArea.setText(
             buf.toString()

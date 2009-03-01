@@ -26,8 +26,9 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
-// import net.dushin.lethe.messaging.interfaces.SignedMessage;
+import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 public class ReceivedMessage {
 
@@ -38,6 +39,7 @@ public class ReceivedMessage {
     private final boolean messageDecrypted;
     
     private PlaintextMessage plaintext;
+    private SignedMessage signed;
     
     public
     ReceivedMessage(
@@ -45,6 +47,25 @@ public class ReceivedMessage {
     ) {
         this(false, false, false, false);
         this.plaintext = plaintext;
+    }
+    
+    public
+    ReceivedMessage(
+        final SignedMessage signed,
+        final PlaintextMessage plaintext
+    ) {
+        this(true, true, false, false);
+        this.signed = signed;
+        this.plaintext = plaintext;
+    }
+    
+    public
+    ReceivedMessage(
+        final SignedMessage signed
+    ) {
+        this(true, false, false, false);
+        this.signed = signed;
+        this.plaintext = parseSigned(signed);
     }
     
     private
@@ -60,8 +81,43 @@ public class ReceivedMessage {
         this.messageDecrypted = messageDecrypted;
     }
     
+    private static PlaintextMessage
+    parseSigned(
+        final SignedMessage signed
+    ) {
+        return JaxbSerialization.deserialize(
+            PlaintextMessage.class.getPackage(), 
+            signed.getSerializedMessage(), 
+            PlaintextMessage.class);
+    }
+    
+    public boolean
+    getMessageSigned() {
+        return this.messageSigned;
+    }
+    
+    public boolean
+    getMessageVerified() {
+        return this.messageVerified;
+    }
+    
+    public boolean
+    getMessageEncrypted() {
+        return this.messageEncrypted;
+    }
+    
+    public boolean
+    getMessageDecrypted() {
+        return this.messageDecrypted;
+    }
+    
     public PlaintextMessage
     getPlaintextMessage() {
         return this.plaintext;
+    }
+    
+    public SignedMessage
+    getSignedMessage() {
+        return this.signed;
     }
 }

@@ -26,10 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.interfaces.MessageList;
-
 public interface MessageChangeListener {
     
     void
-    messageChanged(final MessageList newMessages);
+    messageChanged(final java.util.List<ReceivedMessage> newMessages);
 }

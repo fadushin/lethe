@@ -54,10 +54,10 @@ public class MessageChangeThread extends Thread {
                 return;
             }
             try {
-                final MessageList msgs = controller.getProxy().getMessages(channel, since);
-                if (msgs.getItem().size() > 0) {
-                    since += msgs.getItem().size();
-                    this.listener.messageChanged(msgs);
+                final MessageList messages = controller.getProxy().getMessages(channel, since);
+                if (messages.getItem().size() > 0) {
+                    since += messages.getItem().size();
+                    this.listener.messageChanged(this.controller.receiveMessages(messages));
                 }
                 Thread.sleep(1000);
             } catch (final Exception e) {

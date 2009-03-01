@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.crypto.Verifier;
 import net.dushin.lethe.messaging.client.keys.KeyHelper;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 
@@ -33,8 +34,19 @@ public class Peer {
 
     private final String name;
     private final java.security.PublicKey publicKey;
+    private final Verifier verifier;
     
     private boolean encryptTo = true;
+    
+    public
+    Peer(
+        final String name,
+        final java.security.PublicKey publicKey
+    ) {
+        this.name = name;
+        this.publicKey = publicKey;
+        this.verifier = new Verifier(this.publicKey);
+    }
     
     public
     Peer(
@@ -43,6 +55,7 @@ public class Peer {
         PublicKeyType pkt = KeyHelper.parse(pkg);
         this.name = pkt.getName();
         this.publicKey = KeyHelper.getPublicKey(pkt);
+        this.verifier = new Verifier(this.publicKey);
     }
     
     public String
@@ -63,5 +76,10 @@ public class Peer {
     public boolean
     getEncryptTo() {
         return this.encryptTo;
+    }
+    
+    public Verifier
+    getVerifier() {
+        return this.verifier;
     }
 }

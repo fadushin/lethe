@@ -32,6 +32,7 @@ import net.dushin.lethe.messaging.client.ui.controller.Peer;
 class PeerTablePanel extends javax.swing.JPanel {
 
     private final LetheController controller;
+    private final PeerTableModel peerTableModel;
     private final javax.swing.JTable peerTable;
     
     PeerTablePanel(
@@ -48,7 +49,8 @@ class PeerTablePanel extends javax.swing.JPanel {
         addPeerButton.addActionListener(new NewPeerListener());
         this.add("South", addPeerButton);
         
-        this.peerTable = createPeerTable(this.controller);
+        this.peerTableModel = new PeerTableModel(this.controller);
+        this.peerTable = new javax.swing.JTable(this.peerTableModel);
         final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.peerTable);
         // this.recipientTable.setFillsViewportHeight(true);
         scrollPane.setBorder(
@@ -69,29 +71,23 @@ class PeerTablePanel extends javax.swing.JPanel {
         this.peerTable.setEnabled(enabled);
     }
     
-    private static javax.swing.JTable
-    createPeerTable(
-        final LetheController controller
-    ) {
-        final javax.swing.JTable ret = 
-            new javax.swing.JTable(new PeerTableModel(controller));
-        return ret;
-    }
-    
     void
     addPeer(
         final String input
     ) {
-        System.out.println(input);
         try {
-            final Peer peer = new Peer(input);
-            this.controller.getPeers().add(peer);
-            
-            this.peerTable.repaint();
-            
+            addPeer(new Peer(input));
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    void
+    addPeer(
+        final Peer peer
+    ) {
+        this.controller.getPeers().add(peer);            
+        this.peerTableModel.fireTableDataChanged();
     }
     
     private java.awt.Frame
