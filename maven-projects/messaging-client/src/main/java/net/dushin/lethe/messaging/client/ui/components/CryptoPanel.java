@@ -53,11 +53,10 @@ class CryptoPanel extends javax.swing.JPanel {
 
         final javax.swing.JButton idSetButton = new javax.swing.JButton("set...");
         idSetButton.addActionListener(new SetIdListener());
-        final javax.swing.JButton idInfoButton = new javax.swing.JButton("info...");
         final javax.swing.JButton idExportButton = new javax.swing.JButton("export...");
+        idExportButton.addActionListener(new ExportIdListener());
         final javax.swing.JPanel idButtonPanel = new javax.swing.JPanel();
         idButtonPanel.add(idSetButton);
-        idButtonPanel.add(idInfoButton);
         idButtonPanel.add(idExportButton);
         
         final javax.swing.JPanel idPanel =
@@ -69,9 +68,9 @@ class CryptoPanel extends javax.swing.JPanel {
                 
         this.add("North", idPanel);
         
-        final RecipientTablePanel recipientPanel =
-            new RecipientTablePanel(this.controller);
-        this.add("Center", recipientPanel);
+        final PeerTablePanel peerPanel =
+            new PeerTablePanel(this.controller);
+        this.add("Center", peerPanel);
     }
     
     private java.awt.Frame
@@ -114,8 +113,7 @@ class CryptoPanel extends javax.swing.JPanel {
             final java.awt.event.ActionEvent event
         ) {
             final SetIdentityDialog dlog = new SetIdentityDialog(getFrame());
-            dlog.pack();
-            dlog.setLocationRelativeTo(CryptoPanel.this);
+            // dlog.setLocationRelativeTo(CryptoPanel.this);
             dlog.setVisible(true);
             
             if (dlog.isOk()) {
@@ -123,6 +121,25 @@ class CryptoPanel extends javax.swing.JPanel {
                 final char[] passphrase = dlog.getPassphrase();
                 setNamePassphrase(name, passphrase);
             }
+        }        
+    }
+    
+    private class ExportIdListener 
+        implements java.awt.event.ActionListener {
+        
+        ExportIdListener() {
+        }
+        
+        public void 
+        actionPerformed(
+            final java.awt.event.ActionEvent event
+        ) {
+            final ExportIdentityDialog dlog = new ExportIdentityDialog(
+                getFrame(),
+                CryptoPanel.this.controller.getIdentity()
+            );
+            // dlog.setLocationRelativeTo(CryptoPanel.this);
+            dlog.setVisible(true);
         }        
     }
     

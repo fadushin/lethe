@@ -26,42 +26,42 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.keys.KeyHelper;
-import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
+import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
+// import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
-public class Peer {
+public class ReceivedMessage {
 
-    private final String name;
-    private final java.security.PublicKey publicKey;
+    private final boolean messageSigned;
+    private final boolean messageVerified;
     
-    private boolean encryptTo = true;
+    private final boolean messageEncrypted;
+    private final boolean messageDecrypted;
+    
+    private PlaintextMessage plaintext;
     
     public
-    Peer(
-        final String pkg
+    ReceivedMessage(
+        final PlaintextMessage plaintext
     ) {
-        PublicKeyType pkt = KeyHelper.parse(pkg);
-        this.name = pkt.getName();
-        this.publicKey = KeyHelper.getPublicKey(pkt);
+        this(false, false, false, false);
+        this.plaintext = plaintext;
     }
     
-    public String
-    getName() {
-        return this.name;
+    private
+    ReceivedMessage(
+        final boolean messageSigned,
+        final boolean messageVerified,
+        final boolean messageEncrypted,
+        final boolean messageDecrypted
+    ) {
+        this.messageSigned = messageSigned;
+        this.messageVerified = messageVerified;
+        this.messageEncrypted = messageEncrypted;
+        this.messageDecrypted = messageDecrypted;
     }
     
-    public java.security.PublicKey
-    getPublicKey() {
-        return this.publicKey;
-    }
-    
-    public void
-    setEncryptTo(final boolean encryptTo) {
-        this.encryptTo = encryptTo;
-    }
-    
-    public boolean
-    getEncryptTo() {
-        return this.encryptTo;
+    public PlaintextMessage
+    getPlaintextMessage() {
+        return this.plaintext;
     }
 }

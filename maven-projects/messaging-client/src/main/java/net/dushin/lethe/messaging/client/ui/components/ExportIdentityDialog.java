@@ -26,56 +26,41 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-class SetIdentityDialog extends javax.swing.JDialog {
-    
-    private final javax.swing.JTextField nameField =
-        new javax.swing.JTextField(20);
-    private final javax.swing.JPasswordField passphraseField =
-        new javax.swing.JPasswordField(20);
+import net.dushin.lethe.messaging.client.keys.KeyHelper;
+import net.dushin.lethe.messaging.client.ui.controller.Identity;
 
-    private String name;
-    private char[] passphrase;
+class ExportIdentityDialog extends javax.swing.JDialog {
+    
+    private final javax.swing.JTextArea exportTextArea =
+        new javax.swing.JTextArea(20, 40);
+
     private boolean ok;
     
     public 
-    SetIdentityDialog(
-        final java.awt.Frame owner 
+    ExportIdentityDialog(
+        final java.awt.Frame owner,
+        final Identity identity
     ) {
         super(owner, true);
 
-        setTitle("Set Identity...");
+        setTitle("Export...");
         
-        final javax.swing.JPanel namePanel = new javax.swing.JPanel();
-        namePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));            
-        final javax.swing.JLabel nameLabel = new javax.swing.JLabel("Name: ");
-        nameLabel.setLabelFor(this.nameField);
-        namePanel.add(nameLabel);
-        namePanel.add(this.nameField);
-        
-        final javax.swing.JPanel passphrasePanel = new javax.swing.JPanel();
-        passphrasePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));            
-        final javax.swing.JLabel passphraseLabel = new javax.swing.JLabel("Passphrase: ");
-        passphraseLabel.setLabelFor(this.passphraseField);
-        passphrasePanel.add(passphraseLabel);
-        passphrasePanel.add(this.passphraseField);
-
-        final javax.swing.JPanel contentPanel = new javax.swing.JPanel();
-        contentPanel.setLayout(new java.awt.BorderLayout());
-        contentPanel.add("North", namePanel);
-        contentPanel.add("South", passphrasePanel);
+        this.exportTextArea.setText(
+            KeyHelper.toString(
+                identity.getName(), 
+                identity.getKeyPair().getPublic()
+            )
+        );
         
         final javax.swing.JButton okButton = new javax.swing.JButton("ok");
         okButton.addActionListener(new OkButtonListener());
-        final javax.swing.JButton cancelButton = new javax.swing.JButton("cancel");
-        cancelButton.addActionListener(new CancelButtonListener());
         
         final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
         buttonPanel.setLayout(new java.awt.GridLayout(0, 1));
         buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
         
         this.setLayout(new java.awt.BorderLayout());
-        this.add("Center", contentPanel);
+        this.add("Center", exportTextArea);
         this.add("South", buttonPanel);
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -88,35 +73,21 @@ class SetIdentityDialog extends javax.swing.JDialog {
         return this.ok;
     }
     
-    public String
-    getName() {
-        return this.name;
-    }
-    
-    public char[]
-    getPassphrase() {
-        return this.passphrase;
-    }
 
     /** This method clears the dialog and hides it. */
     private void 
     clearAndHide() {
-        this.nameField.setText("");
-        this.passphraseField.setText("");
+        this.exportTextArea.setText("");
         setVisible(false);
     }
     
     private void
     ok() {
-        this.name = this.nameField.getText();
-        this.passphrase = this.passphraseField.getPassword();
         this.ok = true;
     }
     
     private void
     cancel() {
-        this.name = null;
-        this.passphrase = null;
         this.ok = false;
     }
     
@@ -128,18 +99,6 @@ class SetIdentityDialog extends javax.swing.JDialog {
             final java.awt.event.ActionEvent event
         ) {
             ok();
-            clearAndHide();
-        }        
-    }
-    
-    private class CancelButtonListener 
-        implements java.awt.event.ActionListener {
-        
-        public void 
-        actionPerformed(
-            final java.awt.event.ActionEvent event
-        ) {
-            cancel();
             clearAndHide();
         }        
     }

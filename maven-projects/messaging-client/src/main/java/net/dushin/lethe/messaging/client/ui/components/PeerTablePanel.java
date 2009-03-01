@@ -27,13 +27,14 @@
 package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+import net.dushin.lethe.messaging.client.ui.controller.Peer;
 
-class RecipientTablePanel extends javax.swing.JPanel {
+class PeerTablePanel extends javax.swing.JPanel {
 
     private final LetheController controller;
-    private final javax.swing.JTable recipientTable;
+    private final javax.swing.JTable peerTable;
     
-    RecipientTablePanel(
+    PeerTablePanel(
         final LetheController controller
     ) {
         this.controller = controller;
@@ -43,17 +44,17 @@ class RecipientTablePanel extends javax.swing.JPanel {
         //
         // TODO fix layout
         //
-        java.awt.Button newButton = new java.awt.Button("Add...");
-        newButton.addActionListener(new NewRecipientListener(this));
-        this.add("South", newButton);
+        java.awt.Button addPeerButton = new java.awt.Button("Add Peer...");
+        addPeerButton.addActionListener(new NewPeerListener());
+        this.add("South", addPeerButton);
         
-        this.recipientTable = createRecipientTable();
-        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.recipientTable);
+        this.peerTable = createPeerTable(this.controller);
+        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.peerTable);
         // this.recipientTable.setFillsViewportHeight(true);
         scrollPane.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Recipients"),
+                    javax.swing.BorderFactory.createTitledBorder("Peers"),
                     javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
                 ),
                 scrollPane.getBorder()
@@ -65,51 +66,60 @@ class RecipientTablePanel extends javax.swing.JPanel {
     public void
     setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
-        this.recipientTable.setEnabled(enabled);
+        this.peerTable.setEnabled(enabled);
     }
     
     private static javax.swing.JTable
-    createRecipientTable() {
-        final String[] cols = {"Recipient", "Encrypt"};
-        Object[][] data = {
-            {"Mary", new Boolean(false)},
-            {"Alison", new Boolean(true)},
-            {"Kathy", new Boolean(false)},
-            {"Sharon", new Boolean(true)},
-            {"Philip", new Boolean(false)}
-        };
-        final javax.swing.JTable ret = new javax.swing.JTable(data, cols);
+    createPeerTable(
+        final LetheController controller
+    ) {
+        final javax.swing.JTable ret = 
+            new javax.swing.JTable(new PeerTableModel(controller));
         return ret;
     }
     
     void
-    addRecipient(
-        final String serializedInput
+    addPeer(
+        final String input
     ) {
-        
+        System.out.println(input);
+        try {
+            final Peer peer = new Peer(input);
+            this.controller.getPeers().add(peer);
+            
+            this.peerTable.repaint();
+            
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
     }
     
-    private class NewRecipientListener 
-        implements java.awt.event.ActionListener {
-        
-        private final java.awt.Component parent;
-        
-        NewRecipientListener(final java.awt.Component parent) {
-            this.parent = parent;
+    private java.awt.Frame
+    getFrame() {
+        for (java.awt.Container container = this;; container = container.getParent()) {
+            if (container == null) {
+                return null;
+            }
+            if (container instanceof java.awt.Frame) {
+                return (java.awt.Frame) container;
+            }
         }
+    }
+    
+    private class NewPeerListener 
+        implements java.awt.event.ActionListener {
         
         public void 
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            final String serializedInput = javax.swing.JOptionPane.showInputDialog(
-                parent, 
-                "Recipient Data", 
-                "Add Recipient...",
-                javax.swing.JOptionPane.QUESTION_MESSAGE
-            );
-            if (serializedInput != null) {
-                addRecipient(serializedInput);
+            final AddPeerDialog dlog = new AddPeerDialog(getFrame());
+            // dlog.setLocationRelativeTo(CryptoPanel.this);
+            dlog.setVisible(true);
+            
+            if (dlog.isOk()) {
+                final String input = dlog.getInput();
+                addPeer(input);
             }
         }        
     }

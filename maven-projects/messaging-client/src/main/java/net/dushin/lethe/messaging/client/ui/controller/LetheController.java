@@ -28,6 +28,8 @@ package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Contents;
+import net.dushin.lethe.messaging.interfaces.Message;
+import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
@@ -137,6 +139,34 @@ public class LetheController {
             }
         }
     }
+    
+    java.util.List<ReceivedMessage>
+    receiveMessages(
+        final MessageList messages
+    ) {
+        final java.util.List<ReceivedMessage> ret = new java.util.ArrayList<ReceivedMessage>();
+        for (Message message : messages.getItem()) {
+            ret.add(receiveMessage(message));
+        }
+        return ret;
+    }
+    
+    ReceivedMessage
+    receiveMessage(
+        final Message message
+    ) {
+        final Contents contents = message.getMessage();
+        String descriptor = contents.getDescriptor();
+        if (descriptor.equals(PlaintextMessage.class.getName())) {
+            final PlaintextMessage plaintext = (PlaintextMessage) contents.getMsg();
+            return new ReceivedMessage(plaintext);
+        } /*else if (descriptor.equals(SignedMessage.class.getName()) {
+            final SignedMessage signed = (SignedMessage) contents.getMsg();
+            
+        }*/
+        throw new RuntimeException("Unsupported descriptor: " + descriptor);
+    }
+    
     
     public void
     setIdentity(final Identity identity) {
