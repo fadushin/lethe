@@ -65,19 +65,24 @@ public class Decryptor extends CryptorBase {
      */
     public Object
     decrypt(final EncryptedMessage encrypted) {
-        try {
-            final javax.crypto.SecretKey decryptedKey = 
-                findDecryptedKey(
-                    encrypted.getRecipients(), encrypted.getAlgorithm()
+        //
+        //
+        //
+        for (EncryptedKey encryptedKey : encrypted.getRecipients().getItem()) {
+            try {
+                final javax.crypto.SecretKey decryptedKey =
+                    decryptKey(encryptedKey, encrypted.getAlgorithm());
+                final byte[] decryptedData = decryptData(decryptedKey, encrypted.getEncryptedData());
+                return deserialize(
+                    EncryptedMessage.class.getPackage(),
+                    decryptedData
                 );
-            final byte[] decryptedData = decryptData(decryptedKey, encrypted.getEncryptedData());
-            return deserialize(
-                EncryptedMessage.class.getPackage(),
-                decryptedData
-            );
-        } catch (final Exception e) {
-            throw new RuntimeException("Error decrypting", e);
+            } catch (final Exception e) {
+                // log
+                continue;
+            }
         }
+        throw new RuntimeException("Key not found");
     }
     
     //
