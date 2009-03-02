@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
 public class MessageChangeThread extends Thread {
@@ -33,9 +34,16 @@ public class MessageChangeThread extends Thread {
     private final String channel;
     private final LetheController controller;
     private final MessageChangeListener listener;
+    
+    //private final java.util.List<ReceivedMessage> receivedMessages =
+    //    new java.util.ArrayList<ReceivedMessage>();
+    
+    private final java.util.List<Message> rawMessages =
+        new java.util.ArrayList<Message>();
 
     private boolean halt;
     private int since;
+    private boolean notifyChange;
     
     MessageChangeThread(
         final String channel,
@@ -55,9 +63,13 @@ public class MessageChangeThread extends Thread {
             }
             try {
                 final MessageList messages = controller.getProxy().getMessages(channel, since);
-                if (messages.getItem().size() > 0) {
+                if (messages.getItem().size() > 0 || notifyChange) {
                     since += messages.getItem().size();
-                    this.listener.messageChanged(this.controller.receiveMessages(messages));
+                    this.rawMessages.addAll(messages.getItem());
+                    final java.util.List<ReceivedMessage> receivedMessages =
+                        this.controller.receiveMessages(this.rawMessages);
+                    this.listener.messageChanged(receivedMessages);
+                    notifyChange = false;
                 }
                 Thread.sleep(1000);
             } catch (final Exception e) {
@@ -70,5 +82,10 @@ public class MessageChangeThread extends Thread {
     void
     notifyHalt() {
         this.halt = true;
+    }
+    
+    void
+    notifyChange() {
+        this.notifyChange = true;
     }
 }

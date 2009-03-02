@@ -101,7 +101,7 @@ public final class HexDump {
         return buf.toString();
     }
     
-    private static String
+    public static String
     toHex(
         final short n
     ) {
@@ -113,7 +113,7 @@ public final class HexDump {
         return buf.toString();
     }
     
-    private static String
+    public static String
     toHex(
         final byte b
     ) {

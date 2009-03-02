@@ -173,7 +173,7 @@ public class MessagePanel extends javax.swing.JPanel
     public void
     messageChanged(final java.util.List<ReceivedMessage> msgs) {
         final StringBuilder buf = new StringBuilder();
-        buf.append(this.messageDisplayArea.getText());
+        // buf.append(this.messageDisplayArea.getText());
         for (ReceivedMessage msg : msgs) {
             buf.append("=========\n");
             if (!msg.getMessageEncrypted()) {

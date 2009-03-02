@@ -35,6 +35,7 @@ public class Peer {
     private final String name;
     private final java.security.PublicKey publicKey;
     private final Verifier verifier;
+    private final String pinkyprint;
     
     private boolean encryptTo = true;
     
@@ -46,6 +47,7 @@ public class Peer {
         this.name = name;
         this.publicKey = publicKey;
         this.verifier = new Verifier(this.publicKey);
+        this.pinkyprint = KeyHelper.getPinkyprint(this.publicKey);
     }
     
     public
@@ -56,6 +58,7 @@ public class Peer {
         this.name = pkt.getName();
         this.publicKey = KeyHelper.getPublicKey(pkt);
         this.verifier = new Verifier(this.publicKey);
+        this.pinkyprint = KeyHelper.getPinkyprint(this.publicKey);
     }
     
     public String
@@ -81,5 +84,10 @@ public class Peer {
     public Verifier
     getVerifier() {
         return this.verifier;
+    }
+    
+    public String
+    getPinkyprint() {
+        return this.pinkyprint;
     }
 }

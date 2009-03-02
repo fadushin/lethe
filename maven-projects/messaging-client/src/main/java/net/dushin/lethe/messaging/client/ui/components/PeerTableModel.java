@@ -32,7 +32,8 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
 
     private static final String COLUMN_NAMES[] = {
         "Encrypt",
-        "Peer Name"
+        "Peer Name",
+        "Pinkyprint"
     };
     
     private final LetheController controller;
@@ -72,6 +73,8 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
             return this.controller.getPeers().get(row).getEncryptTo();
         case 1:
             return this.controller.getPeers().get(row).getName();
+        case 2:
+            return this.controller.getPeers().get(row).getPinkyprint();
         default:
             assert false;
             throw new RuntimeException("unsupported col num" + col);

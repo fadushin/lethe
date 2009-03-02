@@ -45,7 +45,7 @@ class CryptoPanel extends javax.swing.JPanel {
     ) {
         this.controller = controller;
         
-        this.idLabel.setText("id: " + this.controller.getIdentity().getName());
+        this.idLabel.setText("name: " + this.controller.getIdentity().getName());
         this.signBox.setSelected(
             this.controller.getIdentity().getSignMessages()
         );
@@ -97,7 +97,7 @@ class CryptoPanel extends javax.swing.JPanel {
         this.controller.setIdentity(
             identity
         );
-        this.idLabel.setText("id: " + name);
+        this.idLabel.setText("name: " + name);
         this.peerPanel.addPeer(new Peer(identity.getName(), identity.getKeyPair().getPublic()));
     }
     

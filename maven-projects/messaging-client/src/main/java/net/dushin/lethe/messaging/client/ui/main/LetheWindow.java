@@ -71,8 +71,6 @@ LetheWindow extends javax.swing.JFrame {
             new java.net.URL("http://localhost:18066/MessengerService/SOAPPort?wsdl")
         );
         LethePanel panel = new LethePanel(controller);
-        panel.createTabbedPane("foo");
-        panel.createTabbedPane("bar");
         add("Center", panel);
         pack();
         setVisible(true);

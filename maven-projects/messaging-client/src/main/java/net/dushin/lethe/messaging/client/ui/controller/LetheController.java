@@ -29,7 +29,6 @@ package net.dushin.lethe.messaging.client.ui.controller;
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
-import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
@@ -110,6 +109,28 @@ public class LetheController {
     }
     
     public void
+    addPeer(final Peer peer) {
+        this.peers.add(peer);
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
+    
+    public void
+    removePeers(final int[] indices) {
+        for (int index : indices) {
+            this.peers.remove(index);
+        }
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
+    
+    public void
     registerMessageChangedListener(
         final String channel,
         final MessageChangeListener listener
@@ -143,10 +164,10 @@ public class LetheController {
     
     java.util.List<ReceivedMessage>
     receiveMessages(
-        final MessageList messages
+        final java.util.List<Message> messages
     ) {
         final java.util.List<ReceivedMessage> ret = new java.util.ArrayList<ReceivedMessage>();
-        for (Message message : messages.getItem()) {
+        for (Message message : messages) {
             ret.add(receiveMessage(message));
         }
         return ret;

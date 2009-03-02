@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.keys;
 
+import net.dushin.lethe.messaging.client.debug.HexDump;
 import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.keys.ObjectFactory;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
@@ -53,6 +54,15 @@ public abstract class KeyHelper {
     private static final int COL_WRAP = 72;
     
     private static final ObjectFactory KEYS_OBJ_FACTORY = new ObjectFactory();
+    
+    private static final byte[] PRD = new byte[20];
+    static {
+        final java.util.Random rand = new java.util.Random();
+        rand.setSeed(19640212);
+        rand.nextBytes(PRD);
+    }
+    
+    private static final byte[] SCRAMBLE = new Hasher().hash(PRD);
     
     
     private
@@ -146,9 +156,91 @@ public abstract class KeyHelper {
         }
     }
     
+    public static String
+    getPinkyprint(
+        final java.security.PublicKey publicKey
+    ) {
+        final byte[] hash = hash(publicKey.getEncoded());
+        final int n = hash.length;
+        final byte[] pinkyprint = {0x00, 0x00, 0x00, 0x00};
+        for (int i = 0;  i < n;  ++i) {
+            hash[i] |= hash[(i + 1) % n];
+            pinkyprint[i % 4] = (byte) (pinkyprint[i % 4] ^ hash[i]);
+        }
+        short ret = 0;
+        for (int i = 0;  i < 4;  ++i) {
+            ret |= pinkyprint[i] << (i * 8);
+        }
+        final StringBuilder buf = new StringBuilder();
+        for (byte b : pinkyprint) {
+            buf.append(HexDump.toHex(b));
+        }
+        return buf.toString();
+    }
+    
+    public static String
+    getThumbprint(
+        final java.security.PublicKey publicKey
+    ) {
+        final byte[] hash = hash(publicKey.getEncoded());
+        final StringBuilder buf = new StringBuilder();
+        for (byte b : hash) {
+            buf.append(HexDump.toHex(b));
+            buf.append(' ');
+        }
+        return buf.toString();
+    }
+    
     //
     // internal operations
     //
+    
+    private static byte[]
+    hash(
+        final byte[] data
+    ) {
+        return new Hasher().hash(data);
+    }
+    
+    private static class Hasher {
+
+        /**
+         * default digest algorithms
+         */
+        private static final String DEFAULT_DIGEST_ALGORITHM =
+            "SHA1";
+
+        /**
+         * JCA digest object used for hashing data.  Note that it's the
+         * hashed data that's signed, not the data itself.
+         */
+        private final java.security.MessageDigest digest;
+        
+        /**
+         * default ctor instantiates member defaults
+         */
+        Hasher() {
+            try {
+                this.digest = java.security.MessageDigest.getInstance(DEFAULT_DIGEST_ALGORITHM);
+            } catch (final java.security.NoSuchAlgorithmException e) {
+                throw new RuntimeException("Error creating Hasher", e);
+            }
+        }
+        
+        /**
+         * Hash the input data
+         */
+        final byte[]
+        hash(
+            final byte[] data
+        ) {
+            try {
+                return this.digest.digest(data);
+            } catch (final Exception e) {
+                throw new RuntimeException("Error hashing", e);
+            }
+        }
+    }
     
     private static String
     encode(

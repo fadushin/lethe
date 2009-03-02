@@ -46,8 +46,16 @@ class PeerTablePanel extends javax.swing.JPanel {
         // TODO fix layout
         //
         java.awt.Button addPeerButton = new java.awt.Button("Add Peer...");
-        addPeerButton.addActionListener(new NewPeerListener());
-        this.add("South", addPeerButton);
+        addPeerButton.addActionListener(new AddPeerListener());
+        java.awt.Button removePeerButton = new java.awt.Button("Remove Peer...");
+        removePeerButton.addActionListener(new RemovePeerListener());
+
+        final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
+        buttonPanel.setLayout(new java.awt.FlowLayout());
+        buttonPanel.add(addPeerButton);
+        buttonPanel.add(removePeerButton);
+        
+        this.add("South", buttonPanel);
         
         this.peerTableModel = new PeerTableModel(this.controller);
         this.peerTable = new javax.swing.JTable(this.peerTableModel);
@@ -86,8 +94,17 @@ class PeerTablePanel extends javax.swing.JPanel {
     addPeer(
         final Peer peer
     ) {
-        this.controller.getPeers().add(peer);            
+        this.controller.addPeer(peer);            
         this.peerTableModel.fireTableDataChanged();
+    }
+    
+    void
+    removeSelectedPeers() {
+        final int[] rows = this.peerTable.getSelectedRows();
+        if (rows != null && rows.length > 0) {
+            this.controller.removePeers(rows);
+            this.peerTableModel.fireTableDataChanged();
+        }
     }
     
     private java.awt.Frame
@@ -102,7 +119,7 @@ class PeerTablePanel extends javax.swing.JPanel {
         }
     }
     
-    private class NewPeerListener 
+    private class AddPeerListener 
         implements java.awt.event.ActionListener {
         
         public void 
@@ -117,6 +134,17 @@ class PeerTablePanel extends javax.swing.JPanel {
                 final String input = dlog.getInput();
                 addPeer(input);
             }
+        }        
+    }
+    
+    private class RemovePeerListener 
+        implements java.awt.event.ActionListener {
+        
+        public void 
+        actionPerformed(
+            final java.awt.event.ActionEvent event
+        ) {
+            removeSelectedPeers();
         }        
     }
     
