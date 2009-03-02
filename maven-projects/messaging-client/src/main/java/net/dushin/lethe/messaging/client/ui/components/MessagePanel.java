@@ -176,25 +176,46 @@ public class MessagePanel extends javax.swing.JPanel
         // buf.append(this.messageDisplayArea.getText());
         for (ReceivedMessage msg : msgs) {
             buf.append("=========\n");
-            if (!msg.getMessageEncrypted()) {
-                final PlaintextMessage plaintext = msg.getPlaintextMessage();
-                buf.append(plaintext.getFrom());
-                buf.append('(');
-                if (msg.getMessageSigned()) {
-                    buf.append('s');
-                }
-                if (msg.getMessageVerified()) {
-                    buf.append('v');
-                }
-                buf.append(')');
-                buf.append(": ");
-                buf.append(plaintext.getData());
-                buf.append('\n');
+            if (msg.getMessageEncrypted() && !msg.getMessageDecrypted()) {
+                buf.append("(encrypted) ...\n");
+            } else {
+                buf.append(displayStatus(msg));
+                buf.append(displayPlaintextMessage(msg.getPlaintextMessage()));
             }            
         }
         this.messageDisplayArea.setText(
             buf.toString()
         );
-        
+    }
+    
+    private static String
+    displayStatus(
+        final ReceivedMessage msg
+    ) {
+        final StringBuilder buf = new StringBuilder();
+        buf.append('(');
+        if (msg.getMessageDecrypted()) {
+            buf.append('e');
+        }
+        if (msg.getMessageVerified()) { 
+            buf.append('s');
+        }
+        if (!msg.getMessageEncrypted() && !msg.getMessageSigned()) {
+            buf.append('p');
+        }
+        buf.append(')');
+        return buf.toString();
+    }
+    
+    private static String
+    displayPlaintextMessage(
+        final PlaintextMessage plaintext
+    ) {
+        final StringBuilder buf = new StringBuilder();
+        buf.append(plaintext.getFrom());
+        buf.append(": ");
+        buf.append(plaintext.getData());
+        buf.append('\n');
+        return buf.toString();
     }
 }

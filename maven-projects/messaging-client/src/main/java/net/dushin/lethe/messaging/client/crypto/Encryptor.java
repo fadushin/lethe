@@ -45,6 +45,25 @@ import net.dushin.lethe.messaging.interfaces.SignedMessage;
 public class Encryptor extends SerializationBase {
     
     /**
+     * @param msg
+     * @param recipients
+     * @return
+     */
+    public EncryptedMessage
+    encrypt(
+        final Object msg,
+        final java.util.Collection<java.security.PublicKey> recipients
+    ) {
+        if (msg instanceof PlaintextMessage) {
+            return encrypt((PlaintextMessage) msg, recipients);
+        } else if (msg instanceof SignedMessage) {
+            return encrypt((SignedMessage) msg, recipients);
+        } else {
+            throw new RuntimeException("Unsupported type: " + msg.getClass().getName());
+        }
+    }
+
+    /**
      * Encrypt a plaintext message for a collection of recipients.
      *
      * @param       plaintext
@@ -60,7 +79,7 @@ public class Encryptor extends SerializationBase {
      *              EncryptedMessage is as described in the corresponding
      *              message.idl, from which this type is derived.
      */
-    EncryptedMessage
+    public EncryptedMessage
     encrypt(
         final PlaintextMessage plaintext,
         final java.util.Collection<java.security.PublicKey> recipients
@@ -92,7 +111,7 @@ public class Encryptor extends SerializationBase {
      *              EncryptedMessage is as described in the corresponding
      *              message.idl, from which this type is derived.
      */
-    EncryptedMessage
+    public EncryptedMessage
     encrypt(
         final SignedMessage signed,
         final java.util.Collection<java.security.PublicKey> recipients

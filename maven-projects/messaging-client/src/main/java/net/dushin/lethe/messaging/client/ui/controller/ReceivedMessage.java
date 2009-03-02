@@ -27,6 +27,7 @@
 package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
+import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
@@ -40,6 +41,7 @@ public class ReceivedMessage {
     
     private PlaintextMessage plaintext;
     private SignedMessage signed;
+    private EncryptedMessage encrypted;
     
     public
     ReceivedMessage(
@@ -66,6 +68,36 @@ public class ReceivedMessage {
         this(true, false, false, false);
         this.signed = signed;
         this.plaintext = parseSigned(signed);
+    }
+    
+    public
+    ReceivedMessage(
+        final EncryptedMessage encrypted
+    ) {
+        this(false, false, true, false);
+        this.encrypted = encrypted;
+    }
+    
+    public
+    ReceivedMessage(
+        final EncryptedMessage encrypted,
+        final SignedMessage signed,
+        final PlaintextMessage plaintext
+    ) {
+        this(true, true, true, true);
+        this.encrypted = encrypted;
+        this.signed = signed;
+        this.plaintext = plaintext;
+    }
+    
+    public
+    ReceivedMessage(
+        final EncryptedMessage encrypted,
+        final PlaintextMessage plaintext
+    ) {
+        this(false, false, true, true);
+        this.encrypted = encrypted;
+        this.plaintext = plaintext;
     }
     
     private
@@ -119,5 +151,10 @@ public class ReceivedMessage {
     public SignedMessage
     getSignedMessage() {
         return this.signed;
+    }
+    
+    public EncryptedMessage
+    getEncryptedMessage() {
+        return this.encrypted;
     }
 }

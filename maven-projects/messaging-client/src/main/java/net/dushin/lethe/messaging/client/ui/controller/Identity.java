@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.crypto.Decryptor;
 import net.dushin.lethe.messaging.client.crypto.KeyPairGenerator;
 import net.dushin.lethe.messaging.client.crypto.Signer;
 
@@ -36,6 +37,7 @@ public class Identity {
     private final String name;
     private final java.security.KeyPair keyPair;
     private final Signer signer;
+    private final Decryptor decryptor;
     
     private boolean signMessages;
 
@@ -53,6 +55,7 @@ public class Identity {
         }
         this.signMessages = signMessages;
         this.signer = new Signer(this.keyPair.getPrivate());
+        this.decryptor = new Decryptor(this.keyPair.getPrivate());
     }
     
     public String
@@ -80,5 +83,10 @@ public class Identity {
         final boolean signMessages
     ) {
         this.signMessages = signMessages;
+    }
+    
+    public Decryptor
+    getDecryptor() {
+        return this.decryptor;
     }
 }

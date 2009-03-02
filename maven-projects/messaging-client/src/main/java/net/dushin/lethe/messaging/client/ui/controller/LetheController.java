@@ -26,8 +26,10 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.crypto.Encryptor;
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Contents;
+import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
@@ -45,6 +47,8 @@ public class LetheController {
     
     private final java.util.List<Peer> peers =
         new java.util.ArrayList<Peer>();
+    
+    private final Encryptor encryptor = new Encryptor();
     
     public
     LetheController(
@@ -75,14 +79,25 @@ public class LetheController {
         final PlaintextMessage plaintext = new PlaintextMessage();
         plaintext.setFrom(this.identity.getName());
         plaintext.setData(message);
-
+        //
+        // message will be in plaintext unless told otherwise below
+        //
+        contents.setDescriptor(PlaintextMessage.class.getName());
+        msg = plaintext;
+        //
+        // If it's to be signed, do so
+        //
         if (this.identity.getSignMessages()) {
             contents.setDescriptor(SignedMessage.class.getName());
-            final SignedMessage signed = this.identity.getSigner().sign(plaintext);
-            msg = signed;
-        } else {
-            contents.setDescriptor(PlaintextMessage.class.getName());
-            msg = plaintext;
+            msg = this.identity.getSigner().sign(plaintext);
+        }
+        //
+        // And then encrypt, if there are any specified recipients
+        //
+        final java.util.List<java.security.PublicKey> recipients = getRecipients();
+        if (recipients.size() > 0) {
+            contents.setDescriptor(EncryptedMessage.class.getName());
+            msg = this.encryptor.encrypt(msg, recipients);
         }
         contents.setMsg(msg);
         try {
@@ -91,6 +106,18 @@ public class LetheController {
             // log
             e.printStackTrace();
         }
+    }
+
+    private java.util.List<java.security.PublicKey>
+    getRecipients() {
+        final java.util.List<java.security.PublicKey> ret = 
+            new java.util.ArrayList<java.security.PublicKey>();
+        for (Peer peer : getPeers()) {
+            if (peer.getEncryptTo()) {
+                ret.add(peer.getPublicKey());
+            }
+        }
+        return ret;
     }
     
     Messenger
@@ -193,6 +220,29 @@ public class LetheController {
                 }
             } catch (final Exception e) {
                 return new ReceivedMessage(signed);
+            }
+        } else if (descriptor.equals(EncryptedMessage.class.getName())) {
+            try {
+                final EncryptedMessage encrypted = (EncryptedMessage) contents.getMsg();
+                Object obj = null; 
+                try {
+                    obj = this.identity.getDecryptor().decrypt(encrypted);
+                } catch (final Exception e) {
+                    return new ReceivedMessage(encrypted);
+                }
+                if (obj instanceof SignedMessage) {
+                    final SignedMessage signed = (SignedMessage) obj;
+                    final Object obj2 = verifyMessageSignedBy(signed);
+                    if (obj2 instanceof PlaintextMessage) {
+                        return new ReceivedMessage(encrypted, signed, (PlaintextMessage) obj2);
+                    } else {
+                        throw new RuntimeException("Expected signed object to be plaintext");
+                    }
+                } else if (obj instanceof PlaintextMessage) {
+                    return new ReceivedMessage(encrypted, (PlaintextMessage) obj);
+                }
+            } catch (final Exception e) {
+                throw new RuntimeException("Error decrypting message", e);
             }
         }
         throw new RuntimeException("Unsupported descriptor: " + descriptor);
