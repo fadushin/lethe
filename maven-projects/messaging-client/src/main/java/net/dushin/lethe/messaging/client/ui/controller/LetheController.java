@@ -213,9 +213,11 @@ public class LetheController {
         } else if (descriptor.equals(SignedMessage.class.getName())) {
             final SignedMessage signed = (SignedMessage) contents.getMsg();
             try {
-                final Object obj = verifyMessageSignedBy(signed);
-                if (obj instanceof PlaintextMessage) {
-                    return new ReceivedMessage(signed, (PlaintextMessage) obj);
+                final Object[] pair = verifyMessageSignedBy(signed);
+                final Object plaintext = pair[0];
+                final Peer signer = (Peer) pair[1];
+                if (plaintext instanceof PlaintextMessage) {
+                    return new ReceivedMessage(signed, signer, (PlaintextMessage) plaintext);
                 } else {
                     throw new RuntimeException("Expected signed object to be plaintext");
                 }
@@ -223,39 +225,46 @@ public class LetheController {
                 return new ReceivedMessage(signed);
             }
         } else if (descriptor.equals(EncryptedMessage.class.getName())) {
+            final EncryptedMessage encrypted = (EncryptedMessage) contents.getMsg();
+            Object obj = null; 
             try {
-                final EncryptedMessage encrypted = (EncryptedMessage) contents.getMsg();
-                Object obj = null; 
-                try {
-                    obj = this.identity.getDecryptor().decrypt(encrypted);
-                } catch (final Exception e) {
-                    return new ReceivedMessage(encrypted);
-                }
-                if (obj instanceof SignedMessage) {
-                    final SignedMessage signed = (SignedMessage) obj;
-                    final Object obj2 = verifyMessageSignedBy(signed);
-                    if (obj2 instanceof PlaintextMessage) {
-                        return new ReceivedMessage(encrypted, signed, (PlaintextMessage) obj2);
-                    } else {
-                        throw new RuntimeException("Expected signed object to be plaintext");
-                    }
-                } else if (obj instanceof PlaintextMessage) {
-                    return new ReceivedMessage(encrypted, (PlaintextMessage) obj);
-                }
+                obj = this.identity.getDecryptor().decrypt(encrypted);
             } catch (final Exception e) {
-                throw new RuntimeException("Error decrypting message", e);
+                return new ReceivedMessage(encrypted);
+            }
+            if (obj instanceof SignedMessage) {
+                final SignedMessage signed = (SignedMessage) obj;
+                Object plaintext = null;
+                Peer signer = null;
+                try {
+                    final Object[] pair = verifyMessageSignedBy(signed);
+                    plaintext = pair[0];
+                    signer = (Peer) pair[1];
+                } catch (final Exception e) {
+                    return new ReceivedMessage(signed);
+                }
+                if (plaintext instanceof PlaintextMessage) {
+                    return new ReceivedMessage(
+                        encrypted, signed, signer, (PlaintextMessage) plaintext
+                    );
+                } else {
+                    throw new RuntimeException("Expected signed object to be plaintext");
+                }
+            } else if (obj instanceof PlaintextMessage) {
+                return new ReceivedMessage(encrypted, (PlaintextMessage) obj);
             }
         }
         throw new RuntimeException("Unsupported descriptor: " + descriptor);
     }
     
-    private Object
+    private Object[]
     verifyMessageSignedBy(
         final SignedMessage signed
     ) {
         for (Peer peer : getIdentityAndPeers()) {
             try {
-                return peer.getVerifier().verify(signed);
+                final Object plaintext = peer.getVerifier().verify(signed);
+                return new Object[]{plaintext, peer};
             } catch (final Exception e) {
                 continue;
             }
@@ -274,6 +283,11 @@ public class LetheController {
     public void
     setIdentity(final Identity identity) {
         this.identity = identity;
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
     }
     
     public Identity

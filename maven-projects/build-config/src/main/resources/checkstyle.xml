@@ -204,7 +204,7 @@
 		<module name="PackageDeclaration" />
 		<module name="JUnitTestCase" />
 		<module name="ReturnCount">
-			<property name="max" value="6" />
+			<property name="max" value="10" />
 		</module>
 
 		<module name="IllegalType">

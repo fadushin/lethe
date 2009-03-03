@@ -41,6 +41,7 @@ public class ReceivedMessage {
     
     private PlaintextMessage plaintext;
     private SignedMessage signed;
+    private Peer signer;
     private EncryptedMessage encrypted;
     
     public
@@ -54,10 +55,12 @@ public class ReceivedMessage {
     public
     ReceivedMessage(
         final SignedMessage signed,
+        final Peer signer,
         final PlaintextMessage plaintext
     ) {
         this(true, true, false, false);
         this.signed = signed;
+        this.signer = signer;
         this.plaintext = plaintext;
     }
     
@@ -82,11 +85,13 @@ public class ReceivedMessage {
     ReceivedMessage(
         final EncryptedMessage encrypted,
         final SignedMessage signed,
+        final Peer signer,
         final PlaintextMessage plaintext
     ) {
         this(true, true, true, true);
         this.encrypted = encrypted;
         this.signed = signed;
+        this.signer = signer;
         this.plaintext = plaintext;
     }
     
@@ -151,6 +156,11 @@ public class ReceivedMessage {
     public SignedMessage
     getSignedMessage() {
         return this.signed;
+    }
+    
+    public Peer
+    getSigner() {
+        return this.signer;
     }
     
     public EncryptedMessage

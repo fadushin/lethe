@@ -94,9 +94,7 @@ class CryptoPanel extends javax.swing.JPanel {
     setIdentity(
         final Identity identity
     ) {
-        this.controller.setIdentity(
-            identity
-        );
+        this.controller.setIdentity(identity);
         this.identityTableModel.fireTableDataChanged();
     }
     
@@ -110,7 +108,12 @@ class CryptoPanel extends javax.swing.JPanel {
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            final SetIdentityDialog dlog = new SetIdentityDialog(getFrame());
+            final SetIdentityDialog dlog = 
+                new SetIdentityDialog(
+                    getFrame(),
+                    CryptoPanel.this.controller.getIdentity().getName(),
+                    CryptoPanel.this.controller.getIdentity().getPassword()
+                );
             // dlog.setLocationRelativeTo(CryptoPanel.this);
             dlog.setVisible(true);
             

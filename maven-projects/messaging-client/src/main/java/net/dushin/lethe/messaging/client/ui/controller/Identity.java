@@ -32,8 +32,9 @@ import net.dushin.lethe.messaging.client.crypto.Signer;
 
 public class Identity extends Peer {
 
-    public static final Identity ANONYMOUS = new Identity("anonymous", "", true, false);
+    public static final Identity ANONYMOUS = new Identity("anonymous", "anonymous", true, false);
     
+    private final String password;
     private final java.security.KeyPair keyPair;
     private final Signer signer;
     private final Decryptor decryptor;
@@ -47,17 +48,19 @@ public class Identity extends Peer {
         final boolean signMessages,
         final boolean encryptToSelf
     ) {
-        this(name, generateKeyPair(password), signMessages, encryptToSelf);
+        this(name, password, generateKeyPair(password), signMessages, encryptToSelf);
     }
 
     private
     Identity(
         final String name,
+        final String password,
         final java.security.KeyPair keyPair,
         final boolean signMessages,
         final boolean encryptToSelf
     ) {
         super(name, keyPair.getPublic());
+        this.password = password;
         this.keyPair = keyPair;
         this.signMessages = signMessages;
         this.signer = new Signer(this.keyPair.getPrivate());
@@ -72,6 +75,11 @@ public class Identity extends Peer {
         } catch (final Exception e) {
             throw new RuntimeException("Error generating key pair", e);
         }
+    }
+    
+    public String
+    getPassword() {
+        return this.password;
     }
     
     public java.security.KeyPair

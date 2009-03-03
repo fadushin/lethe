@@ -51,16 +51,30 @@ class ExportIdentityDialog extends javax.swing.JDialog {
                 identity.getKeyPair().getPublic()
             )
         );
+        this.exportTextArea.setEditable(false);
+        this.exportTextArea.selectAll();
         
-        final javax.swing.JButton okButton = new javax.swing.JButton("ok");
+        final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
         okButton.addActionListener(new OkButtonListener());
         
         final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
-        buttonPanel.setLayout(new java.awt.GridLayout(0, 1));
+        buttonPanel.setLayout(new java.awt.FlowLayout());
         buttonPanel.add(okButton);
         
+        final javax.swing.JPanel pane = new javax.swing.JPanel(new java.awt.BorderLayout());
+        pane.add("Center", this.exportTextArea);
+        pane.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                    javax.swing.BorderFactory.createTitledBorder("Export Peer"),
+                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                ),
+                pane.getBorder()
+            )
+        );
+
         this.setLayout(new java.awt.BorderLayout());
-        this.add("Center", exportTextArea);
+        this.add("Center", pane);
         this.add("South", buttonPanel);
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

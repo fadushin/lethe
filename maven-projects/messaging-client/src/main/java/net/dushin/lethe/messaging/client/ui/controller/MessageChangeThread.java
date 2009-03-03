@@ -71,10 +71,15 @@ public class MessageChangeThread extends Thread {
                     this.listener.messageChanged(receivedMessages);
                     notifyChange = false;
                 }
-                Thread.sleep(1000);
             } catch (final Exception e) {
                 // log it?
                 e.printStackTrace();
+            } finally {
+                try {
+                    Thread.sleep(1000);
+                } catch (final InterruptedException e) {
+                    // ignoref
+                }
             }
         }
     }

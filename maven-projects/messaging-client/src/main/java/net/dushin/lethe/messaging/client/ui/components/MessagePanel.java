@@ -183,7 +183,7 @@ public class MessagePanel extends javax.swing.JPanel
         final StringBuilder buf = new StringBuilder();
         buf.append('[');
         if (msg.getMessageSigned() && msg.getMessageVerified()) { 
-            buf.append("signed");
+            buf.append("signed(" + msg.getSigner().getPinkyprint() + ")");
         } else if (msg.getMessageSigned()) {
             buf.append("signed but unverified");
         }

@@ -39,11 +39,16 @@ class SetIdentityDialog extends javax.swing.JDialog {
     
     public 
     SetIdentityDialog(
-        final java.awt.Frame owner 
+        final java.awt.Frame owner,
+        final String name,
+        final String password
     ) {
         super(owner, true);
 
         setTitle("Set Identity...");
+        
+        this.nameField.setText(name);
+        this.passphraseField.setText(password);
         
         final javax.swing.JPanel namePanel = new javax.swing.JPanel();
         namePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));            
@@ -64,13 +69,23 @@ class SetIdentityDialog extends javax.swing.JDialog {
         contentPanel.add("North", namePanel);
         contentPanel.add("South", passphrasePanel);
         
-        final javax.swing.JButton okButton = new javax.swing.JButton("ok");
+        contentPanel.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                    javax.swing.BorderFactory.createTitledBorder("Edit Identity"),
+                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                ),
+                contentPanel.getBorder()
+            )
+        );
+        
+        final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
         okButton.addActionListener(new OkButtonListener());
-        final javax.swing.JButton cancelButton = new javax.swing.JButton("cancel");
+        final javax.swing.JButton cancelButton = new javax.swing.JButton("Cancel");
         cancelButton.addActionListener(new CancelButtonListener());
         
         final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
-        buttonPanel.setLayout(new java.awt.GridLayout(0, 1));
+        buttonPanel.setLayout(new java.awt.FlowLayout());
         buttonPanel.add(okButton);
         buttonPanel.add(cancelButton);
         

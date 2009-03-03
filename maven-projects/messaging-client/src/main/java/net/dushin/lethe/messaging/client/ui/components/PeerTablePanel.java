@@ -73,12 +73,6 @@ class PeerTablePanel extends javax.swing.JPanel {
         this.add("Center", scrollPane);
     }
     
-    public void
-    setEnabled(final boolean enabled) {
-        super.setEnabled(enabled);
-        this.peerTable.setEnabled(enabled);
-    }
-    
     void
     addPeer(
         final String input
