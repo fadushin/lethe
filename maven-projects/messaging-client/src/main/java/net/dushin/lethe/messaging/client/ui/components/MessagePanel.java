@@ -34,6 +34,7 @@ import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 public class MessagePanel extends javax.swing.JPanel 
     implements MessageChangeListener {
 
+    private static final String NL = System.getProperty("line.separator");
     private final LetheController controller;
     private final String channel;
     
@@ -62,26 +63,12 @@ public class MessagePanel extends javax.swing.JPanel
         final javax.swing.JButton closeTabButton = new javax.swing.JButton("Close");
         closeTabButton.addActionListener(new CloseTabListener());
         closeTabPanel.setLayout(new java.awt.BorderLayout());
-        closeTabPanel.add("West", closeTabButton);
+        closeTabPanel.add("East", closeTabButton);
         add("North", closeTabPanel);
 
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
-        /*
-        messageScrollPane.setVerticalScrollBarPolicy(
-            javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
-        );
-        */
         messageScrollPane.setPreferredSize(new java.awt.Dimension(250, 250));
-        messageScrollPane.setBorder(
-            javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Messages"),
-                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
-                ),
-                messageScrollPane.getBorder()
-            )
-        );
         add("Center", messageScrollPane);
 
         final javax.swing.JPanel sendPanel = new javax.swing.JPanel();
@@ -155,7 +142,6 @@ public class MessagePanel extends javax.swing.JPanel
         keyPressed(
             final java.awt.event.KeyEvent event
         ) {
-            System.out.print(event);
             final int keyCode = event.getKeyCode();
             if (keyCode == java.awt.event.KeyEvent.VK_ENTER) {
                 sendMessage();
@@ -175,13 +161,15 @@ public class MessagePanel extends javax.swing.JPanel
         final StringBuilder buf = new StringBuilder();
         // buf.append(this.messageDisplayArea.getText());
         for (ReceivedMessage msg : msgs) {
-            buf.append("=========\n");
+            buf.append("==========================\n");
+            buf.append(displayStatus(msg));
+            buf.append(' ');
             if (msg.getMessageEncrypted() && !msg.getMessageDecrypted()) {
-                buf.append("(encrypted) ...\n");
+                buf.append("...");
             } else {
-                buf.append(displayStatus(msg));
                 buf.append(displayPlaintextMessage(msg.getPlaintextMessage()));
-            }            
+            }
+            buf.append(NL);
         }
         this.messageDisplayArea.setText(
             buf.toString()
@@ -193,17 +181,22 @@ public class MessagePanel extends javax.swing.JPanel
         final ReceivedMessage msg
     ) {
         final StringBuilder buf = new StringBuilder();
-        buf.append('(');
-        if (msg.getMessageDecrypted()) {
-            buf.append('e');
+        buf.append('[');
+        if (msg.getMessageSigned() && msg.getMessageVerified()) { 
+            buf.append("signed");
+        } else if (msg.getMessageSigned()) {
+            buf.append("signed but unverified");
         }
-        if (msg.getMessageVerified()) { 
-            buf.append('s');
+        if (msg.getMessageEncrypted()) {
+            if (msg.getMessageSigned()) {
+                buf.append('|');
+            }
+            buf.append("encrypted");
         }
         if (!msg.getMessageEncrypted() && !msg.getMessageSigned()) {
-            buf.append('p');
+            buf.append("plaintext");
         }
-        buf.append(')');
+        buf.append(']');
         return buf.toString();
     }
     

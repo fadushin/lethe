@@ -42,13 +42,23 @@ class TabbedMessagePanel extends javax.swing.JPanel {
         
         final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
         buttonPanel.setLayout(new java.awt.BorderLayout());
-        final java.awt.Button newButton = new java.awt.Button("New Channel...");
+        final java.awt.Button newButton = new java.awt.Button("Add...");
         newButton.addActionListener(new NewChannelListener(this));
         buttonPanel.add("West", newButton);
         this.add("North", buttonPanel);
         
         this.tabs = new javax.swing.JTabbedPane();
         this.add("Center", this.tabs);
+
+        this.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                    javax.swing.BorderFactory.createTitledBorder("Channels"),
+                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                ),
+                this.getBorder()
+            )
+        );
     }
     
     void

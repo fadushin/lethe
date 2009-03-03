@@ -45,9 +45,9 @@ class PeerTablePanel extends javax.swing.JPanel {
         //
         // TODO fix layout
         //
-        java.awt.Button addPeerButton = new java.awt.Button("Add Peer...");
+        java.awt.Button addPeerButton = new java.awt.Button("Add...");
         addPeerButton.addActionListener(new AddPeerListener());
-        java.awt.Button removePeerButton = new java.awt.Button("Remove Peer...");
+        java.awt.Button removePeerButton = new java.awt.Button("Remove");
         removePeerButton.addActionListener(new RemovePeerListener());
 
         final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
@@ -61,13 +61,13 @@ class PeerTablePanel extends javax.swing.JPanel {
         this.peerTable = new javax.swing.JTable(this.peerTableModel);
         final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.peerTable);
         // this.recipientTable.setFillsViewportHeight(true);
-        scrollPane.setBorder(
+        this.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
                     javax.swing.BorderFactory.createTitledBorder("Peers"),
                     javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
                 ),
-                scrollPane.getBorder()
+                this.getBorder()
             )
         );        
         this.add("Center", scrollPane);

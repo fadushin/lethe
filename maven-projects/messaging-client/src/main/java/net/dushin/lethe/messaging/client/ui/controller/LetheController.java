@@ -48,8 +48,6 @@ public class LetheController {
     private final java.util.List<Peer> peers =
         new java.util.ArrayList<Peer>();
     
-    private final Encryptor encryptor = new Encryptor();
-    
     public
     LetheController(
         final java.net.URL wsdlLoc
@@ -64,7 +62,7 @@ public class LetheController {
     ) throws Exception {
         this.wsdlLoc = wsdlLoc;
         this.identity = identity;
-        this.peers.add(new Peer(this.identity.getName(), this.identity.getKeyPair().getPublic()));
+        // this.peers.add(new Peer(this.identity.getName(), this.identity.getKeyPair().getPublic()));
     }
     
     public void
@@ -97,7 +95,7 @@ public class LetheController {
         final java.util.List<java.security.PublicKey> recipients = getRecipients();
         if (recipients.size() > 0) {
             contents.setDescriptor(EncryptedMessage.class.getName());
-            msg = this.encryptor.encrypt(msg, recipients);
+            msg = new Encryptor().encrypt(msg, recipients);
         }
         contents.setMsg(msg);
         try {
@@ -116,6 +114,9 @@ public class LetheController {
             if (peer.getEncryptTo()) {
                 ret.add(peer.getPublicKey());
             }
+        }
+        if (ret.size() > 0 && this.identity.getEncryptTo()) {
+            ret.add(this.identity.getPublicKey());
         }
         return ret;
     }
@@ -252,7 +253,7 @@ public class LetheController {
     verifyMessageSignedBy(
         final SignedMessage signed
     ) {
-        for (Peer peer : this.peers) {
+        for (Peer peer : getIdentityAndPeers()) {
             try {
                 return peer.getVerifier().verify(signed);
             } catch (final Exception e) {
@@ -260,6 +261,14 @@ public class LetheController {
             }
         }
         throw new RuntimeException("No public key found");
+    }
+    
+    private java.util.List<Peer>
+    getIdentityAndPeers() {
+        final java.util.List<Peer> ret = new java.util.ArrayList<Peer>();
+        ret.add(this.identity);
+        ret.addAll(this.peers);
+        return ret;
     }
     
     public void

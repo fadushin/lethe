@@ -28,34 +28,29 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.Identity;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
-import net.dushin.lethe.messaging.client.ui.controller.Peer;
 
 class CryptoPanel extends javax.swing.JPanel {
 
     private final LetheController controller;
-    
-    private final javax.swing.JLabel idLabel = new javax.swing.JLabel();
-    private final javax.swing.JCheckBox signBox = new javax.swing.JCheckBox(
-            "Sign messages"
-    );
-    private final PeerTablePanel peerPanel;
+
+    private final IdentityTableModel identityTableModel;
+    private final javax.swing.JTable identityTable;
+    private final PeerTablePanel peerPanel;    
     
     CryptoPanel(
         final LetheController controller
     ) {
         this.controller = controller;
         
-        this.idLabel.setText("name: " + this.controller.getIdentity().getName());
-        this.signBox.setSelected(
-            this.controller.getIdentity().getSignMessages()
-        );
-        this.signBox.addItemListener(new SignBoxSelectionListener());
+        this.identityTableModel = new IdentityTableModel(this.controller);
+        this.identityTable = new javax.swing.JTable(this.identityTableModel);
+        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.identityTable);
         
         this.setLayout(new java.awt.BorderLayout());
 
-        final javax.swing.JButton idSetButton = new javax.swing.JButton("set...");
-        idSetButton.addActionListener(new SetIdListener());
-        final javax.swing.JButton idExportButton = new javax.swing.JButton("export...");
+        final javax.swing.JButton idSetButton = new javax.swing.JButton("Edit...");
+        idSetButton.addActionListener(new SetIdentityListener());
+        final javax.swing.JButton idExportButton = new javax.swing.JButton("Export...");
         idExportButton.addActionListener(new ExportIdListener());
         final javax.swing.JPanel idButtonPanel = new javax.swing.JPanel();
         idButtonPanel.add(idSetButton);
@@ -64,15 +59,23 @@ class CryptoPanel extends javax.swing.JPanel {
         final javax.swing.JPanel idPanel =
             new javax.swing.JPanel();
         idPanel.setLayout(new java.awt.BorderLayout());
-        idPanel.add("North", this.idLabel);
-        idPanel.add("Center", idButtonPanel);
-        idPanel.add("South", this.signBox);
+        idPanel.setBorder(
+            javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createCompoundBorder(
+                    javax.swing.BorderFactory.createTitledBorder("Identity"),
+                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
+                ),
+                this.getBorder()
+            )
+        );
+        idPanel.add("Center", scrollPane);
+        idPanel.add("South", idButtonPanel);
                 
-        this.add("North", idPanel);
+        this.add("Center", idPanel);
         
         this.peerPanel =
             new PeerTablePanel(this.controller);
-        this.add("Center", peerPanel);
+        this.add("South", peerPanel);
     }
     
     private java.awt.Frame
@@ -88,29 +91,19 @@ class CryptoPanel extends javax.swing.JPanel {
     }
     
     private void
-    setNamePassphrase(
-        final String name,
-        final char[] passphrase
+    setIdentity(
+        final Identity identity
     ) {
-        final Identity identity =
-            new Identity(name, new String(passphrase), this.signBox.getSelectedObjects() != null);
         this.controller.setIdentity(
             identity
         );
-        this.idLabel.setText("name: " + name);
-        this.peerPanel.addPeer(new Peer(identity.getName(), identity.getKeyPair().getPublic()));
+        this.identityTableModel.fireTableDataChanged();
     }
     
-    private void
-    signBoxStateChanged() {
-        final Object[] selected = this.signBox.getSelectedObjects();
-        this.controller.getIdentity().setSignMessages(selected != null);
-    }
-    
-    private class SetIdListener 
+    private class SetIdentityListener 
         implements java.awt.event.ActionListener {
         
-        SetIdListener() {
+        SetIdentityListener() {
         }
         
         public void 
@@ -124,7 +117,14 @@ class CryptoPanel extends javax.swing.JPanel {
             if (dlog.isOk()) {
                 final String name = dlog.getName();
                 final char[] passphrase = dlog.getPassphrase();
-                setNamePassphrase(name, passphrase);
+                final Identity identity =
+                    new Identity(
+                        name, 
+                        new String(passphrase), 
+                        CryptoPanel.this.controller.getIdentity().getSignMessages(),
+                        true
+                    );
+                setIdentity(identity);
             }
         }        
     }
@@ -145,20 +145,6 @@ class CryptoPanel extends javax.swing.JPanel {
             );
             // dlog.setLocationRelativeTo(CryptoPanel.this);
             dlog.setVisible(true);
-        }        
-    }
-    
-    private class SignBoxSelectionListener 
-        implements java.awt.event.ItemListener {
-        
-        SignBoxSelectionListener() {
-        }
-        
-        public void 
-        itemStateChanged(
-            final java.awt.event.ItemEvent event
-        ) {
-            signBoxStateChanged();
         }        
     }
 }

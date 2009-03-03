@@ -31,7 +31,7 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 class PeerTableModel extends javax.swing.table.AbstractTableModel {
 
     private static final String COLUMN_NAMES[] = {
-        "Encrypt",
+        "EncryptTo",
         "Peer Name",
         "Pinkyprint"
     };

@@ -30,11 +30,10 @@ import net.dushin.lethe.messaging.client.crypto.Decryptor;
 import net.dushin.lethe.messaging.client.crypto.KeyPairGenerator;
 import net.dushin.lethe.messaging.client.crypto.Signer;
 
-public class Identity {
+public class Identity extends Peer {
 
-    public static final Identity ANONYMOUS = new Identity("anonymous", "", true);
+    public static final Identity ANONYMOUS = new Identity("anonymous", "", true, false);
     
-    private final String name;
     private final java.security.KeyPair keyPair;
     private final Signer signer;
     private final Decryptor decryptor;
@@ -45,22 +44,34 @@ public class Identity {
     Identity(
         final String name,
         final String password,
-        final boolean signMessages
+        final boolean signMessages,
+        final boolean encryptToSelf
     ) {
-        this.name = name;
-        try {
-            this.keyPair = new KeyPairGenerator(512).generateKeyPair(password);
-        } catch (final Exception e) {
-            throw new RuntimeException("Error generating key pair", e);
-        }
+        this(name, generateKeyPair(password), signMessages, encryptToSelf);
+    }
+
+    private
+    Identity(
+        final String name,
+        final java.security.KeyPair keyPair,
+        final boolean signMessages,
+        final boolean encryptToSelf
+    ) {
+        super(name, keyPair.getPublic());
+        this.keyPair = keyPair;
         this.signMessages = signMessages;
         this.signer = new Signer(this.keyPair.getPrivate());
         this.decryptor = new Decryptor(this.keyPair.getPrivate());
+        this.setEncryptTo(encryptToSelf);
     }
     
-    public String
-    getName() {
-        return this.name;
+    private static java.security.KeyPair
+    generateKeyPair(final String password) {
+        try {
+            return new KeyPairGenerator(512).generateKeyPair(password);
+        } catch (final Exception e) {
+            throw new RuntimeException("Error generating key pair", e);
+        }
     }
     
     public java.security.KeyPair

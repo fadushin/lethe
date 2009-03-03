@@ -52,7 +52,7 @@ LetheWindow extends javax.swing.JFrame {
     ) throws Exception {
         super(title);
 
-        setBackground(java.awt.Color.GRAY);
+        // setBackground(java.awt.Color.GRAY);
         
         // Make the menu
         final javax.swing.JMenuItem quitMenuItem = new javax.swing.JMenuItem("Quit");
