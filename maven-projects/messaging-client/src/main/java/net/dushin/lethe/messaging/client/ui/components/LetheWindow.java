@@ -83,11 +83,4 @@ LetheWindow extends javax.swing.JFrame {
             System.exit(0);
         }
     }
-    
-    public static void
-    main(
-        final String[] argv
-    ) throws Exception {
-        new LetheWindow();
-    }
 }
