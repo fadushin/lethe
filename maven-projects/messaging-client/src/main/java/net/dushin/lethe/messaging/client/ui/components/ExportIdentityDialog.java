@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.keys.KeyHelper;
+import net.dushin.lethe.messaging.client.crypto.KeyHelper;
 import net.dushin.lethe.messaging.client.ui.controller.Identity;
 
 class ExportIdentityDialog extends javax.swing.JDialog {

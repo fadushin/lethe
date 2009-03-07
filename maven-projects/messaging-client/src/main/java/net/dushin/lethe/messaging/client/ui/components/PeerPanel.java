@@ -29,13 +29,13 @@ package net.dushin.lethe.messaging.client.ui.components;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 import net.dushin.lethe.messaging.client.ui.controller.Peer;
 
-class PeerTablePanel extends javax.swing.JPanel {
+class PeerPanel extends javax.swing.JPanel {
 
     private final LetheController controller;
     private final PeerTableModel peerTableModel;
     private final javax.swing.JTable peerTable;
     
-    PeerTablePanel(
+    PeerPanel(
         final LetheController controller
     ) {
         this.controller = controller;
@@ -101,18 +101,6 @@ class PeerTablePanel extends javax.swing.JPanel {
         }
     }
     
-    private java.awt.Frame
-    getFrame() {
-        for (java.awt.Container container = this;; container = container.getParent()) {
-            if (container == null) {
-                return null;
-            }
-            if (container instanceof java.awt.Frame) {
-                return (java.awt.Frame) container;
-            }
-        }
-    }
-    
     private class AddPeerListener 
         implements java.awt.event.ActionListener {
         
@@ -120,7 +108,7 @@ class PeerTablePanel extends javax.swing.JPanel {
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            final AddPeerDialog dlog = new AddPeerDialog(getFrame());
+            final AddPeerDialog dlog = new AddPeerDialog(SwingUtil.getFrame(PeerPanel.this));
             // dlog.setLocationRelativeTo(CryptoPanel.this);
             dlog.setVisible(true);
             

@@ -24,7 +24,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.keys;
+package net.dushin.lethe.messaging.client.crypto;
 
 import net.dushin.lethe.messaging.client.debug.HexDump;
 import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;

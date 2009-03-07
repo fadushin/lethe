@@ -26,8 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.crypto.KeyHelper;
 import net.dushin.lethe.messaging.client.crypto.Verifier;
-import net.dushin.lethe.messaging.client.keys.KeyHelper;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 
 public class Peer {

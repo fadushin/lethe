@@ -26,136 +26,24 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.ui.controller.Identity;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 class CryptoPanel extends javax.swing.JPanel {
 
     private final LetheController controller;
 
-    private final IdentityTableModel identityTableModel;
-    private final javax.swing.JTable identityTable;
-    private final PeerTablePanel peerPanel;    
+    private final IdentityPanel identityPanel;
+    private final PeerPanel peerPanel;    
     
     CryptoPanel(
         final LetheController controller
     ) {
         this.controller = controller;
         
-        this.identityTableModel = new IdentityTableModel(this.controller);
-        this.identityTable = new javax.swing.JTable(this.identityTableModel);
-        final java.awt.Dimension dim =
-            new java.awt.Dimension(
-                this.identityTable.getMinimumSize().width,
-                32
-            );
-        this.identityTable.setMinimumSize(dim);
-        this.identityTable.setMaximumSize(dim);
-        this.identityTable.setPreferredSize(dim);
-        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.identityTable);
-        
         this.setLayout(new java.awt.BorderLayout());
-
-        final javax.swing.JButton idSetButton = new javax.swing.JButton("Edit...");
-        idSetButton.addActionListener(new SetIdentityListener());
-        final javax.swing.JButton idExportButton = new javax.swing.JButton("Export...");
-        idExportButton.addActionListener(new ExportIdListener());
-        final javax.swing.JPanel idButtonPanel = new javax.swing.JPanel();
-        idButtonPanel.add(idSetButton);
-        idButtonPanel.add(idExportButton);
-        
-        final javax.swing.JPanel idPanel =
-            new javax.swing.JPanel();
-        idPanel.setLayout(new java.awt.BorderLayout());
-        idPanel.setBorder(
-            javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Identity"),
-                    javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
-                ),
-                this.getBorder()
-            )
-        );
-        idPanel.add("Center", scrollPane);
-        idPanel.add("South", idButtonPanel);
-                
-        this.add("Center", idPanel);
-        
-        this.peerPanel =
-            new PeerTablePanel(this.controller);
+        this.identityPanel = new IdentityPanel(this.controller);        
+        this.add("Center", this.identityPanel);
+        this.peerPanel = new PeerPanel(this.controller);
         this.add("South", peerPanel);
-    }
-    
-    private java.awt.Frame
-    getFrame() {
-        for (java.awt.Container container = this;; container = container.getParent()) {
-            if (container == null) {
-                return null;
-            }
-            if (container instanceof java.awt.Frame) {
-                return (java.awt.Frame) container;
-            }
-        }
-    }
-    
-    private void
-    setIdentity(
-        final Identity identity
-    ) {
-        this.controller.setIdentity(identity);
-        this.identityTableModel.fireTableDataChanged();
-    }
-    
-    private class SetIdentityListener 
-        implements java.awt.event.ActionListener {
-        
-        SetIdentityListener() {
-        }
-        
-        public void 
-        actionPerformed(
-            final java.awt.event.ActionEvent event
-        ) {
-            final SetIdentityDialog dlog = 
-                new SetIdentityDialog(
-                    getFrame(),
-                    CryptoPanel.this.controller.getIdentity().getName(),
-                    CryptoPanel.this.controller.getIdentity().getPassword()
-                );
-            // dlog.setLocationRelativeTo(CryptoPanel.this);
-            dlog.setVisible(true);
-            
-            if (dlog.isOk()) {
-                final String name = dlog.getName();
-                final char[] passphrase = dlog.getPassphrase();
-                final Identity identity =
-                    new Identity(
-                        name, 
-                        new String(passphrase), 
-                        CryptoPanel.this.controller.getIdentity().getSignMessages(),
-                        true
-                    );
-                setIdentity(identity);
-            }
-        }        
-    }
-    
-    private class ExportIdListener 
-        implements java.awt.event.ActionListener {
-        
-        ExportIdListener() {
-        }
-        
-        public void 
-        actionPerformed(
-            final java.awt.event.ActionEvent event
-        ) {
-            final ExportIdentityDialog dlog = new ExportIdentityDialog(
-                getFrame(),
-                CryptoPanel.this.controller.getIdentity()
-            );
-            // dlog.setLocationRelativeTo(CryptoPanel.this);
-            dlog.setVisible(true);
-        }        
     }
 }

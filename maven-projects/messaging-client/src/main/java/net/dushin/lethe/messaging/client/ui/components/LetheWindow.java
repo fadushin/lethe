@@ -24,9 +24,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.ui.main;
+package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.ui.components.LethePanel;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class

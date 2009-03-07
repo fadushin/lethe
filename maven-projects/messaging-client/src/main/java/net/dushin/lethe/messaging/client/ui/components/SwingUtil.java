@@ -26,23 +26,24 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+public final class SwingUtil {
 
-class IdPanel extends javax.swing.JPanel {
-
-    private final LetheController controller;
+    private
+    SwingUtil() {
+        // complete
+    }
     
-    IdPanel(
-        final LetheController controller
+    static java.awt.Frame
+    getFrame(
+        final java.awt.Container container
     ) {
-        this.controller = controller;
-        
-        this.setLayout(new java.awt.BorderLayout());
-
-        final javax.swing.JLabel idLabel = new javax.swing.JLabel("id: "); 
-
-        final javax.swing.JButton idSetButton = new javax.swing.JButton("set...");
-        final javax.swing.JButton idInfoButton = new javax.swing.JButton("info...");
-        final javax.swing.JButton idExportButton = new javax.swing.JButton("export...");
+        for (java.awt.Container current = container;; current = current.getParent()) {
+            if (current == null) {
+                return null;
+            }
+            if (current instanceof java.awt.Frame) {
+                return (java.awt.Frame) current;
+            }
+        }
     }
 }
