@@ -264,7 +264,7 @@ public class LetheController {
         for (Peer peer : getIdentityAndPeers()) {
             try {
                 final Object plaintext = peer.getVerifier().verify(signed);
-                return new Object[]{plaintext, peer};
+                return new Object[] {plaintext, peer};
             } catch (final Exception e) {
                 continue;
             }
@@ -281,7 +281,9 @@ public class LetheController {
     }
     
     public void
-    setIdentity(final Identity identity) {
+    setIdentity(
+        final Identity identity
+    ) {
         this.identity = identity;
         synchronized (messageChangeThreadMap) {
             for (MessageChangeThread thread : messageChangeThreadMap.values()) {

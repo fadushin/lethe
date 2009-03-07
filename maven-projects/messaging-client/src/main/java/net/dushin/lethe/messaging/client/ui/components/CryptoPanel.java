@@ -44,6 +44,14 @@ class CryptoPanel extends javax.swing.JPanel {
         
         this.identityTableModel = new IdentityTableModel(this.controller);
         this.identityTable = new javax.swing.JTable(this.identityTableModel);
+        final java.awt.Dimension dim =
+            new java.awt.Dimension(
+                this.identityTable.getMinimumSize().width,
+                32
+            );
+        this.identityTable.setMinimumSize(dim);
+        this.identityTable.setMaximumSize(dim);
+        this.identityTable.setPreferredSize(dim);
         final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.identityTable);
         
         this.setLayout(new java.awt.BorderLayout());
