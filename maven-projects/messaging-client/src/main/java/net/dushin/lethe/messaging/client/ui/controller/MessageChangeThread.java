@@ -66,7 +66,7 @@ class MessageChangeThread extends Thread {
     /**
      * The last message number that was received
      */
-    private int since;
+    private int since = -1;
     
     /**
      * whether some state has changed that requires a refresh
@@ -97,10 +97,14 @@ class MessageChangeThread extends Thread {
                 return;
             }
             try {
+                System.out.println("since before get: " + since);
                 final MessageList messages = controller.getProxy().getMessages(channel, since);
-                if (messages.getItem().size() > 0 || notifyChange) {
-                    since += messages.getItem().size();
-                    this.rawMessages.addAll(messages.getItem());
+                final java.util.List<Message> msgs = messages.getItem();
+                if (msgs.size() > 0 || notifyChange) {
+                    System.out.println("size > 0");
+                    since = msgs.get(msgs.size() - 1).getOrdinal();
+                    System.out.println("New since: " + since);
+                    this.rawMessages.addAll(msgs);
                     final java.util.List<ReceivedMessage> receivedMessages =
                         this.controller.receiveMessages(this.rawMessages);
                     this.listener.messageChanged(receivedMessages);

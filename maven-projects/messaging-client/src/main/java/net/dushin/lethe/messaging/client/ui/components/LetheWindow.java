@@ -40,7 +40,7 @@ LetheWindow extends javax.swing.JFrame {
     
     public
     LetheWindow(final String title) throws Exception {
-        this(title, 400, 300);
+        this(title, 600, 400);
     }
 
     public 

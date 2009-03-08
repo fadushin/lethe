@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
+import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
@@ -39,6 +40,7 @@ public class ReceivedMessage {
     private final boolean messageEncrypted;
     private final boolean messageDecrypted;
     
+    private final Message rawMessage;
     private PlaintextMessage plaintext;
     private SignedMessage signed;
     private Peer signer;
@@ -46,19 +48,21 @@ public class ReceivedMessage {
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final PlaintextMessage plaintext
     ) {
-        this(false, false, false, false);
+        this(rawMessage, false, false, false, false);
         this.plaintext = plaintext;
     }
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final SignedMessage signed,
         final Peer signer,
         final PlaintextMessage plaintext
     ) {
-        this(true, true, false, false);
+        this(rawMessage, true, true, false, false);
         this.signed = signed;
         this.signer = signer;
         this.plaintext = plaintext;
@@ -66,29 +70,32 @@ public class ReceivedMessage {
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final SignedMessage signed
     ) {
-        this(true, false, false, false);
+        this(rawMessage, true, false, false, false);
         this.signed = signed;
         this.plaintext = parseSigned(signed);
     }
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final EncryptedMessage encrypted
     ) {
-        this(false, false, true, false);
+        this(rawMessage, false, false, true, false);
         this.encrypted = encrypted;
     }
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final EncryptedMessage encrypted,
         final SignedMessage signed,
         final Peer signer,
         final PlaintextMessage plaintext
     ) {
-        this(true, true, true, true);
+        this(rawMessage, true, true, true, true);
         this.encrypted = encrypted;
         this.signed = signed;
         this.signer = signer;
@@ -97,21 +104,24 @@ public class ReceivedMessage {
     
     public
     ReceivedMessage(
+        final Message rawMessage,
         final EncryptedMessage encrypted,
         final PlaintextMessage plaintext
     ) {
-        this(false, false, true, true);
+        this(rawMessage, false, false, true, true);
         this.encrypted = encrypted;
         this.plaintext = plaintext;
     }
     
     private
     ReceivedMessage(
+        final Message rawMessage,
         final boolean messageSigned,
         final boolean messageVerified,
         final boolean messageEncrypted,
         final boolean messageDecrypted
     ) {
+        this.rawMessage = rawMessage;
         this.messageSigned = messageSigned;
         this.messageVerified = messageVerified;
         this.messageEncrypted = messageEncrypted;
@@ -126,6 +136,11 @@ public class ReceivedMessage {
             PlaintextMessage.class.getPackage(), 
             signed.getSerializedMessage(), 
             PlaintextMessage.class);
+    }
+    
+    public Message
+    getRawMessage() {
+        return this.rawMessage;
     }
     
     public boolean

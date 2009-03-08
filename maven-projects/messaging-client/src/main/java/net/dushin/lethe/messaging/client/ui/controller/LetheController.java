@@ -304,7 +304,7 @@ public class LetheController {
         String descriptor = contents.getDescriptor();
         if (descriptor.equals(PlaintextMessage.class.getName())) {
             final PlaintextMessage plaintext = (PlaintextMessage) contents.getMsg();
-            return new ReceivedMessage(plaintext);
+            return new ReceivedMessage(message, plaintext);
         } else if (descriptor.equals(SignedMessage.class.getName())) {
             final SignedMessage signed = (SignedMessage) contents.getMsg();
             try {
@@ -312,12 +312,12 @@ public class LetheController {
                 final Object plaintext = pair[0];
                 final Peer signer = (Peer) pair[1];
                 if (plaintext instanceof PlaintextMessage) {
-                    return new ReceivedMessage(signed, signer, (PlaintextMessage) plaintext);
+                    return new ReceivedMessage(message, signed, signer, (PlaintextMessage) plaintext);
                 } else {
                     throw new RuntimeException("Expected signed object to be plaintext");
                 }
             } catch (final Exception e) {
-                return new ReceivedMessage(signed);
+                return new ReceivedMessage(message, signed);
             }
         } else if (descriptor.equals(EncryptedMessage.class.getName())) {
             final EncryptedMessage encrypted = (EncryptedMessage) contents.getMsg();
@@ -325,7 +325,7 @@ public class LetheController {
             try {
                 obj = this.identity.getDecryptor().decrypt(encrypted);
             } catch (final Exception e) {
-                return new ReceivedMessage(encrypted);
+                return new ReceivedMessage(message, encrypted);
             }
             if (obj instanceof SignedMessage) {
                 final SignedMessage signed = (SignedMessage) obj;
@@ -336,17 +336,17 @@ public class LetheController {
                     plaintext = pair[0];
                     signer = (Peer) pair[1];
                 } catch (final Exception e) {
-                    return new ReceivedMessage(signed);
+                    return new ReceivedMessage(message, signed);
                 }
                 if (plaintext instanceof PlaintextMessage) {
                     return new ReceivedMessage(
-                        encrypted, signed, signer, (PlaintextMessage) plaintext
+                        message, encrypted, signed, signer, (PlaintextMessage) plaintext
                     );
                 } else {
                     throw new RuntimeException("Expected signed object to be plaintext");
                 }
             } else if (obj instanceof PlaintextMessage) {
-                return new ReceivedMessage(encrypted, (PlaintextMessage) obj);
+                return new ReceivedMessage(message, encrypted, (PlaintextMessage) obj);
             }
         }
         throw new RuntimeException("Unsupported descriptor: " + descriptor);

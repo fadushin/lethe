@@ -52,7 +52,7 @@ public class LethePanel extends javax.swing.JPanel {
             this.messagePanel
         );
         splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(150);
+        splitPane.setDividerLocation(250);
         
         this.add("Center", splitPane);
     }

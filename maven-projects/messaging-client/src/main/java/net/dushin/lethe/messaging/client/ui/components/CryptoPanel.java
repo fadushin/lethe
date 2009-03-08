@@ -39,11 +39,26 @@ class CryptoPanel extends javax.swing.JPanel {
         final LetheController controller
     ) {
         this.controller = controller;
-        
-        this.setLayout(new java.awt.BorderLayout());
+        //
+        // create the panels
+        //
         this.identityPanel = new IdentityPanel(this.controller);        
-        this.add("Center", this.identityPanel);
         this.peerPanel = new PeerPanel(this.controller);
-        this.add("South", peerPanel);
+        //
+        // create a split pane for the panels
+        //
+        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
+            javax.swing.JSplitPane.VERTICAL_SPLIT,
+            this.identityPanel,
+            this.peerPanel
+        );
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(150);
+        //
+        // add them to this panel
+        //
+        this.setLayout(new java.awt.BorderLayout());
+        this.add("Center", splitPane);
+
     }
 }

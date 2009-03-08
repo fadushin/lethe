@@ -101,15 +101,15 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
                 "foo",
                 createContents("bar")
             );
-            MessageList foo = messenger.getMessages("foo", 0);
+            MessageList foo = messenger.getMessages("foo", -1);
             assertSame(foo.getItem().size(), 1);
             assertSame(foo.getItem().get(0).getOrdinal(), 0);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             //
             // Check the logic of get
             //
-            assertSame(messenger.getMessages("foo", 1).getItem().size(), 0);
-            assertSame(messenger.getMessages("gnu", 0).getItem().size(), 0);
+            assertSame(messenger.getMessages("foo", 0).getItem().size(), 0);
+            assertSame(messenger.getMessages("gnu", -1).getItem().size(), 0);
             //
             // Post another message, and check that it arrived, as well
             //
@@ -117,7 +117,7 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
                 "foo",
                 createContents("bar2")
             );
-            foo = messenger.getMessages("foo", 0);
+            foo = messenger.getMessages("foo", -1);
             assertSame(foo.getItem().size(), 2);
             assertSame(foo.getItem().get(0).getOrdinal(), 0);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");

@@ -32,10 +32,14 @@ import net.dushin.lethe.messaging.interfaces.MessageList;
 
 public class Channel {
 
+    private static final int DEFAULT_MAX_MESSAGES = 100;
+    
     private final String id;
     
     private final MessageList messages =
         new MessageList();
+    
+    private int totalMessages;
 
     public
     Channel(
@@ -49,7 +53,12 @@ public class Channel {
         final int since
     ) {
         synchronized (messages) {
-            if (since <= 0) {
+            final java.util.List<Message> msgs = this.messages.getItem();
+            final int min = 
+                (msgs.size() > 0 && msgs.get(0).getOrdinal() > 0) 
+                ? msgs.get(0).getOrdinal()
+                : 0;
+            if (since < min) {
                 return messages;
             } else {
                 return getSince(since);
@@ -62,10 +71,15 @@ public class Channel {
         final Contents message
     ) {
         synchronized (messages) {
+            final java.util.List<Message> msgs = this.messages.getItem();
+            if (msgs.size() == DEFAULT_MAX_MESSAGES) {
+                msgs.remove(0);
+            }
             final Message msg = new Message();
-            msg.setOrdinal(messages.getItem().size());
+            msg.setOrdinal(this.totalMessages);
             msg.setMessage(message);
-            messages.getItem().add(msg);
+            msgs.add(msg);
+            this.totalMessages++;
         }
     }
     
@@ -76,12 +90,10 @@ public class Channel {
         final MessageList ret = new MessageList();
         final java.util.List<Message> src = messages.getItem();
         final java.util.List<Message> dst = ret.getItem();
-        int i = 0;
         for (Message msg : src) {
-            if (i >= since) {
+            if (since < msg.getOrdinal()) {
                 dst.add(msg);
             }
-            ++i;
         }
         return ret;
     }
