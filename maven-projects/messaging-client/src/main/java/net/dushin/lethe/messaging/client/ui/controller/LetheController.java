@@ -35,18 +35,53 @@ import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
+/**
+ * This class encapsulates the state of a Lethe client.  It holds
+ * the identity information for the user (his or her key pair), together
+ * with the information for all of the known peers of the user.
+ *
+ * The controller is used to send and receive messages through the
+ * lethe system.  Each message is associated with a channel, each channel
+ * is associated with a thread, which receives messages sent to the channel.
+ */
 public class LetheController {
-
+    
+    //
+    // data
+    //
+    
+    /**
+     * the location of the WSDL for the Lethe messaging service.
+     */
     final java.net.URL wsdlLoc;
 
-    MessengerClientProxy proxy;
+    /**
+     * The identity associated with this controller
+     */
     Identity identity;
     
+    /**
+     * the collection of peers associated with this controller
+     */
+    private final java.util.List<Peer> peers =
+        new java.util.ArrayList<Peer>();
+    
+    /**
+     * a map from channel ids to threads.  Each thread is responsible for
+     * receiving (in a polling manner) messages delivered to the designated
+     * channel.
+     */
     private final java.util.Map<String, MessageChangeThread> messageChangeThreadMap =
         new java.util.HashMap<String, MessageChangeThread>();
     
-    private final java.util.List<Peer> peers =
-        new java.util.ArrayList<Peer>();
+    /**
+     * A cached proxy instance, associated with the WSDL location.
+     */
+    private MessengerClientProxy proxy;
+    
+    //
+    // Lifecycle
+    //
     
     public
     LetheController(
@@ -62,9 +97,88 @@ public class LetheController {
     ) throws Exception {
         this.wsdlLoc = wsdlLoc;
         this.identity = identity;
-        // this.peers.add(new Peer(this.identity.getName(), this.identity.getKeyPair().getPublic()));
     }
     
+    //
+    // public operations
+    //
+    
+    /**
+     * @return      the Identity associated with this controller
+     */
+    public Identity
+    getIdentity() {
+        return this.identity;
+    }
+    
+    /**
+     * Set the identity associated with this controller.
+     *
+     * @param       identity
+     *              the identity to set
+     */
+    public void
+    setIdentity(
+        final Identity identity
+    ) {
+        this.identity = identity;
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
+    
+    /**
+     * @return      the list of peers associated with this controller.
+     */
+    public java.util.List<Peer>
+    getPeers() {
+        return this.peers;
+    }
+    
+    /**
+     * Add a peer to the list of peers associated with this controller.
+     *
+     * @param       peer
+     *              the Peer to add
+     */
+    public void
+    addPeer(final Peer peer) {
+        this.peers.add(peer);
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
+    
+    /**
+     * Remove the peers at the specified list of indices
+     */
+    public void
+    removePeers(final int[] indices) {
+        // TODO is this right?
+        for (int index : indices) {
+            this.peers.remove(index);
+        }
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
+    
+    /**
+     * Send the specified message on the specified channel.  The specified
+     * message will be signed and/or encrypted, based on the identity and peer
+     * settings set on this controller.
+     *
+     * @param       channel
+     *              the channel on which to send the message
+     *
+     * @param       The message (payload) to send.
+     */
     public void
     sendMessage(
         final String channel,
@@ -76,6 +190,7 @@ public class LetheController {
         
         final PlaintextMessage plaintext = new PlaintextMessage();
         plaintext.setFrom(this.identity.getName());
+        plaintext.setUuid(java.util.UUID.randomUUID().toString());
         plaintext.setData(message);
         //
         // message will be in plaintext unless told otherwise below
@@ -100,64 +215,17 @@ public class LetheController {
         contents.setMsg(msg);
         try {
             getProxy().postMessage(channel, contents);
+            messageChangeThreadMap.get(channel).notifyChange();
         } catch (final Exception e) {
             // log
             e.printStackTrace();
         }
     }
-
-    private java.util.List<java.security.PublicKey>
-    getRecipients() {
-        final java.util.List<java.security.PublicKey> ret = 
-            new java.util.ArrayList<java.security.PublicKey>();
-        for (Peer peer : getPeers()) {
-            if (peer.getEncryptTo()) {
-                ret.add(peer.getPublicKey());
-            }
-        }
-        if (ret.size() > 0 && this.identity.getEncryptTo()) {
-            ret.add(this.identity.getPublicKey());
-        }
-        return ret;
-    }
     
-    Messenger
-    getProxy() {
-        synchronized (this) {
-            try {
-                if (this.proxy == null) {
-                    this.proxy = new MessengerClientProxy(this.wsdlLoc);
-                }
-                return this.proxy.getProxy();
-            } catch (final Exception e) {
-                // log it?
-                throw new RuntimeException("Unable to resolve proxy", e);
-            }
-        }
-    }
-    
-    public void
-    addPeer(final Peer peer) {
-        this.peers.add(peer);
-        synchronized (messageChangeThreadMap) {
-            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
-                thread.notifyChange();
-            }
-        }
-    }
-    
-    public void
-    removePeers(final int[] indices) {
-        for (int index : indices) {
-            this.peers.remove(index);
-        }
-        synchronized (messageChangeThreadMap) {
-            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
-                thread.notifyChange();
-            }
-        }
-    }
-    
+    /**
+     * Register a MessageChangeListener with this controller, using the channel
+     * as the index.
+     */
     public void
     registerMessageChangedListener(
         final String channel,
@@ -177,6 +245,10 @@ public class LetheController {
         }
     }
     
+    /**
+     * Remove the message change listener associated with the specified
+     * channel.
+     */
     public void
     removeMessageChangedListener(
         final String channel
@@ -186,6 +258,25 @@ public class LetheController {
             if (thread != null) {
                 thread.notifyHalt();
                 messageChangeThreadMap.remove(channel);
+            }
+        }
+    }
+    
+    //
+    // package protected operations
+    //
+    
+    Messenger
+    getProxy() {
+        synchronized (this) {
+            try {
+                if (this.proxy == null) {
+                    this.proxy = new MessengerClientProxy(this.wsdlLoc);
+                }
+                return this.proxy.getProxy();
+            } catch (final Exception e) {
+                // log it?
+                throw new RuntimeException("Unable to resolve proxy", e);
             }
         }
     }
@@ -201,7 +292,11 @@ public class LetheController {
         return ret;
     }
     
-    ReceivedMessage
+    //
+    // private operations
+    //
+    
+    private ReceivedMessage
     receiveMessage(
         final Message message
     ) {
@@ -256,6 +351,21 @@ public class LetheController {
         }
         throw new RuntimeException("Unsupported descriptor: " + descriptor);
     }
+
+    private java.util.List<java.security.PublicKey>
+    getRecipients() {
+        final java.util.List<java.security.PublicKey> ret = 
+            new java.util.ArrayList<java.security.PublicKey>();
+        for (Peer peer : getPeers()) {
+            if (peer.getEncryptTo()) {
+                ret.add(peer.getPublicKey());
+            }
+        }
+        if (ret.size() > 0 && this.identity.getEncryptTo()) {
+            ret.add(this.identity.getPublicKey());
+        }
+        return ret;
+    }
     
     private Object[]
     verifyMessageSignedBy(
@@ -278,27 +388,5 @@ public class LetheController {
         ret.add(this.identity);
         ret.addAll(this.peers);
         return ret;
-    }
-    
-    public void
-    setIdentity(
-        final Identity identity
-    ) {
-        this.identity = identity;
-        synchronized (messageChangeThreadMap) {
-            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
-                thread.notifyChange();
-            }
-        }
-    }
-    
-    public Identity
-    getIdentity() {
-        return this.identity;
-    }
-    
-    public java.util.List<Peer>
-    getPeers() {
-        return this.peers;
     }
 }

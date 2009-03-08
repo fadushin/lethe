@@ -30,9 +30,6 @@
 // causing types to get mapped to '.'-separated identifiers in WSDL
 //
 
-const string PROTECTED_MSG = "protected";
-const string PLAINTEXT_MSG = "plaintext";
-
 /**
  * A Contents is a wrapper around a set of data that
  * holds the actual message data.
@@ -40,7 +37,12 @@ const string PLAINTEXT_MSG = "plaintext";
 struct Contents
 {
     /**
-     * An optional descriptor for the message contents
+     * A descriptor for the message contents.  Currently, this
+     * descriptor can be one of the following values, indicating
+     * the type of the any:
+     *   * net.dushin.lethe.messaging.client.crypto.PlaintextMessage
+     *   * net.dushin.lethe.messaging.client.crypto.SignedMessage
+     *   * net.dushin.lethe.messaging.client.crypto.EncryptedMessage
      */
     string descriptor;
 
@@ -64,6 +66,11 @@ struct PlaintextMessage
      * Who the message is from
      */
     string from;
+    
+    /**
+     * The message identifier.  This is assumed to be globally unique
+     */
+    string uuid;
     
     /**
      * The message itself

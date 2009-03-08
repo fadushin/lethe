@@ -26,6 +26,11 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+/**
+ * Implementors of this interface are notified when the
+ * list of received messages has changed.  The set of new
+ * messages are intended to /replace/ any previous messages.
+ */
 public interface MessageChangeListener {
     
     void

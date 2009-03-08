@@ -98,7 +98,10 @@ public class MessagePanel extends javax.swing.JPanel
         final String sendText = sendMessageField.getText();
         if (sendText.length() > 0) {
             try {
-                controller.sendMessage(channel, sendText);
+                controller.sendMessage(
+                    channel, 
+                    sendText
+                );
             } catch (final Exception e) {
                 e.printStackTrace();
                 return;

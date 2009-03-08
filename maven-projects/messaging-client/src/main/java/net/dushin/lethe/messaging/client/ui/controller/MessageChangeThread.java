@@ -29,21 +29,56 @@ package net.dushin.lethe.messaging.client.ui.controller;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
-public class MessageChangeThread extends Thread {
-
+/**
+ *
+ */
+class MessageChangeThread extends Thread {
+    
+    private static final long DEFAULT_WAIT = 5000;
+    
+    /**
+     * The channel with which this thread is associated
+     */
     private final String channel;
+    
+    /**
+     * The controller, which is used to manage message
+     * receipt.
+     */
     private final LetheController controller;
+    
+    /**
+     * the entity to notify, when a new message is received.
+     */
     private final MessageChangeListener listener;
     
-    //private final java.util.List<ReceivedMessage> receivedMessages =
-    //    new java.util.ArrayList<ReceivedMessage>();
-    
+    /**
+     * the list of received messages on this channel
+     */
     private final java.util.List<Message> rawMessages =
         new java.util.ArrayList<Message>();
 
+    /**
+     * whether this thread should continue operating
+     */
     private boolean halt;
+    
+    /**
+     * The last message number that was received
+     */
     private int since;
+    
+    /**
+     * whether some state has changed that requires a refresh
+     */
     private boolean notifyChange;
+    
+    /**
+     * Monitor on state change.  This thread will wait on this
+     * * monitor between polls, but will wake up if it is notified
+     * of a state change.
+     */
+    private final Object changeMonitor = new Object();
     
     MessageChangeThread(
         final String channel,
@@ -75,22 +110,37 @@ public class MessageChangeThread extends Thread {
                 // log it?
                 e.printStackTrace();
             } finally {
-                try {
-                    Thread.sleep(1000);
-                } catch (final InterruptedException e) {
-                    // ignoref
+                synchronized (changeMonitor) {
+                    try {
+                        changeMonitor.wait(DEFAULT_WAIT);
+                    } catch (final InterruptedException e) {
+                        // ignore
+                    }
                 }
             }
         }
     }
     
+    /**
+     * Tell this thread to halt
+     */
     void
     notifyHalt() {
         this.halt = true;
+        synchronized (this.changeMonitor) {
+            this.changeMonitor.notifyAll();
+        }
     }
     
+    /**
+     * Tell the thread that some state has changed, and
+     * a new list of messages is needed.
+     */
     void
     notifyChange() {
         this.notifyChange = true;
+        synchronized (this.changeMonitor) {
+            this.changeMonitor.notifyAll();
+        }
     }
 }

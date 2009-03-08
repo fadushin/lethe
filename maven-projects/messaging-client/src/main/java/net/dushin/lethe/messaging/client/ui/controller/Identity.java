@@ -30,17 +30,49 @@ import net.dushin.lethe.messaging.client.crypto.Decryptor;
 import net.dushin.lethe.messaging.client.crypto.KeyPairGenerator;
 import net.dushin.lethe.messaging.client.crypto.Signer;
 
+/**
+ * An Identity is a represenation of a client or user of
+ * the Lethe system, and is an encapsulation of a name
+ * and a cryptographic key pair.
+ */
 public class Identity extends Peer {
 
-    public static final Identity ANONYMOUS = new Identity("anonymous", "anonymous", true, false);
+    /**
+     * The "anonymous" identity.
+     */
+    public static final Identity ANONYMOUS = 
+        new Identity("anonymous", "anonymous", true, false);
     
+    /**
+     * The password associated with this identity
+     */
     private final String password;
+    
+    /**
+     * the cryptographic key pair derived from the user's password.
+     */
     private final java.security.KeyPair keyPair;
+    
+    /**
+     * The signer used to sign messages
+     */
     private final Signer signer;
+    
+    /**
+     * the decryptor used to decrypt messages
+     */
     private final Decryptor decryptor;
     
+    /**
+     * flag indicating whether messages should be signed by
+     * this identity.
+     */
     private boolean signMessages;
-
+    
+    //
+    // lifecycle
+    //
+    
     public
     Identity(
         final String name,
@@ -68,35 +100,50 @@ public class Identity extends Peer {
         this.setEncryptTo(encryptToSelf);
     }
     
-    private static java.security.KeyPair
-    generateKeyPair(final String password) {
-        try {
-            return new KeyPairGenerator(512).generateKeyPair(password);
-        } catch (final Exception e) {
-            throw new RuntimeException("Error generating key pair", e);
-        }
-    }
-    
+    /**
+     * @return      the password associated with this identity
+     */
     public String
     getPassword() {
         return this.password;
     }
     
+    /**
+     * @return      the key pair generated from the user's password
+     */
     public java.security.KeyPair
     getKeyPair() {
         return this.keyPair;
     }
     
+    /**
+     * @return      the signer used to sign messages
+     */
     public Signer
     getSigner() {
         return this.signer;
     }
     
+    /**
+     * @return      the decryptor used to decrypt messages
+     */
+    public Decryptor
+    getDecryptor() {
+        return this.decryptor;
+    }
+    
+    /**
+     * @return      true, if messages should be signed by this
+     *              identity; false, otherwise
+     */
     public boolean
     getSignMessages() {
         return this.signMessages;
     }
     
+    /**
+     * Indicate whether messages should be signed by this identity.
+     */
     public void
     setSignMessages(
         final boolean signMessages
@@ -104,8 +151,16 @@ public class Identity extends Peer {
         this.signMessages = signMessages;
     }
     
-    public Decryptor
-    getDecryptor() {
-        return this.decryptor;
+    //
+    // private operations
+    //
+    
+    private static java.security.KeyPair
+    generateKeyPair(final String password) {
+        try {
+            return new KeyPairGenerator(512).generateKeyPair(password);
+        } catch (final Exception e) {
+            throw new RuntimeException("Error generating key pair", e);
+        }
     }
 }

@@ -30,14 +30,43 @@ import net.dushin.lethe.messaging.client.crypto.KeyHelper;
 import net.dushin.lethe.messaging.client.crypto.Verifier;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 
+/**
+ * A Peer is a representation of an external identity,
+ * encapsupated by a name and public key.
+ */
 public class Peer {
 
+    /**
+     * the peer name
+     */
     private final String name;
-    private final java.security.PublicKey publicKey;
-    private final Verifier verifier;
-    private final String pinkyprint;
     
+    /**
+     * The public key associated with this peer
+     */
+    private final java.security.PublicKey publicKey;
+    
+    /**
+     * the "pinky print" for the public key.  This
+     * 8 character key is computed off the SHA1 hash
+     * of the encoding of the public key.
+     */
+    private final String pinkyprint;
+
+    /**
+     * the Verifier used to verify messages signed by this peer.
+     */
+    private final Verifier verifier;
+    
+    /**
+     * flag indicating whether messages should be encrypted
+     * to this peer.
+     */
     private boolean encryptTo = true;
+    
+    //
+    // lifecycle
+    //
     
     public
     Peer(
@@ -61,33 +90,58 @@ public class Peer {
         this.pinkyprint = KeyHelper.getPinkyprint(this.publicKey);
     }
     
+    //
+    // public operations
+    //
+    
+    /**
+     * @return      the peer name
+     */
     public String
     getName() {
         return this.name;
     }
     
+    /**
+     * @return      the peer's public key
+     */
     public java.security.PublicKey
     getPublicKey() {
         return this.publicKey;
     }
     
-    public void
-    setEncryptTo(final boolean encryptTo) {
-        this.encryptTo = encryptTo;
+    /**
+     * @return      the peer's publick key pinkyprint
+     */
+    public String
+    getPinkyprint() {
+        return this.pinkyprint;
     }
     
-    public boolean
-    getEncryptTo() {
-        return this.encryptTo;
-    }
-    
+    /**
+     * @return      the peer's Verifier
+     */
     public Verifier
     getVerifier() {
         return this.verifier;
     }
     
-    public String
-    getPinkyprint() {
-        return this.pinkyprint;
+    /**
+     * @return      true, if messages should be encrypted
+     *              to this peer; false, otherwise
+     */
+    public boolean
+    getEncryptTo() {
+        return this.encryptTo;
+    }
+    
+    /**
+     * Indicate whether messages should be encrypted to this peer
+     */
+    public void
+    setEncryptTo(
+        final boolean encryptTo
+    ) {
+        this.encryptTo = encryptTo;
     }
 }
