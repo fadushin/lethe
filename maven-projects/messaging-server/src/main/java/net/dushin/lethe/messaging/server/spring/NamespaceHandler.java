@@ -24,31 +24,17 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.server;
+package net.dushin.lethe.messaging.server.spring;
 
-import net.dushin.lethe.messaging.server.config.ChannelConfigType;
+import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
-public class ChannelManager {
+public class NamespaceHandler extends NamespaceHandlerSupport {
 
-    private static java.util.Map<String, Channel> channelMap =
-        new java.util.HashMap<String, Channel>();
-
-    public
-    ChannelManager() {
-    }
-    
-    public Channel
-    getOrCreateChannel(
-        final ChannelConfigType channelConfig,
-        final String channelID
-    ) {
-        synchronized (channelMap) {
-            Channel ret = channelMap.get(channelID);
-            if (ret == null) {
-                ret = new Channel(channelConfig, channelID);
-                channelMap.put(channelID, ret);
-            }
-            return ret;
-        }
+    public void 
+    init() {
+        registerBeanDefinitionParser(
+            "MessagingServer", 
+            new MessagingServerConfigBeanDefinitionParser()
+        );
     }
 }

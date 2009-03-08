@@ -28,14 +28,20 @@ package net.dushin.lethe.messaging.server;
 
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
 public class Messenger
     implements net.dushin.lethe.messaging.interfaces.Messenger {
     
     private final ChannelManager channelMgr = new ChannelManager();
+    
+    private final MessagingServerConfigType serverConfig;
 
     public
-    Messenger() {
+    Messenger(
+        final MessagingServerConfigType serverConfig
+    ) {
+        this.serverConfig = serverConfig;
     }
 
     public MessageList
@@ -43,9 +49,10 @@ public class Messenger
         final java.lang.String channelID,
         final int since
     ) {
-        return channelMgr.getOrCreateChannel(channelID).getMessages(
-            since
-        );
+        return channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelID
+        ).getMessages(since);
     }
 
     public void
@@ -53,8 +60,9 @@ public class Messenger
         final java.lang.String channelID,
         final Contents message
     ) {
-        channelMgr.getOrCreateChannel(channelID).postMessage(
-            message
-        );
+        channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelID
+        ).postMessage(message);
     }
 }

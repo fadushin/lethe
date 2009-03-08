@@ -29,11 +29,13 @@
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:cxf="http://cxf.apache.org/core"
     xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:lethe-server="http://lethe.dushin.net/messaging/server/config"
     xmlns:test="http://lethe.dushin.net/messaging/server"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
         http://cxf.apache.org/core                      http://cxf.apache.org/schemas/core.xsd
         http://cxf.apache.org/jaxws                     http://cxf.apache.org/schemas/jaxws.xsd
+        http://lethe.dushin.net/messaging/server/config http://lethe.dushin.net/schema/lethe-server-config.xsd
         http://www.springframework.org/schema/beans     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
     ">
     <!-- -->
@@ -44,12 +46,18 @@
             <bean class="org.apache.cxf.feature.LoggingFeature"/>
         </cxf:features>
     </cxf:bus>
+    
     <!-- -->
     <!-- Instantiate the server -->
     <!-- -->
+    <lethe-server:MessagingServer id="net.dushin.lethe.messaging.server"/>
+    
+    <!-- -->
+    <!-- Wire the server to an endpoint -->
+    <!-- -->
     <jaxws:endpoint
         id="MessengerEndpoint"
-        implementor="net.dushin.lethe.messaging.server.Messenger"
+        implementor="#net.dushin.lethe.messaging.server"
         address="http://localhost:18066/MessengerService/SOAPPort"
         serviceName="test:MessengerService"
         endpointName="test:SOAPPort"

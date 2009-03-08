@@ -1,0 +1,7 @@
+Removed empty dirs
+--This line, and those below, will be ignored--
+
+D    messaging-client/src/test/java/net/dushin/lethe/messaging/client/keys
+D    messaging-client/src/main/java/net/dushin/lethe/messaging/client/keys
+D    messaging-client/src/main/java/net/dushin/lethe/messaging/client/ui/main
+D    messaging-client/src/main/java/net/dushin/lethe/messaging/client/ui/applet

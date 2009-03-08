@@ -29,10 +29,11 @@ package net.dushin.lethe.messaging.server;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 
 public class Channel {
 
-    private static final int DEFAULT_MAX_MESSAGES = 100;
+    private final ChannelConfigType channelConfig;
     
     private final String id;
     
@@ -43,8 +44,11 @@ public class Channel {
 
     public
     Channel(
+        final ChannelConfigType channelConfig,
         final String id
     ) {
+        this.channelConfig = 
+            channelConfig == null ? new ChannelConfigType() : channelConfig;
         this.id = id;
     }
 
@@ -72,7 +76,7 @@ public class Channel {
     ) {
         synchronized (messages) {
             final java.util.List<Message> msgs = this.messages.getItem();
-            if (msgs.size() == DEFAULT_MAX_MESSAGES) {
+            if (msgs.size() == this.channelConfig.getMaxMessages()) {
                 msgs.remove(0);
             }
             final Message msg = new Message();

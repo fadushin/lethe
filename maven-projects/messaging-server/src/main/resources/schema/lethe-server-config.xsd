@@ -31,18 +31,19 @@
 	xmlns="http://www.w3.org/2001/XMLSchema" 
 	xmlns:lethe-server="http://lethe.dushin.net/messaging/server/config">
 
-    <element name="MessagingServerConfig" type="lethe-server:MessagingServerConfigType"></element>
+    <element name="MessagingServer" type="lethe-server:MessagingServerConfigType"></element>
     <complexType name="MessagingServerConfigType">
     	<sequence>
     		<element name="ChannelConfig"
-    			type="lethe-server:ChannelConfigType">
+    			type="lethe-server:ChannelConfigType" minOccurs="0" maxOccurs="1">
     		</element>
     	</sequence>
-    	<attribute name="channelTimeoutMs" type="int"></attribute>
+    	<attribute name="id" type="anyURI" use="required"></attribute>
+    	<attribute name="channelTimeoutSecs" type="int" default="86400"></attribute>
     </complexType>
 
     <complexType name="ChannelConfigType">
-    	<attribute name="maxMessages" type="int"></attribute>
-    	<attribute name="messageTimeoutMs" type="int"></attribute>
+    	<attribute name="maxMessages" type="int" default="500" use="optional"></attribute>
+    	<attribute name="messageTimeoutSecs" type="int" default="86400"></attribute>
     </complexType>
 </schema>
