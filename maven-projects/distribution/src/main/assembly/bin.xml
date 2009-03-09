@@ -41,8 +41,9 @@
             <includes>
                 <include>bin/*</include>
                 <include>etc/*</include>
-                <include>licenses/*.*</include>
+                <include>html/*</include>
                 <include>lib/*</include>
+                <include>licenses/*.*</include>
                 <include>README.txt</include>
             </includes>
         </fileSet>
