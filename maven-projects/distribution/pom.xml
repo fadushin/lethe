@@ -32,7 +32,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe-distribution</artifactId>
+    <artifactId>lethe</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Lethe Distribution</name>
     <url>http://lethe.dushin.net</url>
@@ -49,6 +49,7 @@
 
     <properties>
         <maven.test.skip>true</maven.test.skip>
+        <lethe.version>${pom.version}</lethe.version>
     </properties>
     
     <dependencies>
@@ -66,15 +67,27 @@
 
     <build>
         <plugins>
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>lethe-${lethe.version}</finalName>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- -->
+            <!-- -->
+            <!-- -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <!-- <version>2.1</version> -->
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>bin</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
                 <executions>
                     <execution>
                         <id>distribution-package</id>
@@ -82,15 +95,12 @@
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <!--
                         <configuration>
                             <descriptors>
                                 <descriptor>src/main/assembly/bin.xml</descriptor>
-                                <descriptor>src/main/assembly/src.xml</descriptor>
                             </descriptors>
                             <tarLongFileMode>gnu</tarLongFileMode>
                         </configuration>
-                        -->
                     </execution>
                 </executions>
             </plugin>

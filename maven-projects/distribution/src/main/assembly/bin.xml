@@ -25,56 +25,41 @@
 <!-- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS      -->
 <!-- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                       -->
 <!--                                                                                    -->
-<project 
-    xmlns="http://maven.apache.org/POM/4.0.0" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<assembly>
+    <!-- id typically identifies the "type" (src vs bin etc) of the assembly -->
+    <id></id>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>dir</format>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe-root</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>Lethe Root POM</name>
-    <url>http://lethe.dushin.net</url>
-    <packaging>pom</packaging>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/release</directory>
+            <outputDirectory>lethe-${lethe.version}</outputDirectory>
+            <includes>
+                <include>bin/*</include>
+                <include>etc/*</include>
+                <include>licenses/*.*</include>
+                <include>lib/*</include>
+                <include>README.txt</include>
+            </includes>
+        </fileSet>
+    </fileSets>
     
-    <modules>
-        <module>build-config</module>
-        <module>parent</module>
-        <module>messaging-interfaces</module>
-        <module>messaging-server</module>
-        <module>messaging-client</module>
-        <module>distribution</module>
-    </modules>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>lethe-${lethe.version}/lib</outputDirectory>
+            <unpack>false</unpack>
+            <!--
+            <excludes>
+                <exclude>net.dushin.lethe:*</exclude>
+            </excludes>
+            -->
+            <scope>runtime</scope>
+        </dependencySet>
+    </dependencySets>
 
-    <profiles>
-        <profile>
-            <id>setup.eclipse</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-            <build>
-                <plugins>
-                    <!-- -->
-                    <!-- Eclipse plugin configuration -->
-                    <!-- -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-eclipse-plugin</artifactId>
-                        <version>2.4</version>
-                        <configuration>
-                            <downloadSources>true</downloadSources>
-                            <downloadJavadocs>true</downloadJavadocs>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>fastinstall</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-        </profile>
-    </profiles>
-</project>
+</assembly>
