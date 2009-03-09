@@ -29,6 +29,6 @@
 LETHE_HOME=$(dirname $0)/..
 . ${LETHE_HOME}/bin/lethe-env.sh
 
-java -classpath ${LETHE_HOME}/lib/lethe-1.0-SNAPSHOT.jar net.dushin.messaging.server.Main $@
+java net.dushin.lethe.messaging.server.Main ${LETHE_HOME}/etc/lethe-server.xml
 
 

@@ -26,11 +26,10 @@
 <!-- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                       -->
 <!--                                                                                    -->
 <assembly>
-    <!-- id typically identifies the "type" (src vs bin etc) of the assembly -->
     <id></id>
     <includeBaseDirectory>false</includeBaseDirectory>
     <formats>
-        <format>dir</format>
+        <!-- <format>dir</format> -->
         <format>tar.gz</format>
         <format>zip</format>
     </formats>
@@ -53,11 +52,6 @@
         <dependencySet>
             <outputDirectory>lethe-${lethe.version}/lib</outputDirectory>
             <unpack>false</unpack>
-            <!--
-            <excludes>
-                <exclude>net.dushin.lethe:*</exclude>
-            </excludes>
-            -->
             <scope>runtime</scope>
         </dependencySet>
     </dependencySets>

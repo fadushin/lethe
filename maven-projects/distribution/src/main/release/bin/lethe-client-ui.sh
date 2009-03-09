@@ -25,20 +25,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-if [ -z "${LETHE_ENV__SH}" ]
-then
-    
-    if [ -z "${LETHE_HOME}" ]
-    then
-        echo "You must set the LETHE_HOME environment variable to the root directory of your LETHE installation"
-        return 1
-    fi
-    
-    CLASSPATH=${LETHE_HOME}/lib/lethe-1.0-SNAPSHOT.jar
-    export CLASSPATH
-    
-    typeset LETHE_ENV__SH=1
-else
-    echo "LETHE_ENV__SH already set; doing nothing."
-fi
+
+LETHE_HOME=$(dirname $0)/..
+. ${LETHE_HOME}/bin/lethe-env.sh
+
+java net.dushin.lethe.messaging.client.ui.Main
+
 
