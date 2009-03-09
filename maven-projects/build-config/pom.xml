@@ -41,5 +41,36 @@
     <properties>
         <maven.test.skip>true</maven.test.skip>
     </properties>
+    
+    <build>
+        <plugins>
+            <!-- -->
+            <!-- Generate a keypair for jar signing -->
+            <!-- -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <executions>
+                   <execution>
+                      <phase>generate-sources</phase>
+                      <goals>
+                         <goal>genkey</goal>
+                      </goals>
+                   </execution>
+                </executions>
+                <configuration>
+                   <keystore>${basedir}/target/classes/keys/keystore.jks</keystore>
+                   <dname>cn=lethe, o=dushin.net</dname>
+                   <storepass>password</storepass>
+                   <alias>lethe</alias>
+                   <keyalg>RSA</keyalg>
+                   <keysize>1024</keysize>
+                   <sigalg>SHA1withRSA</sigalg>
+                   <keypass>password</keypass>
+                   <validity>365</validity>
+                </configuration>
+          </plugin>
+        </plugins>
+    </build>
 
 </project>
