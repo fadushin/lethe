@@ -31,7 +31,7 @@ import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 
-public class Channel {
+class Channel {
 
     private final ChannelConfigType channelConfig;
     
@@ -41,8 +41,9 @@ public class Channel {
         new MessageList();
     
     private int totalMessages;
+    
+    private long lastTouched = Timestamp.currentms();
 
-    public
     Channel(
         final ChannelConfigType channelConfig,
         final String id
@@ -52,25 +53,16 @@ public class Channel {
         this.id = id;
     }
 
-    public MessageList
+    MessageList
     getMessages(
-        final int since
+        final java.lang.String since
     ) {
         synchronized (messages) {
-            final java.util.List<Message> msgs = this.messages.getItem();
-            final int min = 
-                (msgs.size() > 0 && msgs.get(0).getOrdinal() > 0) 
-                ? msgs.get(0).getOrdinal()
-                : 0;
-            if (since < min) {
-                return messages;
-            } else {
-                return getSince(since);
-            }
+            return getSince(since);
         }
     }
 
-    public void
+    void
     postMessage(
         final Contents message
     ) {
@@ -80,7 +72,7 @@ public class Channel {
                 msgs.remove(0);
             }
             final Message msg = new Message();
-            msg.setOrdinal(this.totalMessages);
+            msg.setTimestampMs(Timestamp.currentms());
             msg.setMessage(message);
             msgs.add(msg);
             this.totalMessages++;
@@ -89,16 +81,46 @@ public class Channel {
     
     private MessageList
     getSince(
-        final int since
+        final java.lang.String since
     ) {
         final MessageList ret = new MessageList();
         final java.util.List<Message> src = messages.getItem();
         final java.util.List<Message> dst = ret.getItem();
+        boolean found = false;
         for (Message msg : src) {
-            if (since < msg.getOrdinal()) {
+            if (found) {
                 dst.add(msg);
+            } else if (since.equals(msg.getMessage().getUuid())) {
+                found = true;
             }
         }
-        return ret;
+        return found ? ret : this.messages;
+    }
+    
+    void
+    sweepMessages() {
+        final java.util.List<Message> src = messages.getItem();
+        final long currentms = Timestamp.currentms();
+        for (Message msg : src) {
+            final long deltasecs = (currentms - msg.getTimestampMs()) / 1000;
+            if (deltasecs > this.channelConfig.getMessageTimeoutSecs()) {
+                src.remove(msg);
+                continue;
+            } else {
+                return;
+            }
+        }
+    }
+    
+    long
+    getLastTouched() {
+        return this.lastTouched;
+    }
+    
+    void
+    setLastTouched(
+        final long lastTouched
+    ) {
+        this.lastTouched = lastTouched;
     }
 }

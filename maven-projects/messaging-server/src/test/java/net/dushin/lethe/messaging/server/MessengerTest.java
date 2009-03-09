@@ -93,7 +93,7 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
             //
             // Check to see that the channel is empty
             //
-            assertSame(messenger.getMessages("foo", 0).getItem().size(), 0);
+            assertSame(messenger.getMessages("foo", "").getItem().size(), 0);
             //
             // post a message to the channel, and then check to see it's there
             //
@@ -101,15 +101,20 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
                 "foo",
                 createContents("bar")
             );
-            MessageList foo = messenger.getMessages("foo", -1);
+            MessageList foo = messenger.getMessages("foo", "");
             assertSame(foo.getItem().size(), 1);
-            assertSame(foo.getItem().get(0).getOrdinal(), 0);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             //
             // Check the logic of get
             //
-            assertSame(messenger.getMessages("foo", 0).getItem().size(), 0);
-            assertSame(messenger.getMessages("gnu", -1).getItem().size(), 0);
+            assertSame(
+                messenger.getMessages(
+                    "foo", 
+                    foo.getItem().get(0).getMessage().getUuid()
+                ).getItem().size(), 
+                0
+            );
+            assertSame(messenger.getMessages("gnu", "").getItem().size(), 0);
             //
             // Post another message, and check that it arrived, as well
             //
@@ -117,11 +122,9 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
                 "foo",
                 createContents("bar2")
             );
-            foo = messenger.getMessages("foo", -1);
+            foo = messenger.getMessages("foo", "");
             assertSame(foo.getItem().size(), 2);
-            assertSame(foo.getItem().get(0).getOrdinal(), 0);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
-            assertSame(foo.getItem().get(1).getOrdinal(), 1);
             assertEquals(foo.getItem().get(1).getMessage().getMsg(), "bar2");
             //
         } catch (final Exception e) {
@@ -134,6 +137,7 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
     createContents(final String msg) {
         final Contents ret = new Contents();
         ret.setDescriptor("java.lang.String");
+        ret.setUuid(java.util.UUID.randomUUID().toString());
         ret.setMsg(msg);
         return ret;
     }

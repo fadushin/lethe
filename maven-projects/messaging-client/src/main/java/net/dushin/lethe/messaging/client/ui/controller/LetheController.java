@@ -190,12 +190,12 @@ public class LetheController {
         
         final PlaintextMessage plaintext = new PlaintextMessage();
         plaintext.setFrom(this.identity.getName());
-        plaintext.setUuid(java.util.UUID.randomUUID().toString());
         plaintext.setData(message);
         //
         // message will be in plaintext unless told otherwise below
         //
         contents.setDescriptor(PlaintextMessage.class.getName());
+        contents.setUuid(java.util.UUID.randomUUID().toString());
         msg = plaintext;
         //
         // If it's to be signed, do so

@@ -26,46 +26,16 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import net.dushin.lethe.messaging.server.config.ChannelConfigType;
-import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
-class ChannelManager {
+final class Timestamp {
 
-    private static java.util.Map<String, Channel> channelMap =
-        new java.util.HashMap<String, Channel>();
-
-    private final MessagingServerConfigType serverConfig;
-
-    ChannelManager(
-        final MessagingServerConfigType serverConfig
-    ) {
-        this.serverConfig = serverConfig;
-        new SweeperThread(this).start();
+    private
+    Timestamp() {
+        // complete
     }
     
-    Channel
-    getOrCreateChannel(
-        final ChannelConfigType channelConfig,
-        final String channelID
-    ) {
-        synchronized (channelMap) {
-            Channel ret = channelMap.get(channelID);
-            if (ret == null) {
-                ret = new Channel(channelConfig, channelID);
-                channelMap.put(channelID, ret);
-            }
-            ret.setLastTouched(Timestamp.currentms());
-            return ret;
-        }
-    }
-    
-    java.util.Map<String, Channel>
-    getChannelMap() {
-        return this.channelMap;
-    }
-    
-    MessagingServerConfigType
-    getMessagingServerConfig() {
-        return this.serverConfig;
+    static long
+    currentms() {
+        return System.currentTimeMillis();
     }
 }

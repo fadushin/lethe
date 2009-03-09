@@ -26,46 +26,44 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import net.dushin.lethe.messaging.server.config.ChannelConfigType;
-import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
+class SweeperThread extends Thread {
 
-class ChannelManager {
+    private final ChannelManager mgr;
 
-    private static java.util.Map<String, Channel> channelMap =
-        new java.util.HashMap<String, Channel>();
-
-    private final MessagingServerConfigType serverConfig;
-
-    ChannelManager(
-        final MessagingServerConfigType serverConfig
+    SweeperThread(
+        final ChannelManager mgr
     ) {
-        this.serverConfig = serverConfig;
-        new SweeperThread(this).start();
+        this.mgr = mgr;
     }
     
-    Channel
-    getOrCreateChannel(
-        final ChannelConfigType channelConfig,
-        final String channelID
-    ) {
-        synchronized (channelMap) {
-            Channel ret = channelMap.get(channelID);
-            if (ret == null) {
-                ret = new Channel(channelConfig, channelID);
-                channelMap.put(channelID, ret);
+    public void
+    run() {
+        try {
+            final java.util.Map<String, Channel> channelMap =
+                this.mgr.getChannelMap();
+            synchronized (channelMap) {
+                for (final java.util.Map.Entry<String, Channel> entry : channelMap.entrySet()) {
+                    final Channel channel = entry.getValue();
+                    final int deltasecs = 
+                        (int) (Timestamp.currentms() - channel.getLastTouched()) / 1000;
+                    if (deltasecs > this.mgr.getMessagingServerConfig().getChannelIdleTimeoutSecs()) {
+                        channelMap.remove(entry.getKey());
+                    } else {
+                        channel.sweepMessages();
+                    }
+                }
             }
-            ret.setLastTouched(Timestamp.currentms());
-            return ret;
+        } catch (final Throwable t) {
+            // log?
+            t.printStackTrace();
+        } finally {
+            try {
+                Thread.sleep(
+                    this.mgr.getMessagingServerConfig().getSweeperThreadSleepSecs() * 1000
+                );
+            } catch (final InterruptedException e) {
+                // ignore
+            }
         }
-    }
-    
-    java.util.Map<String, Channel>
-    getChannelMap() {
-        return this.channelMap;
-    }
-    
-    MessagingServerConfigType
-    getMessagingServerConfig() {
-        return this.serverConfig;
     }
 }

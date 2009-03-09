@@ -33,7 +33,7 @@ import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 public class Messenger
     implements net.dushin.lethe.messaging.interfaces.Messenger {
     
-    private final ChannelManager channelMgr = new ChannelManager();
+    private final ChannelManager channelMgr;
     
     private final MessagingServerConfigType serverConfig;
 
@@ -42,12 +42,13 @@ public class Messenger
         final MessagingServerConfigType serverConfig
     ) {
         this.serverConfig = serverConfig;
+        this.channelMgr = new ChannelManager(serverConfig);
     }
 
     public MessageList
     getMessages(
         final java.lang.String channelID,
-        final int since
+        final java.lang.String since
     ) {
         return channelMgr.getOrCreateChannel(
             this.serverConfig.getChannelConfig(), 

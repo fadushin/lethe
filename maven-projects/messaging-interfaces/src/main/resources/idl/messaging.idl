@@ -45,6 +45,11 @@ struct Contents
      *   * net.dushin.lethe.messaging.client.crypto.EncryptedMessage
      */
     string descriptor;
+    
+    /**
+     * The message identifier.  This is assumed to be globally unique
+     */
+    string uuid;
 
     /**
      * The message contents.  Currently, this can be one of:
@@ -66,11 +71,6 @@ struct PlaintextMessage
      * Who the message is from
      */
     string from;
-    
-    /**
-     * The message identifier.  This is assumed to be globally unique
-     */
-    string uuid;
     
     /**
      * The message itself
@@ -147,9 +147,10 @@ struct EncryptedMessage
 struct Message
 {
     /**
-     * The order in which this message was recieved (set by the server)
+     * The milliseconds since the UNIX epoch at which the message was
+     * received at the server.
      */
-    long ordinal;
+    long long timestampMs;
     
     /**
      * The message contents
@@ -189,14 +190,17 @@ interface Messenger
      *              the channel from which to get the message
      *
      * @param       since
-     *              the ordinal from which to get the message.
+     *              the uuid of the last message received by the client.
+     *              The special value of the empty string ("") is a request
+     *              for all of the messages in the server on the channel.
      *
      * @return      a list of messages posted to the specified channel
-     *              since the specified ordinal.
+     *              since the specified uuid, or all of the messages, if
+     *              no such uuid is in the list
      */
     MessageList 
     getMessages(
         in string channel,
-        in long since
+        in string since
     );
 };
