@@ -148,7 +148,7 @@
                 </plugin>
                 <!-- -->
                 <!-- Unpack the key -->
-                <!-- -->
+                <!-- 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
@@ -172,30 +172,34 @@
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
+                </plugin>-->
                 <!-- -->
                 <!-- Jar creation configuration -->
                 <!-- -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
+                    <!--
                     <executions>
                         <execution>
                             <goals>
                                 <goal>sign</goal>
                             </goals>
                         </execution>
+                        <configuration>
+                            <keystore>${basedir}/target/keys/keystore.jks</keystore>
+                            <alias>lethe</alias>
+                            <storepass>password</storepass>
+                            <verify>true</verify>
+                        </configuration>
                     </executions>
+                    -->
                     <configuration>
                         <archive>
                             <manifest>
                                 <addClasspath>true</addClasspath>
                             </manifest>
                         </archive>
-                        <keystore>${basedir}/target/keys/keystore.jks</keystore>
-                        <alias>lethe</alias>
-                        <storepass>password</storepass>
-                        <verify>true</verify>
                     </configuration>
                 </plugin>
             </plugins>
