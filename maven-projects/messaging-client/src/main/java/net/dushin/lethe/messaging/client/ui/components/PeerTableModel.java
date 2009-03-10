@@ -102,7 +102,6 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
         final int row, 
         final int col
     ) {
-        System.out.println(value);
         this.controller.getPeers().get(row).setEncryptTo((Boolean) value);
         fireTableCellUpdated(row, col);
     }

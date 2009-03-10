@@ -98,7 +98,6 @@ class MessageChangeThread extends Thread {
                             this.rawMessages.size() - 1
                         ).getMessage().getUuid()
                         : "";
-                System.out.println("since before get: " + since);
                 final MessageList messages = controller.getProxy().getMessages(channel, since);
                 final java.util.List<Message> msgs = messages.getItem();
                 if (msgs.size() > 0 || notifyChange) {

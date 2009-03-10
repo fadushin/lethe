@@ -32,7 +32,6 @@ public class DeterministicSecureRandom extends java.security.SecureRandomSpi {
     
     public
     DeterministicSecureRandom() {
-        System.out.println("foo");
     }
     
     protected void 

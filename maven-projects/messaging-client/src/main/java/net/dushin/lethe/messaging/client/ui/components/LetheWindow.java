@@ -31,56 +31,36 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 public class
 LetheWindow extends javax.swing.JFrame {
 
-    private static final java.awt.event.ActionListener QUIT_LISTENER = new QuitActionListener();
-    
-    public
-    LetheWindow() throws Exception {
-        this("net.dushin.lethe");
-    }
-    
-    public
-    LetheWindow(final String title) throws Exception {
-        this(title, 600, 400);
-    }
+    public static final String TAG_HOSTNAME = "hostname";
 
-    public 
+    public static final String TAG_PORT = "port";
+    
+    public
     LetheWindow(
-        final String title, 
-        final int width, 
-        final int height 
+        final java.util.Map<String, Object> config
     ) throws Exception {
-        super(title);
+        this(
+            (String) config.get(TAG_HOSTNAME),
+            (Short) config.get(TAG_PORT)
+        );
+    }
+    
+    private 
+    LetheWindow(
+        final String hostname, 
+        final short port 
+    ) throws Exception {
+        super("Lethe Messaging Client");
 
-        // setBackground(java.awt.Color.GRAY);
-        
-        // Make the menu
-        final javax.swing.JMenuItem quitMenuItem = new javax.swing.JMenuItem("Quit");
-        quitMenuItem.addActionListener(QUIT_LISTENER);
-        
-        final javax.swing.JMenu fileMenu = new javax.swing.JMenu("File");
-        fileMenu.add(quitMenuItem);
-        
-        final javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
-        menuBar.add(fileMenu);
-        
-        this.setJMenuBar(menuBar);
+        this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         
         setLayout(new java.awt.BorderLayout());
         final LetheController controller = new LetheController(
-            new java.net.URL("http://localhost:18066/MessengerService/SOAPPort?wsdl")
+            new java.net.URL("http://" + hostname + ":" + port + "/MessengerService/SOAPPort?wsdl")
         );
         LethePanel panel = new LethePanel(controller);
         add("Center", panel);
         pack();
         setVisible(true);
-    }
-    
-    private static class
-    QuitActionListener implements java.awt.event.ActionListener {
-        
-        public void
-        actionPerformed(final java.awt.event.ActionEvent e) {
-            System.exit(0);
-        }
     }
 }
