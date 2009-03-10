@@ -62,6 +62,7 @@ public final class Main {
             }
             if (argv[i].equals("-help")) {
                 System.out.println(syntax());
+                System.exit(0);
             }
         }
         return ret;

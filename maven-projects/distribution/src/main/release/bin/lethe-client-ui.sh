@@ -29,6 +29,6 @@
 LETHE_HOME=$(dirname $0)/..
 . ${LETHE_HOME}/bin/lethe-env.sh
 
-java net.dushin.lethe.messaging.client.ui.Main
+java net.dushin.lethe.messaging.client.ui.Main $@
 
 
