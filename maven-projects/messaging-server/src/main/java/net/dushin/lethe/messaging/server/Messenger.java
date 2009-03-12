@@ -44,6 +44,11 @@ public class Messenger
         this.serverConfig = serverConfig;
         this.channelMgr = new ChannelManager(serverConfig);
     }
+    
+    public void
+    ping() {
+        // log it, or something
+    }
 
     public MessageList
     getMessages(

@@ -163,11 +163,24 @@ struct Message
  */
 typedef sequence<Message> MessageList;
 
+
+/**
+ * An object is pingable if it can be pinged
+ */
+interface Pingable
+{
+    /**
+     * You know the drill.
+     */
+    void ping();
+};
+
+
 /**
  * A Messenger is a service interface responsible for having messages
  * posted to and received from.
  */
-interface Messenger
+interface Messenger : Pingable
 {
     /**
      * Post a message to a channel

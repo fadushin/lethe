@@ -26,12 +26,13 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
+import net.dushin.lethe.messaging.client.ui.controller.Connection;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class
 LetheWindow extends javax.swing.JFrame {
 
-    public static final String TAG_HOSTNAME = "hostname";
+    public static final String TAG_HOST = "host";
 
     public static final String TAG_PORT = "port";
     
@@ -40,14 +41,14 @@ LetheWindow extends javax.swing.JFrame {
         final java.util.Map<String, Object> config
     ) throws Exception {
         this(
-            (String) config.get(TAG_HOSTNAME),
+            (String) config.get(TAG_HOST),
             (Short) config.get(TAG_PORT)
         );
     }
     
     private 
     LetheWindow(
-        final String hostname, 
+        final String host, 
         final short port 
     ) throws Exception {
         super("Lethe Messaging Client");
@@ -56,7 +57,7 @@ LetheWindow extends javax.swing.JFrame {
         
         setLayout(new java.awt.BorderLayout());
         final LetheController controller = new LetheController(
-            new java.net.URL("http://" + hostname + ":" + port + "/MessengerService/SOAPPort?wsdl")
+            new Connection(host, port)
         );
         LethePanel panel = new LethePanel(controller);
         add("Center", panel);

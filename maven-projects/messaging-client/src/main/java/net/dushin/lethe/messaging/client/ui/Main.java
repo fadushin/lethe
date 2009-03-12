@@ -1,21 +1,19 @@
 package net.dushin.lethe.messaging.client.ui;
 
 import net.dushin.lethe.messaging.client.ui.components.LetheWindow;
+import net.dushin.lethe.messaging.client.ui.controller.Connection;
 
 public final class Main {
 
     private static final String FLAG = "-";
-    private static final String FLAG_HOSTNAME = FLAG + LetheWindow.TAG_HOSTNAME;
+    private static final String FLAG_HOST = FLAG + LetheWindow.TAG_HOST;
     private static final String FLAG_PORT = FLAG + LetheWindow.TAG_PORT;
-    
-    private static final String DEFAULT_HOSTNAME = "localhost";
-    private static final Short DEFAULT_PORT = 8080;
-    
+        
     private static final java.util.Map<String, Object> DEFAULT_CONFIG = 
         new java.util.HashMap<String, Object>();
     static {
-        DEFAULT_CONFIG.put(LetheWindow.TAG_HOSTNAME, DEFAULT_HOSTNAME);
-        DEFAULT_CONFIG.put(LetheWindow.TAG_PORT, DEFAULT_PORT);
+        DEFAULT_CONFIG.put(LetheWindow.TAG_HOST, Connection.DEFAULT_HOST);
+        DEFAULT_CONFIG.put(LetheWindow.TAG_PORT, Connection.DEFAULT_PORT);
     }
     
     private Main() {
@@ -54,8 +52,8 @@ public final class Main {
         final java.util.Map<String, Object> ret = 
             new java.util.HashMap<String, Object>(DEFAULT_CONFIG);
         for (int i = 0;  i < n;  ++i) {
-            if (i < n - 1 && argv[i].equals(FLAG_HOSTNAME)) {
-                ret.put(LetheWindow.TAG_HOSTNAME, argv[++i]);
+            if (i < n - 1 && argv[i].equals(FLAG_HOST)) {
+                ret.put(LetheWindow.TAG_HOST, argv[++i]);
             }
             if (i < n - 1 && argv[i].equals(FLAG_PORT)) {
                 ret.put(LetheWindow.TAG_PORT, Short.valueOf(argv[++i]));
@@ -83,8 +81,8 @@ public final class Main {
     syntax() {
         return "Syntax: java "
             + Main.class.getName() + ' ' 
-            + '[' + FLAG_HOSTNAME + " <hostname> (default: " + DEFAULT_HOSTNAME + ')' + ' '
-            + '[' + FLAG_PORT + " <port> (default: " + DEFAULT_PORT + ')' + ' '
+            + '[' + FLAG_HOST + " <host> (default: " + Connection.DEFAULT_HOST + ')' + ' '
+            + '[' + FLAG_PORT + " <port> (default: " + Connection.DEFAULT_PORT + ')' + ' '
             + "[-help]";
     }
 }

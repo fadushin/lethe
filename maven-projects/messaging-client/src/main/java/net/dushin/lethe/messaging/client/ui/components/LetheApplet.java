@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
+import net.dushin.lethe.messaging.client.ui.controller.Connection;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class
@@ -56,10 +57,9 @@ LetheApplet extends javax.swing.JApplet {
     createGUI() {
         try {
             setLayout(new java.awt.BorderLayout());
-            final LetheController controller = 
-                new LetheController(
-                    new java.net.URL("http://localhost:18066/MessengerService/SOAPPort?wsdl")
-                );
+            final LetheController controller = new LetheController(
+                new Connection()
+            );
             LethePanel panel = new LethePanel(controller);
             getContentPane().add(panel, java.awt.BorderLayout.CENTER);
         } catch (final Throwable e) {

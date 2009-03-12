@@ -27,11 +27,9 @@
 package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.crypto.Encryptor;
-import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.Message;
-import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
@@ -50,15 +48,20 @@ public class LetheController {
     // data
     //
     
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(
+            LetheController.class.getName()
+        );
+    
     /**
-     * the location of the WSDL for the Lethe messaging service.
+     * the connection to the server
      */
-    final java.net.URL wsdlLoc;
+    private Connection connection = Connection.LOCALHOST;
 
     /**
      * The identity associated with this controller
      */
-    Identity identity;
+    private Identity identity = Identity.ANONYMOUS;
     
     /**
      * the collection of peers associated with this controller
@@ -74,34 +77,41 @@ public class LetheController {
     private final java.util.Map<String, MessageChangeThread> messageChangeThreadMap =
         new java.util.HashMap<String, MessageChangeThread>();
     
-    /**
-     * A cached proxy instance, associated with the WSDL location.
-     */
-    private MessengerClientProxy proxy;
-    
     //
     // Lifecycle
     //
     
     public
-    LetheController(
-        final java.net.URL wsdlLoc
-    ) throws Exception {
-        this(wsdlLoc, Identity.ANONYMOUS);
+    LetheController() {
     }
     
     public
     LetheController(
-        final java.net.URL wsdlLoc,
-        final Identity identity
-    ) throws Exception {
-        this.wsdlLoc = wsdlLoc;
-        this.identity = identity;
+        final Connection connection
+    ) {
+        this.connection = connection;
     }
     
     //
     // public operations
     //
+    
+    public Connection
+    getConnection() {
+        return this.connection;
+    }
+    
+    public void
+    setConnection(
+        final Connection connection
+    ) {
+        this.connection = connection;
+        synchronized (messageChangeThreadMap) {
+            for (MessageChangeThread thread : messageChangeThreadMap.values()) {
+                thread.notifyChange();
+            }
+        }
+    }
     
     /**
      * @return      the Identity associated with this controller
@@ -214,7 +224,12 @@ public class LetheController {
         }
         contents.setMsg(msg);
         try {
-            getProxy().postMessage(channel, contents);
+            // this.logManager.logInfo(
+            //     LOGGER,
+            //     "Sending message to channel {0}", 
+            //     channel
+            // );
+            this.connection.getProxy().postMessage(channel, contents);
             messageChangeThreadMap.get(channel).notifyChange();
         } catch (final Exception e) {
             // log
@@ -258,25 +273,6 @@ public class LetheController {
             if (thread != null) {
                 thread.notifyHalt();
                 messageChangeThreadMap.remove(channel);
-            }
-        }
-    }
-    
-    //
-    // package protected operations
-    //
-    
-    Messenger
-    getProxy() {
-        synchronized (this) {
-            try {
-                if (this.proxy == null) {
-                    this.proxy = new MessengerClientProxy(this.wsdlLoc);
-                }
-                return this.proxy.getProxy();
-            } catch (final Exception e) {
-                // log it?
-                throw new RuntimeException("Unable to resolve proxy", e);
             }
         }
     }
