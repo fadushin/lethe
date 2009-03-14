@@ -32,11 +32,11 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe</artifactId>
+    <artifactId>lethe-distribution-client</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Lethe Distribution</name>
+    <name>Lethe Distribution Client OneJar</name>
     <url>http://lethe.dushin.net</url>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <!-- -->
     <!-- Inherit settings from parent POM -->
@@ -47,21 +47,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>client</module>
-    </modules>
-
     <properties>
         <maven.test.skip>true</maven.test.skip>
         <lethe.version>${pom.version}</lethe.version>
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>net.dushin.lethe</groupId>
-            <artifactId>lethe-messaging-server</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>net.dushin.lethe</groupId>
             <artifactId>lethe-messaging-client</artifactId>
@@ -71,29 +62,30 @@
 
     <build>
         <plugins>
-            <!-- -->
-            <!-- -->
-            <!-- -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+            <groupId>org.dstovall</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.2.3</version>
                 <executions>
                     <execution>
-                        <id>distribution-package</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
                         <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/bin.xml</descriptor>
-                            </descriptors>
-                            <tarLongFileMode>gnu</tarLongFileMode>
+                            <mainClass>net.dushin.lethe.messaging.client.ui.Main</mainClass>
+                            <onejarVersion>0.96</onejarVersion>
                         </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>onejar-maven-plugin.googlecode.com</id>
+            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
