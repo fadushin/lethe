@@ -55,7 +55,7 @@ public class LethePanel extends javax.swing.JPanel {
         splitPane.setDividerLocation(250);
         
         this.add("Center", splitPane);
-        this.add("North", new ConnectionPanel(this.controller));
+        this.add("South", new StatusPanel(this.controller));
     }
     
     public void

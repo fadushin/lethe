@@ -26,8 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.EncryptedKey;
-import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 
 /**
@@ -90,29 +90,6 @@ public class Decryptor extends CryptorBase {
     //
     
     /**
-     * @return      the decrypted secret key, from a list of encrypted keys.
-     *              This operation will return a non-null value if there is
-     *              an encrypted key in the specified list that was encrypted
-     *              using the public key corresponding to the private key
-     *              with which this Decryptor was initialized.  Otherwise,
-     *              the operation will raise an exception.
-     */
-    private javax.crypto.SecretKey
-    findDecryptedKey(
-        final EncryptedKeyList encryptedKeys,
-        final String algorithm
-    ) {
-        for (EncryptedKey encryptedKey : encryptedKeys.getItem()) {
-            try {
-                return decryptKey(encryptedKey, algorithm);
-            } catch (final Exception e) {
-                continue;
-            }
-        }
-        throw new RuntimeException("Key not found");
-    }
-    
-    /**
      * @return      the decrypted secret key, from the specified EncryptedKey.
      *              This operation will raise an exception if decryption fails.
      */
@@ -124,11 +101,11 @@ public class Decryptor extends CryptorBase {
         try {
             final byte[] encryptedKeyData = encryptedKey.getData();
             final byte[] decryptedKey = this.cipher.doFinal(encryptedKeyData);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Encrypted key prior to decryption:",
                 encryptedKeyData
             );
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Decrypted key:",
                 decryptedKey
             );

@@ -26,6 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
+
 /**
  * This decryptor is used to decrypt data using a secret key.
  * An instance of this class must be initialized with a secret
@@ -61,11 +63,11 @@ class SymmetricDecryptor extends CryptorBase {
     ) {
         try {
             final byte[] ret = this.cipher.doFinal(data);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Data prior to decryption:",
                 data
             );
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Decrypted data:",
                 ret
             );

@@ -29,14 +29,14 @@ package net.dushin.lethe.messaging.client.ui.components;
 import net.dushin.lethe.messaging.client.ui.controller.Connection;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
-class ConnectionPanel extends javax.swing.JPanel {
+class StatusPanel extends javax.swing.JPanel {
 
     private final LetheController controller;
     
     private final javax.swing.JLabel hostLabel;
     private final javax.swing.JLabel portLabel;
 
-    ConnectionPanel(
+    StatusPanel(
         final LetheController controller
     ) {
         this.controller = controller;
@@ -44,7 +44,7 @@ class ConnectionPanel extends javax.swing.JPanel {
         this.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Connection"),
+                    javax.swing.BorderFactory.createTitledBorder("Status"),
                     javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
                 ),
                 this.getBorder()
@@ -101,9 +101,9 @@ class ConnectionPanel extends javax.swing.JPanel {
         ) {
             final SetConnectionDialog dlog = 
                 new SetConnectionDialog(
-                    SwingUtil.getFrame(ConnectionPanel.this),
-                    ConnectionPanel.this.controller.getConnection().getHost(),
-                    Short.toString(ConnectionPanel.this.controller.getConnection().getPort())
+                    SwingUtil.getFrame(StatusPanel.this),
+                    StatusPanel.this.controller.getConnection().getHost(),
+                    Short.toString(StatusPanel.this.controller.getConnection().getPort())
                 );
             // dlog.setLocationRelativeTo(CryptoPanel.this);
             dlog.setVisible(true);

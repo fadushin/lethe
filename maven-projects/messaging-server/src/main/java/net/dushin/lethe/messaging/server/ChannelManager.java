@@ -31,7 +31,7 @@ import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
 class ChannelManager {
 
-    private static java.util.Map<String, Channel> channelMap =
+    private final java.util.Map<String, Channel> channelMap =
         new java.util.HashMap<String, Channel>();
 
     private final MessagingServerConfigType serverConfig;

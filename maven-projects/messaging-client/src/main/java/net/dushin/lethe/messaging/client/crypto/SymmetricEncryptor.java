@@ -26,6 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
+
 /**
  * This class is used to encrypt data using a secret key.
  *
@@ -88,11 +90,11 @@ class SymmetricEncryptor extends CryptorBase {
     ) {
         try {
             final byte[] ret = this.cipher.doFinal(data);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Data prior to encryption:",
                 data
             );
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Encrypted data:",
                 ret
             );

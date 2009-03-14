@@ -35,6 +35,10 @@ LetheWindow extends javax.swing.JFrame {
     public static final String TAG_HOST = "host";
 
     public static final String TAG_PORT = "port";
+
+    public static final String TAG_IDENTITY = "identity";
+    
+    private final LetheController controller;
     
     public
     LetheWindow(
@@ -56,12 +60,15 @@ LetheWindow extends javax.swing.JFrame {
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         
         setLayout(new java.awt.BorderLayout());
-        final LetheController controller = new LetheController(
+        this.controller = new LetheController(
             new Connection(host, port)
         );
         LethePanel panel = new LethePanel(controller);
         add("Center", panel);
-        pack();
-        setVisible(true);
+    }
+    
+    public LetheController
+    getController() {
+        return this.controller;
     }
 }

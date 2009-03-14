@@ -27,6 +27,7 @@
 package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.client.crypto.Encryptor;
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.Message;
@@ -48,6 +49,9 @@ public class LetheController {
     // data
     //
     
+    /**
+     * The Logger instance to use for this type
+     */
     private static final java.util.logging.Logger LOGGER =
         java.util.logging.Logger.getLogger(
             LetheController.class.getName()
@@ -211,6 +215,10 @@ public class LetheController {
         // If it's to be signed, do so
         //
         if (this.identity.getSignMessages()) {
+            LogUtil.logInfo(
+                LOGGER,
+                "Message signing is selected; signing message..." 
+            );
             contents.setDescriptor(SignedMessage.class.getName());
             msg = this.identity.getSigner().sign(plaintext);
         }
@@ -219,20 +227,29 @@ public class LetheController {
         //
         final java.util.List<java.security.PublicKey> recipients = getRecipients();
         if (recipients.size() > 0) {
+            LogUtil.logInfo(
+                LOGGER,
+                "{0} recipient(s) selected; encrypting message...", 
+                recipients.size()
+            );
             contents.setDescriptor(EncryptedMessage.class.getName());
             msg = new Encryptor().encrypt(msg, recipients);
         }
         contents.setMsg(msg);
         try {
-            // this.logManager.logInfo(
-            //     LOGGER,
-            //     "Sending message to channel {0}", 
-            //     channel
-            // );
+            LogUtil.logInfo(
+                LOGGER,
+                "Sending message to channel {0}...", 
+                channel
+            );
             this.connection.getProxy().postMessage(channel, contents);
             messageChangeThreadMap.get(channel).notifyChange();
         } catch (final Exception e) {
-            // log
+            LogUtil.logException(
+                LOGGER,
+                e,
+                "An error occurred sending the message." 
+            );
             e.printStackTrace();
         }
     }

@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
@@ -107,17 +108,17 @@ public class Signer extends SignatoryBase {
             // form.  Then, sign the hash value.
             //
             final byte[] serialized = serialize(pkg, obj);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Serialized message:",
                 serialized
             );
             final byte[] hash = hash(serialized);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Hash of serialized data:",
                 hash
             );
             final byte[] signature = sign(hash);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Signature over hash:",
                 signature
             );

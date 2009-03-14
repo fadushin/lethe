@@ -1,7 +1,9 @@
 package net.dushin.lethe.messaging.client.ui;
 
 import net.dushin.lethe.messaging.client.ui.components.LetheWindow;
+import net.dushin.lethe.messaging.client.ui.components.SetIdentityDialog;
 import net.dushin.lethe.messaging.client.ui.controller.Connection;
+import net.dushin.lethe.messaging.client.ui.controller.Identity;
 
 public final class Main {
 
@@ -71,7 +73,32 @@ public final class Main {
         final java.util.Map<String, Object> args
     ) {
         try {
-            new LetheWindow(args);
+            final LetheWindow window = new LetheWindow(args);
+            
+            final SetIdentityDialog dlog = 
+                new SetIdentityDialog(
+                    window,
+                    Identity.ANONYMOUS.getName(),
+                    Identity.ANONYMOUS.getPassword()
+                );
+            dlog.setVisible(true);
+            
+            if (dlog.isOk()) {
+                final String name = dlog.getName();
+                final char[] passphrase = dlog.getPassphrase();
+                final Identity identity =
+                    new Identity(
+                        name, 
+                        new String(passphrase), 
+                        Identity.ANONYMOUS.getSignMessages(),
+                        true
+                    );
+                window.getController().setIdentity(identity);
+            } else {
+                return;
+            }
+            window.pack();
+            window.setVisible(true);
         } catch (final Exception e) {
             e.printStackTrace();
         }

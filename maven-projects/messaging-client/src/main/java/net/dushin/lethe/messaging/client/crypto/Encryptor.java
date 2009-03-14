@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.EncryptedKey;
 import net.dushin.lethe.messaging.interfaces.EncryptedKeyList;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
@@ -208,12 +209,12 @@ public class Encryptor extends SerializationBase {
             // Encrypt the encoded form of the (symmetric) key
             //
             final byte[] unencryptedKey = key.getEncoded();
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Encrypting symmetric key:",
                 unencryptedKey
             );
             final byte[] encryptedKey = cipher.doFinal(unencryptedKey);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Encrypted symmetric key:",
                 encryptedKey
             );

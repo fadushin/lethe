@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
@@ -34,6 +35,17 @@ import net.dushin.lethe.messaging.interfaces.MessageList;
  */
 class MessageChangeThread extends Thread {
     
+    /**
+     * The Logger instance to use for this type
+     */
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(
+            LetheController.class.getName()
+        );
+
+    /**
+     * The default wait period for this background thread
+     */
     private static final long DEFAULT_WAIT = 5000;
     
     /**
@@ -89,6 +101,10 @@ class MessageChangeThread extends Thread {
     run() {
         while (true) {
             if (halt) {
+                LogUtil.logInfo(
+                    LOGGER,
+                    "MessageChangeThread request to halt; bye bye..." 
+                );
                 return;
             }
             try {
@@ -98,22 +114,39 @@ class MessageChangeThread extends Thread {
                             this.rawMessages.size() - 1
                         ).getMessage().getUuid()
                         : "";
+                LogUtil.logInfo(
+                    LOGGER,
+                    "Last message UUID received: \"{0}\"; polling server...", since 
+                );
                 final MessageList messages = 
                     controller.getConnection().getProxy().getMessages(channel, since);
                 final java.util.List<Message> msgs = messages.getItem();
                 if (msgs.size() > 0 || notifyChange) {
+                    LogUtil.logInfo(
+                        LOGGER,
+                        "Un update is required because we received a positive number "
+                        + "of messages back ({0}) or we were notified of a change "
+                        + "({1}), or both", msgs.size(), notifyChange
+                    );
                     this.rawMessages.addAll(msgs);
                     final java.util.List<ReceivedMessage> receivedMessages =
                         this.controller.receiveMessages(this.rawMessages);
                     this.listener.messageChanged(receivedMessages);
                     notifyChange = false;
+                } else {
+                    LogUtil.logInfo(LOGGER, "Nothing to do.");
                 }
             } catch (final Exception e) {
-                // log it?
+                LogUtil.logException(
+                    LOGGER, 
+                    e, 
+                    "An exception occurred updating received messages." 
+                );
                 e.printStackTrace();
             } finally {
                 synchronized (changeMonitor) {
                     try {
+                        LogUtil.logInfo(LOGGER, "Sleeping {0}ms...", DEFAULT_WAIT);
                         changeMonitor.wait(DEFAULT_WAIT);
                     } catch (final InterruptedException e) {
                         // ignore

@@ -43,6 +43,7 @@ class AddPeerDialog extends javax.swing.JDialog {
         setTitle("Add Peer...");
         
         final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
+        getRootPane().setDefaultButton(okButton);
         okButton.addActionListener(new OkButtonListener());
         final javax.swing.JButton cancelButton = new javax.swing.JButton("Cancel");
         cancelButton.addActionListener(new CancelButtonListener());

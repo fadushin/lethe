@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
+import net.dushin.lethe.messaging.client.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
 /**
@@ -68,17 +69,17 @@ public class Verifier extends SignatoryBase {
     ) {
         try {
             final byte[] serialized = signed.getSerializedMessage();
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Serialized message:",
                 serialized
             );
             final byte[] hash = hash(serialized);
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Hash of serialized data:",
                 hash
             );
             final byte[] sigData = signed.getSignature();
-            Logger.logBuffer(
+            LogUtil.logBuffer(
                 "Signature over hash:",
                 sigData
             );

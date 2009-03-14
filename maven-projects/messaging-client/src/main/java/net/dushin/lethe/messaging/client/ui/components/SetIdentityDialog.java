@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-class SetIdentityDialog extends javax.swing.JDialog {
+public class SetIdentityDialog extends javax.swing.JDialog {
     
     private final javax.swing.JTextField nameField =
         new javax.swing.JTextField(20);
@@ -72,7 +72,7 @@ class SetIdentityDialog extends javax.swing.JDialog {
         contentPanel.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Edit Identity"),
+                    javax.swing.BorderFactory.createTitledBorder("Set Identity"),
                     javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
                 ),
                 contentPanel.getBorder()
@@ -81,6 +81,7 @@ class SetIdentityDialog extends javax.swing.JDialog {
         
         final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
         okButton.addActionListener(new OkButtonListener());
+        getRootPane().setDefaultButton(okButton);
         final javax.swing.JButton cancelButton = new javax.swing.JButton("Cancel");
         cancelButton.addActionListener(new CancelButtonListener());
         
