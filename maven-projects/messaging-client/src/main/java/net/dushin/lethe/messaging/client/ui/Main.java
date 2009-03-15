@@ -74,6 +74,10 @@ public final class Main {
     ) {
         try {
             final LetheWindow window = new LetheWindow(args);
+            window.pack();
+            window.setSize(640, 480);
+            window.setLocationRelativeTo(null);
+            window.setVisible(true);
             
             final SetIdentityDialog dlog = 
                 new SetIdentityDialog(
@@ -82,6 +86,7 @@ public final class Main {
                     Identity.ANONYMOUS.getPassword()
                 );
             dlog.setVisible(true);
+            dlog.setLocationRelativeTo(window.getLethePanel());
             
             if (dlog.isOk()) {
                 final String name = dlog.getName();
@@ -95,10 +100,10 @@ public final class Main {
                     );
                 window.getController().setIdentity(identity);
             } else {
-                return;
+                System.exit(1);
             }
-            window.pack();
-            window.setVisible(true);
+            
+            
         } catch (final Exception e) {
             e.printStackTrace();
         }

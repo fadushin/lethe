@@ -57,8 +57,10 @@ class StatusPanel extends javax.swing.JPanel {
             new javax.swing.JLabel(getPortText());
         
         final javax.swing.JButton setConnectionButton = 
-            new javax.swing.JButton("Set");
+            new javax.swing.JButton("Settings...");
         setConnectionButton.addActionListener(new SetConnectionListener());
+        final javax.swing.JButton helpButton = 
+            new javax.swing.JButton("Help...");
         //
         // add them to this panel
         //
@@ -67,6 +69,7 @@ class StatusPanel extends javax.swing.JPanel {
         this.add(this.hostLabel);
         this.add(this.portLabel);
         this.add(setConnectionButton);
+        this.add(helpButton);
 
     }
     

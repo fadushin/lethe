@@ -54,6 +54,9 @@ public class LethePanel extends javax.swing.JPanel {
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(250);
         
+        // final javax.swing.JToolBar toolBar = new javax.swing.JToolBar("Leethe Toolbox");
+        // add("North", toolBar);
+        
         this.add("Center", splitPane);
         this.add("South", new StatusPanel(this.controller));
     }

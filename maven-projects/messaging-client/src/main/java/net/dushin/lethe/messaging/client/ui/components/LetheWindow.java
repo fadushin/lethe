@@ -40,6 +40,8 @@ LetheWindow extends javax.swing.JFrame {
     
     private final LetheController controller;
     
+    private final LethePanel lethePanel;
+    
     public
     LetheWindow(
         final java.util.Map<String, Object> config
@@ -63,12 +65,17 @@ LetheWindow extends javax.swing.JFrame {
         this.controller = new LetheController(
             new Connection(host, port)
         );
-        LethePanel panel = new LethePanel(controller);
-        add("Center", panel);
+        this.lethePanel = new LethePanel(controller);
+        add("Center", this.lethePanel);
     }
     
     public LetheController
     getController() {
         return this.controller;
+    }
+    
+    public javax.swing.JComponent
+    getLethePanel() {
+        return this.lethePanel;
     }
 }
