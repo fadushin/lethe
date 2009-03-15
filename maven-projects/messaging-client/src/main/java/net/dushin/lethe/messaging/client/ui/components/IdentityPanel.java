@@ -58,7 +58,7 @@ class IdentityPanel extends javax.swing.JPanel {
         // Build the button panel and buttons
         //
         final javax.swing.JPanel idButtonPanel = new javax.swing.JPanel();
-        final javax.swing.JButton idSetButton = new javax.swing.JButton("Edit...");
+        final javax.swing.JButton idSetButton = new javax.swing.JButton("Generate...");
         idSetButton.addActionListener(new SetIdentityListener());
         final javax.swing.JButton idExportButton = new javax.swing.JButton("Export...");
         idExportButton.addActionListener(new ExportIdListener());

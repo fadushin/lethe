@@ -45,7 +45,7 @@ class SetConnectionDialog extends javax.swing.JDialog {
     ) {
         super(owner, true);
 
-        setTitle("Set Identity...");
+        setTitle("Edit Connection...");
         
         this.hostField.setText(name);
         this.portField.setText(password);
@@ -79,7 +79,7 @@ class SetConnectionDialog extends javax.swing.JDialog {
             )
         );
         
-        final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
+        final javax.swing.JButton okButton = new javax.swing.JButton("OK");
         getRootPane().setDefaultButton(okButton);
         okButton.addActionListener(new OkButtonListener());
         final javax.swing.JButton cancelButton = new javax.swing.JButton("Cancel");

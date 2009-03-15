@@ -54,7 +54,7 @@ class ExportIdentityDialog extends javax.swing.JDialog {
         this.exportTextArea.setEditable(false);
         this.exportTextArea.selectAll();
         
-        final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
+        final javax.swing.JButton okButton = new javax.swing.JButton("OK");
         getRootPane().setDefaultButton(okButton);
         okButton.addActionListener(new OkButtonListener());
         

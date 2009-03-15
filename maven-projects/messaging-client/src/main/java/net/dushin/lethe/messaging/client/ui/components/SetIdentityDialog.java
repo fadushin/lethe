@@ -45,7 +45,7 @@ public class SetIdentityDialog extends javax.swing.JDialog {
     ) {
         super(owner, true);
 
-        setTitle("Set Identity...");
+        setTitle("Generate Identity...");
         
         this.nameField.setText(name);
         this.passphraseField.setText(password);
@@ -72,14 +72,14 @@ public class SetIdentityDialog extends javax.swing.JDialog {
         contentPanel.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
                 javax.swing.BorderFactory.createCompoundBorder(
-                    javax.swing.BorderFactory.createTitledBorder("Set Identity"),
+                    javax.swing.BorderFactory.createTitledBorder("Generate Identity"),
                     javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)
                 ),
                 contentPanel.getBorder()
             )
         );
         
-        final javax.swing.JButton okButton = new javax.swing.JButton("Ok");
+        final javax.swing.JButton okButton = new javax.swing.JButton("OK");
         okButton.addActionListener(new OkButtonListener());
         getRootPane().setDefaultButton(okButton);
         final javax.swing.JButton cancelButton = new javax.swing.JButton("Cancel");
