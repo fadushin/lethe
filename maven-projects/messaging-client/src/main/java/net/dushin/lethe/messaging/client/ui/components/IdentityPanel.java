@@ -103,7 +103,7 @@ class IdentityPanel extends javax.swing.JPanel {
                     IdentityPanel.this.controller.getIdentity().getName(),
                     IdentityPanel.this.controller.getIdentity().getPassword()
                 );
-            // dlog.setLocationRelativeTo(CryptoPanel.this);
+            dlog.setLocationRelativeTo(IdentityPanel.this);
             dlog.setVisible(true);
             
             if (dlog.isOk()) {
@@ -135,7 +135,7 @@ class IdentityPanel extends javax.swing.JPanel {
                 SwingUtil.getFrame(IdentityPanel.this),
                 IdentityPanel.this.controller.getIdentity()
             );
-            // dlog.setLocationRelativeTo(IdentityPanel.this);
+            dlog.setLocationRelativeTo(IdentityPanel.this);
             dlog.setVisible(true);
         }        
     }

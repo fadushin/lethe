@@ -43,10 +43,10 @@ import org.apache.cxf.common.util.Base64Utility;
 public abstract class KeyHelper {
     
     private static final String BEGIN_LETHE_PUBLIC_KEY =
-        "--- BEGIN LETHE PUBLIC KEY ---";
+        "-----BEGIN LETHE PEER-----";
 
     private static final String END_LETHE_PUBLIC_KEY =
-        "--- END LETHE PUBLIC KEY ---";
+        "-----END LETHE PEER-----";
 
     private static final String NL =
         System.getProperty("line.separator");

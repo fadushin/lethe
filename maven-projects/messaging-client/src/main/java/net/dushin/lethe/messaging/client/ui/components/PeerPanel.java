@@ -109,7 +109,7 @@ class PeerPanel extends javax.swing.JPanel {
             final java.awt.event.ActionEvent event
         ) {
             final AddPeerDialog dlog = new AddPeerDialog(SwingUtil.getFrame(PeerPanel.this));
-            // dlog.setLocationRelativeTo(CryptoPanel.this);
+            dlog.setLocationRelativeTo(PeerPanel.this);
             dlog.setVisible(true);
             
             if (dlog.isOk()) {

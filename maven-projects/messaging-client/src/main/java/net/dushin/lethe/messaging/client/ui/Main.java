@@ -77,7 +77,7 @@ public final class Main {
             window.pack();
             window.setSize(640, 480);
             window.setLocationRelativeTo(null);
-            window.setVisible(true);
+            // window.setVisible(true);
             
             final SetIdentityDialog dlog = 
                 new SetIdentityDialog(
@@ -85,8 +85,9 @@ public final class Main {
                     Identity.ANONYMOUS.getName(),
                     Identity.ANONYMOUS.getPassword()
                 );
-            dlog.setVisible(true);
+            dlog.pack();
             dlog.setLocationRelativeTo(window.getLethePanel());
+            dlog.setVisible(true);
             
             if (dlog.isOk()) {
                 final String name = dlog.getName();
@@ -99,6 +100,7 @@ public final class Main {
                         true
                     );
                 window.getController().setIdentity(identity);
+                window.setVisible(true);
             } else {
                 System.exit(1);
             }

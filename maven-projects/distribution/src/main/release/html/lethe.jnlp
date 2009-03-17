@@ -25,21 +25,51 @@
 <!-- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS      -->
 <!-- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                       -->
 <!--                                                                                    -->
-<html>
-    
-    <p>
-        Try this one on for size:
-    </p>
-    
+<jnlp
+    spec="1.0+"
+    codebase="http://lethe.dushin.net/lethe-1.0-SNAPSHOT"
+    href="html/lethe.jnlp">
+    <information>
+        <title>Lethe Client Application</title>
+        <vendor>Dushin.Net</vendor>
+        <homepage href="http://lethe.dushin.net"/>
+        <description>Lethe Client Application</description>
+        <description kind="short">fubar</description>
+        <!--
+        <icon href="images/swingset2.jpg"/>
+        <icon kind="splash" href="images/splash.gif"/>
+        <offline-allowed/> 
+        <association>
+            <mime-type="application-x/swingset2-file"/>
+            <extensions="swingset2"/> 
+        </association>
+        <shortcut online="false">
+            <desktop/>
+            <menu submenu="My Corporation Apps"/>
+        </shortcut>
+        -->
+    </information>
     <!--
-    <applet
-        code="net.dushin.lethe.messaging.client.ui.components.LetheApplet.class"
-        width="640"
-        height="480"
-        codebase="../lib"
-        archive="lethe-messaging-client-1.0-SNAPSHOT.jar"
-    />
+    <information os="linux">   
+        <title> SwingSet2 Demo on Linux </title>
+        <homepage href="docs/linuxhelp.html">
+    </information>
     -->
-    <a href=http://lethe.dushin.net/lethe-1.0-SNAPSHOT/html/lethe.jnlp>Launch the application</a>
-
-</html>
+    <security>
+        <all-permissions/>
+    </security>
+    <resources>
+        <j2se version="1.5+" java-vm-args="-esa -Xnoclassgc"/>
+        <!--
+        <jar href="lib/lethe-messaging-client-1.0-SNAPSHOT.jar"/>
+        -->
+        <jar href="lib/lethe-distribution-client-1.0-SNAPSHOT.one-jar.jar"/>
+        <!--
+        <property name="one-jar.jar.path" value="http://lethe.dushin.net/lethe-1.0-SNAPSHOT/lib/lethe-distribution-client-1.0-SNAPSHOT.one-jar.jar"/>
+        -->
+    </resources>
+    <!--
+    <application-desc main-class="net.dushin.lethe.messaging.client.ui.Main"/>
+    -->
+    <application-desc main-class="com.simontuffs.onejar.Boot"/>
+</jnlp> 

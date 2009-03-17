@@ -108,7 +108,7 @@ class StatusPanel extends javax.swing.JPanel {
                     StatusPanel.this.controller.getConnection().getHost(),
                     Short.toString(StatusPanel.this.controller.getConnection().getPort())
                 );
-            // dlog.setLocationRelativeTo(CryptoPanel.this);
+            dlog.setLocationRelativeTo(StatusPanel.this);
             dlog.setVisible(true);
             
             if (dlog.isOk()) {
