@@ -26,22 +26,32 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-public class SetIdentityDialog extends javax.swing.JDialog {
+public class GenerateIdentityDialog extends javax.swing.JDialog {
+    
+    private static final Integer[] KEY_SIZES = {
+        512,
+        1024,
+        2048,
+        4096
+    };
     
     private final javax.swing.JTextField nameField =
         new javax.swing.JTextField(20);
     private final javax.swing.JPasswordField passphraseField =
         new javax.swing.JPasswordField(20);
+    private final javax.swing.JComboBox keySizeComboBox = 
+        new javax.swing.JComboBox(KEY_SIZES);
 
     private String name;
     private char[] passphrase;
     private boolean ok;
     
     public 
-    SetIdentityDialog(
+    GenerateIdentityDialog(
         final java.awt.Frame owner,
         final String name,
-        final String password
+        final String password,
+        final int keySize
     ) {
         super(owner, true);
 
@@ -63,11 +73,20 @@ public class SetIdentityDialog extends javax.swing.JDialog {
         passphraseLabel.setLabelFor(this.passphraseField);
         passphrasePanel.add(passphraseLabel);
         passphrasePanel.add(this.passphraseField);
+        
+        final javax.swing.JPanel keySizePanel = new javax.swing.JPanel();
+        keySizePanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.TRAILING));
+        final javax.swing.JLabel keySizeLabel = new javax.swing.JLabel("Key Size: ");
+        keySizeLabel.setLabelFor(this.keySizeComboBox);
+        keySizePanel.add(keySizeLabel);
+        keySizePanel.add(keySizeComboBox);
+        this.keySizeComboBox.setSelectedItem(new Integer(keySize));
 
         final javax.swing.JPanel contentPanel = new javax.swing.JPanel();
         contentPanel.setLayout(new java.awt.BorderLayout());
         contentPanel.add("North", namePanel);
-        contentPanel.add("South", passphrasePanel);
+        contentPanel.add("Center", passphrasePanel);
+        // contentPanel.add("South", keySizePanel);
         
         contentPanel.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
@@ -112,6 +131,12 @@ public class SetIdentityDialog extends javax.swing.JDialog {
     public char[]
     getPassphrase() {
         return this.passphrase;
+    }
+    
+    public int
+    getKeySize() {
+        return 512;
+        // return (Integer) this.keySizeComboBox.getSelectedItem();
     }
 
     /** This method clears the dialog and hides it. */

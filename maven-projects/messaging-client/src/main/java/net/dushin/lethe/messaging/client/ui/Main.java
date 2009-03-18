@@ -1,7 +1,7 @@
 package net.dushin.lethe.messaging.client.ui;
 
+import net.dushin.lethe.messaging.client.ui.components.GenerateIdentityDialog;
 import net.dushin.lethe.messaging.client.ui.components.LetheWindow;
-import net.dushin.lethe.messaging.client.ui.components.SetIdentityDialog;
 import net.dushin.lethe.messaging.client.ui.controller.Connection;
 import net.dushin.lethe.messaging.client.ui.controller.Identity;
 
@@ -79,11 +79,12 @@ public final class Main {
             window.setLocationRelativeTo(null);
             // window.setVisible(true);
             
-            final SetIdentityDialog dlog = 
-                new SetIdentityDialog(
+            final GenerateIdentityDialog dlog = 
+                new GenerateIdentityDialog(
                     window,
-                    Identity.ANONYMOUS.getName(),
-                    Identity.ANONYMOUS.getPassword()
+                    "",
+                    "",
+                    512
                 );
             dlog.pack();
             dlog.setLocationRelativeTo(window.getLethePanel());
@@ -96,6 +97,7 @@ public final class Main {
                     new Identity(
                         name, 
                         new String(passphrase), 
+                        dlog.getKeySize(),
                         Identity.ANONYMOUS.getSignMessages(),
                         true
                     );

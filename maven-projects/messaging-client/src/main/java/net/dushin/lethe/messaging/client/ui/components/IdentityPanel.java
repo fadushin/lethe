@@ -97,11 +97,12 @@ class IdentityPanel extends javax.swing.JPanel {
         actionPerformed(
             final java.awt.event.ActionEvent event
         ) {
-            final SetIdentityDialog dlog = 
-                new SetIdentityDialog(
+            final GenerateIdentityDialog dlog = 
+                new GenerateIdentityDialog(
                     SwingUtil.getFrame(IdentityPanel.this),
                     IdentityPanel.this.controller.getIdentity().getName(),
-                    IdentityPanel.this.controller.getIdentity().getPassword()
+                    IdentityPanel.this.controller.getIdentity().getPassword(),
+                    IdentityPanel.this.controller.getIdentity().getKeySize()
                 );
             dlog.setLocationRelativeTo(IdentityPanel.this);
             dlog.setVisible(true);
@@ -112,7 +113,8 @@ class IdentityPanel extends javax.swing.JPanel {
                 final Identity identity =
                     new Identity(
                         name, 
-                        new String(passphrase), 
+                        new String(passphrase),
+                        dlog.getKeySize(),
                         IdentityPanel.this.controller.getIdentity().getSignMessages(),
                         true
                     );

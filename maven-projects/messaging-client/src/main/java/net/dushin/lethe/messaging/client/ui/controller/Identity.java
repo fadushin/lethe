@@ -41,7 +41,7 @@ public class Identity extends Peer {
      * The "anonymous" identity.
      */
     public static final Identity ANONYMOUS = 
-        new Identity("anonymous", "anonymous", true, false);
+        new Identity("anonymous", "anonymous", 512, true, false);
     
     /**
      * The password associated with this identity
@@ -52,6 +52,11 @@ public class Identity extends Peer {
      * the cryptographic key pair derived from the user's password.
      */
     private final java.security.KeyPair keyPair;
+    
+    /**
+     * 
+     */
+    private final int keySize;
     
     /**
      * The signer used to sign messages
@@ -77,10 +82,18 @@ public class Identity extends Peer {
     Identity(
         final String name,
         final String password,
+        final int keySize,
         final boolean signMessages,
         final boolean encryptToSelf
     ) {
-        this(name, password, generateKeyPair(password), signMessages, encryptToSelf);
+        this(
+            name, 
+            password, 
+            generateKeyPair(password, keySize),
+            keySize,
+            signMessages, 
+            encryptToSelf
+        );
     }
 
     private
@@ -88,12 +101,14 @@ public class Identity extends Peer {
         final String name,
         final String password,
         final java.security.KeyPair keyPair,
+        final int keySize,
         final boolean signMessages,
         final boolean encryptToSelf
     ) {
         super(name, keyPair.getPublic());
         this.password = password;
         this.keyPair = keyPair;
+        this.keySize = keySize;
         this.signMessages = signMessages;
         this.signer = new Signer(this.keyPair.getPrivate());
         this.decryptor = new Decryptor(this.keyPair.getPrivate());
@@ -114,6 +129,14 @@ public class Identity extends Peer {
     public java.security.KeyPair
     getKeyPair() {
         return this.keyPair;
+    }
+    
+    /**
+     * @return      the size of the key associated with this Identity
+     */
+    public int
+    getKeySize() {
+        return this.keySize;
     }
     
     /**
@@ -156,9 +179,12 @@ public class Identity extends Peer {
     //
     
     private static java.security.KeyPair
-    generateKeyPair(final String password) {
+    generateKeyPair(
+        final String password,
+        final int keySize
+    ) {
         try {
-            return new KeyPairGenerator(512).generateKeyPair(password);
+            return new KeyPairGenerator(keySize).generateKeyPair(password);
         } catch (final Exception e) {
             throw new RuntimeException("Error generating key pair", e);
         }
