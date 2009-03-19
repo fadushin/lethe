@@ -41,6 +41,7 @@ public class MessageProtectionTest extends org.junit.Assert {
     //
     
     private static final String ALICE_PW = "alice";
+    /*
     private static final java.security.KeyPair ALICE;
     static {
         java.security.KeyPair tmp = null;
@@ -51,8 +52,10 @@ public class MessageProtectionTest extends org.junit.Assert {
         }
         ALICE = tmp;
     }
+    */
 
     private static final String BOB_PW = "bob";
+    /*
     private static final java.security.KeyPair BOB;
     static {
         java.security.KeyPair tmp = null;
@@ -63,6 +66,7 @@ public class MessageProtectionTest extends org.junit.Assert {
         }
         BOB = tmp;
     }
+    */
 
     private static final PlaintextMessage ALICE_MSG = new PlaintextMessage();
     static {
@@ -86,6 +90,11 @@ public class MessageProtectionTest extends org.junit.Assert {
         try {
             testPlaintextEncryption(512, 1024);
             testPlaintextEncryption(1024, 512);
+            //
+            // commenting out for now; these are slooow tests
+            //
+            // testPlaintextEncryption(2048, 512);
+            // testPlaintextEncryption(4096, 512);
         } catch (final Exception e) {
             e.printStackTrace();
             fail("testEncryption failed for the above reason");
@@ -194,24 +203,47 @@ public class MessageProtectionTest extends org.junit.Assert {
     public final void
     testPlaintextSignature() throws Exception {
         try {
+            testPlaintextSignature(512, 1024);
+            testPlaintextSignature(1024, 512);
+            //
+            // commenting out for now; these are slooow tests
+            //
+            // testPlaintextSignature(2048, 512);
+            // testPlaintextSignature(4096, 512);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testPlaintextSignature failed for the above reason");
+        }
+    }
+    
+    private void
+    testPlaintextSignature(
+        final int expectedKeySize,
+        final int unexpectedKeySize
+    ) throws Exception {
+        try {
+            final java.security.KeyPair alice =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW);
+            final java.security.KeyPair bob =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(BOB_PW);
             //
             // success scenarios
             //
             testPlaintextSignature(
-                ALICE.getPrivate(),
-                ALICE.getPublic(),
+                alice.getPrivate(),
+                alice.getPublic(),
                 ALICE_MSG,
                 true
             );
             testPlaintextSignature(
-                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPrivate(),
-                ALICE.getPublic(),
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW).getPrivate(),
+                alice.getPublic(),
                 ALICE_MSG,
                 true
             );
             testPlaintextSignature(
-                ALICE.getPrivate(),
-                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPublic(),
+                alice.getPrivate(),
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW).getPublic(),
                 ALICE_MSG,
                 true
             );
@@ -219,20 +251,20 @@ public class MessageProtectionTest extends org.junit.Assert {
             // failure scenarios
             //
             testPlaintextSignature(
-                ALICE.getPrivate(),
-                new KeyPairGenerator(1024).generateKeyPair(ALICE_PW).getPublic(),
+                alice.getPrivate(),
+                new KeyPairGenerator(unexpectedKeySize).generateKeyPair(ALICE_PW).getPublic(),
                 ALICE_MSG,
                 false
             );
             testPlaintextSignature(
-                ALICE.getPrivate(),
-                BOB.getPublic(),
+                alice.getPrivate(),
+                bob.getPublic(),
                 ALICE_MSG,
                 false
             );
             testPlaintextSignature(
-                BOB.getPrivate(),
-                ALICE.getPublic(),
+                bob.getPrivate(),
+                alice.getPublic(),
                 ALICE_MSG,
                 false
             );
@@ -288,20 +320,43 @@ public class MessageProtectionTest extends org.junit.Assert {
     public final void
     testSignedEncryption() throws Exception {
         try {
+            testSignedEncryption(512, 1024);
+            testSignedEncryption(1024, 512);
+            //
+            // commenting out for now; these are slooow tests
+            //
+            // testSignedEncryption(2048, 512);
+            // testSignedEncryption(4096, 512);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testSignedEncryption failed for the above reason");
+        }
+    }
+    
+    private void
+    testSignedEncryption(
+        final int expectedKeySize,
+        final int unexpectedKeySize
+    ) throws Exception {
+        try {
+            final java.security.KeyPair alice =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW);
+            final java.security.KeyPair bob =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(BOB_PW);
             //
             // success scenarios
             //
             testSignedEncryption(
-                ALICE.getPrivate(),
-                BOB.getPublic(),
-                BOB.getPrivate(),
-                ALICE.getPublic(),
+                alice.getPrivate(),
+                bob.getPublic(),
+                bob.getPrivate(),
+                alice.getPublic(),
                 ALICE_MSG,
                 true
             );
         } catch (final Exception e) {
             e.printStackTrace();
-            fail("testEncryption failed for the above reason");
+            fail("testSignedEncryption failed for the above reason");
         }
     }
 

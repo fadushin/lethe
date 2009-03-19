@@ -86,7 +86,7 @@ public class GenerateIdentityDialog extends javax.swing.JDialog {
         contentPanel.setLayout(new java.awt.BorderLayout());
         contentPanel.add("North", namePanel);
         contentPanel.add("Center", passphrasePanel);
-        // contentPanel.add("South", keySizePanel);
+        contentPanel.add("South", keySizePanel);
         
         contentPanel.setBorder(
             javax.swing.BorderFactory.createCompoundBorder(
@@ -135,8 +135,7 @@ public class GenerateIdentityDialog extends javax.swing.JDialog {
     
     public int
     getKeySize() {
-        return 512;
-        // return (Integer) this.keySizeComboBox.getSelectedItem();
+        return (Integer) this.keySizeComboBox.getSelectedItem();
     }
 
     /** This method clears the dialog and hides it. */
