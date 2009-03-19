@@ -84,24 +84,42 @@ public class MessageProtectionTest extends org.junit.Assert {
     public final void
     testPlaintextEncryption() throws Exception {
         try {
+            testPlaintextEncryption(512, 1024);
+            testPlaintextEncryption(1024, 512);
+        } catch (final Exception e) {
+            e.printStackTrace();
+            fail("testEncryption failed for the above reason");
+        }
+    }
+    
+    private void
+    testPlaintextEncryption(
+        final int expectedKeySize,
+        final int unexpectedKeySize
+    ) throws Exception {
+        try {
+            final java.security.KeyPair alice =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW);
+            final java.security.KeyPair bob =
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(BOB_PW);
             //
             // success scenarios
             //
             testPlaintextEncryption(
-                ALICE.getPublic(),
-                ALICE.getPrivate(),
+                alice.getPublic(),
+                alice.getPrivate(),
                 ALICE_MSG,
                 true
             );
             testPlaintextEncryption(
-                ALICE.getPublic(),
-                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPrivate(),
+                alice.getPublic(),
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW).getPrivate(),
                 ALICE_MSG,
                 true
             );
             testPlaintextEncryption(
-                new KeyPairGenerator(512).generateKeyPair(ALICE_PW).getPublic(),
-                ALICE.getPrivate(),
+                new KeyPairGenerator(expectedKeySize).generateKeyPair(ALICE_PW).getPublic(),
+                alice.getPrivate(),
                 ALICE_MSG,
                 true
             );
@@ -109,20 +127,20 @@ public class MessageProtectionTest extends org.junit.Assert {
             // failure scenarios
             //
             testPlaintextEncryption(
-                new KeyPairGenerator(1024).generateKeyPair(ALICE_PW).getPublic(),
-                ALICE.getPrivate(),
+                new KeyPairGenerator(unexpectedKeySize).generateKeyPair(ALICE_PW).getPublic(),
+                alice.getPrivate(),
                 ALICE_MSG,
                 false
             );
             testPlaintextEncryption(
-                ALICE.getPublic(),
-                BOB.getPrivate(),
+                alice.getPublic(),
+                bob.getPrivate(),
                 ALICE_MSG,
                 false
             );
             testPlaintextEncryption(
-                BOB.getPublic(),
-                ALICE.getPrivate(),
+                bob.getPublic(),
+                alice.getPrivate(),
                 ALICE_MSG,
                 false
             );

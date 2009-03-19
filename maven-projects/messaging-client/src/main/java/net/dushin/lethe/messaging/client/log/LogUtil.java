@@ -145,6 +145,7 @@ public abstract class LogUtil {
         final java.io.ByteArrayOutputStream os = new java.io.ByteArrayOutputStream();
         final java.io.PrintWriter s = new java.io.PrintWriter(os);
         e.printStackTrace(s);
+        s.flush();
         return os.toString();
     }
 }

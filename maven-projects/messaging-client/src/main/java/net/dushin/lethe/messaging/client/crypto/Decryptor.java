@@ -36,7 +36,13 @@ import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
  * encrypt the message.
  */
 public class Decryptor extends CryptorBase {
-
+    
+    /**
+     * the Logger instance to be used by this class
+     */
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(Decryptor.class.getName());
+    
     /**
      * @param       key
      *              The private key used to decrypt messages
@@ -78,7 +84,12 @@ public class Decryptor extends CryptorBase {
                     decryptedData
                 );
             } catch (final Exception e) {
-                // log
+                LogUtil.logException(
+                    LOGGER, 
+                    java.util.logging.Level.FINE, 
+                    e, 
+                    "An error occurred decrypting an encrypted message."
+                );
                 continue;
             }
         }
@@ -114,10 +125,11 @@ public class Decryptor extends CryptorBase {
             // 32 bytes of the decrypted data -- they are all 0 for some
             // reason I need to look into
             //
+            final int idx = decryptedKey.length - 32;
             final javax.crypto.spec.SecretKeySpec spec = 
                 new javax.crypto.spec.SecretKeySpec(
                     decryptedKey, 
-                    32, 32, 
+                    idx, 32, 
                     algorithm
                 );
             return spec;
