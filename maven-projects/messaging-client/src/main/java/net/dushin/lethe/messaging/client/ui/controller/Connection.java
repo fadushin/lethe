@@ -46,6 +46,8 @@ public class Connection {
     
     private final short port;
     
+    private final boolean connected;
+    
     /**
      * The jax-ws proxy (wrapper) to the server
      */
@@ -67,6 +69,18 @@ public class Connection {
     ) {
         this.host = host;
         this.port = port;
+        //
+        //
+        //
+        boolean tmp = false;
+        try {
+            getProxy().ping();
+            tmp = true;
+        } catch (final Exception e) {
+            // keep false
+        } finally {
+            this.connected = tmp;
+        }
     }
     
     //
@@ -81,6 +95,11 @@ public class Connection {
     public short
     getPort() {
         return this.port;
+    }
+    
+    public boolean
+    getConnected() {
+        return this.connected;
     }
     
     //

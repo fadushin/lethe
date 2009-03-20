@@ -134,7 +134,8 @@ public abstract class LogUtil {
             if (e != null) {
                 msg += NL + "The offending exception is:" + NL + generateStackTrace(e);
             }
-            logger.log(level, msg);
+            final String[] location = inferCaller();
+            logger.logp(level, location[0], location[1], msg);
         }
     }
     
@@ -147,5 +148,28 @@ public abstract class LogUtil {
         e.printStackTrace(s);
         s.flush();
         return os.toString();
+    }
+    
+    private static String[]
+    inferCaller() {
+        final StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        int ix = 0;
+        while (ix < stack.length) {
+            final StackTraceElement frame = stack[ix];
+            final String cname = frame.getClassName();
+            if (cname.equals(LogUtil.class.getName())) {
+                break;
+            }
+            ix++;
+        }
+        while (ix < stack.length) {
+            StackTraceElement frame = stack[ix];
+            String cname = frame.getClassName();
+            if (!cname.equals(LogUtil.class.getName())) {
+                return new String[]{cname, frame.getMethodName()};
+            }
+            ix++;
+        }
+        return new String[]{"unknown-class", "unknown-method"};
     }
 }

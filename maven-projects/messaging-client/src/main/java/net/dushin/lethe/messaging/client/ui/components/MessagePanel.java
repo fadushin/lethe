@@ -177,6 +177,12 @@ public class MessagePanel extends javax.swing.JPanel
         this.messageDisplayArea.setText(
             buf.toString()
         );
+        //
+        //
+        //
+        this.messageDisplayArea.selectAll();
+        final int idx = this.messageDisplayArea.getSelectionEnd();
+        this.messageDisplayArea.select(idx, idx);
     }
     
     private static String

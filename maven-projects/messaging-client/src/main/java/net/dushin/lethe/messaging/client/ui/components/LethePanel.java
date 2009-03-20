@@ -46,19 +46,23 @@ public class LethePanel extends javax.swing.JPanel {
         this.cryptoPanel = new CryptoPanel(this.controller);
         this.messagePanel = new TabbedMessagePanel(controller);
         
-        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
+        final javax.swing.JSplitPane cryptoMessageSplitPane = new javax.swing.JSplitPane(
             javax.swing.JSplitPane.HORIZONTAL_SPLIT,
             this.cryptoPanel,
             this.messagePanel
         );
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(250);
+        cryptoMessageSplitPane.setOneTouchExpandable(true);
+        cryptoMessageSplitPane.setDividerLocation(250);
         
-        // final javax.swing.JToolBar toolBar = new javax.swing.JToolBar("Leethe Toolbox");
-        // add("North", toolBar);
+        final javax.swing.JSplitPane statusplitPane = new javax.swing.JSplitPane(
+            javax.swing.JSplitPane.VERTICAL_SPLIT,
+            cryptoMessageSplitPane,
+            new StatusPanel(this.controller)
+        );
+        statusplitPane.setOneTouchExpandable(true);
+        statusplitPane.setDividerLocation(350);
         
-        this.add("Center", splitPane);
-        this.add("South", new StatusPanel(this.controller));
+        this.add("Center", statusplitPane);
     }
     
     public void

@@ -35,6 +35,7 @@ class StatusPanel extends javax.swing.JPanel {
     
     private final javax.swing.JLabel hostLabel;
     private final javax.swing.JLabel portLabel;
+    private final javax.swing.JLabel connectedLabel;
 
     StatusPanel(
         final LetheController controller
@@ -55,6 +56,15 @@ class StatusPanel extends javax.swing.JPanel {
             new javax.swing.JLabel(getHostText());
         this.portLabel = 
             new javax.swing.JLabel(getPortText());
+        this.connectedLabel = 
+            new javax.swing.JLabel(getConnectedText());
+        
+        final javax.swing.JPanel labelPanel = new javax.swing.JPanel(
+            new java.awt.GridLayout(3, 1)
+        );
+        labelPanel.add(this.hostLabel);
+        labelPanel.add(this.portLabel);
+        labelPanel.add(this.connectedLabel);
         
         final javax.swing.JButton setConnectionButton = 
             new javax.swing.JButton("Settings...");
@@ -64,12 +74,10 @@ class StatusPanel extends javax.swing.JPanel {
         //
         // add them to this panel
         //
-        // this.setLayout(new java.awt.BorderLayout());
-        // this.add("Center", splitPane);
-        this.add(this.hostLabel);
-        this.add(this.portLabel);
-        this.add(setConnectionButton);
-        this.add(helpButton);
+        this.setLayout(new java.awt.BorderLayout());
+        this.add("West", labelPanel);
+        this.add("East", setConnectionButton);
+        // this.add(helpButton);
 
     }
     
@@ -83,6 +91,11 @@ class StatusPanel extends javax.swing.JPanel {
         return "Port:" + this.controller.getConnection().getPort();
     }
     
+    private String
+    getConnectedText() {
+        return "Connected:" + this.controller.getConnection().getConnected();
+    }
+    
     private void
     setConnection(
         final Connection connection
@@ -90,6 +103,7 @@ class StatusPanel extends javax.swing.JPanel {
         this.controller.setConnection(connection);
         this.hostLabel.setText(getHostText());
         this.portLabel.setText(getPortText());
+        this.connectedLabel.setText(getConnectedText());
     }
     
     private class SetConnectionListener 
