@@ -89,7 +89,7 @@ public class Identity extends Peer {
         this(
             name, 
             password, 
-            generateKeyPair(password, keySize),
+            generateKeyPair(name, password, keySize),
             keySize,
             signMessages, 
             encryptToSelf
@@ -180,11 +180,15 @@ public class Identity extends Peer {
     
     private static java.security.KeyPair
     generateKeyPair(
+        final String name,
         final String password,
         final int keySize
     ) {
         try {
-            return new KeyPairGenerator(keySize).generateKeyPair(password);
+            return new KeyPairGenerator(keySize).generateKeyPair(
+                name.length() + name 
+                + password.length() + password
+            );
         } catch (final Exception e) {
             throw new RuntimeException("Error generating key pair", e);
         }

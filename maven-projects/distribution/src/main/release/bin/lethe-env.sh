@@ -34,7 +34,7 @@ then
         return 1
     fi
     
-    CLASSPATH=${LETHE_HOME}/lib/lethe-1.0-SNAPSHOT.jar
+    CLASSPATH=${LETHE_HOME}/lib/lethe-messaging-server-1.0-SNAPSHOT.jar:${LETHE_HOME}/lib/lethe-messaging-client-1.0-SNAPSHOT.jar
     export CLASSPATH
     
     typeset LETHE_ENV__SH=1

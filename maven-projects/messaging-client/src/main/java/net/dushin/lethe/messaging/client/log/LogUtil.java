@@ -153,22 +153,22 @@ public abstract class LogUtil {
     private static String[]
     inferCaller() {
         final StackTraceElement stack[] = (new Throwable()).getStackTrace();
-        int ix = 0;
-        while (ix < stack.length) {
-            final StackTraceElement frame = stack[ix];
+        int idx = 0;
+        while (idx < stack.length) {
+            final StackTraceElement frame = stack[idx];
             final String cname = frame.getClassName();
             if (cname.equals(LogUtil.class.getName())) {
                 break;
             }
-            ix++;
+            idx++;
         }
-        while (ix < stack.length) {
-            StackTraceElement frame = stack[ix];
+        while (idx < stack.length) {
+            StackTraceElement frame = stack[idx];
             String cname = frame.getClassName();
             if (!cname.equals(LogUtil.class.getName())) {
                 return new String[]{cname, frame.getMethodName()};
             }
-            ix++;
+            idx++;
         }
         return new String[]{"unknown-class", "unknown-method"};
     }
