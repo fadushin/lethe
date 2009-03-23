@@ -32,7 +32,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe-distribution</artifactId>
+    <artifactId>lethe-distribution-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Lethe Distribution</name>
     <url>http://lethe.dushin.net</url>
@@ -49,51 +49,7 @@
 
     <modules>
         <module>client</module>
+        <module>all</module>
     </modules>
-
-    <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <lethe.version>${pom.version}</lethe.version>
-    </properties>
-    
-    <dependencies>
-        <dependency>
-            <groupId>net.dushin.lethe</groupId>
-            <artifactId>lethe-messaging-server</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.dushin.lethe</groupId>
-            <artifactId>lethe-messaging-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <!-- -->
-            <!-- -->
-            <!-- -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>distribution-package</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/bin.xml</descriptor>
-                            </descriptors>
-                            <tarLongFileMode>gnu</tarLongFileMode>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
