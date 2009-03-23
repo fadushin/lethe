@@ -26,12 +26,16 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import net.dushin.lethe.messaging.common.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 
 class Channel {
+
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(SweeperThread.class.getName());
 
     private final ChannelConfigType channelConfig;
     
@@ -69,6 +73,12 @@ class Channel {
         synchronized (messages) {
             final java.util.List<Message> msgs = this.messages.getItem();
             if (msgs.size() == this.channelConfig.getMaxMessages()) {
+                LogUtil.logInfo(
+                    LOGGER, 
+                    "Message list hit max size ({0}); Removing message {1} from message list...", 
+                    this.channelConfig.getMaxMessages(),
+                    msgs.get(0).getMessage().getUuid()
+                );
                 msgs.remove(0);
             }
             final Message msg = new Message();
@@ -104,6 +114,11 @@ class Channel {
         for (Message msg : src) {
             final long deltasecs = (currentms - msg.getTimestampMs()) / 1000;
             if (deltasecs > this.channelConfig.getMessageTimeoutSecs()) {
+                LogUtil.logInfo(
+                    LOGGER, 
+                    "Message {0} timeout (after {1} secs); Removing message from message list...", 
+                    msg.getMessage().getUuid(), deltasecs
+                );
                 src.remove(msg);
                 continue;
             } else {
@@ -122,5 +137,10 @@ class Channel {
         final long lastTouched
     ) {
         this.lastTouched = lastTouched;
+    }
+    
+    String
+    getId() {
+        return this.id;
     }
 }

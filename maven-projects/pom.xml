@@ -42,6 +42,7 @@
         <module>build-config</module>
         <module>parent</module>
         <module>messaging-interfaces</module>
+        <module>messaging-common</module>
         <module>messaging-server</module>
         <module>messaging-client</module>
         <module>distribution</module>

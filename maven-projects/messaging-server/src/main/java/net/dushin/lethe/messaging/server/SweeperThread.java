@@ -26,8 +26,13 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import net.dushin.lethe.messaging.common.log.LogUtil;
+
 class SweeperThread extends Thread {
 
+    private static final java.util.logging.Logger LOGGER =
+        java.util.logging.Logger.getLogger(SweeperThread.class.getName());
+    
     private final ChannelManager mgr;
 
     SweeperThread(
@@ -48,6 +53,11 @@ class SweeperThread extends Thread {
                         final int deltasecs = 
                             (int) (Timestamp.currentms() - channel.getLastTouched()) / 1000;
                         if (deltasecs > this.mgr.getMessagingServerConfig().getChannelIdleTimeoutSecs()) {
+                            LogUtil.logInfo(
+                                LOGGER, 
+                                "Channel {0} timeout (after {1} secs); Removing channel...", 
+                                channel.getId(), deltasecs
+                            );
                             channelMap.remove(entry.getKey());
                         } else {
                             channel.sweepMessages();
@@ -55,13 +65,18 @@ class SweeperThread extends Thread {
                     }
                 }
             } catch (final Throwable t) {
-                // log?
-                t.printStackTrace();
+                LogUtil.logException(
+                    LOGGER, 
+                    java.util.logging.Level.WARNING, 
+                    t, 
+                    "An error occurred sweeping the set of channels."
+                );
             } finally {
                 try {
-                    Thread.sleep(
-                        this.mgr.getMessagingServerConfig().getSweeperThreadSleepSecs() * 1000
-                    );
+                    final int secs = 
+                        this.mgr.getMessagingServerConfig().getSweeperThreadSleepSecs() * 1000;
+                    LogUtil.logFine(LOGGER, "Sleeping for {0} secs...", secs);
+                    Thread.sleep(secs);
                 } catch (final InterruptedException e) {
                     // ignore
                 }

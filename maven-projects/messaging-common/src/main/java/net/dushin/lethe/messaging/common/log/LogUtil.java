@@ -64,6 +64,15 @@ public abstract class LogUtil {
     }
     
     public static void
+    logFine(
+        final java.util.logging.Logger logger,
+        final String pattern,
+        final Object... params
+    ) {
+        log(logger, java.util.logging.Level.FINE, pattern, params);
+    }
+    
+    public static void
     logException(
         final java.util.logging.Logger logger,
         final Exception e,
@@ -77,7 +86,7 @@ public abstract class LogUtil {
     logException(
         final java.util.logging.Logger logger,
         final java.util.logging.Level level,
-        final Exception e,
+        final Throwable e,
         final String pattern,
         final Object... params
     ) {
@@ -122,7 +131,7 @@ public abstract class LogUtil {
     log(
         final java.util.logging.Logger logger,
         final java.util.logging.Level level,
-        final Exception e,
+        final Throwable e,
         final String pattern,
         final Object... params
     ) {
@@ -141,7 +150,7 @@ public abstract class LogUtil {
     
     private static String
     generateStackTrace(
-        final Exception e
+        final Throwable e
     ) {
         final java.io.ByteArrayOutputStream os = new java.io.ByteArrayOutputStream();
         final java.io.PrintWriter s = new java.io.PrintWriter(os);
