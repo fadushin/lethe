@@ -38,31 +38,33 @@ class SweeperThread extends Thread {
     
     public void
     run() {
-        try {
-            final java.util.Map<String, Channel> channelMap =
-                this.mgr.getChannelMap();
-            synchronized (channelMap) {
-                for (final java.util.Map.Entry<String, Channel> entry : channelMap.entrySet()) {
-                    final Channel channel = entry.getValue();
-                    final int deltasecs = 
-                        (int) (Timestamp.currentms() - channel.getLastTouched()) / 1000;
-                    if (deltasecs > this.mgr.getMessagingServerConfig().getChannelIdleTimeoutSecs()) {
-                        channelMap.remove(entry.getKey());
-                    } else {
-                        channel.sweepMessages();
+        while (true) {
+            try {
+                final java.util.Map<String, Channel> channelMap =
+                    this.mgr.getChannelMap();
+                synchronized (channelMap) {
+                    for (final java.util.Map.Entry<String, Channel> entry : channelMap.entrySet()) {
+                        final Channel channel = entry.getValue();
+                        final int deltasecs = 
+                            (int) (Timestamp.currentms() - channel.getLastTouched()) / 1000;
+                        if (deltasecs > this.mgr.getMessagingServerConfig().getChannelIdleTimeoutSecs()) {
+                            channelMap.remove(entry.getKey());
+                        } else {
+                            channel.sweepMessages();
+                        }
                     }
                 }
-            }
-        } catch (final Throwable t) {
-            // log?
-            t.printStackTrace();
-        } finally {
-            try {
-                Thread.sleep(
-                    this.mgr.getMessagingServerConfig().getSweeperThreadSleepSecs() * 1000
-                );
-            } catch (final InterruptedException e) {
-                // ignore
+            } catch (final Throwable t) {
+                // log?
+                t.printStackTrace();
+            } finally {
+                try {
+                    Thread.sleep(
+                        this.mgr.getMessagingServerConfig().getSweeperThreadSleepSecs() * 1000
+                    );
+                } catch (final InterruptedException e) {
+                    // ignore
+                }
             }
         }
     }
