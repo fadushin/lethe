@@ -26,8 +26,8 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.client.debug.HexDump;
-import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
+import net.dushin.lethe.messaging.common.debug.HexDump;
+import net.dushin.lethe.messaging.common.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.keys.ObjectFactory;
 import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
 import net.dushin.lethe.messaging.interfaces.keys.RSAPublicKeyType;

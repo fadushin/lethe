@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
+import net.dushin.lethe.messaging.common.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.EncryptedMessage;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;

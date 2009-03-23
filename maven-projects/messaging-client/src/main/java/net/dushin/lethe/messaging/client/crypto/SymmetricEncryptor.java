@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.client.log.LogUtil;
+import net.dushin.lethe.messaging.common.log.LogUtil;
 
 /**
  * This class is used to encrypt data using a secret key.

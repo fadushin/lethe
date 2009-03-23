@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.crypto;
 
-import net.dushin.lethe.messaging.client.jaxb.JaxbSerialization;
+import net.dushin.lethe.messaging.common.jaxb.JaxbSerialization;
 import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;

@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
-import net.dushin.lethe.messaging.client.log.LogUtil;
+import net.dushin.lethe.messaging.common.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 
