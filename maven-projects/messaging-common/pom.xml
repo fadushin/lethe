@@ -32,10 +32,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
-    <artifactId>lethe-messaging-client</artifactId>
+    <artifactId>lethe-messaging-common</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Lethe Messenging Client</name>
+    <name>Lethe Messenging Common</name>
     <url>http://lethe.dushin.net/</url>
 
     <!-- -->
@@ -61,13 +61,6 @@
         <dependency>
             <groupId>net.dushin.lethe</groupId>
             <artifactId>lethe-messaging-interfaces</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.dushin.lethe</groupId>
-            <artifactId>lethe-messaging-common</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
