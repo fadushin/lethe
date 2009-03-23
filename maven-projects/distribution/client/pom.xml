@@ -34,7 +34,7 @@
     <groupId>net.dushin.lethe</groupId>
     <artifactId>lethe-distribution-client</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>Lethe Distribution Client OneJar</name>
+    <name>Lethe Distribution Client</name>
     <url>http://lethe.dushin.net</url>
     <packaging>jar</packaging>
 

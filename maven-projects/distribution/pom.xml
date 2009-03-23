@@ -49,7 +49,7 @@
 
     <modules>
         <module>client</module>
-        <module>all</module>
+        <module>server</module>
     </modules>
 
 </project>
