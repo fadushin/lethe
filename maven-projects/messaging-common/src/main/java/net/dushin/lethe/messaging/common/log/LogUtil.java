@@ -24,9 +24,9 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.log;
+package net.dushin.lethe.messaging.common.log;
 
-import net.dushin.lethe.messaging.client.debug.HexDump;
+import net.dushin.lethe.messaging.common.debug.HexDump;
 
 /**
  * 
