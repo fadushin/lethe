@@ -89,40 +89,24 @@ class Channel {
         }
     }
     
-    private MessageList
-    getSince(
-        final java.lang.String since
-    ) {
-        final MessageList ret = new MessageList();
-        final java.util.List<Message> src = messages.getItem();
-        final java.util.List<Message> dst = ret.getItem();
-        boolean found = false;
-        for (Message msg : src) {
-            if (found) {
-                dst.add(msg);
-            } else if (since.equals(msg.getMessage().getUuid())) {
-                found = true;
-            }
-        }
-        return found ? ret : this.messages;
-    }
-    
     void
     sweepMessages() {
-        final java.util.List<Message> src = messages.getItem();
-        final long currentms = Timestamp.currentms();
-        for (Message msg : src) {
-            final long deltasecs = (currentms - msg.getTimestampMs()) / 1000;
-            if (deltasecs > this.channelConfig.getMessageTimeoutSecs()) {
-                LogUtil.logInfo(
-                    LOGGER, 
-                    "Message {0} timeout (after {1} secs); Removing message from message list...", 
-                    msg.getMessage().getUuid(), deltasecs
-                );
-                src.remove(msg);
-                continue;
-            } else {
-                return;
+        synchronized (messages) {
+            final java.util.List<Message> src = messages.getItem();
+            final long currentms = Timestamp.currentms();
+            for (Message msg : src) {
+                final long deltasecs = (currentms - msg.getTimestampMs()) / 1000;
+                if (deltasecs > this.channelConfig.getMessageTimeoutSecs()) {
+                    LogUtil.logInfo(
+                        LOGGER, 
+                        "Message {0} timeout (after {1} secs); Removing message from message list...", 
+                        msg.getMessage().getUuid(), deltasecs
+                    );
+                    src.remove(msg);
+                    continue;
+                } else {
+                    return;
+                }
             }
         }
     }
@@ -142,5 +126,27 @@ class Channel {
     String
     getId() {
         return this.id;
+    }
+    
+    //
+    // private operations
+    //
+    
+    private MessageList
+    getSince(
+        final java.lang.String since
+    ) {
+        final MessageList ret = new MessageList();
+        final java.util.List<Message> src = messages.getItem();
+        final java.util.List<Message> dst = ret.getItem();
+        boolean found = false;
+        for (Message msg : src) {
+            if (found) {
+                dst.add(msg);
+            } else if (since.equals(msg.getMessage().getUuid())) {
+                found = true;
+            }
+        }
+        return found ? ret : this.messages;
     }
 }

@@ -50,7 +50,15 @@
     <!-- -->
     <!-- Instantiate the server -->
     <!-- -->
-    <lethe-server:MessagingServer id="net.dushin.lethe.messaging.server"/>
+    <lethe-server:MessagingServer 
+        id="net.dushin.lethe.messaging.server"
+        channelIdleTimeoutSecs="3600"
+        sweeperThreadSleepSecs="30"
+        >
+        <lethe-server:ChannelConfig 
+            messageTimeoutSecs="3600"
+        />
+    </lethe-server:MessagingServer>
     
     <!-- -->
     <!-- Wire the server to an endpoint -->
