@@ -94,20 +94,23 @@ class Channel {
         synchronized (messages) {
             final java.util.List<Message> src = messages.getItem();
             final long currentms = Timestamp.currentms();
+            final java.util.List<Message> remove = new java.util.ArrayList<Message>();
             for (Message msg : src) {
                 final long deltasecs = (currentms - msg.getTimestampMs()) / 1000;
                 if (deltasecs > this.channelConfig.getMessageTimeoutSecs()) {
                     LogUtil.logInfo(
                         LOGGER, 
-                        "Message {0} timeout (after {1} secs); Removing message from message list...", 
-                        msg.getMessage().getUuid(), deltasecs
+                        "Message {0} timeout (after {1} secs) on channel {2}; "
+                        + "This message will be removed from message list...", 
+                        msg.getMessage().getUuid(), deltasecs, this.id
                     );
-                    src.remove(msg);
+                    remove.add(msg);
                     continue;
                 } else {
-                    return;
+                    break;
                 }
             }
+            src.removeAll(remove);
         }
     }
     
