@@ -38,6 +38,17 @@
     <url>http://lethe.dushin.net</url>
     <packaging>pom</packaging>
     
+    <distributionManagement>
+        <repository>
+            <id>lethe.distribution.releaserepository</id>
+            <url>file:///var/www/mvn/repo/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>lethe.distribution.snapshotrepository</id>
+            <url>file:///var/www/mvn/repo/snapshot</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <modules>
         <module>build-config</module>
         <module>parent</module>
@@ -55,6 +66,7 @@
                 <maven.test.skip>true</maven.test.skip>
             </properties>
             <build>
+                <defaultGoal>process-test-sources</defaultGoal>
                 <plugins>
                     <!-- -->
                     <!-- Eclipse plugin configuration -->
