@@ -41,7 +41,7 @@ public class Identity extends Peer {
      * The "anonymous" identity.
      */
     public static final Identity ANONYMOUS = 
-        new Identity("anonymous", "anonymous", 512, true, false);
+        new Identity("anonymous", "anonymous", 512, /*true,*/ false);
     
     /**
      * The password associated with this identity
@@ -68,12 +68,6 @@ public class Identity extends Peer {
      */
     private final Decryptor decryptor;
     
-    /**
-     * flag indicating whether messages should be signed by
-     * this identity.
-     */
-    private boolean signMessages;
-    
     //
     // lifecycle
     //
@@ -83,7 +77,6 @@ public class Identity extends Peer {
         final String name,
         final String password,
         final int keySize,
-        final boolean signMessages,
         final boolean encryptToSelf
     ) {
         this(
@@ -91,7 +84,6 @@ public class Identity extends Peer {
             password, 
             generateKeyPair(name, password, keySize),
             keySize,
-            signMessages, 
             encryptToSelf
         );
     }
@@ -102,14 +94,12 @@ public class Identity extends Peer {
         final String password,
         final java.security.KeyPair keyPair,
         final int keySize,
-        final boolean signMessages,
         final boolean encryptToSelf
     ) {
         super(name, keyPair.getPublic());
         this.password = password;
         this.keyPair = keyPair;
         this.keySize = keySize;
-        this.signMessages = signMessages;
         this.signer = new Signer(this.keyPair.getPrivate());
         this.decryptor = new Decryptor(this.keyPair.getPrivate());
         this.setEncryptTo(encryptToSelf);
@@ -153,25 +143,6 @@ public class Identity extends Peer {
     public Decryptor
     getDecryptor() {
         return this.decryptor;
-    }
-    
-    /**
-     * @return      true, if messages should be signed by this
-     *              identity; false, otherwise
-     */
-    public boolean
-    getSignMessages() {
-        return this.signMessages;
-    }
-    
-    /**
-     * Indicate whether messages should be signed by this identity.
-     */
-    public void
-    setSignMessages(
-        final boolean signMessages
-    ) {
-        this.signMessages = signMessages;
     }
     
     //

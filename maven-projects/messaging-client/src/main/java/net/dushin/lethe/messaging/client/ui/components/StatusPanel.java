@@ -31,6 +31,8 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 class StatusPanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = -7706435013138189317L;
+
     private final LetheController controller;
     
     private final javax.swing.JLabel hostLabel;
@@ -69,8 +71,7 @@ class StatusPanel extends javax.swing.JPanel {
         final javax.swing.JButton setConnectionButton = 
             new javax.swing.JButton("Settings...");
         setConnectionButton.addActionListener(new SetConnectionListener());
-        final javax.swing.JButton helpButton = 
-            new javax.swing.JButton("Help...");
+        // final javax.swing.JButton helpButton = new javax.swing.JButton("Help...");
         //
         // add them to this panel
         //

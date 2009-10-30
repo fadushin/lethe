@@ -33,6 +33,8 @@ public class
 LetheApplet extends javax.swing.JApplet {
 
     
+    private static final long serialVersionUID = -2520119150051284052L;
+
     public
     LetheApplet() throws Exception {
     }

@@ -37,11 +37,13 @@ LetheWindow extends javax.swing.JFrame {
     public static final String TAG_PORT = "port";
 
     public static final String TAG_IDENTITY = "identity";
+
+    private static final long serialVersionUID = -4248702320880894936L;
     
     private final LetheController controller;
     
     private final LethePanel lethePanel;
-    
+
     public
     LetheWindow(
         final java.util.Map<String, Object> config

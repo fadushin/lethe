@@ -28,6 +28,8 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 class AddPeerDialog extends javax.swing.JDialog {
     
+    private static final long serialVersionUID = -1339438920720612291L;
+
     private final javax.swing.JTextArea inputTextArea =
         new javax.swing.JTextArea(20, 40);
 

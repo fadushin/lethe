@@ -26,8 +26,8 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import net.dushin.lethe.messaging.interfaces.Contents;
-import net.dushin.lethe.messaging.interfaces.MessageList;
+import javax.xml.ws.wsaddressing.W3CEndpointReference;
+
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
 public class Messenger
@@ -50,25 +50,10 @@ public class Messenger
         // log it, or something
     }
 
-    public MessageList
-    getMessages(
-        final java.lang.String channelID,
-        final java.lang.String since
-    ) {
+    public W3CEndpointReference getChannel(String id) {
         return channelMgr.getOrCreateChannel(
             this.serverConfig.getChannelConfig(), 
-            channelID
-        ).getMessages(since);
-    }
-
-    public void
-    postMessage(
-        final java.lang.String channelID,
-        final Contents message
-    ) {
-        channelMgr.getOrCreateChannel(
-            this.serverConfig.getChannelConfig(), 
-            channelID
-        ).postMessage(message);
+            id
+        );
     }
 }

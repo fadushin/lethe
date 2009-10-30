@@ -26,13 +26,18 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import javax.xml.ws.Endpoint;
+import javax.xml.ws.EndpointReference;
+import javax.xml.ws.wsaddressing.W3CEndpointReference;
+
+import net.dushin.lethe.messaging.common.collections.Pair;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
 class ChannelManager {
 
-    private final java.util.Map<String, Channel> channelMap =
-        new java.util.HashMap<String, Channel>();
+    private final java.util.Map<String, Pair<Channel, Endpoint>> channelMap =
+        new java.util.HashMap<String, Pair<Channel, Endpoint>>();
 
     private final MessagingServerConfigType serverConfig;
 
@@ -43,27 +48,47 @@ class ChannelManager {
         new SweeperThread(this).start();
     }
     
-    Channel
+    W3CEndpointReference
     getOrCreateChannel(
         final ChannelConfigType channelConfig,
         final String channelID
     ) {
         synchronized (channelMap) {
-            Channel ret = channelMap.get(channelID);
+            Pair<Channel, Endpoint> ret = channelMap.get(channelID);
             if (ret == null) {
-                ret = new Channel(channelConfig, channelID);
+                final Channel channel = new Channel(channelConfig, channelID);
+                final Endpoint endpoint = createEndpoint(channel);
+                endpoint.publish(
+                    "http://" 
+                    + this.serverConfig.getHost() 
+                    + ":"
+                    + this.serverConfig.getPort()
+                    + "/MessengerService/Channel-" + channelID);
+                ret = new Pair<Channel, Endpoint>(
+                    channel, 
+                    endpoint
+                );
                 channelMap.put(channelID, ret);
             }
-            ret.setLastTouched(Timestamp.currentms());
-            return ret;
+            ((Channel) ret.getFirst()).setLastTouched(Timestamp.currentms());
+            final EndpointReference epr = ret.getSecond().getEndpointReference();
+            if (!(epr instanceof W3CEndpointReference)) {
+                // error
+            }
+            return (W3CEndpointReference) epr;
         }
     }
     
-    java.util.Map<String, Channel>
+    java.util.Map<String, Pair<Channel, Endpoint>>
     getChannelMap() {
         return this.channelMap;
     }
     
+    private Endpoint 
+    createEndpoint(final net.dushin.lethe.messaging.interfaces.Channel channel) {
+        return Endpoint.create(channel);
+    }
+
     MessagingServerConfigType
     getMessagingServerConfig() {
         return this.serverConfig;

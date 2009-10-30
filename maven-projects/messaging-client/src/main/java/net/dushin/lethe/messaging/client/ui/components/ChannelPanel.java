@@ -26,30 +26,41 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
+import net.dushin.lethe.messaging.client.ui.controller.ChannelModel;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 import net.dushin.lethe.messaging.client.ui.controller.MessageChangeListener;
+import net.dushin.lethe.messaging.client.ui.controller.Peer;
+import net.dushin.lethe.messaging.client.ui.controller.PeerChangeListener;
 import net.dushin.lethe.messaging.client.ui.controller.ReceivedMessage;
+import net.dushin.lethe.messaging.common.collections.Pair;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 
-public class MessagePanel extends javax.swing.JPanel 
-    implements MessageChangeListener {
+public class ChannelPanel extends javax.swing.JPanel 
+    implements MessageChangeListener, PeerChangeListener {
 
+    private static final long serialVersionUID = -4313701965827987778L;
     private static final String NL = System.getProperty("line.separator");
-    private final LetheController controller;
-    private final String channel;
+    private final ChannelModel channel;
     
     private final javax.swing.JTextArea messageDisplayArea;
     private final javax.swing.JTextField sendMessageField;
-    private final TabbedMessagePanel parent;
+    private final javax.swing.JCheckBox signCheckBox;
+    private final javax.swing.JCheckBox encryptCheckBox;
+    
+    private boolean signMessages = true;
+    private boolean encryptMessages = true;
+    
+    private final PeerPanel peerPanel; 
+    
+    private final TabbedChannelPanel parent;
 
     public 
-    MessagePanel(
+    ChannelPanel(
         final LetheController controller,
-        final String channel,
-        final TabbedMessagePanel parent
+        final String channelId,
+        final TabbedChannelPanel parent
     ) {
-        this.controller = controller;
-        this.channel = channel;
+        this.channel = controller.createChannel(channelId, this, this);
         this.parent = parent;
         
         setLayout(new java.awt.BorderLayout());
@@ -65,11 +76,36 @@ public class MessagePanel extends javax.swing.JPanel
         closeTabPanel.setLayout(new java.awt.BorderLayout());
         closeTabPanel.add("East", closeTabButton);
         add("North", closeTabPanel);
-
+        
+        final javax.swing.JPanel sendCryptoPanel = new javax.swing.JPanel();
+        
+        
+        signCheckBox = new javax.swing.JCheckBox("Sign");
+        signCheckBox.setSelected(true);
+        signCheckBox.addItemListener(new SignCheckBoxItemListener());
+        encryptCheckBox = new javax.swing.JCheckBox("Encrypt");
+        encryptCheckBox.setSelected(true);
+        encryptCheckBox.addItemListener(new EncryptCheckBoxItemListener());
+        
+        this.peerPanel = new PeerPanel(this.channel);
+        
+        sendCryptoPanel.add(signCheckBox);
+        sendCryptoPanel.add(encryptCheckBox);
+        sendCryptoPanel.add(peerPanel);
+        
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
         messageScrollPane.setPreferredSize(new java.awt.Dimension(250, 250));
-        add("Center", messageScrollPane);
+
+        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
+            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
+            sendCryptoPanel,
+            messageScrollPane
+        );
+        splitPane.setOneTouchExpandable(true);
+        // splitPane.setDividerLocation(150);
+
+        add("Center", splitPane);
 
         final javax.swing.JPanel sendPanel = new javax.swing.JPanel();
         sendPanel.setLayout(new java.awt.BorderLayout());
@@ -84,12 +120,12 @@ public class MessagePanel extends javax.swing.JPanel
         
         add("South", sendPanel);
         
-        this.controller.registerMessageChangedListener(channel, this);
+        // this.controller.registerMessageChangedListener(channel, this);
     }
     
     void
     closeTab() {
-        this.controller.removeMessageChangedListener(channel);
+        this.channel.notifyHalt();
         parent.closeTab(this);
     }
     
@@ -98,9 +134,8 @@ public class MessagePanel extends javax.swing.JPanel
         final String sendText = sendMessageField.getText();
         if (sendText.length() > 0) {
             try {
-                controller.sendMessage(
-                    channel, 
-                    sendText
+                channel.sendMessage(
+                    sendText, this.signMessages, this.encryptMessages
                 );
             } catch (final Exception e) {
                 e.printStackTrace();
@@ -156,6 +191,21 @@ public class MessagePanel extends javax.swing.JPanel
             final java.awt.event.KeyEvent e
         ) {
             // complete
+        }
+    }
+    
+    private class SignCheckBoxItemListener implements java.awt.event.ItemListener {
+
+        public void itemStateChanged(java.awt.event.ItemEvent e) {
+            signMessages = e.getStateChange() == java.awt.event.ItemEvent.SELECTED;
+        }
+    }
+    
+    private class EncryptCheckBoxItemListener implements java.awt.event.ItemListener {
+
+        public void itemStateChanged(java.awt.event.ItemEvent e) {
+            encryptMessages = e.getStateChange() == java.awt.event.ItemEvent.SELECTED;
+            peerPanel.setEnabled(encryptMessages);
         }
     }
     
@@ -219,5 +269,11 @@ public class MessagePanel extends javax.swing.JPanel
         buf.append(plaintext.getData());
         buf.append('\n');
         return buf.toString();
+    }
+
+    public void peerChanged(final Pair<java.util.List<Peer>, java.util.List<Peer>> peers) {
+        
+        peerPanel.notifyChanged();
+        
     }
 }

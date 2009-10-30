@@ -26,9 +26,11 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+import net.dushin.lethe.messaging.client.ui.controller.PeerSource;
 
 class PeerTableModel extends javax.swing.table.AbstractTableModel {
+
+    private static final long serialVersionUID = 3106093585007776347L;
 
     private static final String COLUMN_NAMES[] = {
         "EncryptTo",
@@ -36,12 +38,12 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
         "Pinkyprint"
     };
     
-    private final LetheController controller;
+    private final PeerSource peerSource;
     
     PeerTableModel(
-        final LetheController controller
+        final PeerSource peerSource
     ) {
-        this.controller = controller;
+        this.peerSource = peerSource;
     }
     
     //
@@ -55,7 +57,7 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
 
     public final int 
     getRowCount() {
-        return this.controller.getPeers().size();
+        return this.peerSource.getPeers().size();
     }
 
     public final String 
@@ -70,18 +72,18 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
     ) {
         switch (col) {
         case 0:
-            return this.controller.getPeers().get(row).getEncryptTo();
+            return this.peerSource.getPeers().get(row).getEncryptTo();
         case 1:
-            return this.controller.getPeers().get(row).getName();
+            return this.peerSource.getPeers().get(row).getName();
         case 2:
-            return this.controller.getPeers().get(row).getPinkyprint();
+            return this.peerSource.getPeers().get(row).getPinkyprint();
         default:
             assert false;
             throw new RuntimeException("unsupported col num" + col);
         }
     }
 
-    public final Class 
+    public final Class<?>
     getColumnClass(
         final int col
     ) {
@@ -102,7 +104,7 @@ class PeerTableModel extends javax.swing.table.AbstractTableModel {
         final int row, 
         final int col
     ) {
-        this.controller.getPeers().get(row).setEncryptTo((Boolean) value);
+        this.peerSource.getPeers().get(row).setEncryptTo((Boolean) value);
         fireTableCellUpdated(row, col);
     }
 }

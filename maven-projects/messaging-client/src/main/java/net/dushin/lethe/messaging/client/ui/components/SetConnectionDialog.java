@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 class SetConnectionDialog extends javax.swing.JDialog {
     
+    private static final long serialVersionUID = 3063211211401636579L;
     private final javax.swing.JTextField hostField =
         new javax.swing.JTextField(20);
     private final javax.swing.JTextField portField =

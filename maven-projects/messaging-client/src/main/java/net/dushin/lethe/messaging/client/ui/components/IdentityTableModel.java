@@ -30,6 +30,8 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 class IdentityTableModel extends javax.swing.table.AbstractTableModel {
 
+    private static final long serialVersionUID = 3275450862946903052L;
+
     private static final String COLUMN_NAMES[] = {
         "Sign",
         "Name",
@@ -70,7 +72,7 @@ class IdentityTableModel extends javax.swing.table.AbstractTableModel {
     ) {
         switch (col) {
         case 0:
-            return this.controller.getIdentity().getSignMessages();
+            return null; // this.controller.getIdentity().getSignMessages();
         case 1:
             return this.controller.getIdentity().getName();
         case 2:
@@ -81,7 +83,7 @@ class IdentityTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    public final Class 
+    public final Class<?> 
     getColumnClass(
         final int col
     ) {
@@ -102,7 +104,6 @@ class IdentityTableModel extends javax.swing.table.AbstractTableModel {
         final int row, 
         final int col
     ) {
-        this.controller.getIdentity().setSignMessages((Boolean) value);
         fireTableCellUpdated(row, col);
     }
 }

@@ -26,14 +26,17 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import net.dushin.lethe.messaging.common.collections.Pair;
 import net.dushin.lethe.messaging.common.log.LogUtil;
+import net.dushin.lethe.messaging.interfaces.Channel;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.interfaces.PeerList;
 
 /**
  *
  */
-class MessageChangeThread extends Thread {
+class ChannelUpdateThread extends Thread {
     
     /**
      * The Logger instance to use for this type
@@ -51,18 +54,28 @@ class MessageChangeThread extends Thread {
     /**
      * The channel with which this thread is associated
      */
-    private final String channel;
+    private final ChannelModel channel;
     
     /**
      * The controller, which is used to manage message
      * receipt.
      */
-    private final LetheController controller;
+    private final ConnectionSource connectionSource;
+    
+    /**
+     * 
+     */
+    private final IdentitySource identitySource;
     
     /**
      * the entity to notify, when a new message is received.
      */
-    private final MessageChangeListener listener;
+    private final MessageChangeListener messageChangeListener;
+    
+    /**
+     * the entity to notify, when the list of peers changes.
+     */
+    private final PeerChangeListener peerChangeListener;
     
     /**
      * the list of received messages on this channel
@@ -87,14 +100,18 @@ class MessageChangeThread extends Thread {
      */
     private final Object changeMonitor = new Object();
     
-    MessageChangeThread(
-        final String channel,
-        final LetheController controller,
-        final MessageChangeListener listener
+    ChannelUpdateThread(
+        final ChannelModel channel,
+        final ConnectionSource connectionSource,
+        final IdentitySource identitySource,
+        final MessageChangeListener messageChangeListener,
+        final PeerChangeListener peerChangeListener
     ) {
         this.channel = channel;
-        this.controller = controller;
-        this.listener = listener;
+        this.connectionSource = connectionSource;
+        this.identitySource = identitySource;
+        this.messageChangeListener = messageChangeListener;
+        this.peerChangeListener = peerChangeListener;
     }
     
     public void
@@ -108,6 +125,8 @@ class MessageChangeThread extends Thread {
                 return;
             }
             try {
+                final Channel channelClient = connectionSource.getConnection().
+                    getChannelClientProxy(channel.getChannelId()).getProxy();
                 final String since =
                     this.rawMessages.size() > 0
                         ? this.rawMessages.get(
@@ -119,7 +138,7 @@ class MessageChangeThread extends Thread {
                     "Last message UUID received: \"{0}\"; polling server...", since 
                 );
                 final MessageList messages = 
-                    controller.getConnection().getProxy().getMessages(channel, since);
+                    channelClient.getMessages(since);
                 final java.util.List<Message> msgs = messages.getItem();
                 if (msgs.size() > 0 || notifyChange) {
                     LogUtil.logInfo(
@@ -130,17 +149,24 @@ class MessageChangeThread extends Thread {
                     );
                     this.rawMessages.addAll(msgs);
                     final java.util.List<ReceivedMessage> receivedMessages =
-                        this.controller.receiveMessages(this.rawMessages);
-                    this.listener.messageChanged(receivedMessages);
+                        this.channel.receiveMessages(this.rawMessages);
+                    this.messageChangeListener.messageChanged(receivedMessages);
                     notifyChange = false;
                 } else {
-                    LogUtil.logInfo(LOGGER, "Nothing to do.");
+                    LogUtil.logInfo(LOGGER, "No messages to update.");
+                }
+                channelClient.hello(toPeerStruct(identitySource.getIdentity()));
+                final PeerList peers = channelClient.getPeers();
+                final Pair<java.util.List<Peer>, java.util.List<Peer>> delta =
+                    this.channel.reconcilePeers(peers.getItem());
+                if (!delta.getFirst().isEmpty() || !delta.getSecond().isEmpty()) {
+                    this.peerChangeListener.peerChanged(delta);
                 }
             } catch (final Exception e) {
                 LogUtil.logException(
                     LOGGER, 
                     e, 
-                    "An exception occurred updating received messages." 
+                    "An exception occurred updating channel." 
                 );
                 e.printStackTrace();
             } finally {
@@ -155,7 +181,7 @@ class MessageChangeThread extends Thread {
             }
         }
     }
-    
+
     /**
      * Tell this thread to halt
      */
@@ -177,5 +203,13 @@ class MessageChangeThread extends Thread {
         synchronized (this.changeMonitor) {
             this.changeMonitor.notifyAll();
         }
+    }
+    
+    private net.dushin.lethe.messaging.interfaces.Peer toPeerStruct(Peer peer) {
+        final net.dushin.lethe.messaging.interfaces.Peer ret =
+            new net.dushin.lethe.messaging.interfaces.Peer();
+        ret.setName(peer.getName());
+        ret.setEncoded(peer.toString());
+        return ret;
     }
 }

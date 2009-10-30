@@ -31,29 +31,31 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 class IdentityPanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 8135340279515550327L;
+
     private final LetheController controller;
 
-    private final IdentityTableModel identityTableModel;
-    private final javax.swing.JTable identityTable;
+    // private final IdentityTableModel identityTableModel;
+    // private final javax.swing.JTable identityTable;
+    
+    private final TitledLabelPanel nameLabel;
+    
+    private final TitledLabelPanel pinkyprintLabel;
     
     IdentityPanel(
         final LetheController controller
     ) {
         this.controller = controller;
         //
-        // Build the identity table
+        // Build the identity panel
         //
-        this.identityTableModel = new IdentityTableModel(this.controller);
-        this.identityTable = new javax.swing.JTable(this.identityTableModel);
-        final java.awt.Dimension dim =
-            new java.awt.Dimension(
-                this.identityTable.getMinimumSize().width,
-                32
-            );
-        this.identityTable.setMinimumSize(dim);
-        this.identityTable.setMaximumSize(dim);
-        this.identityTable.setPreferredSize(dim);
-        final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.identityTable);
+        final javax.swing.JPanel idLabelPanel = new javax.swing.JPanel();
+        nameLabel = new TitledLabelPanel("Name:", this.controller.getIdentity().getName());
+        pinkyprintLabel = new TitledLabelPanel("Pinkyprint:", this.controller.getIdentity().getPinkyprint());
+        idLabelPanel.setLayout(new java.awt.BorderLayout());
+        idLabelPanel.add("North", nameLabel);
+        idLabelPanel.add("South", pinkyprintLabel);
+        
         //
         // Build the button panel and buttons
         //
@@ -75,7 +77,7 @@ class IdentityPanel extends javax.swing.JPanel {
                 this.getBorder()
             )
         );
-        this.add("Center", scrollPane);
+        this.add("Center", idLabelPanel);
         this.add("South", idButtonPanel);
     }
     
@@ -84,7 +86,8 @@ class IdentityPanel extends javax.swing.JPanel {
         final Identity identity
     ) {
         this.controller.setIdentity(identity);
-        this.identityTableModel.fireTableDataChanged();
+        this.nameLabel.getTextLabel().setText(identity.getName());
+        this.pinkyprintLabel.getTextLabel().setText(identity.getPinkyprint());
     }
     
     private class SetIdentityListener 
@@ -115,7 +118,6 @@ class IdentityPanel extends javax.swing.JPanel {
                         name, 
                         new String(passphrase),
                         dlog.getKeySize(),
-                        IdentityPanel.this.controller.getIdentity().getSignMessages(),
                         true
                     );
                 setIdentity(identity);

@@ -26,7 +26,11 @@
  */
 package net.dushin.lethe.messaging.client.ui.controller;
 
+import javax.xml.ws.wsaddressing.W3CEndpointReference;
+
+import net.dushin.lethe.messaging.client.ws.ChannelClientProxy;
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
+import net.dushin.lethe.messaging.interfaces.Channel;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 
 /**
@@ -38,7 +42,7 @@ public class Connection {
     
     public static final String DEFAULT_HOST = "localhost";
     
-    public static final short DEFAULT_PORT = 80;
+    public static final short DEFAULT_PORT = 8080;
     
     public static final Connection LOCALHOST = new Connection();
     
@@ -47,6 +51,9 @@ public class Connection {
     private final short port;
     
     private final boolean connected;
+    
+    private final java.util.Map<String, ChannelClientProxy> channelProxyMap =
+        new java.util.HashMap<String, ChannelClientProxy>();
     
     /**
      * The jax-ws proxy (wrapper) to the server
@@ -100,6 +107,26 @@ public class Connection {
     public boolean
     getConnected() {
         return this.connected;
+    }
+    
+    public ChannelClientProxy
+    getChannelClientProxy(final String channelId) throws Exception {
+        synchronized (channelProxyMap) {
+            ChannelClientProxy ret = this.channelProxyMap.get(channelId);
+            if (ret == null) {
+                final W3CEndpointReference ref = this.getProxy().getChannel(channelId);
+                ret = new ChannelClientProxy(ref.getPort(Channel.class));
+                this.channelProxyMap.put(channelId, ret);
+            }
+            return ret;
+        }
+    }
+    
+    public void
+    removeChannelClientProxy(final String channelId) {
+        synchronized (channelProxyMap) {
+            this.channelProxyMap.remove(channelId);
+        }
     }
     
     //

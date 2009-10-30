@@ -30,16 +30,21 @@ import net.dushin.lethe.messaging.common.log.LogUtil;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.interfaces.Peer;
+import net.dushin.lethe.messaging.interfaces.PeerList;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 
-class Channel {
+public class Channel implements net.dushin.lethe.messaging.interfaces.Channel {
 
     private static final java.util.logging.Logger LOGGER =
-        java.util.logging.Logger.getLogger(SweeperThread.class.getName());
+        java.util.logging.Logger.getLogger(Channel.class.getName());
 
     private final ChannelConfigType channelConfig;
     
     private final String id;
+    
+    private final java.util.Map<String, PeerRecord> peers = 
+        new java.util.HashMap<String, PeerRecord>();
     
     private final MessageList messages =
         new MessageList();
@@ -56,8 +61,47 @@ class Channel {
             channelConfig == null ? new ChannelConfigType() : channelConfig;
         this.id = id;
     }
+    
+    //
+    // Channel interface operations
+    //
+    
+    public String
+    getId() {
+        return this.id;
+    }
 
-    MessageList
+    public PeerList getPeers() {
+        synchronized (peers) {
+            final PeerList ret = new PeerList();
+            for (final PeerRecord rec : this.peers.values()) {
+                ret.getItem().add(rec.getPeer());
+            }
+            return ret;
+        }
+    }
+
+    public void hello(Peer peer) {
+        synchronized (peers) {
+            final PeerRecord rec = this.peers.get(peer.getName());
+            if (rec == null) {
+                this.peers.put(peer.getName(), new PeerRecord(peer));
+            } else {
+                rec.touch();
+            }
+        }
+    }
+
+    public void bye(Peer peer) {
+        synchronized (peers) {
+            final PeerRecord rec = this.peers.get(peer.getName());
+            if (rec != null) {
+                this.peers.remove(peer.getName());
+            }
+        }
+    }
+
+    public MessageList
     getMessages(
         final java.lang.String since
     ) {
@@ -66,7 +110,7 @@ class Channel {
         }
     }
 
-    void
+    public void
     postMessage(
         final Contents message
     ) {
@@ -88,6 +132,10 @@ class Channel {
             this.totalMessages++;
         }
     }
+    
+    //
+    // internal operations
+    //
     
     void
     sweepMessages() {
@@ -114,6 +162,33 @@ class Channel {
         }
     }
     
+    void
+    sweepPeers() {
+        synchronized (peers) {
+            final java.util.Collection<PeerRecord> recs = peers.values();
+            final long currentms = Timestamp.currentms();
+            final java.util.List<PeerRecord> remove = new java.util.ArrayList<PeerRecord>();
+            for (final PeerRecord rec : recs) {
+                final long deltasecs = (currentms - rec.getTouched()) / 1000;
+                if (deltasecs > this.channelConfig.getPeerTimeoutSecs()) {
+                    LogUtil.logInfo(
+                        LOGGER, 
+                        "Peer {0} timeout (after {1} secs) on channel {2}; "
+                        + "This peer will be removed from peer list...", 
+                        rec.getPeer().getName(), deltasecs, this.id
+                    );
+                    remove.add(rec);
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            for (final PeerRecord rec : remove) {
+                peers.remove(rec.getPeer().getName());
+            }
+        }
+    }
+    
     long
     getLastTouched() {
         return this.lastTouched;
@@ -124,11 +199,6 @@ class Channel {
         final long lastTouched
     ) {
         this.lastTouched = lastTouched;
-    }
-    
-    String
-    getId() {
-        return this.id;
     }
     
     //
@@ -151,5 +221,31 @@ class Channel {
             }
         }
         return found ? ret : this.messages;
+    }
+    
+    private static class PeerRecord {
+        
+        private final Peer peer;
+        
+        private long touched = Timestamp.currentms();
+        
+        PeerRecord(final Peer peer) {
+            this.peer = peer;
+        }
+        
+        Peer 
+        getPeer() {
+            return this.peer;
+        }
+        
+        void
+        touch() {
+            touched = Timestamp.currentms();
+        }
+        
+        long
+        getTouched() {
+            return this.touched;
+        }
     }
 }

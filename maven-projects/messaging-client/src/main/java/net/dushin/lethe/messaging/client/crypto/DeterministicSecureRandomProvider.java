@@ -29,6 +29,8 @@ package net.dushin.lethe.messaging.client.crypto;
 class DeterministicSecureRandomProvider 
     extends java.security.Provider {
     
+    private static final long serialVersionUID = -4683849988101213534L;
+
     DeterministicSecureRandomProvider() {
         super(
             "net.dushin.dprng",

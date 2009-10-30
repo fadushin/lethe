@@ -31,6 +31,8 @@ import net.dushin.lethe.messaging.client.ui.controller.Identity;
 
 class ExportIdentityDialog extends javax.swing.JDialog {
     
+    private static final long serialVersionUID = 3047478407444936663L;
+
     private final javax.swing.JTextArea exportTextArea =
         new javax.swing.JTextArea(20, 40);
 
@@ -99,11 +101,6 @@ class ExportIdentityDialog extends javax.swing.JDialog {
     private void
     ok() {
         this.ok = true;
-    }
-    
-    private void
-    cancel() {
-        this.ok = false;
     }
     
     private class OkButtonListener 

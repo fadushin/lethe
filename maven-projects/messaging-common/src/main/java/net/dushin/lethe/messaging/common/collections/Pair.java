@@ -24,54 +24,26 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.ui.components;
+package net.dushin.lethe.messaging.common.collections;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
+public class Pair<F, S> {
 
-public class LethePanel extends javax.swing.JPanel {
-
-    private static final long serialVersionUID = -3361833391155415546L;
-
-    private final LetheController controller;
+    private final F first;
+    private final S second;
     
-    private final CryptoPanel cryptoPanel;
-    private final TabbedChannelPanel messagePanel;
-    
-    public 
-    LethePanel(
-        final LetheController controller
-    ) {
-        this.controller = controller;
-
-        setLayout(new java.awt.BorderLayout());
-        
-        this.cryptoPanel = new CryptoPanel(this.controller);
-        this.messagePanel = new TabbedChannelPanel(controller);
-        
-        final javax.swing.JSplitPane cryptoMessageSplitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
-            this.cryptoPanel,
-            this.messagePanel
-        );
-        cryptoMessageSplitPane.setOneTouchExpandable(true);
-        cryptoMessageSplitPane.setDividerLocation(250);
-        
-        final javax.swing.JSplitPane statusplitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.VERTICAL_SPLIT,
-            cryptoMessageSplitPane,
-            new StatusPanel(this.controller)
-        );
-        statusplitPane.setOneTouchExpandable(true);
-        statusplitPane.setDividerLocation(350);
-        
-        this.add("Center", statusplitPane);
+    public
+    Pair(F f, S s) {
+        this.first = f;
+        this.second = s;
     }
     
-    public void
-    createTabbedPane(
-        final String channel
-    ) {
-        this.messagePanel.createTabbedPane(channel);
+    public F
+    getFirst() {
+        return this.first;
     }
     
+    public S
+    getSecond() {
+        return this.second;
+    }
 }

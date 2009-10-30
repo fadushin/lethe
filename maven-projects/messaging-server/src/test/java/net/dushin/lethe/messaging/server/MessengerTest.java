@@ -26,6 +26,8 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import javax.xml.ws.wsaddressing.W3CEndpointReference;
+
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
@@ -37,7 +39,7 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
         java.net.URL tmp = null;
         try {
             tmp = new java.net.URL(
-                "http://localhost:18066/MessengerService/SOAPPort?wsdl"
+                "http://localhost:8080/MessengerService/SOAPPort?wsdl"
             );
         } catch (final Exception e) {
             tmp = null;
@@ -81,48 +83,37 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
     testMessender() throws Exception {
         
         try {
-            final javax.xml.ws.Service svc = 
-                javax.xml.ws.Service.create(
-                    WSDL_LOC,
-                    MESSENGER_SERVICE_QNAME
-                );
-            final net.dushin.lethe.messaging.interfaces.Messenger messenger = svc.getPort(
-                MESSENGER_SOAP_PORT_QNAME,
-                net.dushin.lethe.messaging.interfaces.Messenger.class
-            );
+            final net.dushin.lethe.messaging.interfaces.Channel channel = getChannel("foo");
             //
             // Check to see that the channel is empty
             //
-            assertSame(messenger.getMessages("foo", "").getItem().size(), 0);
+            assertSame(channel.getMessages("").getItem().size(), 0);
             //
             // post a message to the channel, and then check to see it's there
             //
-            messenger.postMessage(
-                "foo",
+            channel.postMessage(
                 createContents("bar")
             );
-            MessageList foo = messenger.getMessages("foo", "");
+            MessageList foo = channel.getMessages("");
             assertSame(foo.getItem().size(), 1);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             //
             // Check the logic of get
             //
             assertSame(
-                messenger.getMessages(
-                    "foo", 
+                channel.getMessages(
                     foo.getItem().get(0).getMessage().getUuid()
                 ).getItem().size(), 
                 0
             );
-            assertSame(messenger.getMessages("gnu", "").getItem().size(), 0);
+            assertSame(getChannel("gnu").getMessages("").getItem().size(), 0);
             //
             // Post another message, and check that it arrived, as well
             //
-            messenger.postMessage(
-                "foo",
+            channel.postMessage(
                 createContents("bar2")
             );
-            foo = messenger.getMessages("foo", "");
+            foo = channel.getMessages("");
             assertSame(foo.getItem().size(), 2);
             assertEquals(foo.getItem().get(0).getMessage().getMsg(), "bar");
             assertEquals(foo.getItem().get(1).getMessage().getMsg(), "bar2");
@@ -133,6 +124,20 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
         }
     }
     
+    private net.dushin.lethe.messaging.interfaces.Channel getChannel(final String id) {
+        final javax.xml.ws.Service svc = 
+            javax.xml.ws.Service.create(
+                WSDL_LOC,
+                MESSENGER_SERVICE_QNAME
+            );
+        final net.dushin.lethe.messaging.interfaces.Messenger messenger = svc.getPort(
+            MESSENGER_SOAP_PORT_QNAME,
+            net.dushin.lethe.messaging.interfaces.Messenger.class
+        );
+        final W3CEndpointReference ref = messenger.getChannel(id);
+        return ref.getPort(net.dushin.lethe.messaging.interfaces.Channel.class);
+    }
+
     private static Contents
     createContents(final String msg) {
         final Contents ret = new Contents();

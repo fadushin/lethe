@@ -98,7 +98,7 @@ public final class Main {
                         name, 
                         new String(passphrase), 
                         dlog.getKeySize(),
-                        Identity.ANONYMOUS.getSignMessages(),
+                        // Identity.ANONYMOUS.getSignMessages(),
                         true
                     );
                 window.getController().setIdentity(identity);

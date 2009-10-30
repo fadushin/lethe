@@ -164,6 +164,17 @@ struct Message
 typedef sequence<Message> MessageList;
 
 
+
+struct Peer
+{
+    string name;
+    
+    string encoded;
+};
+
+typedef sequence<Peer> PeerList;
+
+
 /**
  * An object is pingable if it can be pinged
  */
@@ -175,32 +186,28 @@ interface Pingable
     void ping();
 };
 
-
-/**
- * A Messenger is a service interface responsible for having messages
- * posted to and received from.
- */
-interface Messenger : Pingable
+interface Channel
 {
+    readonly attribute string id;
+    
+    readonly attribute PeerList peers;
+    
+    void hello(in Peer peer);
+    
+    void bye(in Peer peer);
+    
     /**
      * Post a message to a channel
-     *
-     * @param       channel
-     *              the channel to which to post the message
      *
      * @param       message
      *              the message to post
      */
     void postMessage(
-        in string channel,
         in Contents message
     );
     
     /**
      * Get a sequence of message off a channel since the specified ordinal
-     *
-     * @param       channel
-     *              the channel from which to get the message
      *
      * @param       since
      *              the uuid of the last message received by the client.
@@ -213,7 +220,16 @@ interface Messenger : Pingable
      */
     MessageList 
     getMessages(
-        in string channel,
         in string since
     );
+};
+
+
+/**
+ * A Messenger is a service interface responsible for having messages
+ * posted to and received from.
+ */
+interface Messenger : Pingable
+{
+    Channel getChannel(in string id);
 };

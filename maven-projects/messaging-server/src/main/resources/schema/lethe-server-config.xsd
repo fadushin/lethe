@@ -44,10 +44,19 @@
     		default="3600">
     	</attribute>
     	<attribute name="sweeperThreadSleepSecs" type="int" default="30"></attribute>
+        <attribute name="host" type="string" default="localhost"></attribute>
+        <attribute name="port" type="int" default="8080"></attribute>
     </complexType>
 
     <complexType name="ChannelConfigType">
-    	<attribute name="maxMessages" type="int" default="500" use="optional"></attribute>
-    	<attribute name="messageTimeoutSecs" type="int" default="3600"></attribute>
+    	<attribute name="maxMessages" type="int" default="500"
+    		use="optional">
+    	</attribute>
+        <attribute name="messageTimeoutSecs" type="int"
+            default="3600">
+        </attribute>
+        <attribute name="peerTimeoutSecs" type="int"
+            default="15">
+        </attribute>
     </complexType>
 </schema>

@@ -26,6 +26,9 @@
  */
 package net.dushin.lethe.messaging.server;
 
+import javax.xml.ws.Endpoint;
+
+import net.dushin.lethe.messaging.common.collections.Pair;
 import net.dushin.lethe.messaging.common.log.LogUtil;
 
 class SweeperThread extends Thread {
@@ -45,11 +48,13 @@ class SweeperThread extends Thread {
     run() {
         while (true) {
             try {
-                final java.util.Map<String, Channel> channelMap =
+                final java.util.Map<String, Pair<Channel, Endpoint>> channelMap =
                     this.mgr.getChannelMap();
                 synchronized (channelMap) {
-                    for (final java.util.Map.Entry<String, Channel> entry : channelMap.entrySet()) {
-                        final Channel channel = entry.getValue();
+                    final java.util.Set<java.util.Map.Entry<String, Pair<Channel, Endpoint>>> entries =
+                        channelMap.entrySet();
+                    for (final java.util.Map.Entry<String, Pair<Channel, Endpoint>> entry : entries) {
+                        final Channel channel = entry.getValue().getFirst();
                         final int deltasecs = 
                             (int) (Timestamp.currentms() - channel.getLastTouched()) / 1000;
                         if (deltasecs > this.mgr.getMessagingServerConfig().getChannelIdleTimeoutSecs()) {
@@ -61,6 +66,7 @@ class SweeperThread extends Thread {
                             channelMap.remove(entry.getKey());
                         } else {
                             channel.sweepMessages();
+                            channel.sweepPeers();
                         }
                     }
                 }

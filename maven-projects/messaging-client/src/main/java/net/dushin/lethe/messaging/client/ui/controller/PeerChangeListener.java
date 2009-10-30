@@ -24,49 +24,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.dushin.lethe.messaging.client.ws;
+package net.dushin.lethe.messaging.client.ui.controller;
+
+import net.dushin.lethe.messaging.common.collections.Pair;
 
 /**
- *
+ * 
  */
-public final class MessagingConstants {
+public interface PeerChangeListener {
     
-    /**
-     * The Messaging XML namespace
-     */
-    public static final String MESSAGING_NS = 
-        "http://lethe.dushin.net/messaging/server";
-    
-    //
-    // Archer "General" WebService
-    //
-    
-    /**
-     * Messenger service QName
-     */
-    public static final javax.xml.namespace.QName MESSENGER_SERVICE_QNAME =
-        new javax.xml.namespace.QName(
-            MESSAGING_NS,
-            "MessengerService"
-        );
-    
-    /**
-     * SOAP port used for access
-     */
-    public static final javax.xml.namespace.QName MESSENGER_SOAP_PORT_QNAME =
-        new javax.xml.namespace.QName(
-            MESSAGING_NS,
-            "SOAPPort"
-        );
-    
-    /**
-     * SOAP port used for access
-     */
-    public static final String CHANNEL_PORT_PREFIX =
-        "ChannelPort-";
-
-    private
-    MessagingConstants() {
-        // complete
-    }
+    void
+    peerChanged(final Pair<java.util.List<Peer>, java.util.List<Peer>> peers);
 }

@@ -61,33 +61,29 @@
 
     <profiles>
         <profile>
-            <id>setup.eclipse</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-            <build>
-                <defaultGoal>process-test-sources</defaultGoal>
-                <plugins>
-                    <!-- -->
-                    <!-- Eclipse plugin configuration -->
-                    <!-- -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-eclipse-plugin</artifactId>
-                        <version>2.4</version>
-                        <configuration>
-                            <downloadSources>true</downloadSources>
-                            <downloadJavadocs>true</downloadJavadocs>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>fastinstall</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
             </properties>
         </profile>
     </profiles>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+            <!-- -->
+            <!-- Eclipse configuration -->
+            <!-- -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <downloadSources>true</downloadSources>
+                    <downloadJavadocs>true</downloadJavadocs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

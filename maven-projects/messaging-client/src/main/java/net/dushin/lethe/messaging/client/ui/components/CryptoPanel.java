@@ -30,10 +30,12 @@ import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 class CryptoPanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 6777860886220334787L;
+
     private final LetheController controller;
 
     private final IdentityPanel identityPanel;
-    private final PeerPanel peerPanel;    
+    // private final PeerPanel peerPanel;    
     
     CryptoPanel(
         final LetheController controller
@@ -43,22 +45,11 @@ class CryptoPanel extends javax.swing.JPanel {
         // create the panels
         //
         this.identityPanel = new IdentityPanel(this.controller);        
-        this.peerPanel = new PeerPanel(this.controller);
-        //
-        // create a split pane for the panels
-        //
-        final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.VERTICAL_SPLIT,
-            this.identityPanel,
-            this.peerPanel
-        );
-        splitPane.setOneTouchExpandable(true);
-        splitPane.setDividerLocation(150);
         //
         // add them to this panel
         //
         this.setLayout(new java.awt.BorderLayout());
-        this.add("Center", splitPane);
+        this.add("Center", identityPanel);
 
     }
 }

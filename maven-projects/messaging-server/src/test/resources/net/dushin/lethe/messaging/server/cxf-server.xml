@@ -58,7 +58,7 @@
     <jaxws:endpoint
         id="MessengerEndpoint"
         implementor="#net.dushin.lethe.messaging.server"
-        address="http://localhost:18066/MessengerService/SOAPPort"
+        address="http://localhost:8080/MessengerService/SOAPPort"
         serviceName="test:MessengerService"
         endpointName="test:SOAPPort"
         >

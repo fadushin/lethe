@@ -28,6 +28,8 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 public class GenerateIdentityDialog extends javax.swing.JDialog {
     
+    private static final long serialVersionUID = 4528824517713592860L;
+
     private static final Integer[] KEY_SIZES = {
         512,
         1024,

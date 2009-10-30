@@ -34,7 +34,7 @@ import net.dushin.lethe.messaging.interfaces.keys.PublicKeyType;
  * A Peer is a representation of an external identity,
  * encapsupated by a name and public key.
  */
-public class Peer {
+public class Peer implements Comparable<Peer> {
 
     /**
      * the peer name
@@ -58,6 +58,8 @@ public class Peer {
      */
     private final Verifier verifier;
     
+    private final String stringRep;
+    
     /**
      * flag indicating whether messages should be encrypted
      * to this peer.
@@ -77,6 +79,7 @@ public class Peer {
         this.publicKey = publicKey;
         this.verifier = new Verifier(this.publicKey);
         this.pinkyprint = KeyHelper.getPinkyprint(this.publicKey);
+        this.stringRep = KeyHelper.toString(name, publicKey);
     }
     
     public
@@ -88,6 +91,7 @@ public class Peer {
         this.publicKey = KeyHelper.getPublicKey(pkt);
         this.verifier = new Verifier(this.publicKey);
         this.pinkyprint = KeyHelper.getPinkyprint(this.publicKey);
+        this.stringRep = pkg;
     }
     
     //
@@ -143,5 +147,18 @@ public class Peer {
         final boolean encryptTo
     ) {
         this.encryptTo = encryptTo;
+    }
+    
+    public String
+    toString() {
+        return this.stringRep;
+    }
+
+    public int 
+    compareTo(final Peer o) {
+        if (o == null) {
+            throw new IllegalStateException("null compare; illegal state");
+        }
+        return toString().compareTo(o.toString());
     }
 }

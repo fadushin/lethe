@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.client.crypto;
 
 public class DeterministicSecureRandom extends java.security.SecureRandomSpi {
     
+    private static final long serialVersionUID = 8242654473092765159L;
     final java.util.Random rand = new java.util.Random();
     
     public

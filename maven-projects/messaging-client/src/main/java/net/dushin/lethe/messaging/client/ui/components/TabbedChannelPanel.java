@@ -28,12 +28,13 @@ package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
-class TabbedMessagePanel extends javax.swing.JPanel {
+class TabbedChannelPanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 9113609518940365002L;
     private final LetheController controller;
     private final javax.swing.JTabbedPane tabs;
     
-    TabbedMessagePanel(
+    TabbedChannelPanel(
         final LetheController controller
     ) {
         this.controller = controller;
@@ -65,8 +66,8 @@ class TabbedMessagePanel extends javax.swing.JPanel {
     createTabbedPane(
         final String channel
     ) {
-        final MessagePanel panel = new MessagePanel(controller, channel, this);
-        final int index = this.tabs.getComponentCount();
+        final ChannelPanel panel = new ChannelPanel(controller, channel, this);
+        // final int index = this.tabs.getComponentCount();
         this.tabs.addTab(channel, panel);
         /*
              REQUIRES 1.6 !!
@@ -79,7 +80,7 @@ class TabbedMessagePanel extends javax.swing.JPanel {
     
     void
     closeTab(
-        final MessagePanel panel
+        final ChannelPanel panel
     ) {
         final int index = this.tabs.indexOfComponent(panel);
         if (index != -1) {

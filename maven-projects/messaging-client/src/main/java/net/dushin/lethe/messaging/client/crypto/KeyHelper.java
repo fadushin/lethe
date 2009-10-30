@@ -62,7 +62,7 @@ public abstract class KeyHelper {
         rand.nextBytes(PRD);
     }
     
-    private static final byte[] SCRAMBLE = new Hasher().hash(PRD);
+    // private static final byte[] SCRAMBLE = new Hasher().hash(PRD);
     
     
     private
@@ -136,7 +136,7 @@ public abstract class KeyHelper {
         Object any = key.getAny();
         byte[] encoded = null;
         if (any instanceof javax.xml.bind.JAXBElement) {
-            javax.xml.bind.JAXBElement elt = (javax.xml.bind.JAXBElement) any;
+            javax.xml.bind.JAXBElement<?> elt = (javax.xml.bind.JAXBElement<?>) any;
             if (elt.getValue() instanceof RSAPublicKeyType) {
                 RSAPublicKeyType pub = (RSAPublicKeyType) elt.getValue();
                 encoded = pub.getEncoded();

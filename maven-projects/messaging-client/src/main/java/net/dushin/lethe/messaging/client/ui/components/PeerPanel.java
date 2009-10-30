@@ -26,38 +26,24 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
-import net.dushin.lethe.messaging.client.ui.controller.LetheController;
-import net.dushin.lethe.messaging.client.ui.controller.Peer;
+import net.dushin.lethe.messaging.client.ui.controller.PeerSource;
 
 class PeerPanel extends javax.swing.JPanel {
 
-    private final LetheController controller;
+    private static final long serialVersionUID = -5090478463185083551L;
     private final PeerTableModel peerTableModel;
     private final javax.swing.JTable peerTable;
     
     PeerPanel(
-        final LetheController controller
+        final PeerSource peerSource
     ) {
-        this.controller = controller;
-        
         this.setLayout(new java.awt.BorderLayout());
         
         //
         // TODO fix layout
         //
-        java.awt.Button addPeerButton = new java.awt.Button("Add...");
-        addPeerButton.addActionListener(new AddPeerListener());
-        java.awt.Button removePeerButton = new java.awt.Button("Remove");
-        removePeerButton.addActionListener(new RemovePeerListener());
 
-        final javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
-        buttonPanel.setLayout(new java.awt.FlowLayout());
-        buttonPanel.add(addPeerButton);
-        buttonPanel.add(removePeerButton);
-        
-        this.add("South", buttonPanel);
-        
-        this.peerTableModel = new PeerTableModel(this.controller);
+        this.peerTableModel = new PeerTableModel(peerSource);
         this.peerTable = new javax.swing.JTable(this.peerTableModel);
         final javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(this.peerTable);
         // this.recipientTable.setFillsViewportHeight(true);
@@ -72,62 +58,8 @@ class PeerPanel extends javax.swing.JPanel {
         );        
         this.add("Center", scrollPane);
     }
-    
-    void
-    addPeer(
-        final String input
-    ) {
-        try {
-            addPeer(new Peer(input));
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    void
-    addPeer(
-        final Peer peer
-    ) {
-        this.controller.addPeer(peer);            
+
+    public void notifyChanged() {
         this.peerTableModel.fireTableDataChanged();
     }
-    
-    void
-    removeSelectedPeers() {
-        final int[] rows = this.peerTable.getSelectedRows();
-        if (rows != null && rows.length > 0) {
-            this.controller.removePeers(rows);
-            this.peerTableModel.fireTableDataChanged();
-        }
-    }
-    
-    private class AddPeerListener 
-        implements java.awt.event.ActionListener {
-        
-        public void 
-        actionPerformed(
-            final java.awt.event.ActionEvent event
-        ) {
-            final AddPeerDialog dlog = new AddPeerDialog(SwingUtil.getFrame(PeerPanel.this));
-            dlog.setLocationRelativeTo(PeerPanel.this);
-            dlog.setVisible(true);
-            
-            if (dlog.isOk()) {
-                final String input = dlog.getInput();
-                addPeer(input);
-            }
-        }        
-    }
-    
-    private class RemovePeerListener 
-        implements java.awt.event.ActionListener {
-        
-        public void 
-        actionPerformed(
-            final java.awt.event.ActionEvent event
-        ) {
-            removeSelectedPeers();
-        }        
-    }
-    
 }
