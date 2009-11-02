@@ -36,7 +36,7 @@
     <groupId>net.dushin.lethe</groupId>
     <artifactId>lethe-messaging-interfaces</artifactId>
     <packaging>jar</packaging>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1-M1</version>
     <name>Lethe Messenging Interfaces</name>
     <url>http://lethe.dushin.net/</url>
     <!-- -->
@@ -45,7 +45,7 @@
     <parent>
         <groupId>net.dushin.lethe</groupId>
         <artifactId>lethe-parent</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1-M1</version>
     </parent>
     <!-- -->
     <!-- -->
