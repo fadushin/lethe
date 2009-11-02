@@ -27,11 +27,8 @@
 package net.dushin.lethe.messaging.server;
 
 import javax.xml.ws.Endpoint;
-import javax.xml.ws.EndpointReference;
-import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
 import net.dushin.lethe.messaging.common.collections.Pair;
-import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
@@ -49,7 +46,7 @@ class ChannelManager {
         new SweeperThread(this).start();
     }
     
-    W3CEndpointReference
+    Channel
     getOrCreateChannel(
         final ChannelConfigType channelConfig,
         final String channelID
@@ -58,26 +55,13 @@ class ChannelManager {
             Pair<Channel, Endpoint> ret = channelMap.get(channelID);
             if (ret == null) {
                 final Channel channel = new Channel(channelConfig, channelID);
-                final Endpoint endpoint = createEndpoint(channel);
-                endpoint.publish(
-                    "http://" 
-                    + this.serverConfig.getHost() 
-                    + ":"
-                    + this.serverConfig.getPort()
-                    + '/' 
-                    + Constants.MESSAGE_CHANNEL_URL_CONTEXT_PREFIX + channelID);
                 ret = new Pair<Channel, Endpoint>(
                     channel, 
-                    endpoint
+                    null
                 );
                 channelMap.put(channelID, ret);
             }
-            ((Channel) ret.getFirst()).setLastTouched(Timestamp.currentms());
-            final EndpointReference epr = ret.getSecond().getEndpointReference();
-            if (!(epr instanceof W3CEndpointReference)) {
-                // error
-            }
-            return (W3CEndpointReference) epr;
+            return ret.getFirst();
         }
     }
     
@@ -86,11 +70,6 @@ class ChannelManager {
         return this.channelMap;
     }
     
-    private Endpoint 
-    createEndpoint(final net.dushin.lethe.messaging.interfaces.Channel channel) {
-        return Endpoint.create(channel);
-    }
-
     MessagingServerConfigType
     getMessagingServerConfig() {
         return this.serverConfig;

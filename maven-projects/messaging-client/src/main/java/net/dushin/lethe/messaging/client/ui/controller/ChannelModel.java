@@ -166,7 +166,7 @@ public class ChannelModel implements PeerSource {
                 channelId
             );
             this.connectionSource.getConnection().
-                getChannelClientProxy(channelId).getProxy().postMessage(contents);
+                getMessenger().postMessage(channelId, contents);
             updateThread.notifyChange();
         } catch (final Exception e) {
             LogUtil.logException(

@@ -40,19 +40,32 @@
                 name="ChannelConfig" type="lethe-server:ChannelConfigType" 
                 minOccurs="0" maxOccurs="1"
             />
+            <element 
+                name="EndpointConfigList" type="lethe-server:EndpointConfigListType" 
+                minOccurs="0" maxOccurs="1"
+            />
     	</sequence>
     	<attribute name="id" type="anyURI" use="required"/>
-        <attribute name="serviceQName" type="QName" default="lethe:MessengerService"/>
-        <attribute name="urlContext" type="string" default="MessengerService/MessengerPort"/>
     	<attribute name="channelIdleTimeoutSecs" type="int" default="3600"/>
         <attribute name="sweeperThreadSleepSecs" type="int" default="30"/>
-        <attribute name="host" type="string" default="localhost"/>
-        <attribute name="port" type="int" default="8080"/>
     </complexType>
 
     <complexType name="ChannelConfigType">
         <attribute name="maxMessages" type="int" default="500" use="optional"/>
         <attribute name="messageTimeoutSecs" type="int" default="3600"/>
         <attribute name="peerTimeoutSecs" type="int" default="15"/>
+    </complexType>
+
+    <complexType name="EndpointConfigType">
+        <attribute name="host" type="string" default="localhost"/>
+        <attribute name="port" type="int" default="8080"/>
+        <attribute name="serviceQName" type="QName" default="lethe:MessengerService"/>
+        <attribute name="urlContext" type="string" default="MessengerService/MessengerPort"/>
+    </complexType>
+
+    <complexType name="EndpointConfigListType">
+    	<sequence>
+            <element name="EndpointConfig" type="lethe-server:EndpointConfigType" minOccurs="1" maxOccurs="unbounded"></element>
+        </sequence>
     </complexType>
 </schema>

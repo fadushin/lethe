@@ -186,15 +186,24 @@ interface Pingable
     void ping();
 };
 
-interface Channel
+/**
+ * A Messenger is a service interface responsible for having messages
+ * posted to and received from.
+ */
+interface Messenger : Pingable
 {
-    readonly attribute string id;
+    PeerList 
+    getPeers(in string channelId);
     
-    readonly attribute PeerList peers;
+    void hello(
+        in string channelId, 
+        in Peer peer
+    );
     
-    void hello(in Peer peer);
-    
-    void bye(in Peer peer);
+    void goodbye(
+        in string channelId, 
+        in Peer peer
+    );
     
     /**
      * Post a message to a channel
@@ -203,6 +212,7 @@ interface Channel
      *              the message to post
      */
     void postMessage(
+        in string channelId,
         in Contents message
     );
     
@@ -220,16 +230,7 @@ interface Channel
      */
     MessageList 
     getMessages(
+        in string channelId,
         in string since
     );
-};
-
-
-/**
- * A Messenger is a service interface responsible for having messages
- * posted to and received from.
- */
-interface Messenger : Pingable
-{
-    Channel getChannel(in string id);
 };

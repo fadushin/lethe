@@ -26,8 +26,10 @@
  */
 package net.dushin.lethe.messaging.server;
 
-import javax.xml.ws.wsaddressing.W3CEndpointReference;
-
+import net.dushin.lethe.messaging.interfaces.Contents;
+import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.interfaces.Peer;
+import net.dushin.lethe.messaging.interfaces.PeerList;
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
 public class Messenger
@@ -50,10 +52,38 @@ public class Messenger
         // log it, or something
     }
 
-    public W3CEndpointReference getChannel(String id) {
+    public void hello(String channelId, Peer peer) {
+        channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelId
+        ).hello(peer);
+    }
+
+    public void goodbye(String channelId, Peer peer) {
+        channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelId
+        ).bye(peer);
+    }
+
+    public MessageList getMessages(String channelId, String since) {
         return channelMgr.getOrCreateChannel(
             this.serverConfig.getChannelConfig(), 
-            id
-        );
+            channelId
+        ).getMessages(since);
+    }
+
+    public PeerList getPeers(String channelId) {
+        return channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelId
+        ).getPeers();
+    }
+
+    public void postMessage(String channelId, Contents message) {
+        channelMgr.getOrCreateChannel(
+            this.serverConfig.getChannelConfig(), 
+            channelId
+        ).postMessage(message);
     }
 }

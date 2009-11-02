@@ -33,7 +33,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dushin.lethe</groupId>
     <artifactId>lethe-build-config</artifactId>
-    <version>0.1-M1</version>
+    <version>0.1-SNAPSHOT</version>
     <name>Lethe Build Configuration POM</name>
     <url>http://lethe.dushin.net/</url>
     <packaging>jar</packaging>

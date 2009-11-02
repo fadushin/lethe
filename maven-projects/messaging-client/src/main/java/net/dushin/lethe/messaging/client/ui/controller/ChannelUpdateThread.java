@@ -28,9 +28,9 @@ package net.dushin.lethe.messaging.client.ui.controller;
 
 import net.dushin.lethe.messaging.common.collections.Pair;
 import net.dushin.lethe.messaging.common.log.LogUtil;
-import net.dushin.lethe.messaging.interfaces.Channel;
 import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.MessageList;
+import net.dushin.lethe.messaging.interfaces.Messenger;
 import net.dushin.lethe.messaging.interfaces.PeerList;
 
 /**
@@ -125,17 +125,17 @@ class ChannelUpdateThread extends Thread {
                 return;
             }
             try {
-                final Channel channelClient = connectionSource.getConnection().
-                    getChannelClientProxy(channel.getChannelId()).getProxy();
+                final Messenger messenger = connectionSource.getConnection().
+                    getMessenger();
                 //
                 // ping the channel, with the current client identity
                 //
-                channelClient.hello(toPeerStruct(identitySource.getIdentity()));
+                messenger.hello(channel.getChannelId(), toPeerStruct(identitySource.getIdentity()));
                 //
                 // Get the list of peers on the channel; notify the listener
                 // if there is anything new.
                 //
-                final PeerList peers = channelClient.getPeers();
+                final PeerList peers = messenger.getPeers(channel.getChannelId());
                 final Pair<java.util.List<Peer>, java.util.List<Peer>> delta =
                     this.channel.reconcilePeers(peers.getItem());
                 if (!delta.getFirst().isEmpty() || !delta.getSecond().isEmpty()) {
@@ -156,7 +156,7 @@ class ChannelUpdateThread extends Thread {
                     "Last message UUID received: \"{0}\"; polling server...", since 
                 );
                 final MessageList messages = 
-                    channelClient.getMessages(since);
+                    messenger.getMessages(channel.getChannelId(), since);
                 final java.util.List<Message> msgs = messages.getItem();
                 if (msgs.size() > 0 || notifyChange) {
                     LogUtil.logInfo(

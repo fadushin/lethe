@@ -34,7 +34,7 @@ import net.dushin.lethe.messaging.interfaces.Peer;
 import net.dushin.lethe.messaging.interfaces.PeerList;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 
-public class Channel implements net.dushin.lethe.messaging.interfaces.Channel {
+public class Channel {
 
     private static final java.util.logging.Logger LOGGER =
         java.util.logging.Logger.getLogger(Channel.class.getName());
