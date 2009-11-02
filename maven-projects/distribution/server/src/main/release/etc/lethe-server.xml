@@ -59,16 +59,5 @@
             messageTimeoutSecs="3600"
         />
     </lethe-server:MessagingServer>
-    
-    <!-- -->
-    <!-- Wire the server to an endpoint -->
-    <!-- -->
-    <jaxws:endpoint
-        id="MessengerEndpoint"
-        implementor="#net.dushin.lethe.messaging.server"
-        address="http://localhost:8080/MessengerService/SOAPPort"
-        serviceName="test:MessengerService"
-        endpointName="test:SOAPPort"
-        >
-    </jaxws:endpoint>
+
 </beans>

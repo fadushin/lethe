@@ -34,7 +34,8 @@ import net.dushin.lethe.messaging.interfaces.MessageList;
 import net.dushin.lethe.messaging.interfaces.PeerList;
 
 /**
- *
+ * This thread keeps the client side channel model as
+ * current as it can, within a given window.
  */
 class ChannelUpdateThread extends Thread {
     
@@ -57,13 +58,12 @@ class ChannelUpdateThread extends Thread {
     private final ChannelModel channel;
     
     /**
-     * The controller, which is used to manage message
-     * receipt.
+     * The connection source, from which the connection is obtained.
      */
     private final ConnectionSource connectionSource;
     
     /**
-     * 
+     * The identity source, from which the current client identity is obtained.
      */
     private final IdentitySource identitySource;
     
@@ -127,6 +127,24 @@ class ChannelUpdateThread extends Thread {
             try {
                 final Channel channelClient = connectionSource.getConnection().
                     getChannelClientProxy(channel.getChannelId()).getProxy();
+                //
+                // ping the channel, with the current client identity
+                //
+                channelClient.hello(toPeerStruct(identitySource.getIdentity()));
+                //
+                // Get the list of peers on the channel; notify the listener
+                // if there is anything new.
+                //
+                final PeerList peers = channelClient.getPeers();
+                final Pair<java.util.List<Peer>, java.util.List<Peer>> delta =
+                    this.channel.reconcilePeers(peers.getItem());
+                if (!delta.getFirst().isEmpty() || !delta.getSecond().isEmpty()) {
+                    this.peerChangeListener.peerChanged(delta);
+                }
+                //
+                // Get the current list of messages; notify the message listener
+                // if there are any new messages
+                //
                 final String since =
                     this.rawMessages.size() > 0
                         ? this.rawMessages.get(
@@ -155,13 +173,6 @@ class ChannelUpdateThread extends Thread {
                 } else {
                     LogUtil.logInfo(LOGGER, "No messages to update.");
                 }
-                channelClient.hello(toPeerStruct(identitySource.getIdentity()));
-                final PeerList peers = channelClient.getPeers();
-                final Pair<java.util.List<Peer>, java.util.List<Peer>> delta =
-                    this.channel.reconcilePeers(peers.getItem());
-                if (!delta.getFirst().isEmpty() || !delta.getSecond().isEmpty()) {
-                    this.peerChangeListener.peerChanged(delta);
-                }
             } catch (final Exception e) {
                 LogUtil.logException(
                     LOGGER, 
@@ -181,6 +192,10 @@ class ChannelUpdateThread extends Thread {
             }
         }
     }
+    
+    //
+    // protected operations
+    //
 
     /**
      * Tell this thread to halt
@@ -204,6 +219,10 @@ class ChannelUpdateThread extends Thread {
             this.changeMonitor.notifyAll();
         }
     }
+    
+    //
+    // private operations
+    //
     
     private net.dushin.lethe.messaging.interfaces.Peer toPeerStruct(Peer peer) {
         final net.dushin.lethe.messaging.interfaces.Peer ret =

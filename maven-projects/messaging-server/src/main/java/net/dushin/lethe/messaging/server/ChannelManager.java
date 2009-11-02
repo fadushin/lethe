@@ -31,6 +31,7 @@ import javax.xml.ws.EndpointReference;
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
 import net.dushin.lethe.messaging.common.collections.Pair;
+import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.server.config.ChannelConfigType;
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 
@@ -63,7 +64,8 @@ class ChannelManager {
                     + this.serverConfig.getHost() 
                     + ":"
                     + this.serverConfig.getPort()
-                    + "/MessengerService/Channel-" + channelID);
+                    + '/' 
+                    + Constants.MESSAGE_CHANNEL_URL_CONTEXT_PREFIX + channelID);
                 ret = new Pair<Channel, Endpoint>(
                     channel, 
                     endpoint

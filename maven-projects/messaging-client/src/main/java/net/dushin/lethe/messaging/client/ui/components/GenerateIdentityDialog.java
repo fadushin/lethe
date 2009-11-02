@@ -32,9 +32,11 @@ public class GenerateIdentityDialog extends javax.swing.JDialog {
 
     private static final Integer[] KEY_SIZES = {
         512,
-        1024,
+        1024
+        /*,
         2048,
         4096
+        */
     };
     
     private final javax.swing.JTextField nameField =

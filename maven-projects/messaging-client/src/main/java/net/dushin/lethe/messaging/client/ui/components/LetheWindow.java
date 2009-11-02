@@ -27,6 +27,7 @@
 package net.dushin.lethe.messaging.client.ui.components;
 
 import net.dushin.lethe.messaging.client.ui.controller.Connection;
+import net.dushin.lethe.messaging.client.ui.controller.Identity;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class
@@ -79,5 +80,9 @@ LetheWindow extends javax.swing.JFrame {
     public javax.swing.JComponent
     getLethePanel() {
         return this.lethePanel;
+    }
+
+    public void setIdentity(Identity identity) {
+        this.lethePanel.setIdentity(identity);
     }
 }

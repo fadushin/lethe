@@ -95,7 +95,7 @@ public class ChannelPanel extends javax.swing.JPanel
         
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
-        messageScrollPane.setPreferredSize(new java.awt.Dimension(250, 250));
+        // messageScrollPane.setPreferredSize(new java.awt.Dimension(250, 250));
 
         final javax.swing.JSplitPane splitPane = new javax.swing.JSplitPane(
             javax.swing.JSplitPane.HORIZONTAL_SPLIT,

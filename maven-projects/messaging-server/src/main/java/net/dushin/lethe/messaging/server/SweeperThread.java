@@ -63,6 +63,7 @@ class SweeperThread extends Thread {
                                 "Channel {0} timeout (after {1} secs); Removing channel...", 
                                 channel.getId(), deltasecs
                             );
+                            entry.getValue().getSecond().stop();
                             channelMap.remove(entry.getKey());
                         } else {
                             channel.sweepMessages();

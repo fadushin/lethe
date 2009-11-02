@@ -29,6 +29,7 @@
     xmlns="http://www.springframework.org/schema/beans"
     xmlns:cxf="http://cxf.apache.org/core"
     xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:lethe="http://lethe.dushin.net/messaging/interfaces"
     xmlns:lethe-server="http://lethe.dushin.net/messaging/server/config"
     xmlns:test="http://lethe.dushin.net/messaging/server"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,20 +48,26 @@
         </cxf:features>
     </cxf:bus>
     
-    <!-- -->
-    <!-- Instantiate the server -->
-    <!-- -->
-    <lethe-server:MessagingServer id="net.dushin.lethe.messaging.server"/>
+    <lethe-server:MessagingServer id="net.dushin.lethe.messaging.server.default"/>
     
-    <!-- -->
-    <!-- Wire the server to an endpoint -->
-    <!-- -->
-    <jaxws:endpoint
-        id="MessengerEndpoint"
-        implementor="#net.dushin.lethe.messaging.server"
-        address="http://localhost:8080/MessengerService/SOAPPort"
-        serviceName="test:MessengerService"
-        endpointName="test:SOAPPort"
-        >
-    </jaxws:endpoint>
+    <lethe-server:MessagingServer 
+        id="net.dushin.lethe.messaging.server.host-port-test"
+        serviceQName="lethe:host-port-test"
+        urlContext="MessengerService/HostPortTest"
+        host="localhost"
+        port="8081"
+    />
+    
+    <lethe-server:MessagingServer 
+        id="net.dushin.lethe.messaging.server.message-timeout-test"
+        serviceQName="lethe:message-timeout-test"
+        urlContext="MessengerService/HostPortTest"
+        channelIdleTimeoutSecs="3"
+        sweeperThreadSleepSecs="1"
+    >
+        <lethe-server:ChannelConfig
+            maxMessages="5"
+            messageTimeoutSecs="100"
+        />
+    </lethe-server:MessagingServer>
 </beans>

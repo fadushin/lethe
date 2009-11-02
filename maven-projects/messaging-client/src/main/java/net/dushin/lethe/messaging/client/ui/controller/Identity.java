@@ -54,7 +54,7 @@ public class Identity extends Peer {
     private final java.security.KeyPair keyPair;
     
     /**
-     * 
+     * The current key size
      */
     private final int keySize;
     

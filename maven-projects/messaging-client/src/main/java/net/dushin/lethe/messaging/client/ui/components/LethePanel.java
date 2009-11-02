@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ui.components;
 
+import net.dushin.lethe.messaging.client.ui.controller.Identity;
 import net.dushin.lethe.messaging.client.ui.controller.LetheController;
 
 public class LethePanel extends javax.swing.JPanel {
@@ -34,7 +35,7 @@ public class LethePanel extends javax.swing.JPanel {
 
     private final LetheController controller;
     
-    private final CryptoPanel cryptoPanel;
+    private final IdentityPanel identityPanel;
     private final TabbedChannelPanel messagePanel;
     
     public 
@@ -45,26 +46,28 @@ public class LethePanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
         
-        this.cryptoPanel = new CryptoPanel(this.controller);
+        this.identityPanel = new IdentityPanel(this.controller);
+        javax.swing.JPanel statusPanel = new StatusPanel(this.controller);
+
+        final javax.swing.JSplitPane statusplitPane = new javax.swing.JSplitPane(
+            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
+            this.identityPanel,
+            statusPanel
+        );
+        statusplitPane.setOneTouchExpandable(true);
+        // statusplitPane.setDividerLocation(350);
+        
         this.messagePanel = new TabbedChannelPanel(controller);
         
         final javax.swing.JSplitPane cryptoMessageSplitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.HORIZONTAL_SPLIT,
-            this.cryptoPanel,
+            javax.swing.JSplitPane.VERTICAL_SPLIT,
+            statusplitPane,
             this.messagePanel
         );
         cryptoMessageSplitPane.setOneTouchExpandable(true);
-        cryptoMessageSplitPane.setDividerLocation(250);
+        // cryptoMessageSplitPane.setDividerLocation(250);
         
-        final javax.swing.JSplitPane statusplitPane = new javax.swing.JSplitPane(
-            javax.swing.JSplitPane.VERTICAL_SPLIT,
-            cryptoMessageSplitPane,
-            new StatusPanel(this.controller)
-        );
-        statusplitPane.setOneTouchExpandable(true);
-        statusplitPane.setDividerLocation(350);
-        
-        this.add("Center", statusplitPane);
+        this.add("Center", cryptoMessageSplitPane);
     }
     
     public void
@@ -72,6 +75,10 @@ public class LethePanel extends javax.swing.JPanel {
         final String channel
     ) {
         this.messagePanel.createTabbedPane(channel);
+    }
+
+    public void setIdentity(Identity identity) {
+        this.identityPanel.setIdentity(identity);
     }
     
 }

@@ -26,6 +26,7 @@
  */
 package net.dushin.lethe.messaging.client.ws;
 
+import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 
 /**
@@ -39,8 +40,8 @@ public class MessengerClientProxy extends ClientProxyBase<Messenger> {
     ) throws Exception {
         super(createProxy(
             wsdlLoc,
-            MessagingConstants.MESSENGER_SERVICE_QNAME,
-            MessagingConstants.MESSENGER_SOAP_PORT_QNAME,
+            Constants.MESSAGE_SERVICE_QNAME,
+            Constants.MESSAGE_PORT_QNAME,
             Messenger.class
         )
         );

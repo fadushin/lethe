@@ -73,12 +73,8 @@ public final class Main {
         final java.util.Map<String, Object> args
     ) {
         try {
-            final LetheWindow window = new LetheWindow(args);
-            window.pack();
-            window.setSize(640, 480);
+            final java.awt.Frame window = new java.awt.Frame();
             window.setLocationRelativeTo(null);
-            // window.setVisible(true);
-            
             final GenerateIdentityDialog dlog = 
                 new GenerateIdentityDialog(
                     window,
@@ -87,25 +83,31 @@ public final class Main {
                     512
                 );
             dlog.pack();
-            dlog.setLocationRelativeTo(window.getLethePanel());
+            dlog.setLocationRelativeTo(window);
             dlog.setVisible(true);
             
+            Identity identity = Identity.ANONYMOUS;
             if (dlog.isOk()) {
                 final String name = dlog.getName();
                 final char[] passphrase = dlog.getPassphrase();
-                final Identity identity =
-                    new Identity(
-                        name, 
-                        new String(passphrase), 
-                        dlog.getKeySize(),
-                        // Identity.ANONYMOUS.getSignMessages(),
-                        true
-                    );
-                window.getController().setIdentity(identity);
-                window.setVisible(true);
+                identity = new Identity(
+                    name, 
+                    new String(passphrase), 
+                    dlog.getKeySize(),
+                    // Identity.ANONYMOUS.getSignMessages(),
+                    true
+                );
+                dlog.pack();
             } else {
                 System.exit(1);
             }
+
+            final LetheWindow letheWindow = new LetheWindow(args);
+            letheWindow.setIdentity(identity);
+            letheWindow.pack();
+            letheWindow.setSize(900, 700);
+            letheWindow.setLocationRelativeTo(null);
+            letheWindow.setVisible(true);
             
             
         } catch (final Exception e) {

@@ -31,6 +31,7 @@ import javax.xml.ws.wsaddressing.W3CEndpointReference;
 import net.dushin.lethe.messaging.client.ws.ChannelClientProxy;
 import net.dushin.lethe.messaging.client.ws.MessengerClientProxy;
 import net.dushin.lethe.messaging.interfaces.Channel;
+import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.interfaces.Messenger;
 
 /**
@@ -152,7 +153,7 @@ public class Connection {
     getURL() {
         try {
             return new java.net.URL(
-                "http://" + host + ':' + port + "/MessengerService/SOAPPort?wsdl"
+                "http://" + host + ':' + port + '/' + Constants.MESSAGE_SERVICE_URL_CONTEXT + "?wsdl"
             );
         } catch (final java.net.MalformedURLException e) {
             assert false;

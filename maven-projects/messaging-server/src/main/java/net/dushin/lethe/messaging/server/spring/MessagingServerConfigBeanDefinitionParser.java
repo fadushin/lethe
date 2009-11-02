@@ -26,7 +26,7 @@
  */
 package net.dushin.lethe.messaging.server.spring;
 
-import net.dushin.lethe.messaging.server.Messenger;
+import net.dushin.lethe.messaging.server.MessengerBusLifecycleListener;
 import net.dushin.lethe.messaging.server.config.MessagingServerConfigType;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSingleBeanDefinitionParser;
@@ -42,6 +42,7 @@ public class MessagingServerConfigBeanDefinitionParser
         final ParserContext ctx, 
         final BeanDefinitionBuilder bean
     ) {
+        bean.addConstructorArgReference("cxf");
         bean.addConstructorArg(parseMessagingServerConfig(element));
     }
 
@@ -50,7 +51,7 @@ public class MessagingServerConfigBeanDefinitionParser
     getBeanClass(
         final org.w3c.dom.Element e
     ) {
-        return Messenger.class;
+        return MessengerBusLifecycleListener.class;
     }
     
     private static MessagingServerConfigType

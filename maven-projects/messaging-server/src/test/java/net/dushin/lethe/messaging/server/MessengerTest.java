@@ -28,6 +28,7 @@ package net.dushin.lethe.messaging.server;
 
 import javax.xml.ws.wsaddressing.W3CEndpointReference;
 
+import net.dushin.lethe.messaging.interfaces.Constants;
 import net.dushin.lethe.messaging.interfaces.Contents;
 import net.dushin.lethe.messaging.interfaces.MessageList;
 import org.apache.cxf.testutil.common.AbstractBusClientServerTestBase;
@@ -39,25 +40,13 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
         java.net.URL tmp = null;
         try {
             tmp = new java.net.URL(
-                "http://localhost:8080/MessengerService/SOAPPort?wsdl"
+                "http://localhost:8080/" + Constants.MESSAGE_SERVICE_URL_CONTEXT + "?wsdl"
             );
         } catch (final Exception e) {
             tmp = null;
         }
         WSDL_LOC = tmp;
     }
-    
-    private static final javax.xml.namespace.QName MESSENGER_SERVICE_QNAME =
-        new javax.xml.namespace.QName(
-            "http://lethe.dushin.net/messaging/server",
-            "MessengerService"
-        );
-    
-    private static final javax.xml.namespace.QName MESSENGER_SOAP_PORT_QNAME =
-        new javax.xml.namespace.QName(
-            "http://lethe.dushin.net/messaging/server",
-            "SOAPPort"
-        );
 
     private static final java.util.Map<String, String> EMPTY_MAP =
         java.util.Collections.emptyMap();
@@ -80,7 +69,7 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
 
     @org.junit.Test
     public final void
-    testMessender() throws Exception {
+    testMessenger() throws Exception {
         
         try {
             final net.dushin.lethe.messaging.interfaces.Channel channel = getChannel("foo");
@@ -128,10 +117,10 @@ public class MessengerTest extends AbstractBusClientServerTestBase {
         final javax.xml.ws.Service svc = 
             javax.xml.ws.Service.create(
                 WSDL_LOC,
-                MESSENGER_SERVICE_QNAME
+                Constants.MESSAGE_SERVICE_QNAME
             );
         final net.dushin.lethe.messaging.interfaces.Messenger messenger = svc.getPort(
-            MESSENGER_SOAP_PORT_QNAME,
+            Constants.MESSAGE_PORT_QNAME,
             net.dushin.lethe.messaging.interfaces.Messenger.class
         );
         final W3CEndpointReference ref = messenger.getChannel(id);

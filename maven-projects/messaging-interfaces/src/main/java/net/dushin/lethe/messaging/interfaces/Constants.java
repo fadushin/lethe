@@ -39,7 +39,35 @@ public final class Constants {
         "http://lethe.dushin.net/messaging/interfaces";
     
     //
-    // 
+    // Message service constants
+    //
+    
+    /**
+     * Message Service QName
+     */
+    public static final javax.xml.namespace.QName MESSAGE_SERVICE_QNAME =
+        new javax.xml.namespace.QName(
+            MESSAGING_NS,
+            "MessengerService"
+        );
+    
+    /**
+     * Message Service QName
+     */
+    public static final javax.xml.namespace.QName MESSAGE_PORT_QNAME =
+        new javax.xml.namespace.QName(
+            MESSAGING_NS,
+            "MessengerPort"
+        );
+    
+    public static final String MESSAGE_SERVICE_URL_CONTEXT =
+        MESSAGE_SERVICE_QNAME.getLocalPart() + "/" + MESSAGE_PORT_QNAME.getLocalPart();
+    
+    public static final String MESSAGE_CHANNEL_URL_CONTEXT_PREFIX =
+        MESSAGE_SERVICE_QNAME.getLocalPart() + "/Channel-";
+    
+    //
+    // Message type constants
     //
     
     /**

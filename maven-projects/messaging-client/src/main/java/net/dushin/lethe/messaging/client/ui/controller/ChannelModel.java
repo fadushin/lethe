@@ -35,6 +35,9 @@ import net.dushin.lethe.messaging.interfaces.Message;
 import net.dushin.lethe.messaging.interfaces.PlaintextMessage;
 import net.dushin.lethe.messaging.interfaces.SignedMessage;
 
+/**
+ * This class reprensents the "client" side of a message channel.
+ */
 public class ChannelModel implements PeerSource {
 
     //
@@ -49,18 +52,31 @@ public class ChannelModel implements PeerSource {
             ChannelModel.class.getName()
         );
     
+    /**
+     * The channel id
+     */
     private final String channelId;
-
+    
+    /**
+     * The connection source, from which the connection will be contained.
+     */
     private final ConnectionSource connectionSource;
     
+    /**
+     * The identity source, from which the current sender identity will
+     * be obtained.
+     */
     private final IdentitySource identitySource;
     
     /**
-     * the collection of peers associated with this controller
+     * the collection of peers that have joined the channel
      */
     private final java.util.Set<Peer> peers =
         new java.util.TreeSet<Peer>();
     
+    /**
+     * The thread that updates the client-side channel state
+     */
     private final ChannelUpdateThread updateThread;
     
     ChannelModel(
@@ -186,6 +202,27 @@ public class ChannelModel implements PeerSource {
         }
         return ret;
     }
+
+    synchronized Pair<java.util.List<Peer>, java.util.List<Peer>> 
+    reconcilePeers(
+        final java.util.List<net.dushin.lethe.messaging.interfaces.Peer> structs
+    ) {
+        final java.util.Set<Peer> reportedPeers = new java.util.TreeSet<Peer>();
+        for (final net.dushin.lethe.messaging.interfaces.Peer struct : structs) {
+            reportedPeers.add(new Peer(struct.getEncoded()));
+        }
+        final java.util.Set<Peer> joined = relativeComplement(reportedPeers, peers);
+        for (final Peer p : joined) {
+            peers.add(p);
+        }
+        final java.util.Set<Peer> left = relativeComplement(peers, reportedPeers);
+        for (final Peer p : left) {
+            peers.remove(p);
+        }
+        return new Pair<java.util.List<Peer>, java.util.List<Peer>>(
+            toList(joined), toList(left)
+        );
+    }
     
     //
     // private
@@ -284,27 +321,6 @@ public class ChannelModel implements PeerSource {
         ret.add(this.identitySource.getIdentity());
         ret.addAll(this.peers);
         return ret;
-    }
-
-    public synchronized Pair<java.util.List<Peer>, java.util.List<Peer>> 
-    reconcilePeers(
-        final java.util.List<net.dushin.lethe.messaging.interfaces.Peer> structs
-    ) {
-        final java.util.Set<Peer> reportedPeers = new java.util.TreeSet<Peer>();
-        for (final net.dushin.lethe.messaging.interfaces.Peer struct : structs) {
-            reportedPeers.add(new Peer(struct.getEncoded()));
-        }
-        final java.util.Set<Peer> joined = relativeComplement(reportedPeers, peers);
-        for (final Peer p : joined) {
-            peers.add(p);
-        }
-        final java.util.Set<Peer> left = relativeComplement(peers, reportedPeers);
-        for (final Peer p : left) {
-            peers.remove(p);
-        }
-        return new Pair<java.util.List<Peer>, java.util.List<Peer>>(
-            toList(joined), toList(left)
-        );
     }
     
     private java.util.List<Peer> toList(java.util.Collection<Peer> col) {

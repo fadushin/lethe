@@ -81,7 +81,7 @@ class IdentityPanel extends javax.swing.JPanel {
         this.add("South", idButtonPanel);
     }
     
-    private void
+    void
     setIdentity(
         final Identity identity
     ) {
