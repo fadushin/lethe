@@ -77,9 +77,6 @@ public class ChannelPanel extends javax.swing.JPanel
         closeTabPanel.add("East", closeTabButton);
         add("North", closeTabPanel);
         
-        final javax.swing.JPanel sendCryptoPanel = new javax.swing.JPanel();
-        
-        
         signCheckBox = new javax.swing.JCheckBox("Sign");
         signCheckBox.setSelected(true);
         signCheckBox.addItemListener(new SignCheckBoxItemListener());
@@ -89,9 +86,28 @@ public class ChannelPanel extends javax.swing.JPanel
         
         this.peerPanel = new PeerPanel(this.channel);
         
-        sendCryptoPanel.add(signCheckBox);
-        sendCryptoPanel.add(encryptCheckBox);
-        sendCryptoPanel.add(peerPanel);
+        final javax.swing.JPanel sendCryptoPanel = new javax.swing.JPanel();
+        sendCryptoPanel.setLayout(new java.awt.GridBagLayout());
+        
+        final java.awt.GridBagConstraints constraints = new java.awt.GridBagConstraints();
+        
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        constraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        constraints.weightx = 1.0;
+        constraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        sendCryptoPanel.add(signCheckBox, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        sendCryptoPanel.add(encryptCheckBox, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.weighty = 1.0;
+        constraints.fill = java.awt.GridBagConstraints.BOTH;
+        sendCryptoPanel.add(peerPanel, constraints);
         
         final javax.swing.JScrollPane messageScrollPane = 
             new javax.swing.JScrollPane(messageDisplayArea);
@@ -103,7 +119,7 @@ public class ChannelPanel extends javax.swing.JPanel
             messageScrollPane
         );
         splitPane.setOneTouchExpandable(true);
-        // splitPane.setDividerLocation(150);
+        splitPane.setDividerLocation(350);
 
         add("Center", splitPane);
 
@@ -205,7 +221,7 @@ public class ChannelPanel extends javax.swing.JPanel
 
         public void itemStateChanged(java.awt.event.ItemEvent e) {
             encryptMessages = e.getStateChange() == java.awt.event.ItemEvent.SELECTED;
-            peerPanel.setEnabled(encryptMessages);
+            peerPanel.getPeerTable().setEnabled(encryptMessages);
         }
     }
     

@@ -62,4 +62,9 @@ class PeerPanel extends javax.swing.JPanel {
     public void notifyChanged() {
         this.peerTableModel.fireTableDataChanged();
     }
+    
+    javax.swing.JTable
+    getPeerTable() {
+        return this.peerTable;
+    }
 }
