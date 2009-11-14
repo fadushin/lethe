@@ -41,12 +41,16 @@
     <distributionManagement>
         <repository>
             <id>lethe.distribution.releaserepository</id>
-            <url>file:///var/www/mvn/repo/release</url>
+            <url>file:///export/mvn/repo/release</url>
         </repository>
         <snapshotRepository>
             <id>lethe.distribution.snapshotrepository</id>
-            <url>file:///var/www/mvn/repo/snapshot</url>
+            <url>file:///export/mvn/repo/snapshot</url>
         </snapshotRepository>
+        <site>
+            <id>beacon.distribution.site.root</id>
+            <url>file:///export/mvn/site/root</url>
+        </site>
     </distributionManagement>
 
     <modules>

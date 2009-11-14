@@ -417,7 +417,7 @@ public class MessageProtectionTest extends org.junit.Assert {
         final PlaintextMessage msg,
         final Object obj
     ) {
-        if (obj == null || !(obj instanceof PlaintextMessage)) {
+        if (!(obj instanceof PlaintextMessage)) {
             return false;
         }
         final PlaintextMessage m2 = (PlaintextMessage) obj;

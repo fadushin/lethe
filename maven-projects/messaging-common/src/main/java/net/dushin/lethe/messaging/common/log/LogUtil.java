@@ -117,7 +117,8 @@ public abstract class LogUtil {
         }
     }
     
-    private static void
+    // TODO PMD does not allow this to be private, but it should be
+    /*private*/ static void
     log(
         final java.util.logging.Logger logger,
         final java.util.logging.Level level,

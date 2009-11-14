@@ -40,6 +40,51 @@
     <name>Lethe Parent POM</name>
     <url>http://lethe.dushin.net/</url>
     
+    <developers>
+        <developer>
+            <name>Fred Dushin</name>
+            <id>fadushin</id>
+            <email>fred@dushin.net</email>
+            <organization>Dushin.Net</organization>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>
+            scm:svn://lethe.dushin.net/svn/repo/trunk
+        </connection>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>lethe.distribution.releaserepository</id>
+            <url>file:///export/mvn/repo/release</url>
+        </repository>
+        <snapshotRepository>
+            <id>lethe.distribution.snapshotrepository</id>
+            <url>file:///export/mvn/repo/snapshot</url>
+        </snapshotRepository>
+        <site>
+            <id>beacon.distribution.site.root</id>
+            <url>file:///export/mvn/site/root</url>
+        </site>
+    </distributionManagement>
+    
+    <!--
+    <repositories>
+        <repository>
+            <id>lethe-snapshot</id>
+            <name>Lethe Maven Snapshot Repository</name>
+            <url>http://lethe.dushin.net/mvn/repo/release</url>
+        </repository>
+        <repository>
+            <id>lethe-release</id>
+            <name>Lethe Maven Release Repository</name>
+            <url>http://lethe.dushin.net/mvn/repo/release</url>
+        </repository>
+    </repositories>
+    -->
+
     <!-- -->
     <!-- Properties shared by child projects -->
     <!-- NOTE: Please keep in alphabetical order -->
@@ -65,27 +110,40 @@
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>nochecks</id>
+        </profile>
+
+        <profile>
+            <id>fastinstall</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
         </profile>
     </profiles>
     
     <build>
+        <defaultGoal>install</defaultGoal>
         <pluginManagement>
             <plugins>
                 <!-- -->
-                <!-- Ensure we compile and generate for JDK 1.5 -->
+                <!-- Ensure we compile and generate for JDK 1.6 -->
                 <!-- -->
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                     </configuration>
                 </plugin>
                 <!-- -->
@@ -102,6 +160,9 @@
                             <version>${project.version}</version>
                         </dependency>
                     </dependencies>
+                    <configuration>
+                      <encoding>UTF-8</encoding>
+                    </configuration>
                     <executions>
                         <execution>
                             <id>validate</id>
@@ -120,16 +181,74 @@
                     </executions>
                 </plugin>
                 <!-- -->
-                <!-- Eclipse plugin configuration -->
+                <!-- Enforce PMD rules -->
                 <!-- -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <artifactId>maven-pmd-plugin</artifactId>
                     <version>2.4</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.dushin.lethe</groupId>
+                            <artifactId>lethe-build-config</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
-                        <downloadSources>true</downloadSources>
-                        <downloadJavadocs>true</downloadJavadocs>
+                        <rulesets>
+                            <ruleset>lethe-pmd-ruleset.xml</ruleset>
+                        </rulesets>
+                        <sourceEncoding>UTF-8</sourceEncoding>
+                        <targetJdk>1.6</targetJdk>
+                        <linkXRef>false</linkXRef>
+                        <includeTests>true</includeTests>
+                        <verbose>true</verbose>
+                        <excludeRoots>
+                            <excludeRoot>${basedir}/src/main/generated</excludeRoot>
+                            <excludeRoot>${basedir}/src/test/generated</excludeRoot>
+                        </excludeRoots>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- -->
+                <!-- Add the CLASSPATH for dependent artifacts to the JAR manifest -->
+                <!-- -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.1</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!-- -->
+                <!-- Package the source JARs, as well -->
+                <!-- -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1</version>
+                    <executions>
+                        <execution>
+                            <id>package-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <!-- -->
                 <!-- Surefire configuration -->
@@ -144,6 +263,18 @@
                                 <value>${basedir}/target/test-classes/logging.properties</value>
                             </property>
                         </systemProperties>
+                    </configuration>
+                </plugin>
+                <!-- -->
+                <!-- Eclipse configuration -->
+                <!-- -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <version>2.5.1</version>
+                    <configuration>
+                        <downloadSources>true</downloadSources>
+                        <downloadJavadocs>true</downloadJavadocs>
                     </configuration>
                 </plugin>
                 <!-- -->
@@ -172,36 +303,8 @@
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>-->
-                <!-- -->
-                <!-- Jar creation configuration -->
-                <!-- -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <!--
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                        <configuration>
-                            <keystore>${basedir}/target/keys/keystore.jks</keystore>
-                            <alias>lethe</alias>
-                            <storepass>password</storepass>
-                            <verify>true</verify>
-                        </configuration>
-                    </executions>
-                    -->
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addClasspath>true</addClasspath>
-                            </manifest>
-                        </archive>
-                    </configuration>
                 </plugin>
+                -->
             </plugins>
         </pluginManagement>
     </build>

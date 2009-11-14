@@ -49,7 +49,7 @@ public class Channel {
     private final MessageList messages =
         new MessageList();
     
-    private int totalMessages;
+    // private int totalMessages;
     
     private long lastTouched = Timestamp.currentms();
 
@@ -129,7 +129,7 @@ public class Channel {
             msg.setTimestampMs(Timestamp.currentms());
             msg.setMessage(message);
             msgs.add(msg);
-            this.totalMessages++;
+            // this.totalMessages++;
         }
     }
     

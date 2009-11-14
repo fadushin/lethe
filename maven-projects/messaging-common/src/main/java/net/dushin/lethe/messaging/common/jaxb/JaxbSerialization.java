@@ -142,8 +142,7 @@ public final class JaxbSerialization {
             if (obj instanceof javax.xml.bind.JAXBElement) {
                 final javax.xml.bind.JAXBElement<?> jaxb =
                     (javax.xml.bind.JAXBElement) obj;
-                Object val = jaxb.getValue();
-                return (T) val;
+                return (T) jaxb.getValue();
             } else {
                 return (T) obj;
             }
@@ -159,8 +158,7 @@ public final class JaxbSerialization {
         try {
             final javax.xml.parsers.DocumentBuilder builder = DOC_BUILDER_FACTORY.newDocumentBuilder();
             final org.w3c.dom.Document doc = builder.parse(is);
-            final org.w3c.dom.Element root = doc.getDocumentElement();
-            return root;
+            return doc.getDocumentElement();
         } catch (final javax.xml.parsers.ParserConfigurationException e) {
             throw new RuntimeException(e);
         } catch (final java.io.IOException e) {
