@@ -249,6 +249,10 @@ public class ChannelPanel extends javax.swing.JPanel
         this.messageDisplayArea.selectAll();
         final int idx = this.messageDisplayArea.getSelectionEnd();
         this.messageDisplayArea.select(idx, idx);
+        //
+        // Beep
+        //
+        java.awt.Toolkit.getDefaultToolkit().beep();
     }
     
     private static String
