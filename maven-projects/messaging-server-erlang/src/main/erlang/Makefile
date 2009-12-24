@@ -25,10 +25,10 @@
 ## SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ##
 
-EBIN_DIR=../../target/test/ebin/
-INCLUDE_DIR=../../main/include
+EBIN_DIR=../ebin/
+INCLUDE_DIR=../include
 
-SRC_MODULES = test channel_test
+SRC_MODULES = xrpc uuid xtimer channel channel_manager
 
 BIN_MODULES = $(addprefix ${EBIN_DIR}, ${SRC_MODULES:%=%.beam})
 

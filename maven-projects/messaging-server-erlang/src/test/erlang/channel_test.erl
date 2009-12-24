@@ -25,19 +25,13 @@
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
 -module(channel_test).
--export(
-    [
-        test/0
-    ]
-).
+
+-include_lib("eunit/include/eunit.hrl").
 
 -include("channel.hrl").
 
-test() ->
-    test_channel().
-
-test_channel() ->
-    Test = channel:start(test),
+channel_test() ->
+    Test = channel:start(fred),
     
     {[], []} = channel:get_peers(Test),
     

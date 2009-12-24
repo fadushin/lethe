@@ -50,8 +50,8 @@
         channel_timeout_ms = 1800000,
         messages_pid,
         peers_pid,
-        shutdown_handler,
-        timer
+        timer,
+        config
     }
 ).
 
@@ -60,7 +60,7 @@
     {
         channel_id,
         peer_timeout_ms = 15000,
-        max_length = 100
+        peer_max_length = 100
     }
 ).
 
@@ -69,7 +69,7 @@
     {
         channel_id,
         message_timeout_ms = 1800000,
-        max_length = 100
+        message_max_length = 100
     }
 ).
 
@@ -81,19 +81,19 @@
 %% 
 %% @spec        start(string()) -> channel().
 %%
-%% @effects     start(ChannelId, undefined)
+%% @effects     start(ChannelId, [])
 %% 
 start(ChannelId) ->
-    start(ChannelId, undefined).
+    start(ChannelId, []).
 
 %% 
-%% @spec        start(string(), func()) -> channel().
+%% @spec        start(string(), config()) -> channel().
 %% 
-start(ChannelId, ShutdownHandler) ->
+start(ChannelId, Config) ->
     #channel {
         id = ChannelId,
         channel_pid = spawn(
-            fun() -> channel_init(ChannelId, ShutdownHandler) end
+            fun() -> channel_init(ChannelId, Config) end
         )
     }.
 
@@ -160,10 +160,10 @@ get_messages(Channel, Since) ->
 %% internal functions
 %%
 
-channel_init(ChannelId, ShutdownHandler) ->
+channel_init(ChannelId, Config) ->
     process_flag(trap_exit, true),
-    PeersPid = spawn_peers(ChannelId),
-    MessagesPid = spawn_messages(ChannelId),
+    PeersPid = spawn_peers(ChannelId, Config),
+    MessagesPid = spawn_messages(ChannelId, Config),
     Timer = xtimer:start(
         #timer_spec {
             f = fun() -> 
@@ -179,7 +179,7 @@ channel_init(ChannelId, ShutdownHandler) ->
             timer = Timer,
             peers_pid = PeersPid,
             messages_pid = MessagesPid,
-            shutdown_handler = ShutdownHandler
+            config = Config
         }
     ).
 
@@ -189,26 +189,37 @@ get_peers_pid(Channel) ->
 get_messages_pid(Channel) ->
     xrpc:call(Channel#channel.channel_pid, get_messages_pid).
 
-spawn_peers(ChannelId) ->
+spawn_peers(ChannelId, Config) ->
     spawn_link(
         fun() -> peer_loop(
             #peer_context {
-                channel_id = ChannelId
+                channel_id = ChannelId,
+                peer_timeout_ms = find_value(Config, peer_timeout_ms, 15000)
             },
             []
         ) end
     ).
 
-spawn_messages(ChannelId) ->
+spawn_messages(ChannelId, Config) ->
     spawn_link(
         fun() -> message_loop(
             #message_context {
-                channel_id = ChannelId
+                channel_id = ChannelId,
+                message_timeout_ms = find_value(Config, message_timeout_ms, 1800000)
             },
             []
         ) end
     ).
 
+find_value(PairList, Key) ->
+    find_value(PairList, Key, undefined).
+
+find_value(PairList, Key, Default) ->
+    case lists:keyfind(Key, 1, PairList) of
+        false -> Default;
+        {Key, Value} -> Value
+    end.
+    
 channel_loop(Ctx) ->
     receive
         %%
@@ -240,13 +251,19 @@ channel_loop(Ctx) ->
                 PeersPid ->
                     channel_loop(
                         Ctx#channel_context {
-                            peers_pid = spawn_peers(Ctx#channel_context.channel_id)
+                            peers_pid = spawn_peers(
+                                Ctx#channel_context.channel_id,
+                                Ctx#channel_context.config
+                            )
                         }
                     );
                 MessagesPid ->
                     channel_loop(
                         Ctx#channel_context {
-                            messages_pid = spawn_messages(Ctx#channel_context.channel_id)
+                            messages_pid = spawn_messages(
+                                Ctx#channel_context.channel_id,
+                                Ctx#channel_context.config
+                            )
                         }
                     );
                 _ ->
@@ -262,11 +279,11 @@ channel_loop(Ctx) ->
     %%
     after Ctx#channel_context.channel_timeout_ms ->
         channel_stop(Ctx),
-        case Ctx#channel_context.shutdown_handler of
+        case find_value(Ctx#channel_context.config, shutdown_handler) of
             undefined ->
                 done;
             F ->
-                F()
+                F(Ctx#channel_context.channel_id)
         end
         %% done
     end.
@@ -291,7 +308,7 @@ peer_loop(Ctx, Peers) ->
         %%
         %%
         {ClientPid, {join, Peer}} ->
-            case add_peer(Peer, Peers, Ctx#peer_context.max_length) of
+            case add_peer(Peer, Peers, Ctx#peer_context.peer_max_length) of
                 too_many_peers ->
                     xrpc:response(ClientPid, {error, too_many_peers}),
                     peer_loop(Ctx, Peers);
@@ -354,7 +371,7 @@ message_loop(Ctx, Messages) ->
         %%
         {ClientPid, {post, Message}} ->
             NewMessages = [NewMessage | _] = 
-                add_message(Message, Messages, Ctx#message_context.max_length),
+                add_message(Message, Messages, Ctx#message_context.message_max_length),
             xrpc:response(ClientPid, NewMessage),
             message_loop(Ctx, NewMessages);
         %%

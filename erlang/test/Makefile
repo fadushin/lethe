@@ -32,4 +32,4 @@ clean:
 	cd src; make clean
 
 test: all
-	erl -noshell -pa ../target/main/ebin -pa ../target/test/ebin -s test test -s init stop
+	erl -noshell -pa ./ebin -pa ../main/ebin -s test test -s init stop

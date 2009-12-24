@@ -27,18 +27,29 @@
 -module(channel_manager).
 -export([start/0, stop/1, get_channel/2]).
 
+-include("channel.hrl").
+-include("channel_manager.hrl").
+
 %
 % external functions
 %
 
 start() ->
-    spawn(fun() -> loop() end).
+    #channel_manager {
+        channel_manager_pid = spawn(fun() -> loop() end)
+    }.
 
-stop(ChannelManagerPid) ->
-    xrpc:call(ChannelManagerPid, {halt}).
+stop(ChannelManager) ->
+    xrpc:call(
+        ChannelManager#channel_manager.channel_manager_pid, 
+        stop
+    ).
 
-get_channel(ChannelManagerPid, ChannelId) ->
-    xrpc:call(ChannelManagerPid, {get, ChannelId}).
+get_channel(ChannelManager, ChannelId) ->
+    xrpc:call(
+        ChannelManager#channel_manager.channel_manager_pid, 
+        {get, ChannelId}
+    ).
 
 
 %
@@ -47,24 +58,35 @@ get_channel(ChannelManagerPid, ChannelId) ->
 
 loop() ->
     receive
+        %%
+        %%
+        %%
         {ClientPid, {remove, ChannelId}} ->
-            %io:format("channel_manager:loop {remove ~p}~n", [ChannelId]),
             erase(ChannelId),
-            %io:format("channel_manager:loop ~p erased~n", [ChannelId]),
             xrpc:response(ClientPid, ok),
             loop();
-        {ClientPid, {halt}} ->
+        %%
+        %%
+        %%
+        {ClientPid, stop} ->
             stop_channels(),
             xrpc:response(ClientPid, ok);
+        %%
+        %%
+        %%
         {ClientPid, {get, ChannelId}} ->
-            %io:format("channel_manager:loop {get ~p}~n", [ChannelId]),
             xrpc:response(ClientPid, get_or_create(ChannelId)),
             loop();
-        {ClientPid, UnsupportedMessage} ->
+        %%
+        %%
+        %%
+        {ClientPid, _} ->
             xrpc:response(ClientPid, unsupported_message),
             loop();
-        Spam ->
-            io:format("Unsolicited call to channel manager: ~p; discarding.~n", [Spam]),
+        %%
+        %%
+        %%
+        _Spam ->
             loop()
     end.
 
@@ -72,12 +94,14 @@ get_or_create(ChannelId) ->
     value(ChannelId, get(ChannelId)).
 
 value(ChannelId, undefined) ->
-    %io:format("value undefined.  Channel: ~p~n", [ChannelId]),
-    ChannelPid = channel:start(ChannelId, self()),
-    put(ChannelId, ChannelPid),
-    ChannelPid;
+    Me = self(),
+    Channel = channel:start(
+        ChannelId, 
+        fun(Id) -> xrpc:call(Me, {remove, Id}) end
+    ),
+    put(ChannelId, Channel),
+    Channel;
 value(_ChannelId, X) ->
-    %io:format("value defined: ~p~n", [X]),
     X.
 
 stop_channels() ->
