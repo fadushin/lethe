@@ -1,6 +1,3 @@
-%
-% Copyright (c) dushin.net
-% All rights reserved.
 %%
 %% Copyright (c) dushin.net
 %% All rights reserved.
@@ -27,27 +24,13 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
--module(xrpc).
--export([send/2, wait/2, call/2, call/3, response/2]).
 
-
-send(Pid, Message) ->
-    Pid ! {self(), Message}.
-
-wait(Pid, TimeoutMs) ->
-    receive
-        {Pid, Response} ->
-            Response
-    after TimeoutMs ->
-        {error, timeout}
-    end.
-
-call(Pid, Message) ->
-    call(Pid, Message, 1000).
-
-call(Pid, Message, TimeoutMs) ->
-    send(Pid, Message),
-    wait(Pid, TimeoutMs).
-
-response(Pid, Message) ->
-    Pid ! {self(), Message}.
+%%
+%% @type    channel_manager() -> #channel_manager{channel_manager_pid = pid()}.
+%%
+-record(
+    channel_manager,
+    {
+        channel_manager_pid
+    }
+).

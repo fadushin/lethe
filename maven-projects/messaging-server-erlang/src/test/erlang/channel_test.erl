@@ -30,15 +30,26 @@
 
 -include("channel.hrl").
 
-channel_test() ->
-    Test = channel:start(fred),
+channel_start_stop_test() ->
+    Test = channel:start(test),
+    ?assertMatch({[], []}, channel:get_peers(Test)),
+    ?assertMatch(ok, channel:stop(Test)),
+    ?assertMatch({error, timeout}, channel:get_peers(Test)),
+    ok.
     
-    {[], []} = channel:get_peers(Test),
+channel_peers_test() ->
+    
+    %eunit:test({timeout, 60, channel_test}),
+
+    Test = channel:start(test),
+    
+    ?assertMatch({[], []}, channel:get_peers(Test)),
     
     Fred = #peer{name = fred},
-    ok = channel:join(Test, Fred),
     
-    % Fred#peer{last_update = _} = channel:get_peers(Test),
+    ?assertMatch(ok, channel:join(Test, Fred)),
     
-    ok = channel:stop(Test).
+    {Add, Remove} = channel:get_peers(Test),
     
+    ?assertMatch(ok, channel:stop(Test)),
+    ok.
