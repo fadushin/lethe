@@ -26,12 +26,20 @@
 %%
 
 %%
-%% @type    channel_manager() -> #channel_manager{channel_manager_pid = pid()}.
+%% @type    net_dushin_lethe_server_config() -> [option()].
+%%
+%% @type    option() -> {key(), term()}.
+%%
+%% @type    key() ->
+%%              channel_config()
+%%
+
+%%
+%% @type    call_opts() -> #call_opts{timeout_ms = integer()}.
 %%
 -record(
-    channel_manager,
+    call_opts,
     {
-        channel_manager_pid,
         timeout_ms = 1000
     }
 ).

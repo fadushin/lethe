@@ -32,7 +32,8 @@
     channel,
     {
         id,
-        channel_pid
+        channel_pid,
+        timeout_ms = 1000
     }
 ).
 

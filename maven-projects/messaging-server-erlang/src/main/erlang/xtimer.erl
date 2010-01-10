@@ -45,10 +45,10 @@ loop(TimerSpec) ->
             xrpc:response(ClientPid, ok)
     after TimerSpec#timer_spec.timeout_ms ->
         F = TimerSpec#timer_spec.f,
-        F(),
+        NewSpec = F(TimerSpec),
         case TimerSpec#timer_spec.loop of
             true ->
-                loop(TimerSpec);
+                loop(NewSpec);
             false ->
                 done
         end

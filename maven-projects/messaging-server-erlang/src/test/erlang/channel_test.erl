@@ -49,7 +49,7 @@ channel_peers_test() ->
     
     ?assertMatch(ok, channel:join(Test, Fred)),
     
-    {Add, Remove} = channel:get_peers(Test),
+    {_Add, _Remove} = channel:get_peers(Test),
     
     ?assertMatch(ok, channel:stop(Test)),
     ok.

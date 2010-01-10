@@ -26,13 +26,14 @@
 %%
 
 %%
-%% @type    timer_spec() -> {integer(), function(), boolean()}.
+%% @type    timer_spec() -> {function(), integer(), boolean()}.
 %%
 -record(
     timer_spec,
     {
         f,
         timeout_ms = 5000,
-        loop = false
+        loop = false,
+        bag
     }
 ).

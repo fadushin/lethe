@@ -24,14 +24,23 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
+-module(net_dushin_lethe_lists).
 
-%%
-%% @type    channel_manager() -> #channel_manager{channel_manager_pid = pid()}.
-%%
--record(
-    channel_manager,
-    {
-        channel_manager_pid,
-        timeout_ms = 1000
-    }
+
+-export(
+    [
+        %%
+        %% Client API
+        %%
+        find_value/2, find_value/3
+    ]
 ).
+
+find_value(PairList, Key) ->
+    find_value(PairList, Key, undefined).
+
+find_value(PairList, Key, Default) ->
+    case lists:keyfind(Key, 1, PairList) of
+        false -> Default;
+        {Key, Value} -> Value
+    end.

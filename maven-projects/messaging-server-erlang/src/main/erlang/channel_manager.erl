@@ -42,13 +42,15 @@ start() ->
 stop(ChannelManager) ->
     xrpc:call(
         ChannelManager#channel_manager.channel_manager_pid, 
-        stop
+        stop,
+        ChannelManager#channel.timeout_ms
     ).
 
 get_channel(ChannelManager, ChannelId) ->
     xrpc:call(
         ChannelManager#channel_manager.channel_manager_pid, 
-        {get, ChannelId}
+        {get, ChannelId}, 
+        ChannelManager#channel.timeout_ms
     ).
 
 
