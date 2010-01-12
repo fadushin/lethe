@@ -90,7 +90,7 @@
 %%              max_messages |          (the max number of messages cached on a channel)
 %%              message_timeout_ms |    (ms before a message is removed from message list.  Default: 30 mins)
 %%              shutdown_handler        (handler to be called when a channel is shut down due to inactivity.  Default: undefined)
-%%              sweep_interval_ms       (interval between sweeps of stale channel data)
+%%              sweep_interval_ms       (interval between sweeps of stale channel data.  Default: 15 secs)
 %%
 
 %% 
@@ -128,19 +128,19 @@ join(Channel, Peer) ->
     xrpc:call(get_peers_pid(Channel), {join, Peer}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        ping(channel(), string()) -> ok.
+%% @spec        ping(channel(), atom()) -> ok.
 %%
 ping(Channel, PeerName) ->
     xrpc:call(get_peers_pid(Channel), {ping, PeerName}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        leave(channel(), string()) -> ok.
+%% @spec        leave(channel(), atom()) -> ok.
 %%
 leave(Channel, PeerName) ->
     xrpc:call(get_peers_pid(Channel), {leave, PeerName}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        get_peers(channel()) -> {peer_list(), string_list()}.
+%% @spec        get_peers(channel()) -> {peer_list(), atom_list()}.
 %%
 %% @effects     get_peers(Channel, [])
 %%

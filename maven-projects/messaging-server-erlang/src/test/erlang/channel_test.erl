@@ -38,18 +38,59 @@ channel_start_stop_test() ->
     ok.
     
 channel_peers_test() ->
-    
-    %eunit:test({timeout, 60, channel_test}),
-
+    %%
+    %% start with a fresh channel
+    %%
     Test = channel:start(test),
-    
+    %%
+    %% there should be no peers in the channel
+    %%
     ?assertMatch({[], []}, channel:get_peers(Test)),
-    
+    %%
+    %% Fred joins, and check for membership
+    %%
     Fred = #peer{name = fred},
-    
     ?assertMatch(ok, channel:join(Test, Fred)),
+    {FredAdd, []} = channel:get_peers(Test),
+	[FredPeer] = FredAdd,
+    FredName = FredPeer#peer.name,
+    ?assertMatch(FredName, fred),
+    %%
+    %% Check that getting the list of peers with fred already
+    %% among the peer names returns the empty pair, and that
+    %% checking with margot's name indicates that she should be
+    %% removed.
+    %%
+    ?assertMatch({[], []}, channel:get_peers(Test, [fred])),
+    ?assertMatch({[], [margot]}, channel:get_peers(Test, [fred, margot])),
+    ?assertMatch({[Peer], [margot]}, channel:get_peers(Test, [margot])),
+    %%
+    %% Margot joins
+    %%
+    Margot = #peer{name = margot},
+    ?assertMatch(ok, channel:join(Test, Margot)),
+    {MargotAdd, []} = channel:get_peers(Test),
+    ?assert(peer_list_contains(MargotAdd, fred)),
+    ?assert(peer_list_contains(MargotAdd, margot)),
+    %%
+    %%
+    %%
+    ?assertMatch(ok, channel:leave(Test, fred)),
+    {FredLeave, []} = channel:get_peers(Test),
+    [MargotPeer] = FredLeave,
+    MargotName = MargotPeer#peer.name,
+    ?assertMatch(MargotName, margot),
     
-    {_Add, _Remove} = channel:get_peers(Test),
-    
-    ?assertMatch(ok, channel:stop(Test)),
-    ok.
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
+
+
+peer_list_contains(PeerList, PeerName) ->
+    lists:any(fun(Peer) -> Peer#peer.name =:= PeerName end, PeerList).
+            
+
+
+

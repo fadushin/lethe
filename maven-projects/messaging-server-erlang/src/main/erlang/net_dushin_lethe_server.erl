@@ -69,9 +69,15 @@
 %%              channel_config
 %%
 
+%%
+%% @spec    start() -> ok
+%%
 start() ->
     start([]).
 
+%%
+%% @spec    start(net_dushin_lethe_server_config()) -> ok
+%%
 start(Config) ->
     gen_server:start_link(
         {local, ?MODULE},
@@ -80,60 +86,72 @@ start(Config) ->
         []
     ).
 
+%%
+%% @spec    stop() -> ok
+%%
 stop() ->
     stop(#call_opts{}).
 
 %%
-%% Example: stop([{timeout_ms = 1000}]).
+%% @spec    stop([option()]) -> ok
+%%
+%% Example: stop([{timeout_ms, 1000}]).
 %%
 stop(Options) ->
     gen_server:call(
         ?MODULE,
         stop,
-        Options#call_opts.timeout_ms
+        net_dushin_lethe_lists:find_value(
+            Options,
+            timeout_ms,
+            1000
+        )
     ).
 
+%%
+%% @spec        join(atom(), peer()) -> ok | {error, too_many_peers} | {error, timeout}.
+%%
 join(ChannelId, Peer) ->
     channel:join(get_channel(ChannelId), Peer).
 
 %%
-%% @spec        ping(string(), string()) -> ok.
+%% @spec        ping(atom(), atom()) -> ok.
 %%
 ping(ChannelId, PeerName) ->
     channel:ping(get_channel(ChannelId), PeerName).
 
 %%
-%% @spec        leave(string(), string()) -> ok.
+%% @spec        leave(atom(), atom()) -> ok.
 %%
 leave(ChannelId, PeerName) ->
     channel:leave(get_channel(ChannelId), PeerName).
 
 %%
-%% @spec        get_peers(string()) -> {peer_list(), string_list()}.
+%% @spec        get_peers(atom()) -> {peer_list(), [atom()]}.
 %%
 get_peers(ChannelId) ->
     channel:get_peers(get_channel(ChannelId)).
 
 %%
-%% @spec        get_peers(string(), string_list()) -> {peer_list(), string_list()}.
+%% @spec        get_peers(atom(), [atom()]) -> {peer_list(), [atom()]}.
 %%
 get_peers(ChannelId, PeerNames) ->
     channel:get_peers(get_channel(ChannelId), PeerNames).
 
 %%
-%% @spec        post_message(string(), message()) -> message().
+%% @spec        post_message(atom(), message()) -> message().
 %%
 post_message(ChannelId, Message) ->
     channel:post_message(get_channel(ChannelId), Message).
 
 %%
-%% @spec        get_messages(string()) -> message_list().
+%% @spec        get_messages(atom()) -> message_list().
 %%
 get_messages(ChannelId) ->
     channel:get_messages(get_channel(ChannelId)).
 
 %%
-%% @spec        get_messages(string(), timestamp() | all) -> message_list().
+%% @spec        get_messages(atom(), timestamp() | all) -> message_list().
 %%
 get_messages(ChannelId, Since) ->
     channel:get_messages(get_channel(ChannelId), Since).
