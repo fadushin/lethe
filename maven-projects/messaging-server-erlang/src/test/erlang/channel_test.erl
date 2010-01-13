@@ -31,8 +31,8 @@
 -include("channel.hrl").
 
 channel_start_stop_test() ->
-    Test = channel:start(test),
-    ?assertMatch({[], []}, channel:get_peers(Test)),
+    Test = channel:start(channel_start_stop_test),
+    ?assertMatch([], channel:get_peers(Test)),
     ?assertMatch(ok, channel:stop(Test)),
     ?assertMatch({error, timeout}, channel:get_peers(Test)),
     ok.
@@ -41,20 +41,19 @@ channel_peers_test() ->
     %%
     %% start with a fresh channel
     %%
-    Test = channel:start(test),
+    Test = channel:start(channel_peers_test),
     %%
     %% there should be no peers in the channel
     %%
-    ?assertMatch({[], []}, channel:get_peers(Test)),
+    ?assertMatch([], channel:get_peers(Test)),
     %%
     %% Fred joins, and check for membership
     %%
     Fred = #peer{name = fred},
     ?assertMatch(ok, channel:join(Test, Fred)),
-    {FredAdd, []} = channel:get_peers(Test),
-	[FredPeer] = FredAdd,
-    FredName = FredPeer#peer.name,
-    ?assertMatch(FredName, fred),
+    FredAdd = channel:get_peers(Test),
+    ?assertEqual(length(FredAdd), 1),
+    ?assert(peer_list_contains(FredAdd, fred)),
     %%
     %% Check that getting the list of peers with fred already
     %% among the peer names returns the empty pair, and that
@@ -63,23 +62,101 @@ channel_peers_test() ->
     %%
     ?assertMatch({[], []}, channel:get_peers(Test, [fred])),
     ?assertMatch({[], [margot]}, channel:get_peers(Test, [fred, margot])),
-    ?assertMatch({[Peer], [margot]}, channel:get_peers(Test, [margot])),
+    {GetPeersMargot, [margot]} = channel:get_peers(Test, [margot]),
+    ?assert(peer_list_contains(GetPeersMargot, fred)),
     %%
     %% Margot joins
     %%
     Margot = #peer{name = margot},
     ?assertMatch(ok, channel:join(Test, Margot)),
-    {MargotAdd, []} = channel:get_peers(Test),
+    MargotAdd = channel:get_peers(Test),
     ?assert(peer_list_contains(MargotAdd, fred)),
     ?assert(peer_list_contains(MargotAdd, margot)),
     %%
-    %%
+    %% Fred leaves
     %%
     ?assertMatch(ok, channel:leave(Test, fred)),
-    {FredLeave, []} = channel:get_peers(Test),
-    [MargotPeer] = FredLeave,
-    MargotName = MargotPeer#peer.name,
-    ?assertMatch(MargotName, margot),
+    FredLeave = channel:get_peers(Test),
+    ?assertEqual(length(FredLeave), 1),
+    ?assert(peer_list_contains(FredLeave, margot)),
+    %%
+    %% Margot leaves
+    %%
+    ?assertMatch(ok, channel:leave(Test, margot)),
+    [] = channel:get_peers(Test),
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
+    
+channel_max_peers_test() ->
+    %%
+    %% start with a fresh channel
+    %%
+    Test = channel:start(
+        channel_max_peers_test, 
+        [
+            {max_peers, 2}
+        ]
+    ),
+    %%
+    %%
+    %%
+    Fred = #peer{name = fred},
+    Margot = #peer{name = margot},
+    ?assertMatch(ok, channel:join(Test, Fred)),
+    ?assertMatch(ok, channel:join(Test, Margot)),
+    FredMargotAdd = channel:get_peers(Test),
+    ?assertEqual(length(FredMargotAdd), 2),
+    ?assert(peer_list_contains(FredMargotAdd, fred)),
+    ?assert(peer_list_contains(FredMargotAdd, margot)),
+    %%
+    %%
+    %%
+    ?assertMatch({error, too_many_peers}, channel:join(Test, #peer{name=too_many_peers})),
+    channel:leave(Test, fred),
+    FredLeave = channel:get_peers(Test),
+    ?assertEqual(length(FredLeave), 1),
+    ?assert(not(peer_list_contains(FredLeave, fred))),
+    ?assert(peer_list_contains(FredLeave, margot)),
+    ?assertMatch(ok, channel:join(Test, #peer{name=some_new_peer})),
+    SomeNewPeerJoins = channel:get_peers(Test),
+    ?assertEqual(length(SomeNewPeerJoins), 2),
+    ?assert(not(peer_list_contains(FredLeave, fred))),
+    ?assert(peer_list_contains(SomeNewPeerJoins, margot)),
+    ?assert(peer_list_contains(SomeNewPeerJoins, some_new_peer)),
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
+    
+channel_peers_timeout_test() ->
+    %%
+    %% start with a fresh channel
+    %%
+    Test = channel:start(
+        channel_peers_timeout_test, 
+        [
+            {peer_timeout_ms, 500}, 
+            {sweep_interval_ms, 600}
+        ]
+    ),
+    %%
+    %%
+    %%
+    Fred = #peer{name = fred},
+    ?assertMatch(ok, channel:join(Test, Fred)),
+    FredAdd = channel:get_peers(Test),
+    ?assertEqual(length(FredAdd), 1),
+    ?assert(peer_list_contains(FredAdd, fred)),
+    %%
+    %%
+    %%
+    sleep(1000),
+    [] = channel:get_peers(Test),
+    
     
     %%
     %% done
@@ -87,10 +164,14 @@ channel_peers_test() ->
     channel:stop(Test).
 
 
+%%
+%% internal operations
+%%
 
 peer_list_contains(PeerList, PeerName) ->
     lists:any(fun(Peer) -> Peer#peer.name =:= PeerName end, PeerList).
             
-
+sleep(Ms) ->
+    receive after Ms -> ok end.
 
 

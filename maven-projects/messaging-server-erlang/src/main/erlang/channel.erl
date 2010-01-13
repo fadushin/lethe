@@ -140,12 +140,16 @@ leave(Channel, PeerName) ->
     xrpc:call(get_peers_pid(Channel), {leave, PeerName}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        get_peers(channel()) -> {peer_list(), atom_list()}.
+%% @spec        get_peers(channel()) -> peer_list().
 %%
 %% @effects     get_peers(Channel, [])
 %%
 get_peers(Channel) ->
-    get_peers(Channel, []).
+    Result = get_peers(Channel, []),
+    case Result of
+        {error, timeout} -> Result; 
+        {Add, []} -> Add
+    end.
 
 %%
 %% @spec        get_peers(channel(), string_list()) -> {peer_list(), string_list()}.
