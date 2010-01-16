@@ -128,19 +128,19 @@ join(Channel, Peer) ->
     xrpc:call(get_peers_pid(Channel), {join, Peer}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        ping(channel(), atom()) -> ok.
+%% @spec        ping(channel(), atom()) -> ok | {error, peer_does_not_exist} | {error, timeout}.
 %%
 ping(Channel, PeerName) ->
     xrpc:call(get_peers_pid(Channel), {ping, PeerName}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        leave(channel(), atom()) -> ok.
+%% @spec        leave(channel(), atom()) -> ok | {error, timeout}.
 %%
 leave(Channel, PeerName) ->
     xrpc:call(get_peers_pid(Channel), {leave, PeerName}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        get_peers(channel()) -> peer_list().
+%% @spec        get_peers(channel()) -> peer_list() | {error, timeout}.
 %%
 %% @effects     get_peers(Channel, [])
 %%
@@ -152,19 +152,19 @@ get_peers(Channel) ->
     end.
 
 %%
-%% @spec        get_peers(channel(), string_list()) -> {peer_list(), string_list()}.
+%% @spec        get_peers(channel(), string_list()) -> {peer_list(), string_list()} | {error, timeout}.
 %%
 get_peers(Channel, PeerNames) ->
     xrpc:call(get_peers_pid(Channel), {get, PeerNames}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        post_message(channel(), message()) -> message().
+%% @spec        post_message(channel(), message()) -> message() | {error, timeout}.
 %%
 post_message(Channel, Message) ->
     xrpc:call(get_messages_pid(Channel), {post, Message}, Channel#channel.timeout_ms).
 
 %%
-%% @spec        get_messages(channel()) -> message_list().
+%% @spec        get_messages(channel()) -> message_list() | {error, timeout}.
 %%
 %% @effects     get_messages(Channel, all)
 %%
@@ -172,7 +172,7 @@ get_messages(Channel) ->
     get_messages(Channel, all).
 
 %%
-%% @spec        get_messages(channel(), timestamp() | all) -> message_list().
+%% @spec        get_messages(channel(), timestamp() | all) -> message_list() | {error, timeout}.
 %%
 get_messages(Channel, Since) ->
     xrpc:call(get_messages_pid(Channel), {get, Since}, Channel#channel.timeout_ms).
@@ -349,7 +349,11 @@ peer_loop(Ctx, Peers) ->
         %%
         {ClientPid, {ping, PeerName}} ->
             NewPeers = update_peer(#peer{name=PeerName}, Peers),
-            xrpc:response(ClientPid, ok),
+            Response = case NewPeers of
+                {error, peer_does_not_exist} -> NewPeers;
+                _ -> ok
+            end,
+            xrpc:response(ClientPid, Response),
             peer_loop(Ctx, NewPeers);
         %%
         %%
