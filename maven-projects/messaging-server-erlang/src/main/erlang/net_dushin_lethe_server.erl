@@ -43,7 +43,7 @@
     ]
 ).
 
--include("channel.hrl").
+-include("net_dushin_lethe_channel.hrl").
 -include("net_dushin_lethe_server.hrl").
 
 
@@ -112,49 +112,49 @@ stop(Options) ->
 %% @spec        join(atom(), peer()) -> ok | {error, too_many_peers} | {error, timeout}.
 %%
 join(ChannelId, Peer) ->
-    channel:join(get_channel(ChannelId), Peer).
+    net_dushin_lethe_channel:join(get_channel(ChannelId), Peer).
 
 %%
 %% @spec        ping(atom(), atom()) -> ok.
 %%
 ping(ChannelId, PeerName) ->
-    channel:ping(get_channel(ChannelId), PeerName).
+    net_dushin_lethe_channel:ping(get_channel(ChannelId), PeerName).
 
 %%
 %% @spec        leave(atom(), atom()) -> ok.
 %%
 leave(ChannelId, PeerName) ->
-    channel:leave(get_channel(ChannelId), PeerName).
+    net_dushin_lethe_channel:leave(get_channel(ChannelId), PeerName).
 
 %%
 %% @spec        get_peers(atom()) -> {peer_list(), [atom()]}.
 %%
 get_peers(ChannelId) ->
-    channel:get_peers(get_channel(ChannelId)).
+    net_dushin_lethe_channel:get_peers(get_channel(ChannelId)).
 
 %%
 %% @spec        get_peers(atom(), [atom()]) -> {peer_list(), [atom()]}.
 %%
 get_peers(ChannelId, PeerNames) ->
-    channel:get_peers(get_channel(ChannelId), PeerNames).
+    net_dushin_lethe_channel:get_peers(get_channel(ChannelId), PeerNames).
 
 %%
 %% @spec        post_message(atom(), message()) -> message().
 %%
 post_message(ChannelId, Message) ->
-    channel:post_message(get_channel(ChannelId), Message).
+    net_dushin_lethe_channel:post_message(get_channel(ChannelId), Message).
 
 %%
 %% @spec        get_messages(atom()) -> message_list().
 %%
 get_messages(ChannelId) ->
-    channel:get_messages(get_channel(ChannelId)).
+    net_dushin_lethe_channel:get_messages(get_channel(ChannelId)).
 
 %%
 %% @spec        get_messages(atom(), timestamp() | all) -> message_list().
 %%
 get_messages(ChannelId, Since) ->
-    channel:get_messages(get_channel(ChannelId), Since).
+    net_dushin_lethe_channel:get_messages(get_channel(ChannelId), Since).
 
 
 %%
@@ -224,7 +224,7 @@ get_or_create(ChannelId, State) ->
 
 value(State, ChannelId, undefined) ->
     ShutdownHandler = fun(Id) -> remove_channel(Id) end,
-    Channel = channel:start(
+    Channel = net_dushin_lethe_channel:start(
         ChannelId,
         [ 
             {shutdown_handler, ShutdownHandler} | 

@@ -27,7 +27,7 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
--module(xrpc).
+-module(net_dushin_lethe_rpc).
 -export([send/2, wait/2, call/2, call/3, response/2]).
 
 

@@ -28,7 +28,7 @@
 % NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 % SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %  
--module(uuid).
+-module(net_dushin_lethe_uuid).
 -export([generate/0, to_string/1, generate_string/0, get_parts/1]).
 -import(random).
 

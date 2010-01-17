@@ -24,7 +24,7 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
--module(channel).
+-module(net_dushin_lethe_channel).
 -export(
     [
         start/1, start/2, stop/1, 
@@ -32,8 +32,8 @@
         post_message/2, get_messages/1, get_messages/2
     ]
 ).
--include("channel.hrl").
--include("xtimer.hrl").
+-include("net_dushin_lethe_channel.hrl").
+-include("net_dushin_lethe_timer.hrl").
 
 %%
 %% @type    channel_context() ->
@@ -119,25 +119,25 @@ start(ChannelId, Config) ->
 %% @spec        stop(channel()) -> ok | {error, timeout}.
 %%
 stop(Channel) ->
-    xrpc:call(Channel#channel.channel_pid, stop, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(Channel#channel.channel_pid, stop, Channel#channel.timeout_ms).
 
 %%
 %% @spec        join(channel(), peer()) -> ok | {error, too_many_peers} | {error, timeout}.
 %%
 join(Channel, Peer) ->
-    xrpc:call(get_peers_pid(Channel), {join, Peer}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_peers_pid(Channel), {join, Peer}, Channel#channel.timeout_ms).
 
 %%
 %% @spec        ping(channel(), atom()) -> ok | {error, peer_does_not_exist} | {error, timeout}.
 %%
 ping(Channel, PeerName) ->
-    xrpc:call(get_peers_pid(Channel), {ping, PeerName}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_peers_pid(Channel), {ping, PeerName}, Channel#channel.timeout_ms).
 
 %%
 %% @spec        leave(channel(), atom()) -> ok | {error, timeout}.
 %%
 leave(Channel, PeerName) ->
-    xrpc:call(get_peers_pid(Channel), {leave, PeerName}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_peers_pid(Channel), {leave, PeerName}, Channel#channel.timeout_ms).
 
 %%
 %% @spec        get_peers(channel()) -> peer_list() | {error, timeout}.
@@ -155,13 +155,13 @@ get_peers(Channel) ->
 %% @spec        get_peers(channel(), string_list()) -> {peer_list(), string_list()} | {error, timeout}.
 %%
 get_peers(Channel, PeerNames) ->
-    xrpc:call(get_peers_pid(Channel), {get, PeerNames}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_peers_pid(Channel), {get, PeerNames}, Channel#channel.timeout_ms).
 
 %%
 %% @spec        post_message(channel(), message()) -> message() | {error, timeout}.
 %%
 post_message(Channel, Message) ->
-    xrpc:call(get_messages_pid(Channel), {post, Message}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_messages_pid(Channel), {post, Message}, Channel#channel.timeout_ms).
 
 %%
 %% @spec        get_messages(channel()) -> message_list() | {error, timeout}.
@@ -175,7 +175,7 @@ get_messages(Channel) ->
 %% @spec        get_messages(channel(), timestamp() | all) -> message_list() | {error, timeout}.
 %%
 get_messages(Channel, Since) ->
-    xrpc:call(get_messages_pid(Channel), {get, Since}, Channel#channel.timeout_ms).
+    net_dushin_lethe_rpc:call(get_messages_pid(Channel), {get, Since}, Channel#channel.timeout_ms).
 
 
 %%
@@ -186,11 +186,11 @@ channel_init(ChannelId, Config) ->
     process_flag(trap_exit, true),
     PeersPid = spawn_peers(ChannelId, Config),
     MessagesPid = spawn_messages(ChannelId, Config),
-    Timer = xtimer:start(
+    Timer = net_dushin_lethe_timer:start(
         #timer_spec {
             f = fun(Spec) -> 
-                xrpc:send(PeersPid, sweep),
-                xrpc:send(MessagesPid, sweep),
+                net_dushin_lethe_rpc:send(PeersPid, sweep),
+                net_dushin_lethe_rpc:send(MessagesPid, sweep),
                 Spec
             end,
             timeout_ms = net_dushin_lethe_lists:find_value(
@@ -213,10 +213,10 @@ channel_init(ChannelId, Config) ->
     ).
 
 get_peers_pid(Channel) ->
-    xrpc:call(Channel#channel.channel_pid, get_peers_pid).
+    net_dushin_lethe_rpc:call(Channel#channel.channel_pid, get_peers_pid).
 
 get_messages_pid(Channel) ->
-    xrpc:call(Channel#channel.channel_pid, get_messages_pid).
+    net_dushin_lethe_rpc:call(Channel#channel.channel_pid, get_messages_pid).
 
 spawn_peers(ChannelId, Config) ->
     spawn_link(
@@ -256,20 +256,20 @@ channel_loop(Ctx) ->
         %%
         %%
         {ClientPid, get_peers_pid} ->
-            xrpc:response(ClientPid, Ctx#channel_context.peers_pid),
+            net_dushin_lethe_rpc:response(ClientPid, Ctx#channel_context.peers_pid),
             channel_loop(Ctx);
         %%
         %%
         %%
         {ClientPid, get_messages_pid} ->
-            xrpc:response(ClientPid, Ctx#channel_context.messages_pid),
+            net_dushin_lethe_rpc:response(ClientPid, Ctx#channel_context.messages_pid),
             channel_loop(Ctx);
         %%
         %%
         %%
         {ClientPid, stop} ->
             channel_stop(Ctx),
-            xrpc:response(ClientPid, ok);
+            net_dushin_lethe_rpc:response(ClientPid, ok);
         %%
         %%
         %%
@@ -318,9 +318,9 @@ channel_loop(Ctx) ->
     end.
 
 channel_stop(Ctx) ->
-    xtimer:stop(Ctx#channel_context.timer),
-    xrpc:call(Ctx#channel_context.peers_pid, stop),
-    xrpc:call(Ctx#channel_context.messages_pid, stop).
+    net_dushin_lethe_timer:stop(Ctx#channel_context.timer),
+    net_dushin_lethe_rpc:call(Ctx#channel_context.peers_pid, stop),
+    net_dushin_lethe_rpc:call(Ctx#channel_context.messages_pid, stop).
     
 %%
 %%
@@ -331,7 +331,7 @@ peer_loop(Ctx, Peers) ->
         %%
         %%
         {ClientPid, stop} ->
-            xrpc:response(ClientPid, ok);
+            net_dushin_lethe_rpc:response(ClientPid, ok);
             %% done
         %%
         %%
@@ -339,10 +339,10 @@ peer_loop(Ctx, Peers) ->
         {ClientPid, {join, Peer}} ->
             case add_peer(Peer, Peers, Ctx#peer_context.max_peers) of
                 too_many_peers ->
-                    xrpc:response(ClientPid, {error, too_many_peers}),
+                    net_dushin_lethe_rpc:response(ClientPid, {error, too_many_peers}),
                     peer_loop(Ctx, Peers);
                 NewPeers ->
-                    xrpc:response(ClientPid, ok),
+                    net_dushin_lethe_rpc:response(ClientPid, ok),
                     peer_loop(Ctx, NewPeers)
             end;
         %%
@@ -354,20 +354,20 @@ peer_loop(Ctx, Peers) ->
                 {error, peer_does_not_exist} -> NewPeers;
                 _ -> ok
             end,
-            xrpc:response(ClientPid, Response),
+            net_dushin_lethe_rpc:response(ClientPid, Response),
             peer_loop(Ctx, NewPeers);
         %%
         %%
         %%
         {ClientPid, {get, PeerNames}} ->
-            xrpc:response(ClientPid, find_peers(PeerNames, Peers)),
+            net_dushin_lethe_rpc:response(ClientPid, find_peers(PeerNames, Peers)),
             peer_loop(Ctx, Peers);
         %%
         %% Remove the peer identified by the specified name from the list of peers
         %%
         {ClientPid, {leave, PeerName}} ->
             NewPeers = remove_peer(PeerName, Peers),
-            xrpc:response(ClientPid, ok),
+            net_dushin_lethe_rpc:response(ClientPid, ok),
             peer_loop(Ctx, NewPeers);
         %%
         %% Sweep the peer list for stale peers.  This message
@@ -398,21 +398,21 @@ message_loop(Ctx, Messages) ->
         %%
         %%
         {ClientPid, stop} ->
-            xrpc:response(ClientPid, ok);
+            net_dushin_lethe_rpc:response(ClientPid, ok);
         %%
         %%
         %%
         {ClientPid, {post, Message}} ->
             NewMessages = [NewMessage | _] = 
                 add_message(Message, Messages, Ctx#message_context.max_messages),
-            xrpc:response(ClientPid, NewMessage),
+            net_dushin_lethe_rpc:response(ClientPid, NewMessage),
             message_loop(Ctx, NewMessages);
         %%
         %%
         %%
         {ClientPid, {get, Since}} ->
             SinceMessages = get_messages_since(Messages, Since),
-            xrpc:response(ClientPid, SinceMessages),
+            net_dushin_lethe_rpc:response(ClientPid, SinceMessages),
             message_loop(Ctx, Messages);
         %%
         %% Sweep the peer list for stale messages.  This message
