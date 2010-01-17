@@ -47,7 +47,7 @@
     channel_context,
     {
         channel_id,
-        channel_timeout_ms = 1800000,
+        channel_timeout_ms,
         messages_pid,
         peers_pid,
         timer,
@@ -59,8 +59,8 @@
     peer_context,
     {
         channel_id,
-        peer_timeout_ms = 15000,
-        max_peers = 100
+        peer_timeout_ms,
+        max_peers
     }
 ).
 
@@ -68,8 +68,8 @@
     message_context,
     {
         channel_id,
-        message_timeout_ms = 1800000,
-        max_messages = 100
+        message_timeout_ms,
+        max_messages
     }
 ).
 
@@ -194,17 +194,21 @@ channel_init(ChannelId, Config) ->
                 Spec
             end,
             timeout_ms = net_dushin_lethe_lists:find_value(
-                Config, sweep_interval_ms, 15000
+                Config, sweep_interval_ms, 15 * 1000
             ),
             loop = true
         }
     ),
     channel_loop(
         #channel_context {
+            channel_id = ChannelId,
             timer = Timer,
             peers_pid = PeersPid,
             messages_pid = MessagesPid,
-            config = Config
+            config = Config,
+            channel_timeout_ms = net_dushin_lethe_lists:find_value(
+                Config, channel_timeout_ms, 1000 * 60 * 30
+            )
         }
     ).
 
@@ -220,7 +224,7 @@ spawn_peers(ChannelId, Config) ->
             #peer_context {
                 channel_id = ChannelId,
                 peer_timeout_ms = net_dushin_lethe_lists:find_value(
-                    Config, peer_timeout_ms, 15000
+                    Config, peer_timeout_ms, 15 * 1000
                 ),
                 max_peers = net_dushin_lethe_lists:find_value(
                     Config, max_peers, 25
@@ -236,7 +240,7 @@ spawn_messages(ChannelId, Config) ->
             #message_context {
                 channel_id = ChannelId,
                 message_timeout_ms = net_dushin_lethe_lists:find_value(
-                    Config, message_timeout_ms, 1800000
+                    Config, message_timeout_ms, 1000 * 60 * 30
                 ),
                 max_messages = net_dushin_lethe_lists:find_value(
                     Config, max_messages, 100
@@ -305,15 +309,12 @@ channel_loop(Ctx) ->
     %%
     after Ctx#channel_context.channel_timeout_ms ->
         channel_stop(Ctx),
-        case net_dushin_lethe_lists:find_value(
-            Ctx#channel_context.config, shutdown_handler
-        ) of
-            undefined ->
-                done;
-            F ->
-                F(Ctx#channel_context.channel_id)
-        end
-        %% done
+        F = net_dushin_lethe_lists:find_value(
+            Ctx#channel_context.config, 
+            shutdown_handler,
+            fun(_ChannelId) -> ok end
+        ),
+        F(Ctx#channel_context.channel_id)
     end.
 
 channel_stop(Ctx) ->

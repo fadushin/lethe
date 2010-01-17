@@ -30,18 +30,38 @@
 
 -include("channel.hrl").
 
-channel_start_stop_test() ->
-    Test = channel:start(channel_start_stop_test),
-    ?assertMatch([], channel:get_peers(Test)),
+start_stop_test() ->
+    Test = channel:start(start_stop_test),
     ?assertMatch(ok, channel:stop(Test)),
     ?assertMatch({error, timeout}, channel:get_peers(Test)),
     ok.
+
+
+channel_timeout_test() ->
+    Me = self(),
+    Test = channel:start(
+        channel_timeout_test, 
+        [
+            {channel_timeout_ms, 500},
+            {shutdown_handler, fun(ChannelId) -> Me ! ChannelId end}
+        ]
+    ),
+    ?assertMatch([], channel:get_peers(Test)),
+    ?assertMatch([], channel:get_messages(Test)),
+    Response = receive
+        Message -> Message
+    after 1000 -> error
+    end,
+    ?assertMatch(Response, channel_timeout_test),
+    ?assertMatch({error, timeout}, channel:get_peers(Test)),
+    ok.
     
-channel_peers_test() ->
+
+peers_test() ->
     %%
     %% start with a fresh channel
     %%
-    Test = channel:start(channel_peers_test),
+    Test = channel:start(peers_test),
     %%
     %% there should be no peers in the channel
     %%
@@ -90,12 +110,12 @@ channel_peers_test() ->
     channel:stop(Test).
 
     
-channel_max_peers_test() ->
+max_peers_test() ->
     %%
     %% start with a fresh channel
     %%
     Test = channel:start(
-        channel_max_peers_test, 
+        max_peers_test, 
         [
             {max_peers, 2}
         ]
@@ -132,12 +152,12 @@ channel_max_peers_test() ->
     channel:stop(Test).
 
     
-channel_peers_timeout_test() ->
+peers_timeout_test() ->
     %%
     %% start with a fresh channel
     %%
     Test = channel:start(
-        channel_peers_timeout_test, 
+        peers_timeout_test, 
         [
             {peer_timeout_ms, 500}, 
             {sweep_interval_ms, 600}
@@ -178,6 +198,119 @@ channel_peers_timeout_test() ->
     %% done
     %%
     channel:stop(Test).
+
+
+messages_test() ->
+    %%
+    %% start with a fresh channel
+    %%
+    Test = channel:start(messages_test),
+    %%
+    %% there should be no messages in the channel
+    %%
+    ?assertMatch([], channel:get_messages(Test)),
+    %%
+    %% Add a message, and check that it's in the list of messages
+    %%
+    FirstMessage = channel:post_message(Test, #message{blob=first}),
+    ?assert(lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assertEqual(length(channel:get_messages(Test)), 1),
+    ?assertMatch([], channel:get_messages(Test, FirstMessage#message.timestamp)),
+    %%
+    %% Add another message
+    %%
+    SecondMessage = channel:post_message(Test, #message{blob=second}),
+    ?assert(lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assert(lists:member(SecondMessage, channel:get_messages(Test))),
+    ?assertEqual(length(channel:get_messages(Test)), 2),
+    ?assertMatch([], channel:get_messages(Test, SecondMessage#message.timestamp)),
+    ?assert(
+        lists:member(
+            SecondMessage, 
+            channel:get_messages(Test, FirstMessage#message.timestamp)
+        )
+    ),
+    ?assert(
+        not lists:member(
+            FirstMessage, 
+            channel:get_messages(Test, FirstMessage#message.timestamp)
+        )
+    ),
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
+    
+max_messages_test() ->
+    %%
+    %% start with a fresh channel
+    %%
+    Test = channel:start(
+        max_messages_test, 
+        [
+            {max_messages, 2}
+        ]
+    ),
+    ?assertMatch([], channel:get_messages(Test)),
+    %%
+    %% Fill the list of messages
+    %%
+    FirstMessage = channel:post_message(Test, #message{blob=first}),
+    SecondMessage = channel:post_message(Test, #message{blob=second}),
+    ?assert(lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assert(lists:member(SecondMessage, channel:get_messages(Test))),
+    %%
+    %% Now add a message.  First should be removed
+    %%
+    ThirdMessage = channel:post_message(Test, #message{blob=third}),
+    ?assert(not lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assert(lists:member(SecondMessage, channel:get_messages(Test))),
+    ?assert(lists:member(ThirdMessage, channel:get_messages(Test))),
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
+    
+messages_timeout_test() ->
+    %%
+    %% start with a fresh channel
+    %%
+    Test = channel:start(
+        messages_timeout_test, 
+        [
+            {message_timeout_ms, 500}, 
+            {sweep_interval_ms, 50}
+        ]
+    ),
+    ?assertMatch([], channel:get_messages(Test)),
+    %%
+    %% Add 2 messages, separated by 200ms
+    %%
+    FirstMessage = channel:post_message(Test, #message{blob=first}),
+    ?assert(lists:member(FirstMessage, channel:get_messages(Test))),
+    sleep(200),
+    SecondMessage = channel:post_message(Test, #message{blob=second}),
+    ?assert(lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assert(lists:member(SecondMessage, channel:get_messages(Test))),
+    %%
+    %% Wait until after the timeout interval on the first mesage, and 
+    %% check that the it has been removed (but not the second)
+    %%
+    sleep(350),
+    ?assert(not lists:member(FirstMessage, channel:get_messages(Test))),
+    ?assert(lists:member(SecondMessage, channel:get_messages(Test))),
+    %%
+    %% Now wait for the second message to expire
+    %%
+    sleep(350),
+    ?assertMatch([], channel:get_messages(Test)),
+    %%
+    %% done
+    %%
+    channel:stop(Test).
+
 
 
 %%
