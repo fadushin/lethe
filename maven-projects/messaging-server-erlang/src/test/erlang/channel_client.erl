@@ -28,8 +28,8 @@
 
 -export([start/0, start/1, stop/1]).
 
--include("channel.hrl").
--include("xtimer.hrl").
+-include("net_dushin_lethe_channel.hrl").
+-include("net_dushin_lethe_timer.hrl").
 
 -record(
     state,
@@ -65,7 +65,7 @@ init(Config) ->
         #state {
             channel_id = ChannelId,
             peer = Peer,
-            peer_pinger = xtimer:start(
+            peer_pinger = net_dushin_lethe_timer:start(
                 #timer_spec {
                     f = fun(Spec) -> 
                         net_dushin_lethe_server:ping(ChannelId, Peer#peer.name),
@@ -77,7 +77,7 @@ init(Config) ->
                     loop = true
                 }
             ),
-            peer_getter = xtimer:start(
+            peer_getter = net_dushin_lethe_timer:start(
                 #timer_spec {
                     f = fun(Spec) -> get_peers(Spec, ChannelId) end,
                     timeout_ms = net_dushin_lethe_lists:find_value(
@@ -87,7 +87,7 @@ init(Config) ->
                     bag = []
                 }
             ),
-            message_getter = xtimer:start(
+            message_getter = net_dushin_lethe_timer:start(
                 #timer_spec {
                     f = fun(Spec) -> get_messages(Spec, ChannelId) end,
                     timeout_ms = net_dushin_lethe_lists:find_value(
@@ -97,7 +97,7 @@ init(Config) ->
                     bag = []
                 }
             ),
-            message_poster = xtimer:start(
+            message_poster = net_dushin_lethe_timer:start(
                 #timer_spec {
                     f = fun(Spec) -> maybe_post_message(Spec, ChannelId) end,
                     timeout_ms = net_dushin_lethe_lists:find_value(
@@ -157,11 +157,11 @@ maybe_post_message(Spec, ChannelId) ->
 loop(State) ->
     receive
         {ClientPid, stop} ->
-            xtimer:stop(State#state.peer_pinger),
-            xtimer:stop(State#state.peer_getter),
-            xtimer:stop(State#state.message_getter),
-            xtimer:stop(State#state.message_poster),
+            net_dushin_lethe_timer:stop(State#state.peer_pinger),
+            net_dushin_lethe_timer:stop(State#state.peer_getter),
+            net_dushin_lethe_timer:stop(State#state.message_getter),
+            net_dushin_lethe_timer:stop(State#state.message_poster),
 			Peer = State#state.peer,
             net_dushin_lethe_server:leave(State#state.channel_id, Peer#peer.name),
-            xrpc:response(ClientPid, ok)
+            net_dushin_lethe_rpc:response(ClientPid, ok)
     end.
