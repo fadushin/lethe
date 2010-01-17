@@ -24,16 +24,16 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
--module(xtimer).
+-module(net_dushin_lethe_timer).
 -export([start/1, stop/1]).
 
--include("xtimer.hrl").
+-include("net_dushin_lethe_timer.hrl").
 
 start(TimerSpec) ->
     spawn(fun() -> loop(TimerSpec) end).
 
 stop(TimerPid) ->
-    xrpc:call(TimerPid, stop).
+    net_dushin_lethe_rpc:call(TimerPid, stop).
 
 %%
 %% Internal operations
@@ -42,7 +42,7 @@ stop(TimerPid) ->
 loop(TimerSpec) ->
     receive
         {ClientPid, stop} ->
-            xrpc:response(ClientPid, ok)
+            net_dushin_lethe_rpc:response(ClientPid, ok)
     after TimerSpec#timer_spec.timeout_ms ->
         F = TimerSpec#timer_spec.f,
         NewSpec = F(TimerSpec),
