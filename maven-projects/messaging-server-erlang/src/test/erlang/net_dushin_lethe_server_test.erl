@@ -63,7 +63,7 @@ channel_api_test() ->
     %%
     %% done
     %%
-    ?assertMatch(ok, net_dushin_lethe_server:stop()), sleep(500).
+    ?assertMatch(ok, net_dushin_lethe_server:stop()).
 
 channel_timout_test() ->
     %%
