@@ -89,8 +89,9 @@
 %%              peer_timeout_ms |       (ms before an inactive peer is removed from peer list.  Default: 15 secs)
 %%              max_messages |          (the max number of messages cached on a channel)
 %%              message_timeout_ms |    (ms before a message is removed from message list.  Default: 30 mins)
-%%              shutdown_handler        (handler to be called when a channel is shut down due to inactivity.  Default: undefined)
-%%              sweep_interval_ms       (interval between sweeps of stale channel data.  Default: 15 secs)
+%%              shutdown_handler |      (handler to be called when a channel is shut down due to inactivity.  Default: undefined)
+%%              sweep_interval_ms |     (interval between sweeps of stale channel data.  Default: 15 secs)
+%%              channel_timeout_ms      (time in ms before which an idle channel will self-destruct)
 %%
 
 %% 
