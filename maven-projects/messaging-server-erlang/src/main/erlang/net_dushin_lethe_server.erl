@@ -44,8 +44,6 @@
 ).
 
 -include("net_dushin_lethe_channel.hrl").
--include("net_dushin_lethe_server.hrl").
-
 
 -record(
     server_context,
@@ -90,22 +88,18 @@ start(Config) ->
 %% @spec    stop() -> ok
 %%
 stop() ->
-    stop(#call_opts{}).
+    stop(1000).
 
 %%
-%% @spec    stop([option()]) -> ok
+%% @spec    stop(timeout_ms()) -> ok
 %%
-%% Example: stop([{timeout_ms, 1000}]).
+%% Example: stop(1000).
 %%
-stop(Options) ->
+stop(TimeoutMs) ->
     gen_server:call(
         ?MODULE,
         stop,
-        net_dushin_lethe_lists:find_value(
-            Options,
-            timeout_ms,
-            1000
-        )
+        TimeoutMs
     ).
 
 %%
@@ -162,7 +156,7 @@ get_messages(ChannelId, Since) ->
 %%
 
 init(Config) -> 
-    process_flag(trap_exit, true),
+    %process_flag(trap_exit, true),
     {
         ok, 
         #server_context {
@@ -188,16 +182,15 @@ handle_call({remove, ChannelId}, _From, State) ->
         State
     };
 handle_call(stop, _From, State) ->
-    stop_channels(State#server_context.tab),
-    {stop, requested, ok, State}.
+    {stop, normal, ok, State}.
 
 handle_cast(_Request, State) -> {noreply, State}.
 
 handle_info(_Info, State) -> {noreply, State}.
 
 terminate(Reason, State) -> 
-    io:format("lethe server terminate with reason ~p and state ~p~n", [Reason, State]),
-    ok.
+    io:format("lethe server terminated with reason ~p and state ~p~n", [Reason, State]),
+    stop_channels(State#server_context.tab).
 
 code_change(_OldVsn, State, _Extra) -> {ok, State}.
 
@@ -254,4 +247,4 @@ remove_channel(Ets, ChannelId) ->
 stop_channels(Ets) ->
     ets:delete_all_objects(Ets), % TODO is this necessary?
     ets:delete(Ets),
-    ok.
+    undefined.
