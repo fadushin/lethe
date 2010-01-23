@@ -58,7 +58,11 @@ init(Config) ->
         Config, channel_id, undefined
     ),
     Peer = #peer {
-        name = list_to_atom(uuid:generate_string())
+        name = net_dushin_lethe_lists:find_value(
+             Config,
+             peer_name,
+             list_to_atom(uuid:generate_string())
+        )
     },
     net_dushin_lethe_server:join(ChannelId, Peer),
     loop(
