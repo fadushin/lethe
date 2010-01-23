@@ -24,40 +24,22 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
--module(net_dushin_lethe_sup).
 
--behavior(supervisor).
-
--export(
+{
+    application, net_dushin_lethe,
     [
-        %%
-        %% Client API
-        %%
-        start/1,
-        %%
-        %% gen_server implementation
-        %%
-        init/1
-    ]
-).
-
-start(Options) ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, Options).
-
-init(Options) ->
-    {
-        ok,
+        {description, "Lethe Messaging Server"},
+        {vsn, "0.1-SNAPSHOT"},
         {
-            {one_for_one, 3, 10},
+            modules, 
             [
-                {
-                    tag1,
-                    {net_dushin_lethe_server, start, Options},
-                    permanent,
-                    10000,
-                    worker,
-                    [net_dushin_lethe_server]
-                }
+                net_dushin_lethe, net_dushin_lethe_sup, net_dushin_lethe_server, net_dushin_lethe_channel,
+                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid
             ]
-        }
-    }.
+        },
+        {registered, [net_dushin_lethe_sup, net_dushin_lethe_server]},
+        {applications, [kernel, stdlib]},
+        {mod, {net_dushin_lethe, []}},
+        {start_phases, []}
+    ]
+}.
