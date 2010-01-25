@@ -37,7 +37,7 @@
                 net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid
             ]
         },
-        {registered, [net_dushin_lethe_sup, net_dushin_lethe_server]},
+        {registered, [net_dushin_lethe_server]},
         {applications, [kernel, stdlib]},
         {mod, {net_dushin_lethe, []}},
         {start_phases, []}
