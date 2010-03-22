@@ -28,6 +28,8 @@
 
 -behavior(application).
 
+-include("yaws.hrl"). 
+
 -export(
     [
         %%
@@ -37,8 +39,49 @@
     ]
 ).
 
+%%
+%% application behavior
+%%
+
 start(_Type, Options) ->
-    net_dushin_lethe_sup:start(Options).
+    start_yaws(net_dushin_lethe_lists:find_value(Options, yaws_args, [])),
+    net_dushin_lethe_sup:start(net_dushin_lethe_lists:find_value(Options, lethe_args, [])).
 
 stop(_State) ->
-    ok.
+    application:stop(yaws).
+
+%%
+%% Internal functions
+%%
+
+start_yaws(Options) ->
+    %process_flag(trap_exit, true), 
+    case application:start(yaws) of
+        ok -> set_conf(Options); 
+        Error -> {stop, Error}
+    end.
+
+set_conf(Options) -> 
+    LetheRoot = net_dushin_lethe_lists:find_value(Options, lethe_root, "."),
+    GC = #gconf{
+        trace = net_dushin_lethe_lists:find_value(Options, trace, false), 
+        logdir = LetheRoot ++ "/logs", 
+        yaws = "lethe-0.1-SNAPSHOT" 
+        %, tmpdir = LetheRoot ++ "/.yaws"
+    }, 
+    SC = #sconf{
+        port        = net_dushin_lethe_lists:find_value(Options, port, 8080), 
+        servername  = net_dushin_lethe_lists:find_value(Options, servername, "localhost"), 
+        listen      = net_dushin_lethe_lists:find_value(Options, listen, {0, 0, 0, 0}), 
+        docroot     = net_dushin_lethe_lists:find_value(Options, docroot, LetheRoot ++ "/content"), 
+        appmods     = [
+            {
+                net_dushin_lethe_lists:find_value(Options, lethe_prefix, "/rs"), 
+                net_dushin_lethe_handler
+            }
+        ]
+    }, 
+    case catch yaws_api:setconf(GC, [[SC]]) of
+        ok -> {ok, started}; 
+        Error -> {stop, Error}
+    end.
