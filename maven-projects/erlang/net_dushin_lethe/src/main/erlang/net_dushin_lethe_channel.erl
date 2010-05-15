@@ -86,7 +86,7 @@
 %% @type    key() ->
 %%              timeout_ms |            (the default timout to be used on a call through any of the channel APIs.  Default: 1 second)
 %%              max_peers |             (the max number of peers allowable on a channel)
-%%              peer_timeout_ms |       (ms before an inactive peer is removed from peer list.  Default: 15 secs)
+%%              peer_timeout_ms |       (ms before an inactive peer is removed from peer list.  Default: 1 min)
 %%              max_messages |          (the max number of messages cached on a channel)
 %%              message_timeout_ms |    (ms before a message is removed from message list.  Default: 30 mins)
 %%              shutdown_handler |      (handler to be called when a channel is shut down due to inactivity.  Default: undefined)
@@ -225,7 +225,7 @@ spawn_peers(ChannelId, Config) ->
             #peer_context {
                 channel_id = ChannelId,
                 peer_timeout_ms = net_dushin_lethe_lists:find_value(
-                    Config, peer_timeout_ms, 15 * 1000
+                    Config, peer_timeout_ms, 60 * 1000
                 ),
                 max_peers = net_dushin_lethe_lists:find_value(
                     Config, max_peers, 25

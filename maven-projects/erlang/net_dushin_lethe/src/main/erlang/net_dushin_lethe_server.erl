@@ -34,6 +34,7 @@
         %% Client API
         %%
         start/0, start/1, stop/0, stop/1, 
+        get_channels/0,
         join/2, get_peers/1, get_peers/2, leave/2, ping/2, 
         post_message/2, get_messages/1, get_messages/2,
         %%
@@ -103,6 +104,15 @@ stop(TimeoutMs) ->
     ).
 
 %%
+%% @spec        get_channels() -> [Channel].
+%%
+get_channels() ->
+    gen_server:call(
+        ?MODULE,
+        get_channels
+    ).
+
+%%
 %% @spec        join(atom(), peer()) -> ok | {error, too_many_peers} | {error, timeout}.
 %%
 join(ChannelId, Peer) ->
@@ -121,7 +131,7 @@ leave(ChannelId, PeerName) ->
     net_dushin_lethe_channel:leave(get_channel(ChannelId), PeerName).
 
 %%
-%% @spec        get_peers(atom()) -> {peer_list(), [atom()]}.
+%% @spec        get_peers(atom()) -> peer_list() | {error, timeout}.
 %%
 get_peers(ChannelId) ->
     net_dushin_lethe_channel:get_peers(get_channel(ChannelId)).
@@ -174,6 +184,12 @@ handle_call({get, ChannelId}, _From, State) ->
         get_or_create(ChannelId, State), 
         State
     };
+handle_call(get_channels, _From, State) ->
+    {
+        reply, 
+        get_channels(State#server_context.tab), 
+        State
+    };
 handle_call({remove, ChannelId}, _From, State) ->
     remove_channel(State#server_context.tab, ChannelId),
     {
@@ -199,6 +215,9 @@ code_change(_OldVsn, State, _Extra) -> {ok, State}.
 %%
 %% internal functions
 %%
+
+get_channels(Ets) ->
+    ets:tab2list(Ets).
 
 get_channel(ChannelId) ->
     gen_server:call(

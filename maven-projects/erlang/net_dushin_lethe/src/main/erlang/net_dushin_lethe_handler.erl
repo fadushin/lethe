@@ -29,31 +29,109 @@
 
 -include("yaws.hrl"). 
 -include("yaws_api.hrl"). 
+-include("net_dushin_lethe_channel.hrl"). 
 
--export([out/1, handle_request/3]).
+-export([out/1, handle_rpc/3]).
+
+%%
+%% Yaws Handler operations
+%%
 
 out(Arg) -> 
-    Req = Arg#arg.req, ReqPath = Arg#arg.pathinfo, 
+    Req = Arg#arg.req, 
+    ReqPath = Arg#arg.pathinfo, 
     handle_request(Req#http_request.method, ReqPath, Arg).
 
-get_path(Arg) -> 
-    Req = Arg#arg.req, {abs_path, Path} = Req#http_request.path,
-    Path.
+%%
+%% callbacks
+%%
 
-handle_request('GET', [47,97,99,99,111,117,110,116 | _], _Arg) -> % "/account" ... 
-    make_response(200, "<p>Please login or logout, okay?</p>");
+handle_rpc(_State, {call, Method, Params} = Request, Session) ->  
+    io:format("Request = ~p~n", [Request]),
+    Response = get_response(Method, Params),
+    io:format("Response = ~p~n", [Response]),
+    {true, 0, Session, {response, Response}}.
 
-handle_request('GET', [47,112,114,111,102,105,108,101 | _], _Arg) -> % "/profile" ... 
-    make_response(200, "<p>This is a slick profile.</p>");
+get_response(get_channels, _Params) ->
+    channels_to_json(net_dushin_lethe_server:get_channels());
 
+get_response(get_peers, [ChannelId]) ->
+    peers_to_json(net_dushin_lethe_server:get_peers(list_to_atom(ChannelId)));
+
+get_response(_Method, _Params) ->
+    %% TODO come up with a way to handle unknown methods
+    atom_to_list(undefined).
+
+
+%%
+%% private operations
+%%
+
+handle_request('POST', "/rpc" ++ _, Arg) ->
+    Peer = inet:peername(Arg#arg.clisock),
+    {ok, {IP, _}} = Peer,
+    yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
+handle_request('GET', "/get_channels" ++ _, _Arg) ->
+    make_response(
+        200,
+        io_lib:format("<pre>~n~p~n</pre>~n", [net_dushin_lethe_server:get_channels()])
+    );
 handle_request(_, Path, Arg) -> % catchall 
     io:format("~p ~p~n", [Path, Arg]),
     make_response(200, "<p>What exactly are you looking for?</p>").
 
-make_response(Status, Message) -> make_response(Status, "text/html", Message).
+channels_to_json(ChannelEntryList) ->
+    {
+        array, 
+        lists:map(
+            fun({ChannelName, _Channel}) ->
+                atom_to_list(ChannelName)
+            end,
+            ChannelEntryList
+        )
+    }.
 
-make_response(Status, Type, Message) -> make_all_response(Status, make_header(Type), Message).
+peers_to_json(PeerList) ->
+    {
+        array, 
+        lists:map(
+            fun(Peer) ->
+                atom_to_list(Peer#peer.name)
+            end,
+            PeerList
+        )
+    }.
 
-make_header(Type) -> [{header, ["Content-Type: ", Type]}].
 
-make_all_response(Status, Headers, Message) -> [{status, Status}, {allheaders, Headers}, {html, Message}].
+%%
+%% old cruft
+%%
+
+get_path(Arg) -> 
+    Req = Arg#arg.req, 
+    {abs_path, Path} = Req#http_request.path,
+    Path.
+
+make_response(Status, Message) -> 
+    make_response(Status, "text/html", Message).
+
+make_response(Status, Type, Message) -> 
+    make_all_response(Status, make_header(Type), Message).
+
+make_header(Type) -> 
+    [{header, ["Content-Type: ", Type]}].
+
+make_all_response(Status, Headers, Message) -> 
+    [
+        {status, Status}, 
+        {allheaders, Headers}, 
+        {html, Message}
+    ].
+
+channelListToHTML(ChannelList) ->
+    "<table>" ++ channelListToHTMLTable(ChannelList) ++ "</table>".
+
+channelListToHTMLTable([]) ->
+    [];
+channelListToHTMLTable([{ChannelName, _Channel}|T]) ->
+    "<tr><td>" ++ atom_to_list(ChannelName) ++ "</td></tr>" ++ channelListToHTMLTable(T).

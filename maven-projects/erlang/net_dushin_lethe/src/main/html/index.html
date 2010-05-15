@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Lethe JSON-RPC</title>
+        <script src="jsolait/jsolait.js"></script>
+        <script>
+            var serviceURL = "rs/get_channels";
+            var methods = ["get_channels"];
+            var jsonrpc = imprt("jsonrpc");
+            var proxy = new jsonrpc.ServiceProxy(serviceURL, methods);
+            
+            function get_channels() {
+                try {
+                    document.getElementById('channels').innerHTML = 
+                        "<PRE>" + proxy.get_channels() + "</PRE>";
+                } catch(e) {
+                    alert(e);
+                } 
+                return false;
+            }
+        </script>
+    </head>
+
+    <body>
+        <form action="" method="post" onSubmit="return get_channels()">
+            <p>
+                <input type="submit" value="get_channels"/>
+            </p>
+            <div id="channels"></div>
+        </form>
+    </body>
+</html>

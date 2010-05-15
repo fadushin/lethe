@@ -43,6 +43,31 @@ start_stop_test() ->
     %%
     ok.
 
+get_channels_test() ->
+    %%
+    %% Start the server
+    %%
+    ?assertMatch({ok, _Pid}, net_dushin_lethe_server:start()),
+    %%
+    %% Check that the set of channels is empty
+    %%
+    ?assertMatch([], net_dushin_lethe_server:get_channels()),
+    %%
+    %% Add a peer to the test channel, and check that it's in the list of channels
+    %%
+    Fred = #peer{name = fred},
+    ?assertMatch(ok, net_dushin_lethe_server:join(test, Fred)),
+    [{test, _}] = net_dushin_lethe_server:get_channels(),
+    %%
+    %% Ditto for test2
+    %%
+    ?assertMatch(ok, net_dushin_lethe_server:join(test2, Fred)),
+    [{test, _}, {test2, _}] = net_dushin_lethe_server:get_channels(),
+    %%
+    %% done
+    %%
+    ?assertMatch(ok, net_dushin_lethe_server:stop()).
+
 channel_api_test() ->
     %%
     %% Start the server
@@ -67,7 +92,7 @@ channel_api_test() ->
 
 channel_timout_test() ->
     %%
-    %% Start the server, stop it, and check that it's no longer available
+    %% Start the server, and check that it is empty
     %%
     ?assertMatch(
         {ok, _Pid}, 
@@ -80,16 +105,23 @@ channel_timout_test() ->
             ]
         )
     ),
+    ?assertMatch([], net_dushin_lethe_server:get_channels()),
+    %%
+    %% Add a peer and post a message
+    %%
     Fred = #peer{name = fred},
     ?assertMatch(ok, net_dushin_lethe_server:join(test, Fred)),
     FirstMessage = net_dushin_lethe_server:post_message(test, #message{blob=first}),
     ?assert(lists:member(FirstMessage, net_dushin_lethe_server:get_messages(test))),
     %%
-    %% Wait for the channel to expire
+    %% Check that test is the only element in the list of channels
+    %%
+    ?assertMatch([{test, _}], net_dushin_lethe_server:get_channels()),
+    %%
+    %% Wait for the channel to expire, and check that the set of channels is empty
     %%
     sleep(1000),
-    ?assertMatch([], net_dushin_lethe_server:get_peers(test)),
-    ?assertMatch([], net_dushin_lethe_server:get_messages(test)),
+    ?assertMatch([], net_dushin_lethe_server:get_channels()),
     %%
     %% done
     %%
