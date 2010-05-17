@@ -58,6 +58,41 @@ get_response(get_channels, _Params) ->
 get_response(get_peers, [ChannelId]) ->
     peers_to_json(net_dushin_lethe_server:get_peers(list_to_atom(ChannelId)));
 
+get_response(join, [ChannelId, Peer]) ->
+    net_dushin_lethe_server:join(
+        list_to_atom(ChannelId),
+        json_to_peer(Peer)
+    ),
+    "ok";
+
+get_response(ping, [ChannelId, PeerName]) ->
+    net_dushin_lethe_server:ping(
+        list_to_atom(ChannelId),
+        list_to_atom(PeerName)
+    ),
+    "ok";
+
+get_response(leave, [ChannelId, PeerName]) ->
+    net_dushin_lethe_server:leave(
+        list_to_atom(ChannelId),
+        list_to_atom(PeerName)
+    ),
+    "ok";
+
+get_response(get_messages, [ChannelId]) ->
+    messages_to_json(
+        net_dushin_lethe_server:get_messages(
+            list_to_atom(ChannelId)
+        )
+    );
+
+get_response(post_message, [ChannelId, Message]) ->
+    net_dushin_lethe_server:post_message(
+        list_to_atom(ChannelId),
+        json_to_message(Message)
+    ),
+    "ok";
+
 get_response(_Method, _Params) ->
     %% TODO come up with a way to handle unknown methods
     atom_to_list(undefined).
@@ -66,19 +101,6 @@ get_response(_Method, _Params) ->
 %%
 %% private operations
 %%
-
-handle_request('POST', "/rpc" ++ _, Arg) ->
-    Peer = inet:peername(Arg#arg.clisock),
-    {ok, {IP, _}} = Peer,
-    yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
-handle_request('GET', "/get_channels" ++ _, _Arg) ->
-    make_response(
-        200,
-        io_lib:format("<pre>~n~p~n</pre>~n", [net_dushin_lethe_server:get_channels()])
-    );
-handle_request(_, Path, Arg) -> % catchall 
-    io:format("~p ~p~n", [Path, Arg]),
-    make_response(200, "<p>What exactly are you looking for?</p>").
 
 channels_to_json(ChannelEntryList) ->
     {
@@ -102,10 +124,51 @@ peers_to_json(PeerList) ->
         )
     }.
 
+messages_to_json(MessageList) ->
+    {
+        array, 
+        lists:map(
+            fun(Message) ->
+                {
+                    struct,
+                    [
+                        %{timestamp, atom_to_list(Message#message.timestamp)},
+                        {blob, Message#message.blob}
+                    ]
+                }
+            end,
+            MessageList
+        )
+    }.
+
+json_to_peer({struct, PropertyList}) ->
+    #peer {
+        name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, name))
+        % TODO Add more properties here 
+    }.
+
+json_to_message({struct, PropertyList}) ->
+    #message {
+        blob = net_dushin_lethe_lists:find_value(PropertyList, blob)
+        % TODO Add more properties here 
+    }.
 
 %%
 %% old cruft
 %%
+
+handle_request('POST', "/rpc" ++ _, Arg) ->
+    Peer = inet:peername(Arg#arg.clisock),
+    {ok, {IP, _}} = Peer,
+    yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
+handle_request('GET', "/get_channels" ++ _, _Arg) ->
+    make_response(
+        200,
+        io_lib:format("<pre>~n~p~n</pre>~n", [net_dushin_lethe_server:get_channels()])
+    );
+handle_request(_, Path, Arg) -> % catchall 
+    io:format("~p ~p~n", [Path, Arg]),
+    make_response(200, "<p>What exactly are you looking for?</p>").
 
 get_path(Arg) -> 
     Req = Arg#arg.req, 

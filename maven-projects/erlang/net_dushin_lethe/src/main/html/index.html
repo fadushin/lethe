@@ -3,8 +3,8 @@
         <title>Lethe JSON-RPC</title>
         <script src="jsolait/jsolait.js"></script>
         <script>
-            var serviceURL = "rs/get_channels";
-            var methods = ["get_channels"];
+            var serviceURL = "rs/rpc";
+            var methods = ["get_channels", "get_peers", "join", "ping", "leave", "get_messages", "post_message"];
             var jsonrpc = imprt("jsonrpc");
             var proxy = new jsonrpc.ServiceProxy(serviceURL, methods);
             
@@ -12,20 +12,116 @@
                 try {
                     document.getElementById('channels').innerHTML = 
                         "<PRE>" + proxy.get_channels() + "</PRE>";
-                } catch(e) {
+                } catch (e) {
                     alert(e);
                 } 
                 return false;
+            }
+            function get_peers() {
+                try {
+                    document.getElementById('peers').innerHTML = 
+                        "<PRE>" + proxy.get_peers(document.getElementById('channel').value) + "</PRE>";
+                } catch (e) {
+                    alert(e);
+                } 
+                return false;
+            }
+            function join() {
+                var f = function() {
+                    return proxy.join(
+                        document.getElementById('channel').value,
+                        {name : document.getElementById('peer').value}
+                    );
+                };
+                var response = call(f);
+                get_channels();
+                get_peers();
+                return false;
+            }
+            function ping() {
+                var f = function() {
+                    return proxy.ping(
+                        document.getElementById('channel').value,
+                        document.getElementById('peer').value
+                    );
+                };
+                var response = call(f);
+                return false;
+            }
+            function leave() {
+                var f = function() {
+                    return proxy.leave(
+                        document.getElementById('channel').value,
+                        document.getElementById('peer').value
+                    );
+                };
+                var response = call(f);
+                get_peers();
+                return false;
+            }
+            function get_messages() {
+                var f = function() {
+                    return proxy.get_messages(
+                        document.getElementById('channel').value
+                    );
+                };
+                var response = call(f);
+                document.getElementById('messages').innerHTML = 
+                    "<pre>" + response + "</pre>";
+                return false;
+            }
+            function post_message() {
+                var f = function() {
+                    return proxy.post_message(
+                        document.getElementById('channel').value,
+                        {blob : document.getElementById('message').value}
+                    );
+                };
+                var response = call(f);
+                return false;
+            }
+            function call(f) {
+                try {
+                    return f();
+                } catch (e) {
+                    alert(e);
+                } 
+                return undefined;
             }
         </script>
     </head>
 
     <body>
+        <hr>
         <form action="" method="post" onSubmit="return get_channels()">
-            <p>
-                <input type="submit" value="get_channels"/>
-            </p>
+            <p><input type="submit" value="get_channels"/></p>
             <div id="channels"></div>
+        </form>
+        <hr>
+        <p>Channel: <input id="channel" /></p>
+        <form action="" method="post" onSubmit="return get_peers()">
+            <p><input type="submit" value="get_peers"/></p>
+            <div id="peers"></div>
+        </form>
+        <form action="" method="post" onSubmit="return get_messages()">
+            <p><input type="submit" value="get_messages"/></p>
+            <div id="messages"></div>
+        </form>
+        <hr>
+        <p>Peer: <input id="peer" /></p>
+        <form action="" method="post" onSubmit="return join()">
+            <p><input type="submit" value="join"/></p>
+        </form>
+        <form action="" method="post" onSubmit="return ping()">
+            <p><input type="submit" value="ping"/></p>
+        </form>
+        <form action="" method="post" onSubmit="return leave()">
+            <p><input type="submit" value="leave"/></p>
+        </form>
+        <hr>
+        <p>Message: <input id="message" /></p>
+        <form action="" method="post" onSubmit="return post_message()">
+            <p><input type="submit" value="post_message"/></p>
         </form>
     </body>
 </html>
