@@ -43,7 +43,20 @@ out(Arg) ->
     handle_request(Req#http_request.method, ReqPath, Arg).
 
 %%
-%% callbacks
+%% Internal operations
+%%
+
+handle_request('POST', "/rpc" ++ _, Arg) ->
+    Peer = inet:peername(Arg#arg.clisock),
+    {ok, {IP, _}} = Peer,
+    yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
+handle_request(_, Path, Arg) -> % catchall 
+    io:format("~p ~p~n", [Path, Arg]),
+    make_response(200, "<p>What exactly are you looking for?</p>").
+
+%%
+%% handle_rpc gets called through yaws_rpc:handler_session; it is the
+%% handler for all of the JSON RPC operations.
 %%
 
 handle_rpc(_State, {call, Method, Params} = Request, Session) ->  
@@ -99,7 +112,7 @@ get_response(_Method, _Params) ->
 
 
 %%
-%% private operations
+%% JSON translation operations
 %%
 
 channels_to_json(ChannelEntryList) ->
@@ -157,24 +170,6 @@ json_to_message({struct, PropertyList}) ->
 %% old cruft
 %%
 
-handle_request('POST', "/rpc" ++ _, Arg) ->
-    Peer = inet:peername(Arg#arg.clisock),
-    {ok, {IP, _}} = Peer,
-    yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
-handle_request('GET', "/get_channels" ++ _, _Arg) ->
-    make_response(
-        200,
-        io_lib:format("<pre>~n~p~n</pre>~n", [net_dushin_lethe_server:get_channels()])
-    );
-handle_request(_, Path, Arg) -> % catchall 
-    io:format("~p ~p~n", [Path, Arg]),
-    make_response(200, "<p>What exactly are you looking for?</p>").
-
-get_path(Arg) -> 
-    Req = Arg#arg.req, 
-    {abs_path, Path} = Req#http_request.path,
-    Path.
-
 make_response(Status, Message) -> 
     make_response(Status, "text/html", Message).
 
@@ -190,11 +185,3 @@ make_all_response(Status, Headers, Message) ->
         {allheaders, Headers}, 
         {html, Message}
     ].
-
-channelListToHTML(ChannelList) ->
-    "<table>" ++ channelListToHTMLTable(ChannelList) ++ "</table>".
-
-channelListToHTMLTable([]) ->
-    [];
-channelListToHTMLTable([{ChannelName, _Channel}|T]) ->
-    "<tr><td>" ++ atom_to_list(ChannelName) ++ "</td></tr>" ++ channelListToHTMLTable(T).

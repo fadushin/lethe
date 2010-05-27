@@ -1,0 +1,9 @@
+// Copyright 1998-2005 David Shapiro.
+//
+// You may use, re-use, abuse,
+// copy, and modify this code to your liking, but please keep this header.
+// Thanks!
+//
+// Dave Shapiro
+// dave@ohdave.com
+

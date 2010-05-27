@@ -1,29 +1,35 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Lethe JSON-RPC</title>
         <script src="jsolait/jsolait.js"></script>
         <script>
             var serviceURL = "rs/rpc";
-            var methods = ["get_channels", "get_peers", "join", "ping", "leave", "get_messages", "post_message"];
+            var methods = ["get_channels", "get_peers", "join", "leave", "get_messages", "post_message"];
             var jsonrpc = imprt("jsonrpc");
             var proxy = new jsonrpc.ServiceProxy(serviceURL, methods);
+            var pinger = new jsonrpc.JSONRPCMethod(serviceURL, "ping");
             
             function get_channels() {
-                try {
-                    document.getElementById('channels').innerHTML = 
-                        "<PRE>" + proxy.get_channels() + "</PRE>";
-                } catch (e) {
-                    alert(e);
-                } 
+                proxy.get_channels(
+                    function(res, err) {
+                        if (res) {
+                            document.getElementById('channels').innerHTML = "<PRE>" + res + "</PRE>"
+                        } else if (err) {
+                            alert(err);
+                        }
+                    }
+                );
                 return false;
             }
             function get_peers() {
-                try {
-                    document.getElementById('peers').innerHTML = 
-                        "<PRE>" + proxy.get_peers(document.getElementById('channel').value) + "</PRE>";
-                } catch (e) {
-                    alert(e);
-                } 
+                var f = function() {
+                    return proxy.get_peers(
+                        document.getElementById('channel').value
+                    );
+                };
+                var response = call(f);
+                document.getElementById('peers').innerHTML = "<PRE>" + response + "</PRE>";
+                get_channels();
                 return false;
             }
             function join() {
@@ -40,7 +46,8 @@
             }
             function ping() {
                 var f = function() {
-                    return proxy.ping(
+                	return pinger.notify(
+                    //return proxy.ping(
                         document.getElementById('channel').value,
                         document.getElementById('peer').value
                     );
@@ -93,7 +100,7 @@
     </head>
 
     <body>
-        <hr>
+        <hr>        
         <form action="" method="post" onSubmit="return get_channels()">
             <p><input type="submit" value="get_channels"/></p>
             <div id="channels"></div>
@@ -124,5 +131,12 @@
         <form action="" method="post" onSubmit="return post_message()">
             <p><input type="submit" value="post_message"/></p>
         </form>
+        <textarea id="area" rows="4" value="fubar" autofocus="true" readOnly="true">
+            FRUMPY
+        </textarea>
+        <hr>
+        
+        <button id="doit" name="name" value="val" onmouseup="get_channels()">text</button>
+        
     </body>
 </html>

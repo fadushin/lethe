@@ -375,7 +375,7 @@ peer_loop(Ctx, Peers) ->
         %% requires no response
         %%
         {_ClientPid, sweep} ->
-            NewPeers = check_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
+            NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
             peer_loop(Ctx, NewPeers);
         %%
         %% Report malformed messages
@@ -420,7 +420,7 @@ message_loop(Ctx, Messages) ->
         %% requires no response
         %%
         {_ClientPid, sweep} ->
-            NewMessages = check_stale_messages(Messages, Ctx#message_context.message_timeout_ms),
+            NewMessages = filter_stale_messages(Messages, Ctx#message_context.message_timeout_ms),
             message_loop(Ctx, NewMessages);
         %%
         %% Report malformed messages
@@ -469,7 +469,7 @@ tail([_H|T]) ->
 
 stamp_message(Message) ->
     Message#message {
-        timestamp = erlang:now()
+        timestamp = current_ms()
     }.
 
 
@@ -495,11 +495,9 @@ get_messages_since(L, [H|T], All, Since) ->
     get_messages_since([H|L], T, All, Since).
 
 
-check_stale_messages(Messages, TimeoutMs) ->
+filter_stale_messages(Messages, TimeoutMs) ->
     lists:filter(
-        fun(Message) -> 
-            delta_ms(Message#message.timestamp, erlang:now()) < TimeoutMs 
-        end, 
+        fun(Message) -> is_not_stale(Message#message.timestamp, TimeoutMs) end, 
         Messages
     ).
 
@@ -512,7 +510,7 @@ peer_name_occurs(PeerName, Peers) ->
     end.
 
 stamp_peer(Peer) ->
-    Peer#peer{last_update = erlang:now()}.
+    Peer#peer{last_update = current_ms()}.
 
 remove_peer(PeerName, Peers) ->
     remove_peer(PeerName, [], Peers).
@@ -547,11 +545,12 @@ peer_matches(P1, P2) ->
     P1#peer.name =:= P2#peer.name.
 
 
-check_stale_peers(Peers, TimeoutMs) ->
-    lists:filter(fun(Peer) -> is_not_stale(Peer, TimeoutMs) end, Peers).
+filter_stale_peers(Peers, TimeoutMs) ->
+    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
 
-is_not_stale(Peer, TimeoutMs) ->
-    delta_ms(Peer#peer.last_update, erlang:now()) < TimeoutMs.
+is_not_stale(TestMs, TimeoutMs) ->
+    (current_ms() - TestMs) < TimeoutMs.
 
-delta_ms({A1,A2,A3}, {B1,B2,B3}) ->
-    (B1 - A1) * 1000000000 + (B2 - A2) * 1000 + (B3 - A3) / 1000.0 .
+current_ms() ->
+    {Megasecs, Secs, MicroSecs} = erlang:now(),
+    Megasecs * 1000000000 + Secs * 1000 + MicroSecs / 1000.0 .

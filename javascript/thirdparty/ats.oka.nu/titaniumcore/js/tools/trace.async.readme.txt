@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>./trace.async.js</title>
+<style>
+body {
+padding:0px;
+margin:0px;
+border:0px;
+background-image:url(http://ats.oka.nu/titaniumcore/js/background.png);
+background-repeat:repeat-y;
+background-position: center center;
+background-color:#ffffff;
+font-family: "Arial", sans-serif;
+/*font-family: sans-serif; */
+}
+#d1 {
+text-align:center;
+width:100%;
+}
+#d2 {
+border:0px solid gray;
+text-align:left;
+min-width:none;
+width:650px;
+margin-left:auto;
+margin-right:auto;
+padding:30px;
+}
+</style>
+</head>
+<body>
+<div id="d1">
+<pre id="d2">
+
+
+    <a href="./trace.async.js">trace.async.js</a>
+
+                                                           Titaniumcore Project
+================================================================================
+Atsushi Oka [ <a href="http://oka.nu/">http://oka.nu/</a> ]                                       Jan 11,2009
+
+Introduction
+    <a href="./trace.async.js">trace.async.js</a> is designed to convey compatibility to ActionScript on
+    Flash.  ActionScript has trace() function. This function is very useful for
+    debugging. Web browser does not have it, 
+
+Example
+    <a href="./trace.async.html">trace.async.html</a>
+
+Usage
+    trace( "hello" );
+
+This creates a new popup window and displays the message on it. 
+
+This method has less overhead since it process messages asynchronously.
+Messages will be stored to a queue once and then will be processed
+asynchronously with a timer that setInterval() function generates.
+
+
+--- Author ---
+====================================================================================
+Copyright(c) 2009 Atsushi Oka [ <a href="http://oka.nu/">http://oka.nu/</a> ]
+This script file is distributed under the LGPL
+
+
+</pre>
+</div>
+</body>
+</html>
