@@ -26,40 +26,44 @@
 //
 
 /**
- * A SignerFactory is used to create a signer object,
- * which in turn is used to sign messages.
+ * A VerifierFactory is used to create a verifier object,
+ * which in turn is used to verify signed messages.
  *
- * A signer is created using the SignerFactory#createSigner
+ * A Verifier is created using the VerifierFactory#createVerifier
  * method, which is passed a paramter specification.
  *
  * Typical usage:
  *
- * var signer = SignerFactory.create({privateKey: ...});
- * var signedMessage = signer.sign(message)
+ * var verifier = Verifier.create({publicKey: ...});
+ * try {
+ *     var ok = verifier.verify(message);
+ * } catch (exception) {
+ *     ...
+ * }
  */
-net_dushin_crypto.SignerFactory = {
+net_dushin_crypto.VerifierFactory = {
     /**
-     * object createSigner(spec)
+     * object createVerifier(spec)
      *
      * @param       spec
      *              The constructor specification.  This parameter may contain
      *              the following elements:
      *
-     *                  * privateKey:       the private key used to sign messages.
+     *                  * publicKey:        the public key used to verify messages.
      *                                      This parameter is required
      *
-     * @return      a signer object, implements the sign method
+     * @return      a verifier object, implements the verify method
      *
-     * @exception   IllegalArgument, if the private key is not provided
+     * @exception   IllegalArgument, if the public key is not provided
      */
-    createSigner: function(spec) {
+    createVerifier: function(spec) {
         //
-        // Check the constructor parameters for a private key, to be used to
+        // Check the constructor parameters for a public key, to be used to
         // perform signature verification.
         //
-        if (!spec.privateKey) {
+        if (!spec.publicKey) {
             throw net_dushin_exception.ExceptionFactory.createIllegalArgument( 
-                {message: "Missing privateKey parameter" }
+                {message: "Missing publicKey parameter" }
             );
         }
         
@@ -69,77 +73,44 @@ net_dushin_crypto.SignerFactory = {
         var jsonrpc = imprt("jsonrpc");
 
         /**
-         * the private key
+         * the public key
          */
-        var privateKey = spec.privateKey;
+        var publicKey = spec.publicKey;
 
         //
-        // Create and return the signer
+        // Create and return the verifier
         //
         return {
             /**
-             * boolean sign(object)
+             * boolean verify(object)
              *
              * @param       object
-             *              The object to sign.
+             *              The signed object to verify.  This must be a signed object,
+             *              conforming to the definition at XXX
              *
-             * @return      the signed object, conforming to the definition at XXX
+             * @return      true, if the signature over the data is valid; false, otherwise
              *
              * @exception   if the supplied object is not a signed object
              */
-            sign: function(object) {
-                var serializedObject = jsonrpc.marshall(object);
+            verify: function(object) {
+                if (object.type !== "signed") {
+                    throw net_dushin_exception.ExceptionFactory.create(
+                        {
+                            message: "Message is not a signed object message."
+                        }
+                    );
+                }
+                // assert object.serialized
+                var serializedObject = object.serialized;
                 var hashValue = sha1Hash(serializedObject);
-                return {
-                    type: "signed",
-                    serialized: serializedObject,
-                    hash: hashValue,
-                    // TODO perform signature
-                    signature: undefined
-                };
+                // assert object.hash
+                if (hashValue !== object.hash) {
+                    return false;
+                }
+                // TODO signature validation
+                return false;
             }
         };
     }
 };
 
-
-
-
-
-
-/*
-var Signer = {};
-
-Signer.create = function(spec) {
-    var that = {};
-    //
-    //
-    //
-    if (!spec.privateKey) {
-        throw {
-            message: "Missing privateKey parameter"
-        };
-    }
-    var privateKey = spec.privateKey;
-    
-    var jsonrpc = imprt("jsonrpc");
-    
-    that.sign = function(object) {
-        var serializedObject = jsonrpc.marshall(object);
-        var hashValue = sha1Hash(serializedObject);
-        return {
-            type: "signed",
-            serialized: serializedObject,
-            hash: hashValue,
-            signature: undefined
-        };
-    }
-    
-    return that;
-};
-
-
-// var signer = Signer.create({privateKey: ...});
-// var signedMessage = signer.sign(message)
-
-*/
