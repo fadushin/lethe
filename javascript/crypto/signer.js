@@ -58,8 +58,8 @@ net_dushin_crypto.SignerFactory = {
         // perform signature verification.
         //
         if (!spec.privateKey) {
-            throw net_dushin_exception.ExceptionFactory.createIllegalArgument( 
-                {message: "Missing privateKey parameter" }
+            throw net_dushin_exception.ExceptionFactory.createIllegalArgumentException( 
+                {message: "Missing privateKey parameter"}
             );
         }
         
@@ -101,45 +101,3 @@ net_dushin_crypto.SignerFactory = {
         };
     }
 };
-
-
-
-
-
-
-/*
-var Signer = {};
-
-Signer.create = function(spec) {
-    var that = {};
-    //
-    //
-    //
-    if (!spec.privateKey) {
-        throw {
-            message: "Missing privateKey parameter"
-        };
-    }
-    var privateKey = spec.privateKey;
-    
-    var jsonrpc = imprt("jsonrpc");
-    
-    that.sign = function(object) {
-        var serializedObject = jsonrpc.marshall(object);
-        var hashValue = sha1Hash(serializedObject);
-        return {
-            type: "signed",
-            serialized: serializedObject,
-            hash: hashValue,
-            signature: undefined
-        };
-    }
-    
-    return that;
-};
-
-
-// var signer = Signer.create({privateKey: ...});
-// var signedMessage = signer.sign(message)
-
-*/

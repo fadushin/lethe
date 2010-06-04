@@ -62,7 +62,7 @@ net_dushin_crypto.VerifierFactory = {
         // perform signature verification.
         //
         if (!spec.publicKey) {
-            throw net_dushin_exception.ExceptionFactory.createIllegalArgument( 
+            throw net_dushin_exception.ExceptionFactory.createIllegalArgumentException( 
                 {message: "Missing publicKey parameter" }
             );
         }
@@ -94,7 +94,7 @@ net_dushin_crypto.VerifierFactory = {
              */
             verify: function(object) {
                 if (object.type !== "signed") {
-                    throw net_dushin_exception.ExceptionFactory.create(
+                    throw net_dushin_exception.ExceptionFactory.createException(
                         {
                             message: "Message is not a signed object message."
                         }

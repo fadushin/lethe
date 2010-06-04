@@ -42,7 +42,7 @@ net_dushin_exception.ExceptionFactory = {
     //
     //                  * message:        the exception message
     //
-    create: function(spec) {
+    createException: function(spec) {
         //
         // the spec (possibly undefined)
         //
@@ -72,7 +72,7 @@ net_dushin_exception.ExceptionFactory = {
         };
     }
     
-    createIllegalArgument: function(spec) {
+    createIllegalArgumentException: function(spec) {
         spec.type = ILLEGAL_ARGUMENT;
         return create(spec);
     }
