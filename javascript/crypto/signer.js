@@ -25,6 +25,16 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+// requires function Base64.encode
+// requires function imprt
+// requires function net_dushin_exception.ExceptionFactory.createException
+// requires function net_dushin_exception.ExceptionFactory.createIllegalArgumentException
+// requires function sha1Hash
+
+__uses("binary.js");
+__uses("BigInteger.init1.js");
+__uses("SHA.js");
+
 /**
  * A SignerFactory is used to create a signer object,
  * which in turn is used to sign messages.
@@ -38,6 +48,17 @@
  * var signedMessage = signer.sign(message)
  */
 net_dushin_crypto.SignerFactory = {
+    
+    /**
+     * The BigInteger type
+     */
+    // BigInteger: __import(this, "titaniumcore.crypto.BigInteger"),
+    
+    /**
+     * The SHA type
+     */
+    SHA: __import(this, "titaniumcore.crypto.SHA"),
+    
     /**
      * object createSigner(spec)
      *
@@ -63,6 +84,7 @@ net_dushin_crypto.SignerFactory = {
             );
         }
         
+
         /**
          * The JSON-RPC object (for marshalling)
          */
@@ -71,7 +93,12 @@ net_dushin_crypto.SignerFactory = {
         /**
          * the private key
          */
-        var privateKey = spec.privateKey;
+        var rsa = net_dushin_crypto.KeyUtil.parseEncodedPrivateKey(spec.privateKey);
+        
+        /**
+         * the hash algorithm (SHA-1)
+         */
+        var sha = this.SHA.create("SHA-1");
 
         //
         // Create and return the signer
@@ -88,14 +115,14 @@ net_dushin_crypto.SignerFactory = {
              * @exception   if the supplied object is not a signed object
              */
             sign: function(object) {
-                var serializedObject = jsonrpc.marshall(object);
-                var hashValue = sha1Hash(serializedObject);
+                var serializedObject = str2utf8(jsonrpc.marshall(object));
+                var hashValue = sha.hash(serializedObject);
+                var signatureValue = rsa.processPrivate(new BigInteger(hashValue));
                 return {
                     type: "signed",
-                    serialized: serializedObject,
-                    hash: hashValue,
-                    // TODO perform signature
-                    signature: undefined
+                    serialized: base64_encode(serializedObject),
+                    hash: base64_encode(hashValue),
+                    signature: base64_encode(signatureValue.toByteArray())
                 };
             }
         };
