@@ -29,9 +29,9 @@
 //
 // An ExceptionFactory is used to create a exception objects.
 //
-net_dushin_exception.ExceptionFactory = {
+net_dushin_foundation.ExceptionFactory = {
 
-    ILLEGAL_ARGUMENT: "ILLEGAL_ARGUMENT";
+    ILLEGAL_ARGUMENT: "ILLEGAL_ARGUMENT",
 
     //
     // object create(spec)
@@ -59,7 +59,7 @@ net_dushin_exception.ExceptionFactory = {
             //
             getType: function() {
                 return myspec.type;
-            }
+            },
             //
             // boolean getMessage()
             //
@@ -70,7 +70,7 @@ net_dushin_exception.ExceptionFactory = {
                 return myspec.message;
             }
         };
-    }
+    },
     
     createIllegalArgumentException: function(spec) {
         spec.type = ILLEGAL_ARGUMENT;

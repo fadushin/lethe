@@ -21,11 +21,16 @@
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAKeyFormat.js"></script>
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/jsSHA.js"></script>
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/SHA.js"></script>
+        <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormat.js"></script>
+        <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP.js"></script>
+        <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP_DIRECT.js"></script>
         
         <script src="crypto/namespace.js"></script>
         <script src="crypto/signer.js"></script>
         <script src="crypto/verifier.js"></script>
         <script src="crypto/key.js"></script>
+        <script src="foundation/namespace.js"></script>
+        <script src="foundation/exception.js"></script>
         <script>
             
             __unit("debug.html");
@@ -36,8 +41,16 @@
 
             var BigInteger = __import(this, "titaniumcore.crypto.BigInteger");
             var RSA = __import(this, "titaniumcore.crypto.RSA");
-            var rsa = new RSA();
-            rsa.generate(128, 65537);
+            
+            // var rsa = net_dushin_crypto.KeyUtil.createRSA();
+            // rsa.generate(512, 65537);
+            
+            var signingKey = net_dushin_crypto.KeyUtil.parseEncodedPrivateKey(
+                "lcjiPIqFYhk8GBcX854XmWzehIpPx9HuKYxpI9XC5sKMCq2GQKlI9VzWpFXzDnZazZlsbyHQdaZJY9WyPEPxHjt+3+BgTlR1jCGfKmTHQu9nZAbiTKHRnNy5+P6mmzg4U27Yr8kReEx53Au8XJqkMy0MDAFMKNOBHfD6FIFs8MFABH56JKmWifD5VFAYY3ADP2ztGZZofLlDcxplpJ8HLxXD3TPavn+C1seoto5vI9g="
+            );
+            var verifyingKey = net_dushin_crypto.KeyUtil.parseEncodedPublicKey(
+                "pw2Q+NQp1foVsT12SfAKU8zyyaGBIRHC2CnE7v34eMP5oKb7XTtPNUqHDtrBqskhzB+XO/uebMwtsF4KCVstF/Y5L3rgRA2NOyZW1bva2YSUuIYzjifGsUMMtC4UE+Uy6c1RVLbYMgTqhFqZkxRfcg=="
+            );
             
             /*
             var message = new BigInteger("DEADBEAFDEADBEAFDEADBEAFDEADBEAF", 16);
@@ -46,15 +59,19 @@
             */
             
             var signer = net_dushin_crypto.SignerFactory.createSigner(
-                {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(rsa)}
+                {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(signingKey)}
             );
             var signedObject = signer.sign({foo: "bar"});
             console.debug(signedObject);
             
             var verifier = net_dushin_crypto.VerifierFactory.createVerifier(
-                {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(rsa)}
+                {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(verifyingKey)}
             );
-            console.debug(verifier.verify(signedObject));
+            try {
+                console.debug(verifier.verify(signedObject));
+            } catch (error) {
+                console.debug(error);
+            }
             
             
         </script>

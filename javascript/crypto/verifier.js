@@ -25,14 +25,10 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-// requires function Base64.decode
 // requires function imprt
 // requires function net_dushin_exception.ExceptionFactory.createException
 // requires function net_dushin_exception.ExceptionFactory.createIllegalArgumentException
-// requires function sha1Hash
-
 __uses("binary.js");
-__uses("BigInteger.init1.js");
 __uses("SHA.js");
 
 /**
@@ -78,7 +74,7 @@ net_dushin_crypto.VerifierFactory = {
         // perform signature verification.
         //
         if (!spec.publicKey) {
-            throw net_dushin_exception.ExceptionFactory.createIllegalArgumentException( 
+            throw net_dushin_foundation.ExceptionFactory.createIllegalArgumentException( 
                 {message: "Missing publicKey parameter" }
             );
         }
@@ -119,24 +115,35 @@ net_dushin_crypto.VerifierFactory = {
              */
             verify: function(object) {
                 if (object.type !== "signed") {
-                    throw net_dushin_exception.ExceptionFactory.createException(
+                    throw net_dushin_foundation.ExceptionFactory.createException(
                         {
                             message: "Message is not a signed object message."
                         }
                     );
                 }
                 // assert object.serialized
+                //
+                // check that the hash for the serialized object matches the
+                // hash in the signed message
+                //
                 var serializedObject = base64_decode(object.serialized);
                 var hashValue = sha.hash(serializedObject);
                 // assert object.hash
                 if (base64_encode(hashValue) !== object.hash) {
                     return {status: false};
                 }
-                var expected = rsa.processPublic(new BigInteger(base64_decode(object.signature)));
-                var decrypted = base64_encode(expected.toByteArray());
+                //
+                // Check that the decrypted signature is the hash (but chop
+                // off the bytes after the hash length, due to padding)
+                //
+                var expected = rsa.publicDecrypt(base64_decode(object.signature));
+                var decrypted = base64_encode(expected.slice(0, hashValue.length));
                 if (decrypted !== object.hash) {
                     return {status: false};
                 }
+                //
+                // return the unmarshalled object, if the signature checks out
+                //
                 var deserializedObject = jsonrpc.unmarshall(Base64.decode(object.serialized));
                 return {status: true, value: deserializedObject};
             }

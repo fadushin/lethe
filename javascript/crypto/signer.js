@@ -25,14 +25,10 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-// requires function Base64.encode
 // requires function imprt
 // requires function net_dushin_exception.ExceptionFactory.createException
 // requires function net_dushin_exception.ExceptionFactory.createIllegalArgumentException
-// requires function sha1Hash
-
 __uses("binary.js");
-__uses("BigInteger.init1.js");
 __uses("SHA.js");
 
 /**
@@ -79,7 +75,7 @@ net_dushin_crypto.SignerFactory = {
         // perform signature verification.
         //
         if (!spec.privateKey) {
-            throw net_dushin_exception.ExceptionFactory.createIllegalArgumentException( 
+            throw net_dushin_foundation.ExceptionFactory.createIllegalArgumentException( 
                 {message: "Missing privateKey parameter"}
             );
         }
@@ -117,12 +113,18 @@ net_dushin_crypto.SignerFactory = {
             sign: function(object) {
                 var serializedObject = str2utf8(jsonrpc.marshall(object));
                 var hashValue = sha.hash(serializedObject);
-                var signatureValue = rsa.processPrivate(new BigInteger(hashValue));
+                var maxLen = rsa.privateEncryptMaxSize();
+                if (hashValue.length > maxLen) {
+                    throw net_dushin_foundation.ExceptionFactory.createException( 
+                        {message: "Key size is not big enough to sign hash."}
+                    );
+                }
+                var signatureValue = rsa.privateEncrypt(hashValue);
                 return {
                     type: "signed",
                     serialized: base64_encode(serializedObject),
                     hash: base64_encode(hashValue),
-                    signature: base64_encode(signatureValue.toByteArray())
+                    signature: base64_encode(signatureValue)
                 };
             }
         };

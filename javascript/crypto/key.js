@@ -32,40 +32,39 @@ __uses("RSA.init2.js");
 __uses("binary.js");
 
 net_dushin_crypto.KeyUtil = {
+    
+    RSA: __import(this, "titaniumcore.crypto.RSA"),
 
     RSAKeyFormat: __import(this, "titaniumcore.crypto.RSAKeyFormat"),
     
-    RSA: __import(this, "titaniumcore.crypto.RSA"),
+    RSAMessageFormatSOAEP: __import( this, "titaniumcore.crypto.RSAMessageFormatSOAEP_DIRECT" ),
+    
+    createRSA: function() {
+        var rsa = new this.RSA();
+        rsa.keyFormat = this.RSAKeyFormat;
+        rsa.messageFormat = this.RSAMessageFormatSOAEP;
+        return rsa;
+    },
     
     encodePrivateKey: function(rsa) {
-        var bytes = this.RSAKeyFormat.encodePrivateKey(
-            rsa.n, rsa.e, rsa.d, rsa.ksize
-        );
-        return base64_encode(bytes);
+        return base64_encode(rsa.privateKeyBytes());
     },
     
     parseEncodedPrivateKey: function(encoded) {
         var bytes = base64_decode(encoded);
-        var rsa = new this.RSA();
-        rsa.keyFormat = this.RSAKeyFormat;
+        var rsa = this.createRSA();
         rsa.privateKeyBytes(bytes);
         return rsa;
     },
     
     encodePublicKey: function(rsa) {
-        var bytes = this.RSAKeyFormat.encodePublicKey(
-            rsa.n, rsa.e, rsa.ksize
-        );
-        return base64_encode(bytes);
+        return base64_encode(rsa.publicKeyBytes());
     },
     
     parseEncodedPublicKey: function(encoded) {
         var bytes = base64_decode(encoded);
-        var rsa = new this.RSA();
-        rsa.keyFormat = this.RSAKeyFormat;
+        var rsa = this.createRSA();
         rsa.publicKeyBytes(bytes);
         return rsa;
     }
-    
-
 };
