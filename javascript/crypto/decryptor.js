@@ -30,22 +30,20 @@
 // requires function net_dushin_exception.ExceptionFactory.createIllegalArgumentException
 __uses("binary.js");
 __uses("Cipher.js");
-__uses("SecureRandom.js");
 
 /**
- * An EncryptorFactory is used to create an encryptor object,
- * which in turn is used to encrypt messages.
+ * An DecryptorFactory is used to create an decryptor object,
+ * which in turn is used to edecrypt messages.
  *
- * An encryptor is created using the EncryptorFactory#createEncryptor
+ * A decryptor is created using the DecryptorFactory#createDecryptor
  * method, which is passed a paramter specification.
  *
  * Typical usage:
  *
- * var encryptor = EncryptorFactory.create({publicKey: ...});
- * var encryptedMessage = encryptor.encrypt(message)
+ * var decryptor = DecryptorFactory.create({privateKey: ...});
+ * var message = encryptor.decrypt(encryptedMessage)
  */
-net_dushin_crypto.EncryptorFactory = {
-    
+net_dushin_crypto.DecryptorFactory = {
     
     /**
      * The Cipher type
@@ -53,35 +51,31 @@ net_dushin_crypto.EncryptorFactory = {
     Cipher: __import(this, "titaniumcore.crypto.Cipher"),
     
     /**
-     * The PRNG type
-     */
-    SecureRandom: __import(this, "titaniumcore.crypto.SecureRandom"),
-    
-    /**
-     * object createEncryptor(spec)
+     * object createDecryptor(spec)
      *
      * @param       spec
      *              The constructor specification.  This parameter may contain
      *              the following elements:
      *
-     *                  * publicKey:        the public key used to encrypt messages.
+     *                  * privateKey:       the private key used to decrypt messages.
      *                                      This parameter is required
      *
-     * @return      an encryptor object, implements the encrypt method
+     * @return      an decryptor object, implements the decrypt method
      *
-     * @exception   IllegalArgument, if the public key is not provided
+     * @exception   IllegalArgument, if the private key is not provided
      */
-    createEncryptor: function(spec) {
+    createDecryptor: function(spec) {
         //
-        // Check the constructor parameters for a public key, to be used to
-        // perform encryption.
+        // Check the constructor parameters for a private key, to be used to
+        // perform decryption.
         //
-        if (!spec.publicKey) {
+        if (!spec.privateKey) {
             throw net_dushin_foundation.ExceptionFactory.createIllegalArgumentException( 
-                {message: "Missing publicKey parameter"}
+                {message: "Missing privateKey parameter"}
             );
         }
         
+
         /**
          * The JSON-RPC object (for marshalling)
          */
@@ -90,57 +84,38 @@ net_dushin_crypto.EncryptorFactory = {
         /**
          * the private key
          */
-        var rsa = net_dushin_crypto.KeyUtil.parseEncodedPublicKey(spec.publicKey);
+        var rsa = net_dushin_crypto.KeyUtil.parseEncodedPrivateKey(spec.privateKey);
         
         /**
          * the symmetric cipher (TWOFISH, for now)
          *
          * TODO: make the algorithm, mode, and padding scheme configurable
          */
-        var cipher = this.Cipher.create("TWOFISH", "ENCRYPT", "CBC", "PKCS7");
-        
-        /**
-         * The PRNG
-         */
-        var prng = new this.SecureRandom();
-        
-        /**
-         * Generate a random symmetric key of size len
-         */
-        var generateSymmetricKey = function(len) {
-            var buf = new Array(len);
-            prng.nextBytes(buf);
-            return buf;
-        }
+        var cipher = this.Cipher.create("TWOFISH", "DECRYPT", "CBC", "PKCS7");
 
         //
         // Create and return the encryptor
         //
         return {
             /**
-             * object encrypt(object)
+             * object decrypt(object)
              *
              * @param       object
-             *              The object to encrypt.
+             *              The object to decrypt.
              *
              * @return      the encrypted object, conforming to the definition at XXX
              */
-            encrypt: function(object, recipient) {
-                var symmetricKey = generateSymmetricKey(16);
-                var maxLen = rsa.publicEncryptMaxSize();
-                if (symmetricKey.length > maxLen) {
-                    throw net_dushin_foundation.ExceptionFactory.createException( 
-                        {message: "RSA key size is not big enough to encrypt symmetric key."}
+            decrypt: function(object) {
+                if (object.type !== "encrypted") {
+                    throw net_dushin_foundation.ExceptionFactory.createException(
+                        {
+                            message: "Message is not a signed object message."
+                        }
                     );
                 }
-                var serializedObject = str2utf8(jsonrpc.marshall(object));
-                var cipertext = cipher.execute(symmetricKey, serializedObject);
-                var encryptedKey = rsa.publicEncrypt(symmetricKey);
-                return {
-                    type: "encrypted",
-                    ciphertext: base64_encode(cipertext),
-                    encryptedKey: base64_encode(encryptedKey)
-                };
+                var symmetricKey = rsa.privateDecrypt(base64_decode(object.encryptedKey));
+                var plaintext = utf82str(cipher.execute(symmetricKey.slice(0, 16), base64_decode(object.ciphertext)));
+                return jsonrpc.unmarshall(plaintext);
             }
         };
     }

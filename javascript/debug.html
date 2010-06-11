@@ -32,6 +32,7 @@
         <script src="crypto/verifier.js"></script>
         <script src="crypto/key.js"></script>
         <script src="crypto/encryptor.js"></script>
+        <script src="crypto/decryptor.js"></script>
         <script src="foundation/namespace.js"></script>
         <script src="foundation/exception.js"></script>
         <script>
@@ -44,8 +45,6 @@
 
             var BigInteger = __import(this, "titaniumcore.crypto.BigInteger");
             var RSA = __import(this, "titaniumcore.crypto.RSA");
-            // var Cipher = __import(this, "titaniumcore.crypto.Cipher");
-            // var SecureRandom = __import(this, "titaniumcore.crypto.SecureRandom");
             
             // var rsa = net_dushin_crypto.KeyUtil.createRSA();
             // rsa.generate(512, 65537);
@@ -81,8 +80,14 @@
             var encryptor = net_dushin_crypto.EncryptorFactory.createEncryptor(
                 {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(publicKey)}
             );
-            console.debug(encryptor.encrypt({gnu: "gnat"}));
+            var encrypted = encryptor.encrypt({gnu: "gnat"});
+            console.debug(encrypted);
             
+            var decryptor = net_dushin_crypto.DecryptorFactory.createDecryptor(
+                {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(privateKey)}
+            );
+            console.debug(decryptor.decrypt(encrypted));
+
         </script>
     </head>
 </html>

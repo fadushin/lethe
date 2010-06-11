@@ -144,7 +144,7 @@ net_dushin_crypto.VerifierFactory = {
                 //
                 // return the unmarshalled object, if the signature checks out
                 //
-                var deserializedObject = jsonrpc.unmarshall(Base64.decode(object.serialized));
+                var deserializedObject = jsonrpc.unmarshall(base64_decode(object.serialized));
                 return {status: true, value: deserializedObject};
             }
         };
