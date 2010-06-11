@@ -80,7 +80,7 @@
             var encryptor = net_dushin_crypto.EncryptorFactory.createEncryptor(
                 {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(publicKey)}
             );
-            var encrypted = encryptor.encrypt({gnu: "gnat"});
+            var encrypted = encryptor.encrypt(signedObject);
             console.debug(encrypted);
             
             var decryptor = net_dushin_crypto.DecryptorFactory.createDecryptor(
