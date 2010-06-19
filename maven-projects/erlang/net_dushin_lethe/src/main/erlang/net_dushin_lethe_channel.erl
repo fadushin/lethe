@@ -468,6 +468,7 @@ tail([_H|T]) ->
     T.
 
 stamp_message(Message) ->
+    %io:format("ts: ~s~n", [current_ms()]),
     Message#message {
         timestamp = current_ms()
     }.
@@ -553,4 +554,5 @@ is_not_stale(TestMs, TimeoutMs) ->
 
 current_ms() ->
     {Megasecs, Secs, MicroSecs} = erlang:now(),
-    Megasecs * 1000000000 + Secs * 1000 + MicroSecs / 1000.0 .
+    Val = (Megasecs * 1000000000 + Secs * 1000 + erlang:trunc(MicroSecs / 1000.0)),
+    Val.

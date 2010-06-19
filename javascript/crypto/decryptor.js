@@ -49,6 +49,11 @@ net_dushin_crypto.DecryptorFactory = {
      * The Cipher type
      */
     Cipher: __import(this, "titaniumcore.crypto.Cipher"),
+        
+    /**
+     * The JSON-RPC object (for marshalling)
+     */
+    jsonrpc: imprt("jsonrpc"),
     
     /**
      * object createDecryptor(spec)
@@ -75,24 +80,16 @@ net_dushin_crypto.DecryptorFactory = {
             );
         }
         
-
         /**
-         * The JSON-RPC object (for marshalling)
+         * the root scope
          */
-        var jsonrpc = imprt("jsonrpc");
-
+        var root = this;
+        
         /**
          * the private key
          */
         var rsa = net_dushin_crypto.KeyUtil.parseEncodedPrivateKey(spec.privateKey);
         
-        /**
-         * the symmetric cipher (TWOFISH, for now)
-         *
-         * TODO: make the algorithm, mode, and padding scheme configurable
-         */
-        var cipher = this.Cipher.create("TWOFISH", "DECRYPT", "CBC", "PKCS7");
-
         //
         // Create and return the encryptor
         //
@@ -113,9 +110,10 @@ net_dushin_crypto.DecryptorFactory = {
                         }
                     );
                 }
+                var cipher = root.Cipher.create(object.algorithm, "DECRYPT", object.mode, object.padding);
                 var symmetricKey = rsa.privateDecrypt(base64_decode(object.encryptedKey));
                 var plaintext = utf82str(cipher.execute(symmetricKey.slice(0, 16), base64_decode(object.ciphertext)));
-                return jsonrpc.unmarshall(plaintext);
+                return root.jsonrpc.unmarshall(plaintext);
             }
         };
     }

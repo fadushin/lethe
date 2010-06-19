@@ -45,7 +45,11 @@ __uses("SecureRandom.js");
  * var encryptedMessage = encryptor.encrypt(message)
  */
 net_dushin_crypto.EncryptorFactory = {
-    
+        
+    /**
+     * The JSON-RPC object (for marshalling)
+     */
+    jsonrpc: imprt("jsonrpc"),
     
     /**
      * The Cipher type
@@ -83,9 +87,9 @@ net_dushin_crypto.EncryptorFactory = {
         }
         
         /**
-         * The JSON-RPC object (for marshalling)
+         * the root scope
          */
-        var jsonrpc = imprt("jsonrpc");
+        var root = this;
 
         /**
          * the private key
@@ -93,11 +97,16 @@ net_dushin_crypto.EncryptorFactory = {
         var rsa = net_dushin_crypto.KeyUtil.parseEncodedPublicKey(spec.publicKey);
         
         /**
-         * the symmetric cipher (TWOFISH, for now)
-         *
-         * TODO: make the algorithm, mode, and padding scheme configurable
+         * Default cipher AES_CBC_PKCS7
          */
-        var cipher = this.Cipher.create("TWOFISH", "ENCRYPT", "CBC", "PKCS7");
+        var algorithm = spec.algorithm ? spec.algorithm : this.Cipher.RIJNDAEL;
+        var mode = spec.mode ? spec.mode : "CBC";
+        var padding = spec.padding ? spec.padding : "PKCS7";
+        
+        /**
+         * the symmetric cipher
+         */
+        var cipher = this.Cipher.create(algorithm, "ENCRYPT", mode, padding);
         
         /**
          * The PRNG
@@ -111,7 +120,7 @@ net_dushin_crypto.EncryptorFactory = {
             var buf = new Array(len);
             prng.nextBytes(buf);
             return buf;
-        }
+        };
 
         //
         // Create and return the encryptor
@@ -133,13 +142,16 @@ net_dushin_crypto.EncryptorFactory = {
                         {message: "RSA key size is not big enough to encrypt symmetric key."}
                     );
                 }
-                var serializedObject = str2utf8(jsonrpc.marshall(object));
+                var serializedObject = str2utf8(root.jsonrpc.marshall(object));
                 var cipertext = cipher.execute(symmetricKey, serializedObject);
                 var encryptedKey = rsa.publicEncrypt(symmetricKey);
                 return {
                     type: "encrypted",
                     ciphertext: base64_encode(cipertext),
-                    encryptedKey: base64_encode(encryptedKey)
+                    encryptedKey: base64_encode(encryptedKey),
+                    algorithm: algorithm,
+                    mode: mode,
+                    padding: padding
                 };
             }
         };

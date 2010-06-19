@@ -2,9 +2,7 @@
     <head>
         <title>test</title>
         <script src="jsolait/jsolait.js"></script>
-        <script src="thirdparty/movable-type.co.uk/sha1/sha1.js"></script>
-        <script src="thirdparty/movable-type.co.uk/aes/base64.js"></script>
-
+        
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/tools/packages.js"></script> 
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/tools/trace.js"></script> 
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/tools/elapse.js"></script> 
@@ -24,8 +22,6 @@
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormat.js"></script>
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP.js"></script>
         <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP_DIRECT.js"></script>
-        <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/SecureRandom.js"></script>
-        <script src="thirdparty/ats.oka.nu/titaniumcore/js/crypto/Cipher.js"></script>
         
         <script src="crypto/namespace.js"></script>
         <script src="crypto/signer.js"></script>
@@ -55,12 +51,6 @@
             var publicKey = net_dushin_crypto.KeyUtil.parseEncodedPublicKey(
                 "pw2Q+NQp1foVsT12SfAKU8zyyaGBIRHC2CnE7v34eMP5oKb7XTtPNUqHDtrBqskhzB+XO/uebMwtsF4KCVstF/Y5L3rgRA2NOyZW1bva2YSUuIYzjifGsUMMtC4UE+Uy6c1RVLbYMgTqhFqZkxRfcg=="
             );
-            
-            /*
-            var message = new BigInteger("DEADBEAFDEADBEAFDEADBEAFDEADBEAF", 16);
-            var encrypted = rsa.processPublic(message);
-            var decrypted = rsa.processPrivate(encrypted);
-            */
             
             var signer = net_dushin_crypto.SignerFactory.createSigner(
                 {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(privateKey)}

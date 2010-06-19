@@ -145,7 +145,7 @@ messages_to_json(MessageList) ->
                 {
                     struct,
                     [
-                        %{timestamp, atom_to_list(Message#message.timestamp)},
+                        {timestamp, Message#message.timestamp},
                         {blob, Message#message.blob}
                     ]
                 }
