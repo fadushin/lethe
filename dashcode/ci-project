@@ -7,10 +7,13 @@ PROJECT_CO=${PROJECT_NAME}-co${PROJECT_SUFFIX}
 
 if [ -e "${PROJECT_CO}" ] 
 then
-    DATESTR=$(date +%Y.%m.%d-%H:%M:%S)
-    tar zcf archives/${PROJECT_CO}-${DATESTR}.tar.gz ${PROJECT_CO}
-    cp -r ${PROJECT_CO} ${PROJECT_CI}
-    rm -rf ${PROJECT_CO}
+    mv ${PROJECT_CO} archives/${PROJECT_CI}
+    pushd archives
+        ARCHIVE_FILE=${PROJECT_CI}-$(date +%Y.%m.%d-%H:%M:%S).tar.gz
+        tar zcf ${ARCHIVE_FILE} ${PROJECT_CI}
+        rm -rf ${PROJECT_CI}
+    popd
+    tar zxf archives/${ARCHIVE_FILE}
     
     echo "OK!! "
     echo "OK!! You may now submit your work in ${PROJECT_CI} to subversion"

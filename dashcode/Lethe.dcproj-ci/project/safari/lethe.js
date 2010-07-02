@@ -51,7 +51,7 @@ var Lethe = {
         var that = this;
         
         backend = backend ? backend : {
-        
+            
             dummyChannels: {messages: []},
             
             ordinal: 0,

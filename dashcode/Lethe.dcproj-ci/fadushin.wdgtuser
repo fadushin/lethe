@@ -133,8 +133,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {968, 524}}</string>
-			<string>{{0, 534}, {968, 122}}</string>
+			<string>{{0, 0}, {968, 78}}</string>
+			<string>{{0, 88}, {968, 568}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
