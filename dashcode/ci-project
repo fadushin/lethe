@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PROJECT_NAME=Lethe
+PROJECT_SUFFIX=.dcproj
+PROJECT_CI=${PROJECT_NAME}${PROJECT_SUFFIX}-ci
+PROJECT_CO=${PROJECT_NAME}-co${PROJECT_SUFFIX}
+
+if [ -e "${PROJECT_CO}" ] 
+then
+    DATESTR=$(date +%Y.%m.%d-%H:%M:%S)
+    tar zcf archives/${PROJECT_CO}-${DATESTR}.tar.gz ${PROJECT_CO}
+    cp -r ${PROJECT_CO} ${PROJECT_CI}
+    rm -rf ${PROJECT_CO}
+    
+    echo "OK!! "
+    echo "OK!! You may now submit your work in ${PROJECT_CI} to subversion"
+    echo "OK!! "
+else
+    echo "ERROR!! "
+    echo "ERROR!! You have not checked out ${PROJECT_NAME}!  Try running co-project first."
+    echo "ERROR!! "
+    exit 1
+fi
+

@@ -1,0 +1,27 @@
+ <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>test</title>
+        <script src="jsolait/jsolait.js"></script>
+        <script src="../thirdparty/movable-type.co.uk/sha1/sha1.js"></script>
+        <script src="namespace.js"></script>
+        <script src="signer.js"></script>
+        <script src="verifier.js"></script>
+        <script>
+
+        
+            var signer = net_dushin_crypto.SignerFactory.createSigner(
+                {privateKey: "foo"}
+            );
+            var signedObject = signer.sign({foo: "bar"});
+            console.debug(signedObject);
+            
+            var verifier = net_dushin_crypto.VerifierFactory.createVerifier(
+                {publicKey: "bar"}
+            );
+            console.debug(verifier.verify(signedObject));
+            
+            
+        </script>
+    </head>
+</html>
+
