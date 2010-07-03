@@ -157,13 +157,14 @@ messages_to_json(MessageList) ->
 json_to_peer({struct, PropertyList}) ->
     #peer {
         name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, name))
-        % TODO Add more properties here 
+        % blob = net_dushin_lethe_lists:find_value(PropertyList, blob, "")
     }.
 
 json_to_message({struct, PropertyList}) ->
     #message {
         blob = net_dushin_lethe_lists:find_value(PropertyList, blob)
         % TODO Add more properties here 
+        % uuid = net_dushin_lethe_lists:find_value(PropertyList, uuid)
     }.
 
 %%

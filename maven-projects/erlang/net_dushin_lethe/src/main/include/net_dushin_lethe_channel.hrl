@@ -51,5 +51,6 @@
     {
         timestamp,
         blob
+        % uuid
     }
 ).
