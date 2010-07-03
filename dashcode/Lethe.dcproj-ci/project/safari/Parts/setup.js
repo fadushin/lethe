@@ -21,7 +21,7 @@ var dashcodePartSpecs = {
     "KeyFingerprint": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprintLabel": { "text": "Key Fingerprint:", "view": "DC.Text" },
-    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }], "view": "DC.StackLayout" },
+    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
     "MessagesLabel": { "text": "Messages", "view": "DC.Text" },
     "MessagesTextArea": { "propertyValues": { "valueBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToText" } }, "view": "DC.TextField" },
     "ModifyIdentityNameButton": { "initialHeight": 23, "initialWidth": 61, "leftImageWidth": 5, "onclick": "modifyIdentity", "rightImageWidth": 5, "text": "Modify...", "view": "DC.PushButton" },
@@ -43,6 +43,7 @@ var dashcodePartSpecs = {
     "TitleText": { "text": "Lethe Messenger", "view": "DC.Text" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 

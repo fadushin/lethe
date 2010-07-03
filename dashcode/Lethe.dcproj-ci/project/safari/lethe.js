@@ -713,7 +713,9 @@ Lethe.Message = Class.create(
                 }
             } else {
                 prefix += "UNSIGNED::";
-                contents = this.renderContents(this.contents);
+                contents = this.renderContents(
+                    this.isDecrypted() ? this.decryptedContents : this.contents
+                );
             }
             return prefix + contents;
         },
@@ -756,3 +758,48 @@ Lethe.init = function() {
     return lethe;
 };
 
+
+Lethe.serverBackend = {
+    
+    jsonrpc: JSOlait.imprt("jsonrpc"),
+    
+    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "post_message"],
+    
+    create: function(spec) {
+    
+        spec = spec ? spec : {};
+
+        var serviceURL = spec.serviceURL ? spec.serviceURL : "rs/rpc";
+
+        var proxy = new jsonrpc.ServiceProxy(serviceURL, methods);
+
+        var pinger = new jsonrpc.JSONRPCMethod(serviceURL, "ping");
+    
+    
+        return {
+            join: function(channelName, peer) {
+                return proxy.join(channelName, peer);
+            },
+
+            getPeers: function(channelName, peerNames) {
+                return proxy.get_peers(channelName, peerNames);
+            },
+            
+            leave: function(channelName) {
+                return proxy.leave(channelName);
+            },
+            
+            sendMessage: function(channelName, message) {
+                return proxy.post_message(channelName, message);
+            },
+            
+            getAllMessages: function(channelName) {
+                return proxy.get_messages(channelName);
+            },
+            
+            getMessagesSince: function(channelName, timestamp) {
+                // return proxy.();
+            }
+        };
+    }
+};

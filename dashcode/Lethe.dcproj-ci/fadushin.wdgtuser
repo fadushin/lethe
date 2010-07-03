@@ -48,7 +48,7 @@
 		<string>-</string>
 		<key>safari/lethe.js:351</key>
 		<string>-</string>
-		<key>safari/lethe.js:753</key>
+		<key>safari/lethe.js:755</key>
 		<string>init</string>
 		<key>safari/main.js:143</key>
 		<string>-</string>
@@ -133,8 +133,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {968, 78}}</string>
-			<string>{{0, 88}, {968, 568}}</string>
+			<string>{{0, 0}, {968, 144}}</string>
+			<string>{{0, 154}, {968, 502}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -144,7 +144,7 @@
 		<key>CompressJavaScript</key>
 		<true/>
 		<key>Date</key>
-		<date>2010-06-30T21:38:10Z</date>
+		<date>2010-07-02T16:12:37Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -256,52 +256,17 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
 				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
 				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
 				<integer>0</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-			</array>
-		</array>
+		<array/>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>view1</string>
@@ -311,7 +276,7 @@
 			<string>editIdentityView</string>
 			<string>view2</string>
 			<string>PeerView</string>
-			<string>MainView</string>
+			<string>EditIdentityView</string>
 		</array>
 	</dict>
 	<key>Last selected product type</key>

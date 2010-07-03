@@ -992,3 +992,10 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
 .selected #IdentityNameTextLabel {
     color: white;
 }
+
+#AboutView {
+    width: 100%;
+    min-height: 631px;
+    display: none;
+    position: relative;
+}
