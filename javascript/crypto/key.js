@@ -29,6 +29,7 @@
 __uses("RSAKeyFormat.js");
 __uses("RSA.init1.js");
 __uses("RSA.init2.js");
+__uses("SHA.js");
 __uses("binary.js");
 
 net_dushin_crypto.KeyUtil = {
@@ -39,6 +40,10 @@ net_dushin_crypto.KeyUtil = {
     
     RSAMessageFormatSOAEP: __import( this, "titaniumcore.crypto.RSAMessageFormatSOAEP_DIRECT" ),
     
+    SHA: __import(this, "titaniumcore.crypto.SHA"),
+
+    jsonrpc: JSOlait.imprt("jsonrpc"),
+        
     createRSA: function() {
         var rsa = new this.RSA();
         rsa.keyFormat = this.RSAKeyFormat;
@@ -65,6 +70,39 @@ net_dushin_crypto.KeyUtil = {
         var bytes = base64_decode(encoded);
         var rsa = this.createRSA();
         rsa.publicKeyBytes(bytes);
+        return rsa;
+    },
+    
+    keyFingerprint: function(key) {
+        var bytes;
+        if (typeof key === 'string') {
+            bytes = base64_decode(key);
+        } else {
+            bytes = key;
+        }
+        var sha = this.SHA.create("SHA-1");
+        var hashValue = sha.hash(bytes);
+        return base16_encode(hashValue, 256, ' ');
+    },
+    
+    marshalKey: function(rsa) {
+        return base64_encode(
+            str2utf8(
+                this.jsonrpc.marshall(
+                    {
+                        privateKey: this.encodePrivateKey(rsa),
+                        publicKey: this.encodePublicKey(rsa)
+                    }
+                )
+            )
+        );
+    },
+    
+    parseKey: function(marshaled) {
+        var obj = this.jsonrpc.unmarshall(utf82str(base64_decode(marshaled)));
+        var rsa = this.createRSA();
+        rsa.privateKeyBytes(base64_decode(obj.privateKey));
+        rsa.publicKeyBytes(base64_decode(obj.publicKey));
         return rsa;
     }
 };

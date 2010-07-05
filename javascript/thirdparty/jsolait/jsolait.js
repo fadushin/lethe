@@ -1,10 +1,12 @@
-Class = function (name, base1, classScope) {
+JSOlait = {};
+
+JSOlait.Class = function (name, base1, classScope) {
     var args = [];
     for (var i = 0; i < arguments.length; i++) {
         args[i] = arguments[i];
     }
     classScope = args.pop();
-    var classID = Class.__idcount__++;
+    var classID = JSOlait.Class.__idcount__++;
     if ((args.length > 0) && (typeof args[0] == 'string')) {
         name = args.shift();
     } else {
@@ -39,7 +41,7 @@ Class = function (name, base1, classScope) {
             if (baseClass.__createProto__ !== undefined) {
                 baseProto = baseClass.__createProto__(bases);
             } else {
-                baseProto = new baseClass(Class);
+                baseProto = new baseClass(JSOlait.Class);
             }
             __class__.__isArray__ = __class__.__isArray__ || baseClass.__isArray__;
             if (i == 0) {
@@ -61,7 +63,7 @@ Class = function (name, base1, classScope) {
     if (proto.__hash__ === undefined) {
         proto.__hash__ = function () {
             if (this.__id__ === undefined) {
-                this.__id__ = '@' + (Class.__idcount__++);
+                this.__id__ = '@' + (JSOlait.Class.__idcount__++);
             }
             return this.__id__;
         };
@@ -76,7 +78,7 @@ Class = function (name, base1, classScope) {
     proto.toString = proto.__str__;
     if (proto.__call__) {
         var NewClass = function (calledBy) {
-            if (calledBy !== Class) {
+            if (calledBy !== JSOlait.Class) {
                 var rslt = function () {
                     return rslt.__call__.apply(rslt, arguments);
                 };
@@ -94,7 +96,7 @@ Class = function (name, base1, classScope) {
         };
     } else if (__class__.__isArray__) {
         var NewClass = function (calledBy) {
-            if (calledBy !== Class) {
+            if (calledBy !== JSOlait.Class) {
                 rslt = [];
                 var proto = arguments.callee.prototype;
                 for (var n in proto) {
@@ -118,7 +120,7 @@ Class = function (name, base1, classScope) {
         };
     } else {
         var NewClass = function (calledBy) {
-            if (calledBy !== Class) {
+            if (calledBy !== JSOlait.Class) {
                 if (this.__init__) {
                     this.__init__.apply(this, arguments);
                 }
@@ -134,12 +136,12 @@ Class = function (name, base1, classScope) {
     NewClass.toString = __class__.__str__;
     return NewClass;
 };
-Class.__idcount__ = 0;
-Class.__str__ = Class.toString = function () {
-    return "[object Class]";
+JSOlait.Class.__idcount__ = 0;
+JSOlait.Class.__str__ = JSOlait.Class.toString = function () {
+    return "[object JSOlait.Class]";
 };
-Class.__createProto__ = function () {
-    throw "Can't use Class as a base class.";
+JSOlait.Class.__createProto__ = function () {
+    throw "Can't use JSOlait.Class as a base class.";
 };
 Function.__createProto__ = function () {
     throw "Cannot inherit from Function. implement the callable interface instead using YourClass::__call__.";
@@ -194,7 +196,7 @@ repr = function (obj) {
         }
     }
 };
-hash = function (obj, forceId) {
+JSOlait.hash = function (obj, forceId) {
     if (obj.__id__ != null) {
         return obj.__id__;
     } else if (obj.__hash__) {
@@ -204,25 +206,25 @@ hash = function (obj, forceId) {
     } else if (obj instanceof Number || typeof obj == 'number') {
         return '#' + obj;
     } else if (forceId) {
-        obj.__id__ = '@' + (Class.__idcount__++);
+        obj.__id__ = '@' + (JSOlait.Class.__idcount__++);
         return obj.__id__;
     } else {
         throw new jsolait.Exception('Objec cannot be hashed: %s'.format(obj));
     }
 };
-bind = function (obj, fn) {
+JSOlait.bind = function (obj, fn) {
     return function () {
         return fn.apply(obj, arguments);
     };
 };
-isinstance = function (obj, cls) {
+JSOlait.isinstance = function (obj, cls) {
     if (obj instanceof cls) {
         return true;
     } else {
-        return issubclass(obj.constructor, cls);
+        return JSOlait.issubclass(obj.constructor, cls);
     }
 };
-issubclass = function (cls, baseclass) {
+JSOlait.issubclass = function (cls, baseclass) {
     if (baseclass === Object || cls === baseclass || (cls.prototype instanceof baseclass)) {
         return true;
     } else {
@@ -234,7 +236,7 @@ issubclass = function (cls, baseclass) {
                 }
             }
             for (var i = 0; i < bases.length; i++) {
-                if (issubclass(bases[i], baseclass)) {
+                if (JSOlait.issubclass(bases[i], baseclass)) {
                     return true;
                 }
             }
@@ -242,12 +244,13 @@ issubclass = function (cls, baseclass) {
         return false;
     }
 };
-Module = function (name, version, moduleScope) {
-    var newMod = new Module.ModuleClass(name, version, Module.currentURI);
+JSOlait.Module = function (name, version, moduleScope) {
+    var newMod = new JSOlait.Module.ModuleClass(name, version, JSOlait.Module.currentURI);
     try {
         moduleScope.call(newMod, newMod);
-    } catch (e) {
-        throw new Module.ModuleScopeExecFailed(newMod, e);
+    } catch (ex123) {
+        console.debug(ex123);
+        throw new JSOlait.Module.ModuleScopeExecFailed(newMod, ex123);
     }
     for (var n in newMod) {
         var obj = newMod[n];
@@ -258,7 +261,7 @@ Module = function (name, version, moduleScope) {
     jsolait.registerModule(newMod);
     return newMod;
 };
-Module.ModuleClass = Class(function (publ) {
+JSOlait.Module.ModuleClass = JSOlait.Class(function (publ) {
     publ.name;
     publ.version;
     publ.__sourceURI__;
@@ -267,20 +270,20 @@ Module.ModuleClass = Class(function (publ) {
         this.name = name;
         this.version = version;
         this.__sourceURI__ = sourceURI;
-        this.Exception = Class(Module.Exception, function () {});
+        this.Exception = JSOlait.Class(JSOlait.Module.Exception, function () {});
         this.Exception.prototype.module = this;
     };
     publ.__str__ = function () {
         return "[module '%s' version: %s]".format(this.name, (this.version + '').replace(/\$Revision$/, "rev.$1"));
     };
 });
-Module.toString = function () {
-    return "[object Module]";
+JSOlait.Module.toString = function () {
+    return "[object JSOlait.Module]";
 };
-Module.__createProto__ = function () {
-    throw "Can't use Module as a base class.";
+JSOlait.Module.__createProto__ = function () {
+    throw "Can't use JSOlait.Module as a base class.";
 };
-Module.Exception = Class("Exception", function (publ) {
+JSOlait.Module.Exception = JSOlait.Class("Exception", function (publ) {
     publ.__init__ = function (msg, trace) {
         this.name = this.constructor.__name__;
         this.message = '' + msg;
@@ -306,14 +309,14 @@ Module.Exception = Class("Exception", function (publ) {
     publ.module = "jsolait";
     publ.trace;
 });
-Module.ModuleScopeExecFailed = Class("ModuleScopeExecFailed", Module.Exception, function (publ, supr) {
+JSOlait.Module.ModuleScopeExecFailed = JSOlait.Class("ModuleScopeExecFailed", JSOlait.Module.Exception, function (publ, supr) {
     publ.__init__ = function (module, trace) {
         supr.__init__.call(this, "Failed to run the module scope for %s".format(module), trace);
         this.failedModule = module;
     };
     publ.module;
 });
-Module("jsolait", "$Revision$", function (mod) {
+JSOlait.Module("jsolait", "$Revision$", function (mod) {
     jsolait = mod;
     mod.modules = {};
     mod.knownModuleURIs = {
@@ -379,7 +382,7 @@ Module("jsolait", "$Revision$", function (mod) {
             throw new mod.LoadURIFailed(uri, new mod.Exception("Server did not respond with 200"));
         }
     };
-    mod.LoadURIFailed = Class(mod.Exception, function (publ, priv, supr) {
+    mod.LoadURIFailed = JSOlait.Class(mod.Exception, function (publ, priv, supr) {
         publ.__init__ = function (sourceURI, trace) {
             supr.__init__.call(this, "Failed to load file: '%s'".format(sourceURI.indent(2)), trace);
             this.sourceURI = sourceURI;
@@ -422,7 +425,7 @@ Module("jsolait", "$Revision$", function (mod) {
             } else {
                 try {
                     var srcURI = src.__sourceURI__;
-                    src = 'Module.currentURI="%s";\n%s\nModule.currentURI=null;\n'.format(src.__sourceURI__.replace(/\\/g, '\\\\'), src);
+                    src = 'JSOlait.Module.currentURI="%s";\n%s\nJSOlait.Module.currentURI=null;\n'.format(src.__sourceURI__.replace(/\\/g, '\\\\'), src);
                     var f = new Function("", src);
                     f();
                 } catch (e) {
@@ -436,7 +439,7 @@ Module("jsolait", "$Revision$", function (mod) {
             }
         }
     };
-    mod.ImportFailed = Class(mod.Exception, function (publ, supr) {
+    mod.ImportFailed = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (moduleName, moduleURIs, trace) {
             supr.__init__.call(this, "Failed to import module: '%s' from:\n%s".format(moduleName, moduleURIs.join(',\n').indent(2)), trace);
             this.moduleName = moduleName;
@@ -445,7 +448,7 @@ Module("jsolait", "$Revision$", function (mod) {
         publ.moduleName;
         publ.moduleURIs;
     });
-    imprt = function (name) {
+    JSOlait.imprt = function (name) {
         return mod.__imprt__(name);
     };
     mod.__registerModule__ = function (modObj, modName) {

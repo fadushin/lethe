@@ -49,7 +49,7 @@ net_dushin_crypto.EncryptorFactory = {
     /**
      * The JSON-RPC object (for marshalling)
      */
-    jsonrpc: imprt("jsonrpc"),
+    jsonrpc: JSOlait.imprt("jsonrpc"),
     
     /**
      * The Cipher type
@@ -134,17 +134,11 @@ net_dushin_crypto.EncryptorFactory = {
              *
              * @return      the encrypted object, conforming to the definition at XXX
              */
-            encrypt: function(object, recipient) {
+            encrypt: function(object) {
                 var symmetricKey = generateSymmetricKey(16);
-                var maxLen = rsa.publicEncryptMaxSize();
-                if (symmetricKey.length > maxLen) {
-                    throw net_dushin_foundation.ExceptionFactory.createException( 
-                        {message: "RSA key size is not big enough to encrypt symmetric key."}
-                    );
-                }
+                var encryptedKey = this.encryptData(symmetricKey);
                 var serializedObject = str2utf8(root.jsonrpc.marshall(object));
                 var cipertext = cipher.execute(symmetricKey, serializedObject);
-                var encryptedKey = rsa.publicEncrypt(symmetricKey);
                 return {
                     type: "encrypted",
                     ciphertext: base64_encode(cipertext),
@@ -153,7 +147,101 @@ net_dushin_crypto.EncryptorFactory = {
                     mode: mode,
                     padding: padding
                 };
+            },
+            
+            encryptData: function(data) {
+                var maxLen = rsa.publicEncryptMaxSize();
+                if (data.length > maxLen) {
+                    throw net_dushin_foundation.ExceptionFactory.createException( 
+                        {message: "RSA key size is not big enough to encrypt symmetric key."}
+                    );
+                }
+                return rsa.publicEncrypt(data);
+            }
+        };
+    },
+    
+    /**
+     * object createBulkEncryptor(spec)
+     *
+     * @param       spec
+     *              The constructor specification.  This parameter may contain
+     *              the following elements:
+     *
+     * @return      an encryptor object, implements the encrypt method
+     *
+     * @exception   IllegalArgument, if the public key is not provided
+     */
+    createBulkEncryptor: function(spec) {
+        /**
+         * the root scope
+         */
+        var root = this;
+        
+        spec = spec ? spec : {};
+        
+        /**
+         * Default cipher AES_CBC_PKCS7
+         */
+        var algorithm = spec.algorithm ? spec.algorithm : this.Cipher.RIJNDAEL;
+        var mode = spec.mode ? spec.mode : "CBC";
+        var padding = spec.padding ? spec.padding : "PKCS7";
+        
+        /**
+         * the symmetric cipher
+         */
+        var cipher = this.Cipher.create(algorithm, "ENCRYPT", mode, padding);
+        
+        /**
+         * The PRNG
+         */
+        var prng = new this.SecureRandom();
+        
+        /**
+         * Generate a random symmetric key of size len
+         */
+        var generateSymmetricKey = function(len) {
+            var buf = new Array(len);
+            prng.nextBytes(buf);
+            return buf;
+        };
+
+        //
+        // Create and return the encryptor
+        //
+        return {
+            /**
+             * object encrypt(object)
+             *
+             * @param       object
+             *              The object to encrypt.
+             *
+             * @return      the encrypted object, conforming to the definition at XXX
+             */
+            encrypt: function(object, recipientEncryptors) {
+                var symmetricKey = generateSymmetricKey(16);
+                var encryptedKeys = this.bulkEncryptData(symmetricKey, recipientEncryptors);
+                var serializedObject = str2utf8(root.jsonrpc.marshall(object));
+                var cipertext = cipher.execute(symmetricKey, serializedObject);
+                return {
+                    type: "encrypted",
+                    ciphertext: base64_encode(cipertext),
+                    encryptedKeys: encryptedKeys,
+                    algorithm: algorithm,
+                    mode: mode,
+                    padding: padding
+                };
+            },
+            
+            bulkEncryptData: function(data, recipientEncryptors) {
+                return net_dushin_foundation.Lists.map(
+                    function(recipientEncryptor) {
+                        return base64_encode(recipientEncryptor.encryptData(data));
+                    },
+                    recipientEncryptors
+                );
             }
         };
     }
+
 };

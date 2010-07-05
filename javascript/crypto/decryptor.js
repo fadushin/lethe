@@ -53,7 +53,7 @@ net_dushin_crypto.DecryptorFactory = {
     /**
      * The JSON-RPC object (for marshalling)
      */
-    jsonrpc: imprt("jsonrpc"),
+    jsonrpc: JSOlait.imprt("jsonrpc"),
     
     /**
      * object createDecryptor(spec)
@@ -111,7 +111,26 @@ net_dushin_crypto.DecryptorFactory = {
                     );
                 }
                 var cipher = root.Cipher.create(object.algorithm, "DECRYPT", object.mode, object.padding);
-                var symmetricKey = rsa.privateDecrypt(base64_decode(object.encryptedKey));
+                var symmetricKey;
+                if (object.encryptedKey) {
+                    symmetricKey = rsa.privateDecrypt(base64_decode(object.encryptedKey));
+                } else if (object.encryptedKeys) {
+                    symmetricKey = net_dushin_foundation.Lists.mapFirst(
+                        function(encryptedKey) {
+                            try {
+                                return rsa.privateDecrypt(base64_decode(encryptedKey));
+                            } catch (e) {
+                                return false;
+                            }
+                        },
+                        object.encryptedKeys
+                    );
+                    if (!symmetricKey) {
+                        throw "Unable to decrypt any of the encrypted symmetric keys";
+                    }
+                } else {
+                    throw "Encrypted message must contain at most one of encryptedKey or encryptedKeys";
+                }
                 var plaintext = utf82str(cipher.execute(symmetricKey.slice(0, 16), base64_decode(object.ciphertext)));
                 return root.jsonrpc.unmarshall(plaintext);
             }

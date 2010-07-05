@@ -82,7 +82,7 @@ net_dushin_crypto.VerifierFactory = {
         /**
          * The JSON-RPC object (for marshalling)
          */
-        var jsonrpc = imprt("jsonrpc");
+        var jsonrpc = JSOlait.imprt("jsonrpc");
 
         /**
          * the private key

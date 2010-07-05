@@ -84,7 +84,7 @@ net_dushin_crypto.SignerFactory = {
         /**
          * The JSON-RPC object (for marshalling)
          */
-        var jsonrpc = imprt("jsonrpc");
+        var jsonrpc = JSOlait.imprt("jsonrpc");
 
         /**
          * the private key

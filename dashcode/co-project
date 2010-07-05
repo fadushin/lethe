@@ -4,6 +4,8 @@ PROJECT_NAME=Lethe
 PROJECT_SUFFIX=.dcproj
 PROJECT_CI=${PROJECT_NAME}${PROJECT_SUFFIX}-ci
 PROJECT_CO=${PROJECT_NAME}-co${PROJECT_SUFFIX}
+WDIR=$(pwd)
+JS_ROOT=${WDIR}/../javascript
 
 if [ -e "${PROJECT_CO}" ] 
 then
@@ -15,7 +17,19 @@ fi
 
 cp -r ${PROJECT_CI} ${PROJECT_CO}
 pushd ${PROJECT_CO}
-find . -type d -name .svn | xargs rm -rf
+    find . -type d -name .svn | xargs rm -rf
+    cd project
+    mkdir thirdparty
+    cd thirdparty
+    cp -r ${JS_ROOT}/thirdparty/com.broofa .
+    cp -r ${JS_ROOT}/thirdparty/ats.oka.nu .
+    cd ..
+    cp -r ${JS_ROOT}/foundation .
+    cp -r ${JS_ROOT}/crypto .
+    cd safari
+    cp -r ${JS_ROOT}/thirdparty/jsolait .
+    cd ..
+    find . -type d -name .svn | xargs rm -rf
 popd
 
 echo "OK!! "

@@ -73,7 +73,7 @@ net_dushin_foundation.ExceptionFactory = {
     },
     
     createIllegalArgumentException: function(spec) {
-        spec.type = ILLEGAL_ARGUMENT;
+        spec.type = this.ILLEGAL_ARGUMENT;
         return create(spec);
     }
 };

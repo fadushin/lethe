@@ -1,20 +1,20 @@
-Module("jsonrpc", "$Revision$", function (mod) {
-    var urllib = imprt("urllib");
-    mod.InvalidServerResponse = Class(mod.Exception, function (publ, supr) {
+JSOlait.Module("jsonrpc", "$Revision$", function (mod) {
+    var urllib = JSOlait.imprt("urllib");
+    mod.InvalidServerResponse = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (status) {
             supr.__init__.call(this, "The server did not respond with a status 200 (OK) but with: " + status);
             this.status = status;
         };
         publ.status;
     });
-    mod.MalformedJSONRpc = Class(mod.Exception, function (publ, supr) {
+    mod.MalformedJSONRpc = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (msg, s, trace) {
             supr.__init__.call(this, msg, trace);
             this.source = s;
         };
         publ.source;
     });
-    mod.JSONRPCError = Class(mod.Exception, function (publ, supr) {
+    mod.JSONRPCError = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (err, trace) {
             supr.__init__.call(this, err, trace);
         };
@@ -43,7 +43,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
             throw new mod.MalformedJSONRpc("The server's response could not be parsed.", source, e);
         }
     };
-    mod.JSONRPCMethod = Class(function (publ) {
+    mod.JSONRPCMethod = JSOlait.Class(function (publ) {
         var postData = function (url, user, pass, data, callback) {
             if (callback == null) {
                 var rslt = urllib.postURL(url, user, pass, data, [
@@ -135,7 +135,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
         publ.user;
         publ.password;
     });
-    mod.ServiceProxy = Class(function (publ) {
+    mod.ServiceProxy = JSOlait.Class(function (publ) {
         publ.__init__ = function (url, methodNames, user, pass) {
             this._url = url;
             this._user = user;
@@ -175,7 +175,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
         publ._password;
         publ._methods = new Array();
     });
-    mod.NotificationReceiver = Class(function (publ, supr) {
+    mod.NotificationReceiver = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (url) {
             this._url = url;
             var req = new XMLHttpRequest();
@@ -195,7 +195,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
             }
         };
     });
-    mod.HTTPConnection = Class(function (publ, supr) {
+    mod.HTTPConnection = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (url, datahandler) {
             this.url = url;
             this.datahandler = datahandler;
@@ -207,7 +207,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
             });
         };
     });
-    mod.ContinousHTTPConnection = Class(function (publ, supr) {
+    mod.ContinousHTTPConnection = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (url, datahandler) {
             this.url = url;
             this.datahandler = datahandler;
@@ -253,7 +253,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
             }
         };
     });
-    mod.RPCMethod = Class(function (publ, supr) {
+    mod.RPCMethod = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (name, proxy) {
             this.name = name;
             this.proxy = proxy;
@@ -271,10 +271,10 @@ Module("jsonrpc", "$Revision$", function (mod) {
             }
         };
     });
-    mod.ServiceProxy2 = Class(function (publ, supr) {
+    mod.ServiceProxy2 = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (serviceurl, methodNames, localService) {
             this._url = serviceurl;
-            var c = new mod.ContinousHTTPConnection(this._url, bind(this, this._handleData));
+            var c = new mod.ContinousHTTPConnection(this._url, JSOlait.bind(this, this._handleData));
             this._attachMethods(methodNames);
             this._localService = localService == null ? {} : localService;
             this._pendingRequests = {};
@@ -374,7 +374,7 @@ Module("jsonrpc", "$Revision$", function (mod) {
             this._sendData(data);
         };
     });
-    var PendingRequest = Class(function (publ, supr) {
+    var PendingRequest = JSOlait.Class(function (publ, supr) {
         publ.__init__ = function (callback) {
             this.callback = callback;
         };

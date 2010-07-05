@@ -1,20 +1,20 @@
-Module("urllib", "$Revision$", function (mod) {
-    mod.NoHTTPRequestObject = Class(mod.Exception, function (publ, supr) {
+JSOlait.Module("urllib", "$Revision$", function (mod) {
+    mod.NoHTTPRequestObject = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (trace) {
             supr.__init__.call(this, "Could not create an HTTP request object", trace);
         };
     });
-    mod.RequestOpenFailed = Class(mod.Exception, function (publ, supr) {
+    mod.RequestOpenFailed = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (trace) {
             supr.__init__.call(this, "Opening of HTTP request failed.", trace);
         };
     });
-    mod.SendFailed = Class(mod.Exception, function (publ, supr) {
+    mod.SendFailed = JSOlait.Class(mod.Exception, function (publ, supr) {
         publ.__init__ = function (trace) {
             supr.__init__.call(this, "Sending of HTTP request failed.", trace);
         };
     });
-    var ASVRequest = Class(function (publ) {
+    var ASVRequest = JSOlait.Class(function (publ) {
         publ.__init__ = function () {
             if ((getURL == null) || (postURL == null)) {
                 throw "getURL and postURL are not available!";
