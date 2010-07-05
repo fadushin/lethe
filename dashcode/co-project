@@ -18,17 +18,11 @@ fi
 cp -r ${PROJECT_CI} ${PROJECT_CO}
 pushd ${PROJECT_CO}
     find . -type d -name .svn | xargs rm -rf
-    cd project
-    mkdir thirdparty
-    cd thirdparty
-    cp -r ${JS_ROOT}/thirdparty/com.broofa .
-    cp -r ${JS_ROOT}/thirdparty/ats.oka.nu .
-    cd ..
-    cp -r ${JS_ROOT}/foundation .
-    cp -r ${JS_ROOT}/crypto .
-    cd safari
-    cp -r ${JS_ROOT}/thirdparty/jsolait .
-    cd ..
+    cpdir ${JS_ROOT}/thirdparty/com.broofa ./project/thirdparty/com.broofa
+    cpdir ${JS_ROOT}/thirdparty/ats.oka.nu ./project/thirdparty/ats.oka.nu
+    cpdir ${JS_ROOT}/thirdparty/jsolait ./project/safari/jsolait
+    cpdir ${JS_ROOT}/foundation ./project/foundation
+    cpdir ${JS_ROOT}/crypto ./project/crypto
     find . -type d -name .svn | xargs rm -rf
 popd
 

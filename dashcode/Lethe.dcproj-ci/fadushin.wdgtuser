@@ -318,8 +318,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {268, 208}}</string>
-			<string>{{0, 218}, {268, 438}}</string>
+			<string>{{0, 0}, {268, 209}}</string>
+			<string>{{0, 219}, {268, 437}}</string>
 		</array>
 	</dict>
 </dict>

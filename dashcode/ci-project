@@ -4,16 +4,21 @@ PROJECT_NAME=Lethe
 PROJECT_SUFFIX=.dcproj
 PROJECT_CI=${PROJECT_NAME}${PROJECT_SUFFIX}-ci
 PROJECT_CO=${PROJECT_NAME}-co${PROJECT_SUFFIX}
+WDIR=$(pwd)
+JS_ROOT=${WDIR}/../javascript
 
 if [ -e "${PROJECT_CO}" ] 
 then
-    mv ${PROJECT_CO} archives/${PROJECT_CI}
-    pushd archives
-        ARCHIVE_FILE=${PROJECT_CI}-$(date +%Y.%m.%d-%H:%M:%S).tar.gz
-        tar zcf ${ARCHIVE_FILE} ${PROJECT_CI}
-        rm -rf ${PROJECT_CI}
-    popd
-    tar zxf archives/${ARCHIVE_FILE}
+    ARCHIVE_FILE=${PROJECT_CO}-$(date +%Y.%m.%d-%H:%M:%S).tar.gz
+    tar zcf archives/${ARCHIVE_FILE} ${PROJECT_CO}
+
+    mvdir ${PROJECT_CO}/project/thirdparty/com.broofa ${JS_ROOT}/thirdparty/com.broofa
+    mvdir ${PROJECT_CO}/project/thirdparty/ats.oka.nu ${JS_ROOT}/thirdparty/ats.oka.nu
+    mvdir ${PROJECT_CO}/project/safari/jsolait ${JS_ROOT}/thirdparty/jsolait
+    mvdir ${PROJECT_CO}/project/foundation ${JS_ROOT}/.
+    mvdir ${PROJECT_CO}/project/crypto ${JS_ROOT}/.
+
+    mvdir ${PROJECT_CO} ${PROJECT_CI}
     
     echo "OK!! "
     echo "OK!! You may now submit your work in ${PROJECT_CI} to subversion"
