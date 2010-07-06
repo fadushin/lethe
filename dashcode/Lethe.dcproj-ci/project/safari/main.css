@@ -84,10 +84,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     min-height: 0px;
     top: 35px;
     left: 0px;
-    right: 7px;
-    width: auto;
     bottom: 46px;
     height: auto;
+    right: 0px;
+    width: auto;
 }
 
 #ChannelSelectionBox {
@@ -98,7 +98,6 @@ body.DC_windowInactive .listRowTemplate_template.selected {
 }
 
 #ChannelBox {
-    overflow: auto;
     background-color: rgb(225, 225, 225);
     width: 709px;
     height: auto;
@@ -108,9 +107,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
 
 #splitter {
     overflow: hidden;
-    width: 8px;
+    width: 10px;
     background-image: url(Parts/Images/splitter.png);
-    background-repeat: repeat no-repeat;
+    background-repeat: no-repeat repeat;
 }
 
 #splitThumb {
@@ -142,10 +141,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     bottom: auto;
     left: 0px;
     top: 0px;
+    right: 0px;
+    width: auto;
     -webkit-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
-    right: 7px;
-    width: auto;
 }
 
 #TitleText {
@@ -251,12 +250,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: auto;
-    right: 0px;
     left: 0px;
-    top: 0px;
+    top: 1px;
     -webkit-border-image: url(Parts/Images/MessagesHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/MessagesHeader.png) 0 1 0 1 stretch stretch;
+    right: -1px;
+    width: auto;
 }
 
 #MessagesLabel {
@@ -280,12 +279,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     overflow: hidden;
     z-index: 0;
     position: absolute;
-    top: -1px;
     left: 0px;
-    right: 12px;
+    right: 0px;
     width: auto;
-    bottom: 16px;
     height: auto;
+    bottom: 0px;
+    top: -1px;
 }
 
 #MessagesView {
@@ -293,15 +292,15 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     display: none;
     position: relative;
     height: auto;
-    min-height: 533px;
+    min-height: 551px;
 }
 
 #PeersView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 533px;
     height: auto;
+    min-height: 551px;
 }
 
 #PeersHeader {
@@ -341,8 +340,6 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     font-family: HelveticaNeue;
     font-size: 10pt;
     position: absolute;
-    width: 688px;
-    height: 460px;
     background-color: rgb(255, 252, 198);
     border-top-left-radius: 0px 0px;
     border-top-right-radius: 0px 0px;
@@ -351,6 +348,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     min-width: 0px;
     top: 33px;
     left: 4px;
+    width: 716px;
+    height: 479px;
 }
 
 #MessageTextField {
@@ -358,9 +357,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     color: black;
     font-family: HelveticaNeue;
     font-size: 10pt;
-    width: 612px;
     left: 4px;
-    top: 505px;
+    width: 634px;
+    top: 521px;
 }
 
 #SendMessageButton {
@@ -379,8 +378,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     width: 71px;
     height: 21px;
-    left: 627px;
-    top: 507px;
+    top: 523px;
+    left: 655px;
 }
 
 #IdentityBar {
@@ -395,7 +394,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     -webkit-border-image: url(Parts/Images/IdentityBar.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/IdentityBar.png) 0 1 0 1 stretch stretch;
     left: 0px;
-    bottom: 11px;
+    bottom: 12px;
     margin-top: auto;
     right: 0px;
     width: auto;
@@ -770,8 +769,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     bottom: 531px;
     top: 0px;
     left: 0px;
-    height: 631px;
-    width: 885px;
+    width: 900px;
+    height: 650px;
 }
 
 #MainView {
@@ -801,7 +800,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     left: -8px;
     right: 8px;
     width: auto;
-    bottom: 29px;
+    bottom: 8px;
     height: auto;
 }
 
@@ -998,4 +997,135 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     min-height: 631px;
     display: none;
     position: relative;
+}
+
+#box2 {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    background-color: rgb(147, 147, 147);
+    position: absolute;
+    margin-top: 0px;
+    width: auto;
+    height: auto;
+    right: 8px;
+    bottom: 6px;
+    top: 0px;
+    left: -8px;
+}
+
+#box3 {
+    border-color: black;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    margin-top: 0px;
+    opacity: 1;
+    left: 32px;
+    -webkit-box-reflect: below 1px -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.339844))) 0 0 0 0 stretch stretch;
+    border-top-left-radius: 20px 20px;
+    border-top-right-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+    top: 30px;
+    right: 33px;
+    width: auto;
+    bottom: 35px;
+    height: auto;
+}
+
+#button3 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    width: 56px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    left: 758px;
+    top: 507px;
+}
+
+#GenerateKeyIndicator {
+    opacity: 0.6;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    width: 19px;
+    height: 19px;
+    top: 208px;
+    right: 457px;
+    margin-left: auto;
+}
+
+#box4 {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    position: absolute;
+    margin-top: 0px;
+    left: 25px;
+    top: 27px;
+    width: 782px;
+    overflow: scroll;
+    height: 463px;
+}
+
+#SwitchToPeersViewButton1 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    width: 64px;
+    height: 21px;
+    top: 10px;
+    right: 4px;
+    margin-left: auto;
+}
+
+#text1 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    bottom: 0px;
+    height: auto;
+}
+
+.selected #text1 {
+    color: white;
 }

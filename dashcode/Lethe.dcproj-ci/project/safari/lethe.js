@@ -763,7 +763,7 @@ Lethe.serverBackend = {
     
     jsonrpc: JSOlait.imprt("jsonrpc"),
     
-    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "post_message"],
+    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "get_messages_since", "post_message"],
     
     create: function(spec) {
     
@@ -798,7 +798,7 @@ Lethe.serverBackend = {
             },
             
             getMessagesSince: function(channelName, timestamp) {
-                // return proxy.();
+                return proxy.get_messages_since(channelName, timestamp);
             }
         };
     }
