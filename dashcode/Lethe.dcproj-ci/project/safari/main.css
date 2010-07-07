@@ -84,10 +84,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     min-height: 0px;
     top: 35px;
     left: 0px;
-    bottom: 46px;
-    height: auto;
     right: 0px;
     width: auto;
+    bottom: 81px;
+    height: auto;
 }
 
 #ChannelSelectionBox {
@@ -170,11 +170,11 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    height: 29px;
-    top: 0px;
-    right: 0px;
+    height: 30px;
     width: auto;
+    top: 0px;
     left: 0px;
+    right: 0px;
     -webkit-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
 }
@@ -250,12 +250,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
+    width: auto;
+    right: 0px;
+    top: 0px;
     left: 0px;
-    top: 1px;
     -webkit-border-image: url(Parts/Images/MessagesHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/MessagesHeader.png) 0 1 0 1 stretch stretch;
-    right: -1px;
-    width: auto;
 }
 
 #MessagesLabel {
@@ -280,11 +280,11 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     z-index: 0;
     position: absolute;
     left: 0px;
-    right: 0px;
+    top: 0px;
+    right: -1px;
     width: auto;
-    height: auto;
     bottom: 0px;
-    top: -1px;
+    height: auto;
 }
 
 #MessagesView {
@@ -292,15 +292,15 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     display: none;
     position: relative;
     height: auto;
-    min-height: 551px;
+    min-height: 533px;
 }
 
 #PeersView {
     width: 100%;
     display: none;
     position: relative;
+    min-height: 533px;
     height: auto;
-    min-height: 551px;
 }
 
 #PeersHeader {
@@ -309,13 +309,13 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    height: 32px;
-    top: 0px;
-    width: auto;
-    right: 0px;
     left: 0px;
+    top: 0px;
+    height: 30px;
     -webkit-border-image: url(Parts/Images/PeersHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeersHeader.png) 0 1 0 1 stretch stretch;
+    right: 0px;
+    width: auto;
 }
 
 #PeersLabel {
@@ -346,10 +346,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-bottom-left-radius: 0px 0px;
     border-bottom-right-radius: 0px 0px;
     min-width: 0px;
-    top: 33px;
     left: 4px;
-    width: 716px;
-    height: 479px;
+    top: 34px;
+    width: 717px;
+    height: 443px;
 }
 
 #MessageTextField {
@@ -358,8 +358,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     font-family: HelveticaNeue;
     font-size: 10pt;
     left: 4px;
-    width: 634px;
-    top: 521px;
+    width: 637px;
+    top: 487px;
 }
 
 #SendMessageButton {
@@ -378,8 +378,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     width: 71px;
     height: 21px;
-    top: 523px;
-    left: 655px;
+    left: 656px;
+    top: 489px;
 }
 
 #IdentityBar {
@@ -394,7 +394,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     -webkit-border-image: url(Parts/Images/IdentityBar.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/IdentityBar.png) 0 1 0 1 stretch stretch;
     left: 0px;
-    bottom: 12px;
+    bottom: 46px;
     margin-top: auto;
     right: 0px;
     width: auto;
@@ -494,9 +494,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     margin-top: 0px;
     height: 22px;
     width: 95px;
-    top: 7px;
     right: 5px;
     margin-left: auto;
+    top: 5px;
 }
 
 #SwitchToPeersViewButton {
@@ -517,9 +517,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     margin-top: 0px;
     width: 64px;
     height: 21px;
-    top: 7px;
     right: 4px;
     margin-left: auto;
+    top: 6px;
 }
 
 #PeersList {
@@ -770,7 +770,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     top: 0px;
     left: 0px;
     width: 900px;
-    height: 650px;
+    height: 620px;
 }
 
 #MainView {
@@ -789,19 +789,18 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
 
 #box {
     border-color: black;
-    border-style: solid;
     border-width: 1px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     background-color: rgb(147, 147, 147);
     position: absolute;
     margin-top: 0px;
-    top: 0px;
-    left: -8px;
-    right: 8px;
+    left: 0px;
+    right: 0px;
     width: auto;
-    bottom: 8px;
+    bottom: 44px;
     height: auto;
+    top: 0px;
 }
 
 #box1 {
@@ -826,7 +825,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     height: auto;
 }
 
-#button {
+#EditIdentityOkButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -847,11 +846,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    left: 747px;
-    top: 281px;
+    left: 760px;
+    top: 274px;
 }
 
-#button1 {
+#EditIdentityCancelButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -872,8 +871,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    left: 660px;
-    top: 281px;
+    top: 274px;
+    left: 672px;
 }
 
 #text {
@@ -959,8 +958,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     margin-top: 0px;
     width: 19px;
     height: 19px;
-    top: 208px;
-    right: 457px;
+    top: 212px;
+    right: 474px;
     margin-left: auto;
 }
 
@@ -997,135 +996,4 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     min-height: 631px;
     display: none;
     position: relative;
-}
-
-#box2 {
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    background-color: rgb(147, 147, 147);
-    position: absolute;
-    margin-top: 0px;
-    width: auto;
-    height: auto;
-    right: 8px;
-    bottom: 6px;
-    top: 0px;
-    left: -8px;
-}
-
-#box3 {
-    border-color: black;
-    border-width: 1px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    background-color: rgb(255, 255, 255);
-    position: absolute;
-    margin-top: 0px;
-    opacity: 1;
-    left: 32px;
-    -webkit-box-reflect: below 1px -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.339844))) 0 0 0 0 stretch stretch;
-    border-top-left-radius: 20px 20px;
-    border-top-right-radius: 20px 20px;
-    border-bottom-left-radius: 20px 20px;
-    border-bottom-right-radius: 20px 20px;
-    top: 30px;
-    right: 33px;
-    width: auto;
-    bottom: 35px;
-    height: auto;
-}
-
-#button3 {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    height: 30px;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    width: 56px;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    left: 758px;
-    top: 507px;
-}
-
-#GenerateKeyIndicator {
-    opacity: 0.6;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
-    width: 19px;
-    height: 19px;
-    top: 208px;
-    right: 457px;
-    margin-left: auto;
-}
-
-#box4 {
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    position: absolute;
-    margin-top: 0px;
-    left: 25px;
-    top: 27px;
-    width: 782px;
-    overflow: scroll;
-    height: 463px;
-}
-
-#SwitchToPeersViewButton1 {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
-    width: 64px;
-    height: 21px;
-    top: 10px;
-    right: 4px;
-    margin-left: auto;
-}
-
-#text1 {
-    font-size: 13px;
-    font-family: 'Lucida Grande', Arial, sans-serif;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    width: auto;
-    bottom: 0px;
-    height: auto;
-}
-
-.selected #text1 {
-    color: white;
 }

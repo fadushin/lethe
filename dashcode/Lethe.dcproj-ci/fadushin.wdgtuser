@@ -68,49 +68,49 @@
 		<string>-editIdentityViewOk</string>
 		<key>safari/main.js:243</key>
 		<string>-</string>
-		<key>safari/main.js:269</key>
+		<key>safari/main.js:255</key>
+		<string>-</string>
+		<key>safari/main.js:258</key>
+		<string>-</string>
+		<key>safari/main.js:260</key>
 		<string>-</string>
 		<key>safari/main.js:27</key>
 		<string>-</string>
 		<key>safari/main.js:272</key>
 		<string>-</string>
-		<key>safari/main.js:274</key>
+		<key>safari/main.js:275</key>
 		<string>-</string>
-		<key>safari/main.js:286</key>
+		<key>safari/main.js:276</key>
 		<string>-</string>
-		<key>safari/main.js:289</key>
+		<key>safari/main.js:301</key>
 		<string>-</string>
-		<key>safari/main.js:290</key>
+		<key>safari/main.js:310</key>
 		<string>-</string>
-		<key>safari/main.js:315</key>
+		<key>safari/main.js:312</key>
 		<string>-</string>
-		<key>safari/main.js:324</key>
+		<key>safari/main.js:316</key>
 		<string>-</string>
-		<key>safari/main.js:326</key>
+		<key>safari/main.js:320</key>
 		<string>-</string>
-		<key>safari/main.js:330</key>
+		<key>safari/main.js:327</key>
 		<string>-</string>
-		<key>safari/main.js:334</key>
+		<key>safari/main.js:329</key>
 		<string>-</string>
-		<key>safari/main.js:341</key>
+		<key>safari/main.js:335</key>
 		<string>-</string>
-		<key>safari/main.js:343</key>
+		<key>safari/main.js:338</key>
 		<string>-</string>
 		<key>safari/main.js:349</key>
 		<string>-</string>
-		<key>safari/main.js:352</key>
+		<key>safari/main.js:357</key>
 		<string>-</string>
-		<key>safari/main.js:363</key>
+		<key>safari/main.js:358</key>
 		<string>-</string>
-		<key>safari/main.js:371</key>
+		<key>safari/main.js:359</key>
 		<string>-</string>
-		<key>safari/main.js:372</key>
-		<string>-</string>
-		<key>safari/main.js:373</key>
-		<string>-</string>
-		<key>safari/main.js:389</key>
+		<key>safari/main.js:375</key>
 		<string></string>
-		<key>safari/main.js:401</key>
+		<key>safari/main.js:387</key>
 		<string>-</string>
 		<key>safari/main.js:45</key>
 		<string>-load</string>
@@ -133,8 +133,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {968, 97}}</string>
-			<string>{{0, 107}, {968, 549}}</string>
+			<string>{{0, 0}, {968, 646}}</string>
+			<string>{{0, 656}, {968, 0}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -261,22 +261,12 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
 				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
 				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>2</integer>
 				<integer>0</integer>
 			</array>
 			<array>
@@ -284,35 +274,44 @@
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
 			</array>
 			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
@@ -320,6 +319,8 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
 				<integer>2</integer>
 				<integer>0</integer>
 				<integer>0</integer>
@@ -330,12 +331,12 @@
 		<array>
 			<string>view1</string>
 			<string>mainView</string>
-			<string>AboutView</string>
-			<string>MessageView</string>
 			<string>MessagesView</string>
+			<string>MessageView</string>
 			<string>editIdentityView</string>
 			<string>view2</string>
 			<string>PeerView</string>
+			<string>MainView</string>
 		</array>
 	</dict>
 	<key>Last selected product type</key>
@@ -377,8 +378,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {268, 210}}</string>
-			<string>{{0, 220}, {268, 436}}</string>
+			<string>{{0, 0}, {268, 208}}</string>
+			<string>{{0, 218}, {268, 438}}</string>
 		</array>
 	</dict>
 </dict>
