@@ -733,6 +733,7 @@ Lethe.Message.parse = function(obj) {
 
 Lethe.init = function() {
     var lethe = Lethe.create();
+    // var lethe = Lethe.create(Lethe.serverBackend.create());
     lethe.setIdentity(new Lethe.Identity("", "", ""));
     this.instance = lethe;
     return lethe;
@@ -749,11 +750,11 @@ Lethe.serverBackend = {
     
         spec = spec ? spec : {};
 
-        var serviceURL = spec.serviceURL ? spec.serviceURL : "rs/rpc";
+        var serviceURL = spec.serviceURL ? spec.serviceURL : "../rs/rpc";
 
-        var proxy = new jsonrpc.ServiceProxy(serviceURL, methods);
+        var proxy = new this.jsonrpc.ServiceProxy(serviceURL, this.methods);
 
-        var pinger = new jsonrpc.JSONRPCMethod(serviceURL, "ping");
+        var pinger = new this.jsonrpc.JSONRPCMethod(serviceURL, "ping");
     
     
         return {
