@@ -75,8 +75,6 @@ function initPackages( __scope ) {
     };
 
     /*
-    fdushin 2010.07.05 Commented out to avoid conflict with DashCode
-    TODO: INVESTIGATE WHY
     Object.prototype.resolve = function( pathString ) {
 	return __package( this, pathString );
     };
