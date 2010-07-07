@@ -11,7 +11,7 @@ mkdir -p ./content
 mkdir -p ./logs
 
 cd content
-ln -s /opt/yaws/var/yaws/www/jsolait
+ln -s ../../../../../../javascript/thirdparty/jsolait
 ln -s ${BASE_DIR}/src/main/html/index.html
 cd ..
 
