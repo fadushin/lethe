@@ -5,6 +5,7 @@
  code generator otherwise the changes will be lost.
  */
 var dashcodePartSpecs = {
+    "AboutBoxOkButton": { "initialHeight": 30, "initialWidth": 56, "leftImageWidth": 5, "onclick": "aboutViewOk", "rightImageWidth": 5, "text": "ok", "view": "DC.PushButton" },
     "AddChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "addChannel", "rightImageWidth": 5, "text": "+", "view": "DC.PushButton" },
     "ChannelLabel": { "text": "Channels", "view": "DC.Text" },
     "ChannelList": { "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.channels" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
@@ -16,12 +17,13 @@ var dashcodePartSpecs = {
     "GenerateKeyIndicator": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "mappubKeyToAnimating" }, "visibleBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "mappubKeyToAnimating" } }, "view": "DC.ActivityIndicator" },
     "IdentityNameLabel": { "text": "Name:", "view": "DC.Text" },
     "IdentityNameTextLabel": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.name" } }, "text": "Text", "view": "DC.Text" },
+    "image1": { "view": "DC.ImageLayout" },
     "input": { "propertyValues": { "checkedBinding": { "keypath": "*.encryptTo" } }, "view": "DC.ToggleButton" },
     "input1": { "propertyValues": { "checkedBinding": { "keypath": "ChannelList.selection.signMessages" } }, "view": "DC.ToggleButton" },
     "KeyFingerprint": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprintLabel": { "text": "Key Fingerprint:", "view": "DC.Text" },
-    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
+    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }], "view": "DC.StackLayout" },
     "MessagesLabel": { "text": "Messages", "view": "DC.Text" },
     "MessagesTextArea": { "propertyValues": { "valueBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToText" } }, "view": "DC.TextField" },
     "ModifyIdentityNameButton": { "initialHeight": 23, "initialWidth": 61, "leftImageWidth": 5, "onclick": "modifyIdentity", "rightImageWidth": 5, "text": "Modify...", "view": "DC.PushButton" },
@@ -37,12 +39,16 @@ var dashcodePartSpecs = {
     "splitLayout": { "flexibleViewIndex": 1, "initialSize": 898, "initialSplitterSize": 10, "isVertical": true, "splitterPosition": 159, "view": "DC.SplitLayout" },
     "SwitchToMessagesViewButton": { "initialHeight": 22, "initialWidth": 95, "leftImageWidth": 5, "onclick": "switchToMessagesView", "rightImageWidth": 5, "text": "Messages...", "view": "DC.PushButton" },
     "SwitchToPeersViewButton": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToPeersView", "rightImageWidth": 5, "text": "Peers...", "view": "DC.PushButton" },
+    "SwitchToPeersViewButton1": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToAboutView", "rightImageWidth": 5, "text": "About...", "view": "DC.PushButton" },
     "text": { "text": "Name:", "view": "DC.Text" },
+    "text1": { "text": "About Lethe", "view": "DC.Text" },
+    "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
     "text3": { "text": "Key Fingerprint:", "view": "DC.Text" },
     "textField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
     "TitleText": { "text": "Lethe Messenger", "view": "DC.Text" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 

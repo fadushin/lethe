@@ -293,7 +293,7 @@ var Lethe = {
 
 Lethe.KVO.deserialize = function(str) {
     return net_dushin_foundation.Serialization.deserialize(str);
-}
+};
 
 Lethe.Identity = Class.create(
     Lethe.KVO,
@@ -734,27 +734,7 @@ Lethe.Message.parse = function(obj) {
 Lethe.init = function() {
     var lethe = Lethe.create();
     lethe.setIdentity(new Lethe.Identity("", "", ""));
-    // lethe.setTmpIdentity(new Lethe.Identity("", "", ""));
     this.instance = lethe;
-    /*
-    var identityChangedFunction = function(change) {
-        console.log("Identity changed:");
-        console.log(change.oldValue);
-        console.log(change.newValue);
-        if (change.newValue) {
-            Lethe.instance.setStoredIdentity(lethe.getIdentity());
-            var oldValue = change.oldValue;
-            if (oldValue) {
-                Lethe.instance.updateIdentity(oldValue, lethe.getIdentity());
-            }
-        }
-    };
-    Lethe.create().getModel().addObserverForKeyPath(
-        {},
-        identityChangedFunction,
-        "content.identity.name"
-    );
-    */
     return lethe;
 };
 
@@ -763,7 +743,7 @@ Lethe.serverBackend = {
     
     jsonrpc: JSOlait.imprt("jsonrpc"),
     
-    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "post_message"],
+    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "get_messages_since", "post_message"],
     
     create: function(spec) {
     
@@ -798,7 +778,7 @@ Lethe.serverBackend = {
             },
             
             getMessagesSince: function(channelName, timestamp) {
-                // return proxy.();
+                return proxy.get_messages_since(channelName, timestamp);
             }
         };
     }

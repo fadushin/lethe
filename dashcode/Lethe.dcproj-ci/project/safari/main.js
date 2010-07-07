@@ -247,3 +247,17 @@ function editIdentityViewCancel(event)
     var layout = document.getElementById("MainStackLayout").object;
     layout.setCurrentView("MainView");
 }
+
+
+function aboutViewOk(event)
+{
+    var layout = document.getElementById("MainStackLayout").object;
+    layout.setCurrentView("MainView");
+}
+
+
+function switchToAboutView(event)
+{
+    var layout = document.getElementById("MainStackLayout").object;
+    layout.setCurrentView("AboutView");
+}
