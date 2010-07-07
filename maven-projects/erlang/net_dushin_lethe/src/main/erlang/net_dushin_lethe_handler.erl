@@ -68,8 +68,23 @@ handle_rpc(_State, {call, Method, Params} = Request, Session) ->
 get_response(get_channels, _Params) ->
     channels_to_json(net_dushin_lethe_server:get_channels());
 
-get_response(get_peers, [ChannelId]) ->
-    peers_to_json(net_dushin_lethe_server:get_peers(list_to_atom(ChannelId)));
+get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
+    {Add, Remove} = net_dushin_lethe_server:get_peers(
+        list_to_atom(ChannelId),
+        lists:map(
+            fun(PeerName) ->
+                list_to_atom(PeerName)
+            end,
+            PeerNames
+        )
+    ),
+    {
+        struct,
+        [
+            {add, peers_to_json(Add)},
+            {remove, {array, lists:map(fun(Name) -> atom_to_list(Name) end, Remove)}}
+        ]
+    };
 
 get_response(join, [ChannelId, Peer]) ->
     net_dushin_lethe_server:join(
@@ -96,6 +111,13 @@ get_response(get_messages, [ChannelId]) ->
     messages_to_json(
         net_dushin_lethe_server:get_messages(
             list_to_atom(ChannelId)
+        )
+    );
+
+get_response(get_messages_since, [ChannelId, Since]) ->
+    messages_to_json(
+        net_dushin_lethe_server:get_messages(
+            list_to_atom(ChannelId), Since
         )
     );
 
@@ -131,7 +153,13 @@ peers_to_json(PeerList) ->
         array, 
         lists:map(
             fun(Peer) ->
-                atom_to_list(Peer#peer.name)
+                {
+                    struct,
+                    [
+                        {id, atom_to_list(Peer#peer.name)},
+                        {blob, Peer#peer.blob}
+                    ]
+                }
             end,
             PeerList
         )
@@ -156,14 +184,13 @@ messages_to_json(MessageList) ->
 
 json_to_peer({struct, PropertyList}) ->
     #peer {
-        name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, name))
-        % blob = net_dushin_lethe_lists:find_value(PropertyList, blob, "")
+        name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, id)),
+        blob = net_dushin_lethe_lists:find_value(PropertyList, blob, "")
     }.
 
 json_to_message({struct, PropertyList}) ->
     #message {
         blob = net_dushin_lethe_lists:find_value(PropertyList, blob)
-        % TODO Add more properties here 
         % uuid = net_dushin_lethe_lists:find_value(PropertyList, uuid)
     }.
 
