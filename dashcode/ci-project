@@ -15,8 +15,8 @@ then
     mvdir ${PROJECT_CO}/project/thirdparty/com.broofa ${JS_ROOT}/thirdparty/com.broofa
     mvdir ${PROJECT_CO}/project/thirdparty/ats.oka.nu ${JS_ROOT}/thirdparty/ats.oka.nu
     mvdir ${PROJECT_CO}/project/safari/jsolait ${JS_ROOT}/thirdparty/jsolait
-    mvdir ${PROJECT_CO}/project/foundation ${JS_ROOT}/.
-    mvdir ${PROJECT_CO}/project/crypto ${JS_ROOT}/.
+    mvdir ${PROJECT_CO}/project/foundation ${JS_ROOT}/foundation
+    mvdir ${PROJECT_CO}/project/crypto ${JS_ROOT}/crypto
 
     mvdir ${PROJECT_CO} ${PROJECT_CI}
     
