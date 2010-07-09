@@ -40,7 +40,21 @@
         },
         {registered, [net_dushin_lethe_server]},
         {applications, [kernel, stdlib]},
-        {mod, {net_dushin_lethe, [{lethe_args, []}, {yaws_args, []}]}},
+        {
+            mod, 
+            {
+                net_dushin_lethe, 
+                [
+                    {
+                        lethe_args, 
+                        [
+                            % [{channel_config, [{peer_timeout_ms, 50000000}]}]
+                        ]
+                    }, 
+                    {yaws_args, []}
+                ]
+            }
+        },
         {start_phases, []}
     ]
 }.

@@ -60,23 +60,59 @@ handle_request(_, Path, Arg) -> % catchall
 %%
 
 handle_rpc(_State, {call, Method, Params} = Request, Session) ->  
-    io:format("Request = ~p~n", [Request]),
-    Response = get_response(Method, Params),
-    io:format("Response = ~p~n", [Response]),
+    %io:format("Request = ~p~n", [Request]),
+    Response = 
+            try get_response(Method, Params)
+            catch
+                Exception -> Exception
+            end,
+    %io:format("Response = ~p~n", [Response]),
     {true, 0, Session, {response, Response}}.
+%
+% input args:
+%   ChannelId,
+%   PeerName,
+%   {
+%       update_peers: [peerid, ..., peerid],
+%       update_messages: since
+%   }
+%
+%
+%
+get_response(update, [ChannelId, PeerName, {struct, [{update_peers, UpdatePeers}, {update_messages, Since}]}]) ->
+    net_dushin_lethe_server:ping(
+        list_to_atom(ChannelId),
+        list_to_atom(PeerName)
+    ),
+    PeerUpdate = get_response(get_peers, [ChannelId, UpdatePeers]),
+    MessageUpdate = get_response(get_messages_since, [ChannelId, Since]),
+    {
+        struct,
+        [
+            {peer_update, PeerUpdate},
+            {message_update, MessageUpdate}
+        ]
+    };
 
 get_response(get_channels, _Params) ->
     channels_to_json(net_dushin_lethe_server:get_channels());
 
 get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
-    {Add, Remove} = net_dushin_lethe_server:get_peers(
-        list_to_atom(ChannelId),
-        lists:map(
+    PeerAtoms = lists:map(
             fun(PeerName) ->
                 list_to_atom(PeerName)
             end,
             PeerNames
-        )
+        ),
+    {Add, Remove} = net_dushin_lethe_server:get_peers(
+        list_to_atom(ChannelId),
+        PeerAtoms
+    ),
+    io:format("get_peers(~p) -> {Add, Remove} = ~p~n", 
+        [
+            PeerAtoms,
+            {lists:map(fun(Peer) -> Peer#peer.name end, Add), Remove}
+        ]
     ),
     {
         struct,
@@ -101,6 +137,7 @@ get_response(ping, [ChannelId, PeerName]) ->
     "ok";
 
 get_response(leave, [ChannelId, PeerName]) ->
+    io:format("leave: ~p~n", [list_to_atom(PeerName)]),
     net_dushin_lethe_server:leave(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)

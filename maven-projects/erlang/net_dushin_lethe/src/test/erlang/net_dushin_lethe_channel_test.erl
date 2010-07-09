@@ -92,6 +92,15 @@ peers_test() ->
     MargotAdd = net_dushin_lethe_channel:get_peers(Test),
     ?assert(peer_list_contains(MargotAdd, fred)),
     ?assert(peer_list_contains(MargotAdd, margot)),
+    {MargotAdd,  []} = net_dushin_lethe_channel:get_peers(Test, []),
+    {MargotAdd1, []} = net_dushin_lethe_channel:get_peers(Test, [fred]),
+    ?assert(not peer_list_contains(MargotAdd1, fred)),
+    ?assert(peer_list_contains(MargotAdd1, margot)),
+    {MargotAdd2, []} = net_dushin_lethe_channel:get_peers(Test, [margot]),
+    ?assert(peer_list_contains(MargotAdd2, fred)),
+    ?assert(not peer_list_contains(MargotAdd2, margot)),
+    {[], []} = net_dushin_lethe_channel:get_peers(Test, [fred, margot]),
+    {[], [stranger]} = net_dushin_lethe_channel:get_peers(Test, [fred, margot, stranger]),
     %%
     %% Fred leaves
     %%

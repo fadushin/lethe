@@ -65,6 +65,10 @@ var Lethe = {
                 dummyChannel.peers[peer.id] = peer;
             },
 
+            ping: function(channelName, peer) {
+                // no-op
+            },
+            
             getPeers: function(channelName, peerNames) {
                 var dummyChannel = this.dummyChannels[channelName];
                 var ret = {add: [], remove: []};
@@ -87,7 +91,7 @@ var Lethe = {
                 return ret;
             },
             
-            leave: function(channelName) {
+            leave: function(channelName, peerId) {
                 delete this.dummyChannels[channelName];
             },
             
@@ -208,7 +212,7 @@ var Lethe = {
                 //
                 // Join the channel (on the back end)
                 //
-                var obj = identity.toPeerObject();
+                var obj = identity.peer;
                 backend.join(channelName, obj);
                 //
                 // Create the channel and add it to the list of channels
@@ -218,17 +222,18 @@ var Lethe = {
             },
             
             leaveChannel: function(channel) {
+                var identity = this.getIdentity()
                 var channels = this.getChannels();
                 var channelName = channel.valueForKeyPath('name');
+                var peerId = identity.peer.id;
                 //
                 // Signal the update function to stop
                 //
                 channel.setValueForKeyPath(false, 'running');
-                // clearInterval(channel.updateId)
                 //
                 // remove the channel from the back end
                 //
-                backend.leave(channelName);
+                backend.leave(channelName, peerId);
                 //
                 // remove it from the model
                 //
@@ -252,7 +257,7 @@ var Lethe = {
                     if (oldName) {
                         backend.leave(channelName);
                     }
-                    var obj = identity.toPeerObject();
+                    var obj = identity.peer;
                     backend.join(channelName, obj);
                     channel.updatePeers();
                 }
@@ -327,6 +332,7 @@ Lethe.Identity = Class.create(
                 {privateKey: identity.privKey}
             ) : null;
             this.setValueForKeyPath(identity.name, "name");
+            this.peer = this.toPeerObject();
         },
         
         getName: function() {
@@ -400,7 +406,7 @@ Lethe.Channel = Class.create(
                     peers: [], 
                     messages: [],
                     running: true,
-                    updateId: setInterval(
+                    intervalId: setInterval(
                         function() {
                             that.update();
                         },
@@ -427,20 +433,35 @@ Lethe.Channel = Class.create(
         },
         
         update: function() {
+            if (!this.checkRunning()) {
+                return;
+            }
+            this.ping();
             this.updatePeers();
-            // this.updateMessages();
+            this.updateMessages();
         },
-
-        updatePeers: function() {
-            var channelName = this.name;
+        
+        checkRunning: function() {
             if (!this.running) {
                 console.log("Shutting down update function for channel " + channelName);
                 clearInterval(this.intervalId);
-                return;
+                return false;
             }
+            return true;
+        },
+        
+        ping: function() {
+            var identity = Lethe.instance.getIdentity();
+            var channelName = this.name;
+            this.valueForKeyPath('backend').ping(channelName, identity.peer.id);
+        },
+
+        updatePeers: function() {
+            var identity = Lethe.instance.getIdentity();
+            var channelName = this.name;
             console.log("Updating channel " + channelName + "...");
             //
-            // Get the peer ids out of the ppers
+            // Get the peer ids out of the peers
             //
             var peers = this.valueForKeyPath('peers');
             var peerIds = net_dushin_foundation.Lists.map(
@@ -552,11 +573,7 @@ Lethe.Peer = Class.create(
                     )
                 }
             );
-        }/*,
-        
-        getPeerId: function() {
-            return this.peerId;
-        }*/
+        }
     }
 );
 
@@ -681,12 +698,6 @@ Lethe.Message = Class.create(
         toString: function() {
             var prefix = "";
             var contents;
-            /*
-            if (this.isPlaintext()) {
-                prefix += "PLAINTEXT::";
-                contents = this.renderContents(this.contents);
-            }
-            */
             if (this.isEncrypted()) {
                 if (this.isDecrypted()) {
                     prefix += "DECRYPTED::";
@@ -732,8 +743,7 @@ Lethe.Message.parse = function(obj) {
 };
 
 Lethe.init = function() {
-    var lethe = Lethe.create();
-    // var lethe = Lethe.create(Lethe.serverBackend.create());
+    var lethe = Lethe.create(Lethe.serverBackend.create());
     lethe.setIdentity(new Lethe.Identity("", "", ""));
     this.instance = lethe;
     return lethe;
@@ -762,12 +772,16 @@ Lethe.serverBackend = {
                 return proxy.join(channelName, peer);
             },
 
+            ping: function(channelName, peer) {
+                // return pinger.notify(channelName, peer);
+            },
+
             getPeers: function(channelName, peerNames) {
                 return proxy.get_peers(channelName, peerNames);
             },
             
-            leave: function(channelName) {
-                return proxy.leave(channelName);
+            leave: function(channelName, peerId) {
+                return proxy.leave(channelName, peerId);
             },
             
             sendMessage: function(channelName, message) {

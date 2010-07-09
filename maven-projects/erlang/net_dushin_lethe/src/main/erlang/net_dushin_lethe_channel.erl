@@ -356,12 +356,13 @@ peer_loop(Ctx, Peers) ->
                 _ -> ok
             end,
             net_dushin_lethe_rpc:response(ClientPid, Response),
-            peer_loop(Ctx, NewPeers);
+            peer_loop(Ctx, case NewPeers of {error, _} -> Peers; _ -> NewPeers end);
         %%
         %%
         %%
         {ClientPid, {get, PeerNames}} ->
-            net_dushin_lethe_rpc:response(ClientPid, find_peers(PeerNames, Peers)),
+            Result = find_peers(PeerNames, Peers),
+            net_dushin_lethe_rpc:response(ClientPid, Result),
             peer_loop(Ctx, Peers);
         %%
         %% Remove the peer identified by the specified name from the list of peers
@@ -375,8 +376,9 @@ peer_loop(Ctx, Peers) ->
         %% requires no response
         %%
         {_ClientPid, sweep} ->
-            NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
-            peer_loop(Ctx, NewPeers);
+            % NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
+            % peer_loop(Ctx, NewPeers);
+            peer_loop(Ctx, Peers);
         %%
         %% Report malformed messages
         %%
@@ -468,17 +470,26 @@ tail([_H|T]) ->
     T.
 
 stamp_message(Message) ->
-    %io:format("ts: ~s~n", [current_ms()]),
     Message#message {
         timestamp = current_ms()
     }.
 
 
 find_peers(PeerNames, Peers) ->
+    Add = [Peer || Peer <- Peers, not(lists:member(Peer#peer.name, PeerNames))],
+    Remove = [PeerName || PeerName <- PeerNames, not(peer_name_occurs(PeerName, Peers))],
     {
-        [Peer || Peer <- Peers, not(lists:member(Peer#peer.name, PeerNames))],
-        [PeerName || PeerName <- PeerNames, not(peer_name_occurs(PeerName, Peers))]
+        Add,
+        Remove
     }.
+
+peer_name_occurs(PeerName, Peers) ->
+    case lists:filter(fun(Peer) -> Peer#peer.name =:= PeerName end, Peers) of
+        [] ->
+            false;
+        _ ->
+            true
+    end.
 
 get_messages_since(Messages, Since) ->
     case Since of
@@ -502,14 +513,6 @@ filter_stale_messages(Messages, TimeoutMs) ->
         Messages
     ).
 
-peer_name_occurs(PeerName, Peers) ->
-    case lists:filter(fun(Peer) -> Peer#peer.name =:= PeerName end, Peers) of
-        [] ->
-            false;
-        _ ->
-            true
-    end.
-
 stamp_peer(Peer) ->
     Peer#peer{last_update = current_ms()}.
 
@@ -521,6 +524,7 @@ remove_peer(_, L, []) ->
 remove_peer(PeerName, L, [H|T]) ->
     case PeerName =:= H#peer.name of
         true ->
+            io:format("peer removed: ~p~n", [PeerName]),
             stitch(L, T);
         false ->
             remove_peer(PeerName, [H|L], T)
