@@ -145,17 +145,20 @@ get_response(leave, [ChannelId, PeerName]) ->
     "ok";
 
 get_response(get_messages, [ChannelId]) ->
-    messages_to_json(
-        net_dushin_lethe_server:get_messages(
-            list_to_atom(ChannelId)
-        )
+    get_response(
+        get_messages_since, [ChannelId, all]
     );
 
 get_response(get_messages_since, [ChannelId, Since]) ->
+    Messages = net_dushin_lethe_server:get_messages(
+        list_to_atom(ChannelId), Since
+    ),
+    io:format(
+        "get_messages_since(~p, ~p): ~p~n", 
+        [ChannelId, Since, Messages]
+    ),
     messages_to_json(
-        net_dushin_lethe_server:get_messages(
-            list_to_atom(ChannelId), Since
-        )
+        Messages
     );
 
 get_response(post_message, [ChannelId, Message]) ->
