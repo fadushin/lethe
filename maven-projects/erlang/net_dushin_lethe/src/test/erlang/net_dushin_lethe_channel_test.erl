@@ -161,7 +161,7 @@ max_peers_test() ->
     net_dushin_lethe_channel:stop(Test).
 
     
-peers_timeout_test() ->
+peers_timeout_test_disabled() ->
     %%
     %% start with a fresh channel
     %%

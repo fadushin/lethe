@@ -114,25 +114,28 @@ net_dushin_crypto.DecryptorFactory = {
                 var symmetricKey;
                 if (object.encryptedKey) {
                     symmetricKey = rsa.privateDecrypt(base64_decode(object.encryptedKey));
+                    var plaintext = utf82str(cipher.execute(symmetricKey.slice(0, 16), base64_decode(object.ciphertext)));
+                    return root.jsonrpc.unmarshall(plaintext);
                 } else if (object.encryptedKeys) {
-                    symmetricKey = net_dushin_foundation.Lists.mapFirst(
+                    var result = net_dushin_foundation.Lists.mapFirst(
                         function(encryptedKey) {
                             try {
-                                return rsa.privateDecrypt(base64_decode(encryptedKey));
+                                var key = rsa.privateDecrypt(base64_decode(encryptedKey));
+                                var plaintext = utf82str(cipher.execute(key.slice(0, 16), base64_decode(object.ciphertext)));
+                                return root.jsonrpc.unmarshall(plaintext);
                             } catch (e) {
                                 return false;
                             }
                         },
                         object.encryptedKeys
                     );
-                    if (!symmetricKey) {
+                    if (!result) {
                         throw "Unable to decrypt any of the encrypted symmetric keys";
                     }
+                    return result;
                 } else {
                     throw "Encrypted message must contain at most one of encryptedKey or encryptedKeys";
                 }
-                var plaintext = utf82str(cipher.execute(symmetricKey.slice(0, 16), base64_decode(object.ciphertext)));
-                return root.jsonrpc.unmarshall(plaintext);
             }
         };
     }

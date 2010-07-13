@@ -59,7 +59,7 @@ handle_request(_, Path, Arg) -> % catchall
 %% handler for all of the JSON RPC operations.
 %%
 
-handle_rpc(_State, {call, Method, Params} = Request, Session) ->  
+handle_rpc(_State, {call, Method, Params} = _Request, Session) ->  
     %io:format("Request = ~p~n", [Request]),
     Response = 
             try get_response(Method, Params)
@@ -123,6 +123,7 @@ get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
     };
 
 get_response(join, [ChannelId, Peer]) ->
+    io:format("join(~p, ~p)~n", [ChannelId, Peer]),
     net_dushin_lethe_server:join(
         list_to_atom(ChannelId),
         json_to_peer(Peer)

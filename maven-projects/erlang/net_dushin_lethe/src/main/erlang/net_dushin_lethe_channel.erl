@@ -414,7 +414,7 @@ message_loop(Ctx, Messages) ->
         %%
         %%
         {ClientPid, {get, Since}} ->
-            SinceMessages = get_messages_since(Messages, Since),
+            SinceMessages = lists:reverse(get_messages_since(Messages, Since)),
             net_dushin_lethe_rpc:response(ClientPid, SinceMessages),
             message_loop(Ctx, Messages);
         %%
@@ -550,8 +550,8 @@ peer_matches(P1, P2) ->
     P1#peer.name =:= P2#peer.name.
 
 
-filter_stale_peers(Peers, TimeoutMs) ->
-    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
+%filter_stale_peers(Peers, TimeoutMs) ->
+%    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
 
 is_not_stale(TestMs, TimeoutMs) ->
     (current_ms() - TestMs) < TimeoutMs.

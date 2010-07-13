@@ -309,17 +309,18 @@ Lethe.Identity = Class.create(
                     name: name, 
                     privKey: privKey, 
                     pubKey: pubKey,
-                    //
-                    // derived properties
-                    //
-                    signer: privKey ? net_dushin_crypto.SignerFactory.createSigner(
-                        {privateKey: privKey}
-                    ) : null,
-                    decryptor: privKey ? net_dushin_crypto.DecryptorFactory.createDecryptor(
-                        {privateKey: privKey}
-                    ) : null
                 }
             );
+            //
+            // derived properties
+            //
+            this.signer = privKey ? net_dushin_crypto.SignerFactory.createSigner(
+                {privateKey: privKey}
+            ) : null;
+            this.decryptor = privKey ? net_dushin_crypto.DecryptorFactory.createDecryptor(
+                {privateKey: privKey}
+            ) : null;
+            this.peer = pubKey ? this.toPeerObject() : null;
         },
         
         assign: function(identity) {
@@ -356,7 +357,7 @@ Lethe.Identity = Class.create(
         createPeerBlob: function() {
             var name = this.valueForKeyPath("name");
             var pubKey = this.valueForKeyPath("pubKey");
-            var signer = this.valueForKeyPath("signer");
+            var signer = this.signer; // this.valueForKeyPath("signer");
             var signedObject = signer.sign({name: name});
             return net_dushin_foundation.Serialization.serialize(
                 {
@@ -443,7 +444,7 @@ Lethe.Channel = Class.create(
         
         checkRunning: function() {
             if (!this.running) {
-                console.log("Shutting down update function for channel " + channelName);
+                console.log("Shutting down update function for channel " + this.channelName);
                 clearInterval(this.intervalId);
                 return false;
             }
@@ -497,8 +498,13 @@ Lethe.Channel = Class.create(
             // and add the ones that should be added.
             //
             for (i = 0;  i < peerUpdate.add.length;  ++i) {
-                var parsedPeer = Lethe.Peer.parse(peerUpdate.add[i]);
-                peers.addObject(parsedPeer);
+                try {
+                    var parsedPeer = Lethe.Peer.parse(peerUpdate.add[i]);
+                    peers.addObject(parsedPeer);
+                } catch (e) {
+                    console.log("An error occurred parsing a peer from the server:");
+                    console.log(e);
+                }
             }
         },
         
@@ -519,8 +525,6 @@ Lethe.Channel = Class.create(
             var processedMessages = net_dushin_foundation.Lists.map(
                 function(newMessage) {
                     var message = Lethe.Message.parse(newMessage);
-                    // TODO decrypt/verify
-                    
                     if (message.isPlaintext()) {
                         return message;
                     }
