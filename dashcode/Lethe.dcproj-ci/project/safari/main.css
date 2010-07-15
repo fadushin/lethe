@@ -449,7 +449,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     margin-top: 0px;
     height: 16px;
     top: 10px;
-    left: 312px;
+    left: 353px;
     width: auto;
 }
 
@@ -463,12 +463,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     margin-top: 0px;
     height: 16px;
-    left: 423px;
     font-size: 12px;
     font-weight: bold;
     font-family: 'Courier New';
     top: 13px;
-    right: 41px;
+    left: 464px;
+    right: 0px;
     width: auto;
 }
 
@@ -980,8 +980,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
-    left: 132px;
     top: 10px;
+    left: 121px;
     width: auto;
     bottom: 11px;
     height: auto;
@@ -1124,7 +1124,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     width: 64px;
     height: 21px;
     top: 10px;
-    right: 3px;
+    right: 5px;
     margin-left: auto;
 }
 

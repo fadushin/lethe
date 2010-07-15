@@ -45,9 +45,10 @@ var dashcodePartSpecs = {
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
     "text3": { "text": "Key Fingerprint:", "view": "DC.Text" },
     "textField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
-    "TitleText": { "text": "Lethe Messenger", "view": "DC.Text" },
+    "TitleText": { "text": "Lethe Messenger 0.1-SNAPSHOT", "view": "DC.Text" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 
