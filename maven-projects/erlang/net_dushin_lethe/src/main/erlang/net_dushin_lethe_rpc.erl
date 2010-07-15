@@ -39,7 +39,7 @@ wait(Pid, TimeoutMs) ->
         {Pid, Response} ->
             Response
     after TimeoutMs ->
-        {error, timeout}
+        throw({error, timeout})
     end.
 
 call(Pid, Message) ->

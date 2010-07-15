@@ -51,7 +51,7 @@ handle_request('POST', "/rpc" ++ _, Arg) ->
     {ok, {IP, _}} = Peer,
     yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
 handle_request(_, Path, Arg) -> % catchall 
-    io:format("~p ~p~n", [Path, Arg]),
+    debug("~p ~p~n", [Path, Arg]),
     make_response(200, "<p>What exactly are you looking for?</p>").
 
 %%
@@ -60,13 +60,15 @@ handle_request(_, Path, Arg) -> % catchall
 %%
 
 handle_rpc(_State, {call, Method, Params} = _Request, Session) ->  
-    %io:format("Request = ~p~n", [Request]),
+    %debug("Request = ~p~n", [Request]),
     Response = 
             try get_response(Method, Params)
             catch
-                Exception -> Exception
+                Exception -> 
+                    debug("Exception = ~p~n", [Exception]),
+                    Exception
             end,
-    %io:format("Response = ~p~n", [Response]),
+    %debug("Response = ~p~n", [Response]),
     {true, 0, Session, {response, Response}}.
 %
 % input args:
@@ -108,7 +110,7 @@ get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
         list_to_atom(ChannelId),
         PeerAtoms
     ),
-    io:format("get_peers(~p) -> {Add, Remove} = ~p~n", 
+    debug("get_peers(~p) -> {Add, Remove} = ~p~n", 
         [
             PeerAtoms,
             {lists:map(fun(Peer) -> Peer#peer.name end, Add), Remove}
@@ -123,7 +125,7 @@ get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
     };
 
 get_response(join, [ChannelId, Peer]) ->
-    io:format("join(~p, ~p)~n", [ChannelId, Peer]),
+    debug("join(~p, ~p)~n", [ChannelId, Peer]),
     net_dushin_lethe_server:join(
         list_to_atom(ChannelId),
         json_to_peer(Peer)
@@ -131,6 +133,7 @@ get_response(join, [ChannelId, Peer]) ->
     "ok";
 
 get_response(ping, [ChannelId, PeerName]) ->
+    debug("ping(~p, ~p)~n", [ChannelId, PeerName]),
     net_dushin_lethe_server:ping(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)
@@ -138,7 +141,7 @@ get_response(ping, [ChannelId, PeerName]) ->
     "ok";
 
 get_response(leave, [ChannelId, PeerName]) ->
-    io:format("leave: ~p~n", [list_to_atom(PeerName)]),
+    debug("leave: ~p~n", [list_to_atom(PeerName)]),
     net_dushin_lethe_server:leave(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)
@@ -154,7 +157,7 @@ get_response(get_messages_since, [ChannelId, Since]) ->
     Messages = net_dushin_lethe_server:get_messages(
         list_to_atom(ChannelId), Since
     ),
-    io:format(
+    debug(
         "get_messages_since(~p, ~p): ~p~n", 
         [ChannelId, Since, Messages]
     ),
@@ -254,3 +257,13 @@ make_all_response(Status, Headers, Message) ->
         {allheaders, Headers}, 
         {html, Message}
     ].
+
+
+
+debug(Fmt, Args) ->
+    io:format("~p: " ++ Fmt, [current_ms() | Args]).
+
+current_ms() ->
+    {Megasecs, Secs, MicroSecs} = erlang:now(),
+    Val = (Megasecs * 1000000000 + Secs * 1000 + erlang:trunc(MicroSecs / 1000.0)),
+    Val.

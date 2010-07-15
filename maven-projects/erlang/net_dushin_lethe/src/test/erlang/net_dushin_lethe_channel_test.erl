@@ -33,7 +33,7 @@
 start_stop_test() ->
     Test = net_dushin_lethe_channel:start(start_stop_test),
     ?assertMatch(ok, net_dushin_lethe_channel:stop(Test)),
-    ?assertMatch({error, timeout}, net_dushin_lethe_channel:get_peers(Test)),
+    ?assertMatch({error, timeout}, catch net_dushin_lethe_channel:get_peers(Test)),
     ok.
 
 
@@ -53,7 +53,7 @@ channel_timeout_test() ->
     after 1000 -> error
     end,
     ?assertMatch(Response, channel_timeout_test),
-    ?assertMatch({error, timeout}, net_dushin_lethe_channel:get_peers(Test)),
+    ?assertMatch({error, timeout}, catch net_dushin_lethe_channel:get_peers(Test)),
     ok.
     
 
@@ -161,7 +161,7 @@ max_peers_test() ->
     net_dushin_lethe_channel:stop(Test).
 
     
-peers_timeout_test_disabled() ->
+peers_timeout_test() ->
     %%
     %% start with a fresh channel
     %%
@@ -228,6 +228,7 @@ messages_test() ->
     %%
     %% Add another message
     %%
+    sleep(1),
     SecondMessage = net_dushin_lethe_channel:post_message(Test, #message{blob=second}),
     ?assert(lists:member(FirstMessage, net_dushin_lethe_channel:get_messages(Test))),
     ?assert(lists:member(SecondMessage, net_dushin_lethe_channel:get_messages(Test))),

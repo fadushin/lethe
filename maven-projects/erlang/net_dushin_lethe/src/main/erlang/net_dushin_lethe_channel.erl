@@ -351,6 +351,7 @@ peer_loop(Ctx, Peers) ->
         %%
         {ClientPid, {ping, PeerName}} ->
             NewPeers = update_peer(#peer{name=PeerName}, Peers),
+            %io:format("ping ~p; NewPeers=~p~n", [PeerName, NewPeers]),
             Response = case NewPeers of
                 {error, peer_does_not_exist} -> NewPeers;
                 _ -> ok
@@ -376,9 +377,9 @@ peer_loop(Ctx, Peers) ->
         %% requires no response
         %%
         {_ClientPid, sweep} ->
-            % NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
-            % peer_loop(Ctx, NewPeers);
-            peer_loop(Ctx, Peers);
+            NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
+            peer_loop(Ctx, NewPeers);
+            % peer_loop(Ctx, Peers);
         %%
         %% Report malformed messages
         %%
@@ -484,10 +485,13 @@ find_peers(PeerNames, Peers) ->
     }.
 
 peer_name_occurs(PeerName, Peers) ->
+    
     case lists:filter(fun(Peer) -> Peer#peer.name =:= PeerName end, Peers) of
         [] ->
+            %io:format("peer_name_occurs: PeerName=~p, Peers=~p -> false~n", [PeerName, Peers]),
             false;
         _ ->
+            %io:format("peer_name_occurs: PeerName=~p, Peers=~p -> true~n", [PeerName, Peers]),
             true
     end.
 
@@ -514,7 +518,9 @@ filter_stale_messages(Messages, TimeoutMs) ->
     ).
 
 stamp_peer(Peer) ->
-    Peer#peer{last_update = current_ms()}.
+    Ret = Peer#peer{last_update = current_ms()},
+    %io:format("Stamped Peer: ~p, ~p~n", [Ret#peer.name, Ret#peer.last_update]),
+    Ret.
 
 remove_peer(PeerName, Peers) ->
     remove_peer(PeerName, [], Peers).
@@ -543,15 +549,15 @@ update_peer(_Peer, _, []) ->
 update_peer(Peer, L, [H|T]) ->
     case peer_matches(Peer, H) of
         true -> stitch(L, [stamp_peer(H) | T]);
-        false -> update_peer(Peer, L, T)
+        false -> update_peer(Peer, [H|L], T)
     end.
 
 peer_matches(P1, P2) ->
     P1#peer.name =:= P2#peer.name.
 
 
-%filter_stale_peers(Peers, TimeoutMs) ->
-%    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
+filter_stale_peers(Peers, TimeoutMs) ->
+    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
 
 is_not_stale(TestMs, TimeoutMs) ->
     (current_ms() - TestMs) < TimeoutMs.

@@ -34,24 +34,10 @@
 %%
 %% Exported Functions
 %%
--export([start0/0, start1/0]).
+-export([start/0]).
 
 %%
 %% API Functions
 %%
-start0() ->
+start() ->
     application:start(net_dushin_lethe).
-
-start1() ->
-    start0(),
-    Fred=#peer{name=fred},
-    net_dushin_lethe_server:join(hurly, Fred),
-    net_dushin_lethe_server:join(burly, Fred),
-    
-    ok.
-
-
-%%
-%% Local Functions
-%%
-
