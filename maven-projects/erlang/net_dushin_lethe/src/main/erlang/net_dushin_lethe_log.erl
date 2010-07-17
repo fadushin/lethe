@@ -24,37 +24,47 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
+-module(net_dushin_lethe_log).
 
-{
-    application, net_dushin_lethe,
-    [
-        {description, "Lethe Messaging Server"},
-        {vsn, "0.1-SNAPSHOT"},
-        {
-            modules, 
-            [
-                net_dushin_lethe_launcher, net_dushin_lethe, net_dushin_lethe_sup, net_dushin_lethe_server, net_dushin_lethe_channel,
-                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid,
-                net_dushin_lethe_handler, net_dushin_lethe_log
-            ]
-        },
-        {registered, [net_dushin_lethe_server]},
-        {applications, [kernel, stdlib]},
-        {
-            mod, 
-            {
-                net_dushin_lethe, 
-                [
-                    {
-                        lethe_args, 
-                        [
-                            % [{channel_config, [{peer_timeout_ms, 50000000}]}]
-                        ]
-                    }, 
-                    {yaws_args, []}
-                ]
-            }
-        },
-        {start_phases, []}
-    ]
-}.
+%%
+%% Include files
+%%
+
+%%
+%% Exported Functions
+%%
+-export([severe/2, warning/2, info/2, debug/2]).
+
+%%
+%% API Functions
+%%
+
+%% TODO make this a configurable process, etc
+
+severe(Fmt, Args) ->
+    log("SEVERE " ++ Fmt, Args).
+
+warning(Fmt, Args) ->
+    log("WARNING " ++ Fmt, Args).
+
+info(Fmt, Args) ->
+    log("INFO " ++ Fmt, Args).
+
+debug(Fmt, Args) ->
+    ok. %log("DEBUG " ++ Fmt, Args).
+
+
+
+%%
+%% Local Functions
+%%
+
+log(Fmt, Args) ->
+    io:format("~p: " ++ Fmt ++ "~n", [current_ms() | Args]).
+
+
+current_ms() ->
+    {Megasecs, Secs, MicroSecs} = erlang:now(),
+    Val = (Megasecs * 1000000000 + Secs * 1000 + erlang:trunc(MicroSecs / 1000.0)),
+    Val.
+

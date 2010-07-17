@@ -252,6 +252,7 @@ spawn_messages(ChannelId, Config) ->
     ).
 
 channel_loop(Ctx) ->
+    ChannelId = Ctx#channel_context.channel_id,
     receive
         %%
         %%
@@ -269,12 +270,17 @@ channel_loop(Ctx) ->
         %%
         %%
         {ClientPid, stop} ->
+            net_dushin_lethe_log:info("Channel Loop ~p stopping...", [ChannelId]),
             channel_stop(Ctx),
             net_dushin_lethe_rpc:response(ClientPid, ok);
         %%
         %%
         %%
         {'EXIT', Pid, Reason} ->
+            net_dushin_lethe_log:warning(
+                "An error was trapped by channel loop (~p): Pid=~p; Reason=~p", 
+                [ChannelId, Pid, Reason]
+            ),
             PeersPid = Ctx#channel_context.peers_pid,
             MessagesPid = Ctx#channel_context.messages_pid,
             %% TODO handle rebooting the timer
@@ -309,6 +315,7 @@ channel_loop(Ctx) ->
     %%
     %%
     after Ctx#channel_context.channel_timeout_ms ->
+        net_dushin_lethe_log:info("Channel ~p timed out.  Stopping...", [ChannelId]),
         channel_stop(Ctx),
         F = net_dushin_lethe_lists:find_value(
             Ctx#channel_context.config, 
@@ -327,19 +334,26 @@ channel_stop(Ctx) ->
 %%
 %%
 peer_loop(Ctx, Peers) ->
+    ChannelId = Ctx#peer_context.channel_id,
     receive
         %%
         %%
         %%
         {ClientPid, stop} ->
+            net_dushin_lethe_log:info("Peer Loop ~p stopping", [ChannelId]),
             net_dushin_lethe_rpc:response(ClientPid, ok);
             %% done
         %%
         %%
         %%
         {ClientPid, {join, Peer}} ->
+            net_dushin_lethe_log:info("Peer Loop ~p join of peer ~p", [ChannelId, Peer]),
             case add_peer(Peer, Peers, Ctx#peer_context.max_peers) of
                 too_many_peers ->
+                    net_dushin_lethe_log:warning(
+                        "Too many peers on channel ~p;  Peer ~p rejected", 
+                        [ChannelId, Peer]
+                    ),
                     net_dushin_lethe_rpc:response(ClientPid, {error, too_many_peers}),
                     peer_loop(Ctx, Peers);
                 NewPeers ->
@@ -351,10 +365,15 @@ peer_loop(Ctx, Peers) ->
         %%
         {ClientPid, {ping, PeerName}} ->
             NewPeers = update_peer(#peer{name=PeerName}, Peers),
-            %io:format("ping ~p; NewPeers=~p~n", [PeerName, NewPeers]),
             Response = case NewPeers of
-                {error, peer_does_not_exist} -> NewPeers;
-                _ -> ok
+                {error, peer_does_not_exist} -> 
+                    net_dushin_lethe_log:warning(
+                        "Non existent peer pinged on channel ~p;  Peer = ~p", 
+                        [ChannelId, PeerName]
+                    ),
+                    NewPeers;
+                _ -> 
+                    ok
             end,
             net_dushin_lethe_rpc:response(ClientPid, Response),
             peer_loop(Ctx, case NewPeers of {error, _} -> Peers; _ -> NewPeers end);
@@ -369,6 +388,7 @@ peer_loop(Ctx, Peers) ->
         %% Remove the peer identified by the specified name from the list of peers
         %%
         {ClientPid, {leave, PeerName}} ->
+            net_dushin_lethe_log:info("Peer Loop ~p; peer ~p leaving", [ChannelId, PeerName]),
             NewPeers = remove_peer(PeerName, Peers),
             net_dushin_lethe_rpc:response(ClientPid, ok),
             peer_loop(Ctx, NewPeers);
@@ -379,7 +399,6 @@ peer_loop(Ctx, Peers) ->
         {_ClientPid, sweep} ->
             NewPeers = filter_stale_peers(Peers, Ctx#peer_context.peer_timeout_ms),
             peer_loop(Ctx, NewPeers);
-            % peer_loop(Ctx, Peers);
         %%
         %% Report malformed messages
         %%
@@ -397,6 +416,7 @@ peer_loop(Ctx, Peers) ->
 %% 
 %% 
 message_loop(Ctx, Messages) ->
+    ChannelId = Ctx#message_context.channel_id,
     receive
         %%
         %%
@@ -407,6 +427,7 @@ message_loop(Ctx, Messages) ->
         %%
         %%
         {ClientPid, {post, Message}} ->
+            net_dushin_lethe_log:info("Message Loop ~p; adding message ~p", [ChannelId, Message]),
             NewMessages = [NewMessage | _] = 
                 add_message(Message, Messages, Ctx#message_context.max_messages),
             net_dushin_lethe_rpc:response(ClientPid, NewMessage),
@@ -443,7 +464,7 @@ add_peer(Peer, Peers, MaxLen) ->
     case length(Peers) < MaxLen of
         true ->
             case update_peer(Peer, Peers) of
-                {error, _} ->
+                {_, peer_does_not_exist} ->
                     [stamp_peer(Peer) | Peers];
                 NewPeers ->
                     NewPeers
@@ -513,13 +534,22 @@ get_messages_since(L, [H|T], All, Since) ->
 
 filter_stale_messages(Messages, TimeoutMs) ->
     lists:filter(
-        fun(Message) -> is_not_stale(Message#message.timestamp, TimeoutMs) end, 
+        fun(Message) -> 
+            Ret = is_not_stale(Message#message.timestamp, TimeoutMs),
+            case Ret of
+                false ->
+                    net_dushin_lethe_log:debug("Message is stale: ~p", [Message]);
+                _ ->
+                    ok
+            end,
+            Ret
+        end, 
         Messages
     ).
 
 stamp_peer(Peer) ->
     Ret = Peer#peer{last_update = current_ms()},
-    %io:format("Stamped Peer: ~p, ~p~n", [Ret#peer.name, Ret#peer.last_update]),
+    net_dushin_lethe_log:debug("Stamped Peer: ~p, ~p~n", [Ret#peer.name, Ret#peer.last_update]),
     Ret.
 
 remove_peer(PeerName, Peers) ->
@@ -530,7 +560,7 @@ remove_peer(_, L, []) ->
 remove_peer(PeerName, L, [H|T]) ->
     case PeerName =:= H#peer.name of
         true ->
-            io:format("peer removed: ~p~n", [PeerName]),
+            net_dushin_lethe_log:debug("peer removed: ~p", [PeerName]),
             stitch(L, T);
         false ->
             remove_peer(PeerName, [H|L], T)
@@ -557,7 +587,19 @@ peer_matches(P1, P2) ->
 
 
 filter_stale_peers(Peers, TimeoutMs) ->
-    lists:filter(fun(Peer) -> is_not_stale(Peer#peer.last_update, TimeoutMs) end, Peers).
+    lists:filter(
+        fun(Peer) -> 
+            Ret = is_not_stale(Peer#peer.last_update, TimeoutMs),
+            case Ret of
+                false ->
+                    net_dushin_lethe_log:debug("Peer is stale: ~p", [Peer]);
+                _ ->
+                    ok
+            end,
+            Ret
+        end, 
+        Peers
+    ).
 
 is_not_stale(TestMs, TimeoutMs) ->
     (current_ms() - TestMs) < TimeoutMs.
