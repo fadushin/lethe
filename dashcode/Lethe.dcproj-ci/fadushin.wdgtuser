@@ -138,7 +138,7 @@
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>0</integer>
+	<integer>5</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
@@ -150,11 +150,11 @@
 		<key>EmailToNotifyAddress</key>
 		<string>fred@dushin.net</string>
 		<key>Path</key>
-		<string>Lethe</string>
+		<string>Lethe-stage</string>
 		<key>SavePath</key>
-		<string>/Users/fadushin/Sites/tmp</string>
+		<string>/Users/fadushin/Sites/stage</string>
 		<key>enableSimulation</key>
-		<true/>
+		<false/>
 		<key>simulatedHost</key>
 		<string>spock.local</string>
 	</dict>
@@ -315,11 +315,7 @@
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
+				<integer>4</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
