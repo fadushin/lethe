@@ -26,6 +26,8 @@
 %%
 -module(net_dushin_lethe_log).
 
+-behavior(gen_server).
+
 %%
 %% Include files
 %%
@@ -33,38 +35,145 @@
 %%
 %% Exported Functions
 %%
--export([severe/2, warning/2, info/2, debug/2]).
+-export(
+    [
+        start/1, stop/0, set/2,
+        severe/3, warning/3, info/3, debug/3,
+        %%
+        %% gen_server implementation
+        %%
+        init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3
+
+    ]
+).
+
+-record(
+    state,
+    {
+        logger,
+        tab
+    }
+).
+
 
 %%
 %% API Functions
 %%
 
-%% TODO make this a configurable process, etc
 
-severe(Fmt, Args) ->
-    log("SEVERE " ++ Fmt, Args).
+%
+% {logger, fun(Module, Level, Fmt, Args)}
+% {filter, [{module1, [severe, info]}, {module2, [debug]}]}
+%
 
-warning(Fmt, Args) ->
-    log("WARNING " ++ Fmt, Args).
+start(Config) ->
+    gen_server:start_link(
+        {local, ?MODULE},
+        ?MODULE,
+        Config,
+        []
+    ).
 
-info(Fmt, Args) ->
-    log("INFO " ++ Fmt, Args).
+stop() ->
+    gen_server:call(
+        ?MODULE,
+        stop
+    ).
 
-debug(Fmt, Args) ->
-    ok. %log("DEBUG " ++ Fmt, Args).
+set(Module, Levels) ->
+    gen_server:call(
+        ?MODULE,
+        {set, Module, Levels}
+    ).
 
+severe(Module, Fmt, Args) ->
+    log(Module, severe, Fmt, Args).
+
+warning(Module, Fmt, Args) ->
+    log(Module, warning, Fmt, Args).
+
+info(Module, Fmt, Args) ->
+    log(Module, info, Fmt, Args).
+
+debug(Module, Fmt, Args) ->
+    log(Module, debug, Fmt, Args).
+
+log(Module, Level, Fmt, Args) ->
+    gen_server:cast(
+        ?MODULE,
+        {log, Module, Level, Fmt, Args}
+    ).
+
+%%
+%% gen_server implementation
+%%
+
+init(Config) -> 
+    State = #state {
+        logger = net_dushin_lethe_lists:find_value(
+            Config, 
+            logger,
+            fun(Module, Level, Format, Args) -> default_log(Module, Level, Format, Args) end
+        ),
+        tab = ets:new(
+            ?MODULE,
+            [set, private]
+        )
+    },
+    lists:foreach(
+        fun({Module, Levels}) ->
+            ets:insert(State#state.tab, {Module, Levels})
+        end,
+        net_dushin_lethe_lists:find_value(Config, filter, [])
+    ),
+    {ok, State}.
+
+handle_call(stop, _From, State) ->
+    {stop, normal, ok, State};
+handle_call({set, Module, Levels}, _From, State) ->
+    ets:insert(State#state.tab, {Module, Levels}),
+    {reply, ok, State}.
+
+handle_cast({log, Module, Level, Format, Args}, State) ->
+    Logger = State#state.logger,
+    case is_log(State#state.tab, Module, Level) of
+        true ->
+            Logger(Module, Level, Format, Args);
+        _ ->
+            ok
+    end,
+    {noreply, State}.
+
+handle_info(_Info, State) -> {noreply, State}.
+
+terminate(_Reason, _State) -> 
+    ok.
+
+code_change(_OldVsn, State, _Extra) -> {ok, State}.
 
 
 %%
 %% Local Functions
 %%
 
-log(Fmt, Args) ->
-    io:format("~p: " ++ Fmt ++ "~n", [current_ms() | Args]).
+is_log(Ets, Module, Level) ->
+    case ets:lookup(Ets, Module) of
+        [] ->
+            false;
+        [{Module, Levels}|[]] ->
+            lists:any(fun(X) -> case X of Level -> true; _ -> false end end, Levels);
+        % garbage
+        _ ->
+            false
+    end.
+
+default_log(Module, Level, Fmt, Args) ->
+    io:format(date_time() ++ " - ~p - ~p: " ++ Fmt ++ "~n", [Module | [Level | Args]]).
 
 
-current_ms() ->
-    {Megasecs, Secs, MicroSecs} = erlang:now(),
-    Val = (Megasecs * 1000000000 + Secs * 1000 + erlang:trunc(MicroSecs / 1000.0)),
-    Val.
+date_time() ->
+    {Year, Month, Day} = erlang:date(),
+    {Hour, Minute, Second} = erlang:time(),
+    % "[" ++ Year ++ "-" ++ Month ++ "-" ++ Day ++ " " ++ Hour ++ ":" ++ Minute ++ ":" ++ Second ++ "]".
+    io_lib:format("[~p-~p-~p ~p:~p:~p]", [Year, Month, Day, Hour, Minute, Second]).
 

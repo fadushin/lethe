@@ -24,38 +24,34 @@
 %% (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
+-module(net_dushin_lethe_log_test).
 
-{
-    application, net_dushin_lethe,
-    [
-        {description, "Lethe Messaging Server"},
-        {vsn, "0.1-SNAPSHOT"},
-        {
-            modules, 
-            [
-                net_dushin_lethe_launcher, net_dushin_lethe, net_dushin_lethe_sup, net_dushin_lethe_server, net_dushin_lethe_channel,
-                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid,
-                net_dushin_lethe_handler, net_dushin_lethe_log
-            ]
-        },
-        {registered, [net_dushin_lethe_server]},
-        {applications, [kernel, stdlib]},
-        {
-            mod, 
-            {
-                net_dushin_lethe, 
-                [
-                    {log_args, [{filter, [{net_dushin_lethe_channel, [debug, info, warning, severe]}]}]},
-                    {
-                        lethe_args, 
-                        [
-                            % [{channel_config, [{peer_timeout_ms, 50000000}]}]
-                        ]
-                    }, 
-                    {yaws_args, []}
-                ]
-            }
-        },
-        {start_phases, []}
-    ]
-}.
+-include("net_dushin_lethe_log.hrl").
+-include_lib("eunit/include/eunit.hrl").
+
+start_stop_test() ->
+    %%
+    %% Start the server, stop it, and check that it's no longer available
+    %%
+    io:format("foo", []),
+    {ok, _Pid} = net_dushin_lethe_log:start([]),
+    io:format("foo", []),
+    ?assertMatch(ok, net_dushin_lethe_log:stop()),
+    %%
+    %% done
+    %%
+    ok.
+
+log_test() ->
+    %%
+    %% Start the server
+    %%
+    {ok, _Pid} = net_dushin_lethe_log:start([{filter, [{?MODULE, [debug]}]}]),
+    
+    ?LETHE_DEBUG("bar", []),
+    
+    ?assertMatch(ok, net_dushin_lethe_log:stop()),
+    %%
+    %% done
+    %%
+    ok.

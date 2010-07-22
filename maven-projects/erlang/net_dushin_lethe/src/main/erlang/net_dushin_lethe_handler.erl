@@ -30,6 +30,7 @@
 -include("yaws.hrl"). 
 -include("yaws_api.hrl"). 
 -include("net_dushin_lethe_channel.hrl"). 
+-include("net_dushin_lethe_log.hrl").
 
 -export([out/1, handle_rpc/3]).
 
@@ -51,7 +52,7 @@ handle_request('POST', "/rpc" ++ _, Arg) ->
     {ok, {IP, _}} = Peer,
     yaws_rpc:handler_session(Arg#arg{state = [{ip, IP}]}, {?MODULE, handle_rpc});
 handle_request(_, Path, Arg) -> % catchall 
-    net_dushin_lethe_log:debug("~p ~p", [Path, Arg]),
+    ?LETHE_DEBUG("~p ~p", [Path, Arg]),
     make_response(200, "<p>What exactly are you looking for?</p>").
 
 %%
@@ -60,7 +61,7 @@ handle_request(_, Path, Arg) -> % catchall
 %%
 
 handle_rpc(_State, {call, Method, Params} = _Request, Session) ->  
-    %net_dushin_lethe_log:debug("Request = ~p", [Request]),
+    % ?LETHE_DEBUG("Request = ~p", [Request]),
     Response = 
             try get_response(Method, Params)
             catch
@@ -68,7 +69,7 @@ handle_rpc(_State, {call, Method, Params} = _Request, Session) ->
                     net_dushin_lethe_log:debug("Exception = ~p", [Exception]),
                     Exception
             end,
-    %net_dushin_lethe_log:debug("Response = ~p", [Response]),
+    % ?LETHE_DEBUG("Response = ~p", [Response]),
     {true, 0, Session, {response, Response}}.
 %
 % input args:
@@ -110,7 +111,7 @@ get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
         list_to_atom(ChannelId),
         PeerAtoms
     ),
-    net_dushin_lethe_log:debug("get_peers(~p) -> {Add, Remove} = ~p", 
+    ?LETHE_DEBUG("get_peers(~p) -> {Add, Remove} = ~p", 
         [
             PeerAtoms,
             {lists:map(fun(Peer) -> Peer#peer.name end, Add), Remove}
@@ -125,7 +126,7 @@ get_response(get_peers, [ChannelId, {array, PeerNames}]) ->
     };
 
 get_response(join, [ChannelId, Peer]) ->
-    net_dushin_lethe_log:debug("join(~p, ~p)", [ChannelId, Peer]),
+    ?LETHE_DEBUG("join(~p, ~p)", [ChannelId, Peer]),
     net_dushin_lethe_server:join(
         list_to_atom(ChannelId),
         json_to_peer(Peer)
@@ -133,7 +134,7 @@ get_response(join, [ChannelId, Peer]) ->
     "ok";
 
 get_response(ping, [ChannelId, PeerName]) ->
-    net_dushin_lethe_log:debug("ping(~p, ~p)", [ChannelId, PeerName]),
+    ?LETHE_DEBUG("ping(~p, ~p)", [ChannelId, PeerName]),
     net_dushin_lethe_server:ping(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)
@@ -141,7 +142,7 @@ get_response(ping, [ChannelId, PeerName]) ->
     "ok";
 
 get_response(leave, [ChannelId, PeerName]) ->
-    net_dushin_lethe_log:debug("leave: ~p", [list_to_atom(PeerName)]),
+    ?LETHE_DEBUG("leave: ~p", [list_to_atom(PeerName)]),
     net_dushin_lethe_server:leave(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)
@@ -157,7 +158,7 @@ get_response(get_messages_since, [ChannelId, Since]) ->
     Messages = net_dushin_lethe_server:get_messages(
         list_to_atom(ChannelId), Since
     ),
-    net_dushin_lethe_log:debug(
+    ?LETHE_DEBUG(
         "get_messages_since(~p, ~p): ~p", 
         [ChannelId, Since, Messages]
     ),

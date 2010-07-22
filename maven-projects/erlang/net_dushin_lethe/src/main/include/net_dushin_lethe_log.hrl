@@ -25,37 +25,7 @@
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
 
-{
-    application, net_dushin_lethe,
-    [
-        {description, "Lethe Messaging Server"},
-        {vsn, "0.1-SNAPSHOT"},
-        {
-            modules, 
-            [
-                net_dushin_lethe_launcher, net_dushin_lethe, net_dushin_lethe_sup, net_dushin_lethe_server, net_dushin_lethe_channel,
-                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid,
-                net_dushin_lethe_handler, net_dushin_lethe_log
-            ]
-        },
-        {registered, [net_dushin_lethe_server]},
-        {applications, [kernel, stdlib]},
-        {
-            mod, 
-            {
-                net_dushin_lethe, 
-                [
-                    {log_args, [{filter, [{net_dushin_lethe_channel, [debug, info, warning, severe]}]}]},
-                    {
-                        lethe_args, 
-                        [
-                            % [{channel_config, [{peer_timeout_ms, 50000000}]}]
-                        ]
-                    }, 
-                    {yaws_args, []}
-                ]
-            }
-        },
-        {start_phases, []}
-    ]
-}.
+-define(LETHE_SEVERE(Fmt, Args), net_dushin_lethe_log:severe(?MODULE, Fmt, Args)).
+-define(LETHE_WARNING(Fmt, Args), net_dushin_lethe_log:warning(?MODULE, Fmt, Args)).
+-define(LETHE_INFO(Fmt, Args), net_dushin_lethe_log:info(?MODULE, Fmt, Args)).
+-define(LETHE_DEBUG(Fmt, Args), net_dushin_lethe_log:debug(?MODULE, Fmt, Args)).
