@@ -33,9 +33,7 @@ start_stop_test() ->
     %%
     %% Start the server, stop it, and check that it's no longer available
     %%
-    io:format("foo", []),
     {ok, _Pid} = net_dushin_lethe_log:start([]),
-    io:format("foo", []),
     ?assertMatch(ok, net_dushin_lethe_log:stop()),
     %%
     %% done

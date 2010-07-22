@@ -365,19 +365,21 @@ peer_loop(Ctx, Peers) ->
         %%
         %%
         {ClientPid, {ping, PeerName}} ->
-            NewPeers = update_peer(#peer{name=PeerName}, Peers),
-            Response = case NewPeers of
+            ?LETHE_DEBUG("ping: PeerName = ~p", [PeerName]),
+            UpdatedPeers = update_peer(#peer{name=PeerName}, Peers),
+            NewPeers = case UpdatedPeers of
                 {error, peer_does_not_exist} -> 
                     ?LETHE_WARNING(
                         "Non existent peer pinged on channel ~p;  Peer = ~p", 
                         [ChannelId, PeerName]
                     ),
-                    NewPeers;
+                    Peers;
                 _ -> 
-                    ok
+                    UpdatedPeers
             end,
-            net_dushin_lethe_rpc:response(ClientPid, Response),
-            peer_loop(Ctx, case NewPeers of {error, _} -> Peers; _ -> NewPeers end);
+            net_dushin_lethe_rpc:response(ClientPid, ok),
+            ?LETHE_DEBUG("After ping, NewPeers = ~p", [NewPeers]),
+            peer_loop(Ctx, NewPeers);
         %%
         %%
         %%
@@ -502,6 +504,10 @@ stamp_message(Message) ->
 find_peers(PeerNames, Peers) ->
     Add = [Peer || Peer <- Peers, not(lists:member(Peer#peer.name, PeerNames))],
     Remove = [PeerName || PeerName <- PeerNames, not(peer_name_occurs(PeerName, Peers))],
+    case Remove of
+        [] -> ok;
+        NonEmpty -> ?LETHE_DEBUG("The following peers had been removed: ~p", [NonEmpty])
+    end,
     {
         Add,
         Remove
@@ -511,10 +517,8 @@ peer_name_occurs(PeerName, Peers) ->
     
     case lists:filter(fun(Peer) -> Peer#peer.name =:= PeerName end, Peers) of
         [] ->
-            %io:format("peer_name_occurs: PeerName=~p, Peers=~p -> false~n", [PeerName, Peers]),
             false;
         _ ->
-            %io:format("peer_name_occurs: PeerName=~p, Peers=~p -> true~n", [PeerName, Peers]),
             true
     end.
 

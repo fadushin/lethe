@@ -38,7 +38,7 @@
 -export(
     [
         start/1, stop/0, set/2,
-        severe/3, warning/3, info/3, debug/3,
+        severe/3, warning/3, info/3, debug/3, log/4,
         %%
         %% gen_server implementation
         %%
