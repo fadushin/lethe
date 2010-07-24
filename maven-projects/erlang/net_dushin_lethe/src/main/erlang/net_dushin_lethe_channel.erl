@@ -367,17 +367,17 @@ peer_loop(Ctx, Peers) ->
         {ClientPid, {ping, PeerName}} ->
             ?LETHE_DEBUG("ping: PeerName = ~p", [PeerName]),
             UpdatedPeers = update_peer(#peer{name=PeerName}, Peers),
-            NewPeers = case UpdatedPeers of
+            {Response, NewPeers} = case UpdatedPeers of
                 {error, peer_does_not_exist} -> 
                     ?LETHE_WARNING(
                         "Non existent peer pinged on channel ~p;  Peer = ~p", 
                         [ChannelId, PeerName]
                     ),
-                    Peers;
+                    {{error, peer_does_not_exist}, Peers};
                 _ -> 
-                    UpdatedPeers
+                    {ok, UpdatedPeers}
             end,
-            net_dushin_lethe_rpc:response(ClientPid, ok),
+            net_dushin_lethe_rpc:response(ClientPid, Response),
             ?LETHE_DEBUG("After ping, NewPeers = ~p", [NewPeers]),
             peer_loop(Ctx, NewPeers);
         %%

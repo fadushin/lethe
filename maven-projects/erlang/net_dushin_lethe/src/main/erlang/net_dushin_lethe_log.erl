@@ -37,8 +37,8 @@
 %%
 -export(
     [
-        start/1, stop/0, set/2,
-        severe/3, warning/3, info/3, debug/3, log/4,
+        start/0, start/1, stop/0, set/2,
+        log/4,
         %%
         %% gen_server implementation
         %%
@@ -60,6 +60,7 @@
 %% API Functions
 %%
 
+start() -> start([]).
 
 %
 % {logger, fun(Module, Level, Fmt, Args)}
@@ -85,18 +86,6 @@ set(Module, Levels) ->
         ?MODULE,
         {set, Module, Levels}
     ).
-
-severe(Module, Fmt, Args) ->
-    log(Module, severe, Fmt, Args).
-
-warning(Module, Fmt, Args) ->
-    log(Module, warning, Fmt, Args).
-
-info(Module, Fmt, Args) ->
-    log(Module, info, Fmt, Args).
-
-debug(Module, Fmt, Args) ->
-    log(Module, debug, Fmt, Args).
 
 log(Module, Level, Fmt, Args) ->
     gen_server:cast(

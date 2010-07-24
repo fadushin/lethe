@@ -43,16 +43,40 @@
         {
             mod, 
             {
-                net_dushin_lethe, 
-                [
-                    {log_args, [{filter, [{net_dushin_lethe_channel, [debug, info, warning, severe]}]}]},
+                net_dushin_lethe, [
+                    {
+                        log_args, [
+                            {
+                                filter, [
+                                    {net_dushin_lethe_channel, [debug, info, warning, severe]},
+                                    {net_dushin_lethe_handler, []}
+                                ]
+                            }
+                        ]
+                    },
                     {
                         lethe_args, 
                         [
                             % [{channel_config, [{peer_timeout_ms, 50000000}]}]
                         ]
                     }, 
-                    {yaws_args, []}
+                    {
+                        yaws_args, [
+                            % {lethe_root, "."},
+                            {
+                                scs, [
+                                    [
+                                        {servername, "localhost"},
+                                        {port, 8080}
+                                    ]%,
+                                    %[
+                                    %    {servername, "spock.local"},
+                                    %    {port, 80}
+                                    %]
+                                ] 
+                            }
+                        ]
+                    }
                 ]
             }
         },

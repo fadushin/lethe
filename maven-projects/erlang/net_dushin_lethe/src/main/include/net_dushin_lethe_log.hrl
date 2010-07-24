@@ -25,7 +25,8 @@
 %% SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 %%
 
--define(LETHE_SEVERE(Fmt, Args), net_dushin_lethe_log:severe(?MODULE, Fmt, Args)).
--define(LETHE_WARNING(Fmt, Args), net_dushin_lethe_log:warning(?MODULE, Fmt, Args)).
--define(LETHE_INFO(Fmt, Args), net_dushin_lethe_log:info(?MODULE, Fmt, Args)).
--define(LETHE_DEBUG(Fmt, Args), net_dushin_lethe_log:debug(?MODULE, Fmt, Args)).
+-define(LETHE_SEVERE(Fmt, Args), net_dushin_lethe_log:log(?MODULE, severe, Fmt, Args)).
+-define(LETHE_WARNING(Fmt, Args), net_dushin_lethe_log:log(?MODULE, warning, Fmt, Args)).
+-define(LETHE_INFO(Fmt, Args), net_dushin_lethe_log:log(?MODULE, info, Fmt, Args)).
+-define(LETHE_DEBUG(Fmt, Args), net_dushin_lethe_log:log(?MODULE, debug, Fmt, Args)).
+-define(LETHE_TRACE(Fmt, Args), net_dushin_lethe_log:log(?MODULE, trace, Fmt, Args)).

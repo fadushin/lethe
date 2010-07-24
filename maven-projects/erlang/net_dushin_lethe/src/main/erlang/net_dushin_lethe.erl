@@ -69,20 +69,27 @@ set_conf(Options) ->
         logdir = LetheRoot ++ "/logs", 
         yaws = "lethe-0.1-SNAPSHOT" 
         %, tmpdir = LetheRoot ++ "/.yaws"
-    }, 
-    SC = #sconf{
-        port        = net_dushin_lethe_lists:find_value(Options, port, 8080), 
-        servername  = net_dushin_lethe_lists:find_value(Options, servername, "localhost"), 
-        listen      = net_dushin_lethe_lists:find_value(Options, listen, {0, 0, 0, 0}), 
-        docroot     = net_dushin_lethe_lists:find_value(Options, docroot, LetheRoot ++ "/content"), 
-        appmods     = [
-            {
-                net_dushin_lethe_lists:find_value(Options, lethe_prefix, "/rs"), 
-                net_dushin_lethe_handler
+    },
+    SCS = lists:map(
+        fun(SC) ->
+            #sconf{
+                port = net_dushin_lethe_lists:find_value(SC, port, 8080), 
+                servername = net_dushin_lethe_lists:find_value(SC, servername, "localhost"), 
+                listen = net_dushin_lethe_lists:find_value(SC, listen, {0, 0, 0, 0}), 
+                docroot = net_dushin_lethe_lists:find_value(SC, docroot, LetheRoot ++ "/content"), 
+                appmods = [
+                    {
+                        net_dushin_lethe_lists:find_value(SC, lethe_prefix, "/rs"), 
+                        net_dushin_lethe_handler
+                    }
+                ]
             }
-        ]
-    }, 
-    case catch yaws_api:setconf(GC, [[SC]]) of
+        end,
+        net_dushin_lethe_lists:find_value(
+            Options, scs, [[]]
+        )
+    ),
+    case catch yaws_api:setconf(GC, [SCS]) of
         ok -> {ok, started}; 
         Error -> {stop, Error}
     end.
