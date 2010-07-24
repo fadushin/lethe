@@ -23,6 +23,7 @@ var dashcodePartSpecs = {
     "KeyFingerprint": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprintLabel": { "text": "Key Fingerprint:", "view": "DC.Text" },
+    "list": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.about.sections" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
     "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }], "view": "DC.StackLayout" },
     "MessagesLabel": { "text": "Messages", "view": "DC.Text" },
     "MessagesTextArea": { "propertyValues": { "valueBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToText" } }, "view": "DC.TextField" },
@@ -35,19 +36,24 @@ var dashcodePartSpecs = {
     "PeersList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "PeerNameLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "ChannelList.selection.peers" } }, "sampleRows": 3, "useDataSource": true, "view": "DC.List" },
     "RemoveChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "removeChannel", "propertyValues": { "enabledBinding": { "keypath": "ChannelList.hasSelection" } }, "rightImageWidth": 5, "text": "-", "view": "DC.PushButton" },
     "rowLabel": { "propertyValues": { "textBinding": { "keypath": "*.name" } }, "text": "Item", "view": "DC.Text" },
+    "rowLabel1": { "propertyValues": { "textBinding": { "keypath": "*.title" } }, "text": "Item", "view": "DC.Text" },
     "SendMessageButton": { "initialHeight": 21, "initialWidth": 71, "leftImageWidth": 5, "onclick": "sendMessage", "rightImageWidth": 5, "text": "Send", "view": "DC.PushButton" },
     "splitLayout": { "flexibleViewIndex": 1, "initialSize": 898, "initialSplitterSize": 10, "isVertical": true, "splitterPosition": 159, "view": "DC.SplitLayout" },
+    "splitLayout1": { "flexibleViewIndex": 1, "initialSize": 781, "initialSplitterSize": 8, "isVertical": true, "splitterPosition": 192, "view": "DC.SplitLayout" },
     "SwitchToMessagesViewButton": { "initialHeight": 22, "initialWidth": 95, "leftImageWidth": 5, "onclick": "switchToMessagesView", "rightImageWidth": 5, "text": "Messages...", "view": "DC.PushButton" },
     "SwitchToPeersViewButton": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToPeersView", "rightImageWidth": 5, "text": "Peers...", "view": "DC.PushButton" },
     "SwitchToPeersViewButton1": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToAboutView", "rightImageWidth": 5, "text": "About...", "view": "DC.PushButton" },
     "text": { "text": "Name:", "view": "DC.Text" },
-    "text1": { "text": "About Lethe", "view": "DC.Text" },
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
     "text3": { "text": "Key Fingerprint:", "view": "DC.Text" },
+    "textarea": { "propertyValues": { "valueBinding": { "keypath": "list.selection.text" }, "visibleBinding": { "keypath": "list.hasSelection" } }, "view": "DC.TextField" },
     "textField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
     "TitleText": { "text": "Lethe Messenger 0.1-SNAPSHOT", "view": "DC.Text" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
+
+
 
 
 

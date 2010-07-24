@@ -777,7 +777,7 @@ Lethe.serverBackend = {
             },
 
             ping: function(channelName, peer) {
-                // return pinger.notify(channelName, peer);
+                return pinger.notify(channelName, peer);
             },
 
             getPeers: function(channelName, peerNames) {

@@ -49,7 +49,7 @@
 		<key>safari/lethe.js:351</key>
 		<string>-</string>
 		<key>safari/lethe.js:738</key>
-		<string>init</string>
+		<string></string>
 		<key>safari/main.js:143</key>
 		<string>-</string>
 		<key>safari/main.js:174</key>
@@ -133,8 +133,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {968, 342}}</string>
-			<string>{{0, 352}, {968, 304}}</string>
+			<string>{{0, 0}, {968, 293}}</string>
+			<string>{{0, 303}, {968, 353}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -144,15 +144,15 @@
 		<key>CompressJavaScript</key>
 		<true/>
 		<key>Date</key>
-		<date>2010-07-02T16:12:37Z</date>
+		<date>2010-07-24T01:06:10Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
 		<string>fred@dushin.net</string>
 		<key>Path</key>
-		<string>Lethe-stage</string>
+		<string>content</string>
 		<key>SavePath</key>
-		<string>/Users/fadushin/Sites/stage</string>
+		<string>/Users/fadushin/Sites/tmp</string>
 		<key>enableSimulation</key>
 		<false/>
 		<key>simulatedHost</key>
@@ -257,17 +257,6 @@
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
 				<integer>0</integer>
 				<integer>1</integer>
 			</array>
@@ -285,31 +274,7 @@
 				<integer>2</integer>
 				<integer>0</integer>
 				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
 				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
@@ -322,12 +287,12 @@
 		<array>
 			<string>view1</string>
 			<string>mainView</string>
-			<string>MessagesView</string>
+			<string>AboutView</string>
 			<string>MessageView</string>
+			<string>MessagesView</string>
 			<string>editIdentityView</string>
 			<string>view2</string>
 			<string>PeerView</string>
-			<string>MainView</string>
 		</array>
 	</dict>
 	<key>Last selected product type</key>
@@ -369,8 +334,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {268, 224}}</string>
-			<string>{{0, 234}, {268, 422}}</string>
+			<string>{{0, 0}, {268, 223}}</string>
+			<string>{{0, 233}, {268, 423}}</string>
 		</array>
 	</dict>
 </dict>
