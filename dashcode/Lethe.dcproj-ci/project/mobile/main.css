@@ -9,29 +9,587 @@ body {
     min-height: 356px;
     font-family: Helvetica;
     background-image: url(../Images/backgroundStripes.png);
-    background-repeat: repeat;
+    background-repeat: repeat repeat;
 }
 
-#footer {
-    position: relative;
-    font-family: Helvetica;
-    font-size: 10pt;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    color: rgb(76, 86, 108);
-    text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+#Footer {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    margin-top: 0px;
     -webkit-margin-top-collapse: separate;
-    margin-top: 10px;
-    width: 156px;
-    margin-left: auto;
-    margin-right: auto;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    height: 32px;
+    left: 0px;
+    top: 325px;
+    width: 320px;
+    -webkit-border-image: url(Parts/Images/Footer.png) 0 1 0 1 stretch stretch;
 }
 
-#content {
+#IdentityButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    height: 21px;
+    width: 58px;
+    top: 5px;
+    left: 4px;
+}
+
+#ChannelsButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    height: 21px;
+    width: 70px;
+    top: 5px;
+    left: 63px;
+}
+
+#IdentityFingerprintActivityMonitor {
+    -webkit-animation-name: none;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+#IdentityBox {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+    background-color: white;
+    border-top-left-radius: 8px 8px;
+    border-top-right-radius: 8px 8px;
+    border-bottom-right-radius: 8px 8px;
+    border-bottom-left-radius: 8px 8px;
     position: relative;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    width: auto;
+    min-height: 354px;
+    height: auto;
+}
+
+#IdentityNameLabel {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    margin-top: 0px;
+    left: 41px;
+    top: 151px;
+    right: 210px;
+    width: auto;
+    height: auto;
+}
+
+.selected #IdentityNameLabel {
+    color: white;
+}
+
+#IdentityNameTextField {
+    position: absolute;
+    color: black;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    width: 106px;
+    left: 97px;
+    top: 149px;
+}
+
+#IdentityFingerprintLabel {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Courier New';
+    font-size: 15px;
+    left: 14px;
+    top: 203px;
+    right: 31px;
+    width: auto;
+    bottom: 110px;
+    height: auto;
+}
+
+.selected #IdentityFingerprintLabel {
+    color: white;
+}
+
+#IdentityFingerprintRegenerateButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 109px;
+    left: 93px;
+    top: 247px;
+}
+
+#IdentityFingerprintActivityMonitor {
+    width: 32px;
+    height: 32px;
+    opacity: 0.6;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    left: 131px;
+    top: 203px;
+}
+
+#LetheStack {
+    overflow: hidden;
+    z-index: 0;
+    position: absolute;
+    margin-top: 0px;
+    right: 0px;
+    bottom: 199px;
+    top: 0px;
+    left: 0px;
+    width: 318px;
+    height: 357px;
+}
+
+#IdentityView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 357px;
+}
+
+#ChannelsView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 357px;
+    height: auto;
+}
+
+#ChannelsBrowser {
+    position: relative;
+    margin-left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-right: 0px;
+    width: auto;
     min-height: 326px;
     height: auto;
+}
+
+#ChannelsBrowserHeader {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 44px;
     width: auto;
+    font-family: Helvetica;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    font-size: 16pt;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    -webkit-border-image: url(Parts/Images/ChannelsBrowserHeader.png) 0 1 0 1 stretch stretch;
+}
+
+.div1_template {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    width: 70px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    top: 7px;
+    left: 5px;
+}
+
+#ChannelsBrowserStack {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#ChannelsListView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 282px;
+}
+
+#ChannelsDetailsView {
+    width: 100%;
+    display: none;
+    position: relative;
+    height: auto;
+    min-height: 282px;
+}
+
+#ChannelsList {
+    background-color: white;
+    overflow: hidden;
+    display: none;
+    padding: 0px;
+    margin: 0px;
+    cursor: default;
+    -webkit-user-select: none;
+    position: relative;
+    width: auto;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+}
+
+.listRowTemplate_template {
+    position: relative;
+    list-style-type: none;
+    height: 47px;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(224, 224, 224);
+}
+
+.label_template {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    height: 22px;
+    right: 30px;
+    width: auto;
+    color: black;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 20px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.arrow_template {
+    position: absolute;
+    width: 8px;
+    height: 13px;
+    right: 11px;
+    top: 17px;
+    background-image: url(../Images/chevron.png);
+    background-repeat: no-repeat no-repeat;
+}
+
+.listRowTemplate_template .DC_selectionBG {
+    background-image: url(../Images/selectedRowiPhone.png);
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(38, 127, 239);
+    -webkit-background-size: 100% 100%;
+}
+
+.listRowTemplate_template.selected .label_template {
+    color: white;
+}
+
+.listRowTemplate_template.selected .arrow_template {
+    background-image: url(../Images/chevron_white.png);
+}
+
+#MessagesButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 101px;
+    left: 71px;
+    top: 8px;
+}
+
+#PeersButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 76px;
+    left: 171px;
+    top: 8px;
+}
+
+#ChannelStack {
+    overflow: hidden;
+    z-index: 0;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 0px;
+    position: absolute;
+    left: 0px;
+    top: 46px;
+    right: 0px;
+    width: auto;
+    bottom: -183px;
+    height: auto;
+}
+
+#MessagesView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 419px;
+}
+
+#PeersView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 419px;
+}
+
+#IdentityHeader {
+    position: absolute;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    top: 0px;
+    left: 0px;
+    width: 318px;
+    height: 48px;
+    opacity: 1;
+    -webkit-border-image: url(Parts/Images/IdentityHeader.png) 0 1 0 1 stretch stretch;
+}
+
+#button {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 9px;
+    width: 82px;
+    left: 7px;
+}
+
+#button1 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 72px;
+    top: 9px;
+    left: 236px;
+}
+
+#text {
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    left: 131px;
+    top: 14px;
+    width: auto;
+    height: auto;
+    color: rgb(255, 255, 255);
+}
+
+.selected #text {
+    color: white;
+}
+
+#text1 {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    left: 0px;
+    top: 0px;
+    width: auto;
+    height: auto;
+}
+
+.selected #text1 {
+    color: white;
+}
+
+#textField {
+    position: absolute;
+    color: black;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    width: 248px;
+    left: 0px;
+    top: 205px;
+}
+
+#ChannelsButton1 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    height: 21px;
+    width: 44px;
+    top: 207px;
+    left: 259px;
+}
+
+#box {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    position: absolute;
+    margin-top: 0px;
+    top: 0px;
+    left: 7px;
+    height: 201px;
+    width: 303px;
+}
+
+#SignMessagesCheckbox {
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    position: relative;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 10px;
+    margin-left: 119px;
+    width: 112px;
+}
+
+#div {
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    width: auto;
+    height: auto;
+    right: -31px;
+    bottom: -2px;
+    top: 2px;
+    left: 18px;
 }

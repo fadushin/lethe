@@ -28,6 +28,10 @@
 		<string>initSOAEP</string>
 		<key>foundation/exception.js:77</key>
 		<string>createIllegalArgumentException</string>
+		<key>mobile/main.js:37</key>
+		<string>load</string>
+		<key>mobile/main.js:51</key>
+		<string>generateRSAKey</string>
 		<key>safari/jsolait/jsolait.js:248</key>
 		<string>-Module</string>
 		<key>safari/jsolait/jsolait.js:250</key>
@@ -50,74 +54,74 @@
 		<string>-</string>
 		<key>safari/lethe.js:738</key>
 		<string></string>
-		<key>safari/main.js:143</key>
+		<key>safari/main.js:118</key>
 		<string>-</string>
-		<key>safari/main.js:174</key>
-		<string>-sendMessage</string>
+		<key>safari/main.js:145</key>
+		<string>-</string>
+		<key>safari/main.js:148</key>
+		<string>-</string>
+		<key>safari/main.js:149</key>
+		<string>-</string>
+		<key>safari/main.js:171</key>
+		<string>-editIdentityViewOk</string>
+		<key>safari/main.js:188</key>
+		<string>-</string>
 		<key>safari/main.js:19</key>
-		<string>-</string>
-		<key>safari/main.js:198</key>
-		<string>-</string>
-		<key>safari/main.js:201</key>
-		<string>-</string>
-		<key>safari/main.js:202</key>
 		<string>-</string>
 		<key>safari/main.js:21</key>
 		<string>-</string>
-		<key>safari/main.js:226</key>
-		<string>-editIdentityViewOk</string>
-		<key>safari/main.js:243</key>
+		<key>safari/main.js:214</key>
+		<string>-</string>
+		<key>safari/main.js:217</key>
+		<string>-</string>
+		<key>safari/main.js:219</key>
+		<string>-</string>
+		<key>safari/main.js:231</key>
+		<string>-</string>
+		<key>safari/main.js:234</key>
+		<string>-</string>
+		<key>safari/main.js:235</key>
+		<string>-</string>
+		<key>safari/main.js:260</key>
 		<string>-</string>
 		<key>safari/main.js:269</key>
 		<string>-</string>
 		<key>safari/main.js:27</key>
 		<string>-</string>
-		<key>safari/main.js:272</key>
+		<key>safari/main.js:271</key>
 		<string>-</string>
-		<key>safari/main.js:274</key>
+		<key>safari/main.js:275</key>
+		<string>-</string>
+		<key>safari/main.js:279</key>
 		<string>-</string>
 		<key>safari/main.js:286</key>
 		<string>-</string>
-		<key>safari/main.js:289</key>
+		<key>safari/main.js:288</key>
 		<string>-</string>
-		<key>safari/main.js:290</key>
+		<key>safari/main.js:294</key>
 		<string>-</string>
-		<key>safari/main.js:315</key>
+		<key>safari/main.js:297</key>
 		<string>-</string>
-		<key>safari/main.js:324</key>
+		<key>safari/main.js:308</key>
 		<string>-</string>
-		<key>safari/main.js:326</key>
+		<key>safari/main.js:316</key>
 		<string>-</string>
-		<key>safari/main.js:330</key>
+		<key>safari/main.js:317</key>
+		<string>-</string>
+		<key>safari/main.js:318</key>
 		<string>-</string>
 		<key>safari/main.js:334</key>
-		<string>-</string>
-		<key>safari/main.js:341</key>
-		<string>-</string>
-		<key>safari/main.js:343</key>
-		<string>-</string>
-		<key>safari/main.js:349</key>
-		<string>-</string>
-		<key>safari/main.js:352</key>
-		<string>-</string>
-		<key>safari/main.js:363</key>
-		<string>-</string>
-		<key>safari/main.js:371</key>
-		<string>-</string>
-		<key>safari/main.js:372</key>
-		<string>-</string>
-		<key>safari/main.js:373</key>
-		<string>-</string>
-		<key>safari/main.js:389</key>
 		<string></string>
-		<key>safari/main.js:401</key>
+		<key>safari/main.js:346</key>
 		<string>-</string>
-		<key>safari/main.js:45</key>
+		<key>safari/main.js:38</key>
 		<string>-load</string>
-		<key>safari/main.js:50</key>
+		<key>safari/main.js:43</key>
 		<string>-load</string>
-		<key>safari/main.js:86</key>
-		<string>generateRSAKey</string>
+		<key>safari/main.js:54</key>
+		<string></string>
+		<key>safari/main.js:95</key>
+		<string>-</string>
 	</dict>
 	<key>BreakpointsFrame</key>
 	<string>483 285 673 467 0 0 1280 778 </string>
@@ -133,12 +137,12 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {968, 293}}</string>
-			<string>{{0, 303}, {968, 353}}</string>
+			<string>{{0, 0}, {903, 646}}</string>
+			<string>{{0, 656}, {903, 0}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>5</integer>
+	<integer>0</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
@@ -276,35 +280,78 @@
 				<integer>0</integer>
 				<integer>1</integer>
 			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
 		</array>
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>4</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>5</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>view1</string>
 			<string>mainView</string>
-			<string>AboutView</string>
 			<string>MessageView</string>
 			<string>MessagesView</string>
 			<string>editIdentityView</string>
 			<string>view2</string>
 			<string>PeerView</string>
+			<string>EditIdentityView</string>
 		</array>
 	</dict>
+	<key>EvaluatorFrame</key>
+	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>Desktop</string>
+	<string>MobileWeb</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {266, 677}}</string>
-			<string>{{267, 0}, {969, 677}}</string>
+			<string>{{0, 0}, {331, 677}}</string>
+			<string>{{332, 0}, {904, 677}}</string>
 		</array>
 	</dict>
 	<key>MainWindowFrame</key>
@@ -316,12 +363,360 @@
 			<array>
 				<integer>0</integer>
 			</array>
-		</array>
-		<key>Objects view last selections</key>
-		<array>
 			<array>
 				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
 			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+		</array>
+		<key>Objects view last selections</key>
+		<array/>
+		<key>Visible StackLayout Views</key>
+		<array>
+			<string>AboutDetailView</string>
+			<string>view3</string>
+			<string>view1</string>
+			<string>ChannelDetailView</string>
+			<string>MessageView</string>
+			<string>ChannelView</string>
+			<string>PeersView</string>
+			<string>PeerView</string>
+			<string>ChannelsDetailsView</string>
+			<string>view2</string>
+			<string>IdentityView</string>
 		</array>
 	</dict>
 	<key>NavigatorSplitViewGeometry</key>
@@ -334,8 +729,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {268, 223}}</string>
-			<string>{{0, 233}, {268, 423}}</string>
+			<string>{{0, 0}, {333, 255}}</string>
+			<string>{{0, 265}, {333, 391}}</string>
 		</array>
 	</dict>
 </dict>

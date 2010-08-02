@@ -5,5 +5,34 @@
  code generator otherwise the changes will be lost.
  */
 var dashcodePartSpecs = {
-    'footer': { view: 'DC.Text', text: 'Developed with Dashcode' }
+    "button": { "initialHeight": 30, "initialWidth": 82, "leftImageWidth": 5, "rightImageWidth": 5, "text": "Cancel", "view": "DC.PushButton" },
+    "button1": { "initialHeight": 30, "initialWidth": 72, "leftImageWidth": 5, "rightImageWidth": 5, "text": "Done", "view": "DC.PushButton" },
+    "ChannelsBrowser": { "clearSelectionOnBack": true, "view": "DC.Browser" },
+    "ChannelsBrowserHeader": { "rootTitle": "Home", "view": "DC.Header" },
+    "ChannelsBrowserStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
+    "ChannelsButton": { "initialHeight": 21, "initialWidth": 70, "leftImageWidth": 5, "onclick": "showChannelsView", "rightImageWidth": 5, "text": "Channels", "view": "DC.PushButton" },
+    "ChannelsButton1": { "initialHeight": 21, "initialWidth": 44, "leftImageWidth": 5, "onclick": "showChannelsView", "rightImageWidth": 5, "text": "send", "view": "DC.PushButton" },
+    "ChannelsList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "label", "listStyle": "List.EDGE_TO_EDGE", "sampleRows": 3, "selectionEnabled": true, "view": "DC.List" },
+    "ChannelStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
+    "div1": { "initialHeight": 30, "initialWidth": 70, "leftImageWidth": 16, "rightImageWidth": 5, "text": "Back", "view": "DC.PushButton" },
+    "IdentityButton": { "initialHeight": 21, "initialWidth": 58, "leftImageWidth": 5, "onclick": "showIdentityView", "rightImageWidth": 5, "text": "Identity", "view": "DC.PushButton" },
+    "IdentityFingerprintActivityMonitor": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showActivityMonitor" }, "visibleBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showActivityMonitor" } }, "view": "DC.ActivityIndicator" },
+    "IdentityFingerprintLabel": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
+    "IdentityFingerprintRegenerateButton": { "initialHeight": 30, "initialWidth": 109, "leftImageWidth": 5, "onclick": "generateRSAKey", "rightImageWidth": 5, "text": "Regenerate", "view": "DC.PushButton" },
+    "IdentityNameLabel": { "text": "Name:", "view": "DC.Text" },
+    "IdentityNameTextField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
+    "label": { "text": "Item", "view": "DC.Text" },
+    "LetheStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }], "view": "DC.StackLayout" },
+    "MessagesButton": { "initialHeight": 30, "initialWidth": 101, "leftImageWidth": 5, "rightImageWidth": 1, "text": "Messages", "view": "DC.PushButton" },
+    "PeersButton": { "initialHeight": 30, "initialWidth": 76, "leftImageWidth": 1, "rightImageWidth": 5, "text": "Peers", "view": "DC.PushButton" },
+    "text": { "text": "Identity", "view": "DC.Text" },
+    "text1": { "text": "Text", "view": "DC.Text" }
 };
+
+
+
+
+
+
+
+

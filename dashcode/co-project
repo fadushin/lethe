@@ -21,6 +21,7 @@ pushd ${PROJECT_CO}
     cpdir ${JS_ROOT}/thirdparty/com.broofa ./project/thirdparty/com.broofa
     cpdir ${JS_ROOT}/thirdparty/ats.oka.nu ./project/thirdparty/ats.oka.nu
     cpdir ${JS_ROOT}/thirdparty/jsolait ./project/safari/jsolait
+    cpdir ${JS_ROOT}/thirdparty/jsolait ./project/mobile/jsolait
     cpdir ${JS_ROOT}/foundation ./project/foundation
     cpdir ${JS_ROOT}/crypto ./project/crypto
     find . -type d -name .svn | xargs rm -rf

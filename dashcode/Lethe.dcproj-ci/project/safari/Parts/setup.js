@@ -6,6 +6,7 @@
  */
 var dashcodePartSpecs = {
     "AboutBoxOkButton": { "initialHeight": 30, "initialWidth": 56, "leftImageWidth": 5, "onclick": "aboutViewOk", "rightImageWidth": 5, "text": "ok", "view": "DC.PushButton" },
+    "AboutList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.about.sections" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
     "AddChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "addChannel", "rightImageWidth": 5, "text": "+", "view": "DC.PushButton" },
     "ChannelLabel": { "text": "Channels", "view": "DC.Text" },
     "ChannelList": { "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.channels" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
@@ -23,8 +24,7 @@ var dashcodePartSpecs = {
     "KeyFingerprint": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprintLabel": { "text": "Key Fingerprint:", "view": "DC.Text" },
-    "list": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.about.sections" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
-    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }], "view": "DC.StackLayout" },
+    "MainStackLayout": { "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }], "view": "DC.StackLayout" },
     "MessagesLabel": { "text": "Messages", "view": "DC.Text" },
     "MessagesTextArea": { "propertyValues": { "valueBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToText" } }, "view": "DC.TextField" },
     "ModifyIdentityNameButton": { "initialHeight": 23, "initialWidth": 61, "leftImageWidth": 5, "onclick": "modifyIdentity", "rightImageWidth": 5, "text": "Modify...", "view": "DC.PushButton" },
@@ -44,13 +44,18 @@ var dashcodePartSpecs = {
     "SwitchToPeersViewButton": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToPeersView", "rightImageWidth": 5, "text": "Peers...", "view": "DC.PushButton" },
     "SwitchToPeersViewButton1": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "switchToAboutView", "rightImageWidth": 5, "text": "About...", "view": "DC.PushButton" },
     "text": { "text": "Name:", "view": "DC.Text" },
+    "text1": { "propertyValues": { "textBinding": { "keypath": "AboutList.selection.title" } }, "text": "Text", "view": "DC.Text" },
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
     "text3": { "text": "Key Fingerprint:", "view": "DC.Text" },
-    "textarea": { "propertyValues": { "valueBinding": { "keypath": "list.selection.text" }, "visibleBinding": { "keypath": "list.hasSelection" } }, "view": "DC.TextField" },
+    "text4": { "propertyValues": { "htmlBinding": { "keypath": "AboutList.selection.text" } }, "text": "Text", "view": "DC.Text" },
     "textField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
     "TitleText": { "text": "Lethe Messenger 0.1-SNAPSHOT", "view": "DC.Text" },
+    "view2": { "propertyValues": { "visibleBinding": { "keypath": "AboutList.hasSelection" } }, "view": "DC.View" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
+
+
 
 
 

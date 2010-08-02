@@ -1185,7 +1185,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     background-repeat: no-repeat no-repeat;
 }
 
-#list {
+#AboutList {
     overflow: hidden;
     display: none;
     padding: 0px;
@@ -1237,16 +1237,41 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     background-color: rgb(212, 212, 212);
 }
 
-#textarea {
-    color: black;
-    font-family: HelveticaNeue;
-    font-size: 10pt;
+#text1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
     position: absolute;
-    right: auto;
-    bottom: auto;
     margin-top: 0px;
-    width: 577px;
-    top: -1px;
-    left: -1px;
-    height: 409px;
+    font-weight: bold;
+    font-family: 'Lucida Grande';
+    font-size: 23px;
+    top: 21px;
+    left: 22px;
+    right: 28px;
+    width: auto;
+    bottom: 365px;
+    height: auto;
+}
+
+.selected #text1 {
+    color: white;
+}
+
+#text4 {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    left: 22px;
+    top: 55px;
+    right: 28px;
+    width: auto;
+    bottom: 23px;
+    height: auto;
+    font-family: Times;
+}
+
+.selected #text4 {
+    color: white;
 }

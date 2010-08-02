@@ -47,60 +47,11 @@
     <script type="text/javascript" src="../foundation/lists.js"></script>
     <script type="text/javascript" src="../foundation/exception.js"></script>
     <script type="text/javascript" src="../foundation/serialization.js"></script>
-    <script type="text/javascript" src="lethe.js" charset="utf-8"></script>
-    <!--
-    <script>
-            __unit("index.html");
-            __uses("BigInteger.init1.js");
-            __uses("BigInteger.init2.js");
-            __uses("RSA.init1.js");
-            __uses("RSA.init2.js");
-            var BigInteger = __import(this, "titaniumcore.crypto.BigInteger");
-            var RSA = __import(this, "titaniumcore.crypto.RSA");
-            
-            /*
-            var rsa = net_dushin_crypto.KeyUtil.createRSA();
-            rsa.generate(512, 65537);
-            var privateKey = rsa;
-            var publicKey = rsa;            
-            console.debug(net_dushin_crypto.KeyUtil.encodePrivateKey(rsa));
-            console.debug(net_dushin_crypto.KeyUtil.encodePublicKey(rsa));
-            */
-            
-            var privateKey = net_dushin_crypto.KeyUtil.parseEncodedPrivateKey(
-                "yuR7Lj/W1MNzXShgfxIbVudh/qEPHOn7muG59KRmPwz/377bTzI3BUZ2z0dgzl8D4+apjCzJhkAXnr9ZSUNidyD3EzmGWOcrfr8XOqaH5IVkA+OoV7qgKWp1oZ0M6s3a+EY0RY5AtG/domZ8gmQymNHLR7RIG9wGixSwV1XhZnxu0tfIHsTBVgGgxcSu1wxmjeYJ32zAmmUmV9ouA03jqCNgrWIa5n3tAjPgwE//0Ig="
-            );
-            var publicKey = net_dushin_crypto.KeyUtil.parseEncodedPublicKey(
-                "ugqxUDF2a6jUYu6Mj8w+OY8o02TNzJDRyf3YXKAPY9Nba15wtnK8XnRwLrzh1Hl9dgRPbtgP+TaWt9z52cVr2+w4+9BKsN0iIkczsIkWniNao8aEYk0EdtyzT3pbjvLhhrlL8NfAbhIt/duRW8us7A=="
-            );
-            
-            var signer = net_dushin_crypto.SignerFactory.createSigner(
-                {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(privateKey)}
-            );
-            var signedObject = signer.sign({foo: "bar"});
-            console.debug(signedObject);
-            
-            var verifier = net_dushin_crypto.VerifierFactory.createVerifier(
-                {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(publicKey)}
-            );
-            try {
-                console.debug(verifier.verify(signedObject));
-            } catch (error) {
-                console.debug(error);
-            }
-            
-            var encryptor = net_dushin_crypto.EncryptorFactory.createEncryptor(
-                {publicKey: net_dushin_crypto.KeyUtil.encodePublicKey(publicKey)}
-            );
-            var encrypted = encryptor.encrypt(signedObject);
-            console.debug(encrypted);
-            
-            var decryptor = net_dushin_crypto.DecryptorFactory.createDecryptor(
-                {privateKey: net_dushin_crypto.KeyUtil.encodePrivateKey(privateKey)}
-            );
-            console.debug(decryptor.decrypt(encrypted));
-    </script>
-    -->
+    <script type="text/javascript" src="../lethe/lethe.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/identity.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/channel.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/peer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/message.js" charset="utf-8"></script>
 </head>
 <body onload="load();">
     <div id="MainStackLayout" apple-part="com.apple.Dashcode.part.StackLayout"><div id="MainView" apple-part-locked="true">
@@ -191,7 +142,7 @@
                     <div id="text2" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
                     <div id="splitLayout1" apple-part="com.apple.Dashcode.part.splitlayout">
                         <div id="view1" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
-                            <ul id="list" apple-part="com.apple.Dashcode.part.widgetList" class="">
+                            <ul id="AboutList" apple-part="com.apple.Dashcode.part.widgetList" class="">
                                 <li id="listRowTemplate2" apple-template="true" class="listRowTemplate2_template first" style="">
                                     <div id="rowLabel1" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children rowLabel1_template" apple-text-overflow="ellipsis"></div>
                                 </li>
@@ -201,7 +152,8 @@
                             <div apple-part="com.apple.Dashcode.part.box" id="splitThumb1"></div>
                         </div>
                         <div id="view2" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
-                            <textarea id="textarea" apple-part="com.apple.Dashcode.part.textarea"></textarea>
+                            <div id="text1" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                            <div id="text4" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
                         </div>
                     </div>
                 </div>
