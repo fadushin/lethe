@@ -25,110 +25,27 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-//
-// Function: load()
-// Called by HTML body element's onload event when the web application is ready to start
-//
-function load()
-{
-    dashcode.setupParts();
-    
-    setTimeout(
-        function() {
-            var lethe = Lethe.init();
-            var identity = lethe.getStoredIdentity();
-            if (identity) {
-                lethe.getIdentity().assign(identity);
-            } else {
-                modifyIdentity();
-            }
-        }, 
-        1000
-    );
-}
 
-function generateRSAKey(event)
-{
-    Lethe.instance.regenerateTmpIdentityKey();
-}
 
-function addChannel(event)
-{
-    var channelName = prompt("Enter channel name:");
-    if (channelName !== null) {
-        Lethe.instance.joinChannel(channelName);
+
+
+
+
+
+
+
+
+
+function sendMessageOnEnter(event) {
+    if (event.charCode === 13) {
+        sendMessage(event);
     }
 }
 
 
-function removeChannel(event)
-{
-    var channelList = dashcode.getDataSource("ChannelList");
-    var channel = channelList.valueForKeyPath("selection");
-    Lethe.instance.leaveChannel(channel);
-}
 
 
-function switchToPeersView(event)
-{
-    var layout = document.getElementById("ChannelStackLayout").object;
-    layout.setCurrentView("PeersView");
-}
-
-
-function switchToMessagesView(event)
-{
-    var layout = document.getElementById("ChannelStackLayout").object;
-    layout.setCurrentView("MessagesView");
-}
-
-
-messagesToText = Class.create(
-    DC.ValueTransformer,
-    {
-        transformedValue: function(messages){
-            var i;
-            var s = "";
-            for (i = 0;  i < messages.length; ++i) {
-                var message = messages[i];
-                s += message.toString() + '\n';
-            }
-            return s;
-        }
-    }
-);
-
-
-
-function sendMessage(event)
-{
-    var messageText = document.getElementById("MessageTextField").value;
-    if (messageText.trim() === "") {
-        return;
-    }
-    document.getElementById("MessageTextField").value = "";
-    //
-    //
-    //
-    var lethe = Lethe.instance;
-    var channel = lethe.getSelectedChannel();
-    var channelName = channel.valueForKeyPath('name');
-    lethe.sendMessage(channelName, messageText);
-}
-
-mappubKeyToAnimating = Class.create(
-    DC.ValueTransformer,
-    {
-        transformedValue: function(value){
-            if (value === Lethe.TAG_GENERATING) {
-                return true;
-            }
-            return false;
-        }
-    }
-);
-
-
+// is this used?
 isNotGenerating = Class.create(DC.ValueTransformer,{
     transformedValue: function(value){
 		return value !== Lethe.TAG_GENERATING;
@@ -136,73 +53,8 @@ isNotGenerating = Class.create(DC.ValueTransformer,{
 });
 
 
-pubKeyFingerprint = Class.create(
-    DC.ValueTransformer,
-    {
-        transformedValue: function(value){
-            if (value === Lethe.TAG_GENERATING) {
-                return '';
-            }
-            return net_dushin_crypto.KeyUtil.keyFingerprint(value);
-        }
-    }
-);
 
 
 
-function sendMessageOnEnter(event) {
-    console.log(event);
-    if (event.charCode === 13) {
-        sendMessage(event);
-    }
-}
 
 
-function modifyIdentity(event)
-{
-    var identity = Lethe.instance.getIdentity();
-    var tmpIdentity = Lethe.instance.getTmpIdentity();
-    tmpIdentity.assign(identity);
-    var layout = document.getElementById("MainStackLayout").object;
-    layout.setCurrentView("EditIdentityView");
-}
-
-
-function editIdentityViewOk(event)
-{
-    var layout = document.getElementById("MainStackLayout").object;
-    layout.setCurrentView("MainView");
-    var lethe = Lethe.instance;
-    var identity = lethe.getIdentity();
-    var oldName = identity.getName();
-    setTimeout(
-        function() {
-            var tmpIdentity = lethe.getTmpIdentity();
-            identity.assign(tmpIdentity);
-            lethe.setStoredIdentity(identity);
-            lethe.updateIdentity(oldName, identity);
-        },
-        200
-    );
-}
-
-
-function editIdentityViewCancel(event)
-{
-    var layout = document.getElementById("MainStackLayout").object;
-    layout.setCurrentView("MainView");
-}
-
-
-function aboutViewOk(event)
-{
-    var layout = document.getElementById("MainStackLayout").object;
-    layout.setCurrentView("MainView");
-}
-
-
-function switchToAboutView(event)
-{
-    var layout = document.getElementById("MainStackLayout").object;
-    layout.setCurrentView("AboutView");
-}

@@ -5,8 +5,10 @@
  code generator otherwise the changes will be lost.
  */
 var dashcodeDataSources = {
-    "lethe": { "Class": "DC.AjaxController", "propertyValues": { "url": "../data.js", "parameters": {}, "dataModel": { "uuid": "A3BF083A-F4FC-4143-88B3-1AA4042E0C6F", "url": null, "dataType": "json", "version": 1, "root": "", "model": { "identity": { "name": "", "privKey": "", "pubKey": "" }, "channels": [{ "name": "", "signMessages": true, "peers": [{ "name": "", "pubKey": "", "encryptTo": true }], "messages": [{ "from": "", "message": "" }] }], "tmp": { "id": { "name": "", "privKey": "", "pubKey": "" } }, "about": { "sections": [{ "title": "", "text": "" }] } } } } }
+    "lethe": { "Class": "DC.AjaxController", "propertyValues": { "url": "../data.js", "parameters": {}, "dataModel": { "uuid": "FCC46865-8B94-447E-9053-4D62EE8691A0", "url": null, "dataType": "json", "version": 1, "root": "", "model": { "starting": true, "identity": { "name": "", "privKey": "", "pubKey": "" }, "channels": [{ "name": "", "signMessages": true, "peers": [{ "name": "", "pubKey": "", "encryptTo": true }], "messages": [{ "from": "", "message": "" }] }], "tmp": { "id": { "name": "", "privKey": "", "pubKey": "" } }, "about": { "sections": [{ "title": "", "text": "" }] } } } } }
 };
+
+
 
 
 

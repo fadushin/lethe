@@ -1,11 +1,13 @@
 {
+    starting: true,
+    
     identity: {
         name: "",
         privKey: "",
         pubKey: ""
     },
     channels: [
-        /*
+        
         { 
             name: "Acadia",
             signMessages: true,
@@ -32,7 +34,7 @@
                 }
             ]
         }
-        */
+        
     ],
     
     tmp: {

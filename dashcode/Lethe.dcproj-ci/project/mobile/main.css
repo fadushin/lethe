@@ -23,11 +23,11 @@ body {
     position: absolute;
     right: auto;
     bottom: auto;
-    height: 32px;
+    width: 317px;
     left: 0px;
-    top: 325px;
-    width: 320px;
+    height: 34px;
     -webkit-border-image: url(Parts/Images/Footer.png) 0 1 0 1 stretch stretch;
+    top: 460px;
 }
 
 #IdentityButton {
@@ -46,32 +46,10 @@ body {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    height: 21px;
-    width: 58px;
-    top: 5px;
-    left: 4px;
-}
-
-#ChannelsButton {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    cursor: default;
-    -webkit-user-select: none;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    height: 21px;
-    width: 70px;
-    top: 5px;
-    left: 63px;
+    width: 56px;
+    height: 26px;
+    top: 6px;
+    left: 3px;
 }
 
 #IdentityFingerprintActivityMonitor {
@@ -189,48 +167,47 @@ body {
 #LetheStack {
     overflow: hidden;
     z-index: 0;
-    position: absolute;
-    margin-top: 0px;
-    right: 0px;
-    bottom: 199px;
-    top: 0px;
-    left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    height: 494px;
     width: 318px;
-    height: 357px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
 }
 
 #IdentityView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 357px;
+    min-height: 494px;
 }
 
 #ChannelsView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 357px;
     height: auto;
+    min-height: 494px;
 }
 
-#ChannelsBrowser {
+#ChannelBrowser {
     position: relative;
     margin-left: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     margin-right: 0px;
     width: auto;
-    min-height: 326px;
+    min-height: 459px;
     height: auto;
 }
 
-#ChannelsBrowserHeader {
+#ChannelBrowserHeader {
     position: relative;
     left: 0px;
     top: 0px;
     height: 44px;
-    width: auto;
     font-family: Helvetica;
     font-weight: bold;
     color: rgb(255, 255, 255);
@@ -240,7 +217,10 @@ body {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    -webkit-border-image: url(Parts/Images/ChannelsBrowserHeader.png) 0 1 0 1 stretch stretch;
+    -webkit-border-image: url(Parts/Images/ChannelBrowserHeader.png) 0 1 0 1 stretch stretch;
+    width: auto;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .div1_template {
@@ -262,7 +242,7 @@ body {
     left: 5px;
 }
 
-#ChannelsBrowserStack {
+#ChannelBrowserStack {
     position: relative;
     left: 0px;
     top: 0px;
@@ -272,33 +252,36 @@ body {
     z-index: 0;
 }
 
-#ChannelsListView {
+#ChannelListView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 282px;
+    min-height: 415px;
 }
 
-#ChannelsDetailsView {
+#ChannelDetailsView {
     width: 100%;
     display: none;
     position: relative;
     height: auto;
-    min-height: 282px;
+    min-height: 415px;
 }
 
-#ChannelsList {
+#ChannelList {
     background-color: white;
     overflow: hidden;
     display: none;
     padding: 0px;
-    margin: 0px;
+    margin-bottom: 0px;
     cursor: default;
     -webkit-user-select: none;
     position: relative;
-    width: auto;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    width: auto;
 }
 
 .listRowTemplate_template {
@@ -306,20 +289,22 @@ body {
     list-style-type: none;
     height: 47px;
     overflow: hidden;
-    margin: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
     padding: 0px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: rgb(224, 224, 224);
+    margin-right: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    width: auto;
 }
 
 .label_template {
     position: absolute;
-    left: 10px;
-    top: 12px;
     height: 22px;
-    right: 30px;
-    width: auto;
     color: black;
     font-family: Helvetica;
     font-weight: bold;
@@ -327,6 +312,10 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: auto;
+    right: 30px;
+    top: 12px;
+    left: 10px;
 }
 
 .arrow_template {
@@ -400,8 +389,8 @@ body {
     bottom: auto;
     margin-top: 0px;
     width: 76px;
-    left: 171px;
     top: 8px;
+    left: 170px;
 }
 
 #ChannelStack {
@@ -412,25 +401,30 @@ body {
     margin-top: 0px;
     position: absolute;
     left: 0px;
-    top: 46px;
+    top: 45px;
     right: 0px;
     width: auto;
-    bottom: -183px;
+    bottom: 0px;
     height: auto;
+    border-top-left-radius: 0px 0px;
+    border-top-right-radius: 0px 0px;
+    border-bottom-left-radius: 0px 0px;
+    border-bottom-right-radius: 0px 0px;
 }
 
 #MessagesView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 419px;
+    min-height: 370px;
 }
 
 #PeersView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 419px;
+    height: auto;
+    min-height: 370px;
 }
 
 #IdentityHeader {
@@ -447,7 +441,7 @@ body {
     -webkit-border-image: url(Parts/Images/IdentityHeader.png) 0 1 0 1 stretch stretch;
 }
 
-#button {
+#IdentityCancelButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -466,10 +460,10 @@ body {
     margin-top: 0px;
     top: 9px;
     width: 82px;
-    left: 7px;
+    left: 9px;
 }
 
-#button1 {
+#IdentityDoneButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -486,9 +480,9 @@ body {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    width: 72px;
     top: 9px;
     left: 236px;
+    width: 72px;
 }
 
 #text {
@@ -509,35 +503,20 @@ body {
     color: white;
 }
 
-#text1 {
-    color: black;
-    font-family: Helvetica;
-    font-size: 17px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    left: 0px;
-    top: 0px;
-    width: auto;
-    height: auto;
-}
-
-.selected #text1 {
-    color: white;
-}
-
-#textField {
-    position: absolute;
+#MessageTextField {
     color: black;
     font-family: HelveticaNeue;
     font-size: 10pt;
-    width: 248px;
-    left: 0px;
-    top: 205px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    display: block;
+    margin-left: 0px;
+    position: relative;
+    margin-top: 5px;
+    width: 296px;
 }
 
-#ChannelsButton1 {
+#SendMessageButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -549,26 +528,27 @@ body {
     -webkit-dashboard-region: dashboard-region(control rectangle);
     cursor: default;
     -webkit-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
     position: absolute;
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    height: 21px;
-    width: 44px;
-    top: 207px;
-    left: 259px;
+    height: 24px;
+    width: 115px;
+    left: 93px;
+    top: 306px;
 }
 
 #box {
     border-color: black;
-    border-style: solid;
     border-width: 1px;
     position: absolute;
     margin-top: 0px;
-    top: 0px;
-    left: 7px;
-    height: 201px;
     width: 303px;
+    height: 366px;
+    top: 0px;
+    left: 6px;
 }
 
 #SignMessagesCheckbox {
@@ -592,4 +572,616 @@ body {
     bottom: -2px;
     top: 2px;
     left: 18px;
+}
+
+#rectangleShape {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    margin-top: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    margin-left: 0px;
+    width: 318px;
+    height: 34px;
+    -webkit-border-image: url(Parts/Images/rectangleShape.png) 0 1 0 1 stretch stretch;
+}
+
+#button {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 26px;
+    height: 26px;
+    top: 4px;
+    left: 253px;
+}
+
+#button1 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 0px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    width: 26px;
+    height: 26px;
+    top: 4px;
+    left: 285px;
+}
+
+#text2 {
+    color: black;
+    font-family: Helvetica;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-size: 12px;
+    top: 12px;
+    left: 67px;
+    right: 186px;
+    width: auto;
+    bottom: 7px;
+    height: auto;
+}
+
+.selected #text2 {
+    color: white;
+}
+
+#IdentityKeyFingerprintLabel {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Courier New';
+    font-size: 10px;
+    top: 6px;
+    left: 127px;
+    right: 4px;
+    width: auto;
+    bottom: 4px;
+    height: auto;
+}
+
+.selected #IdentityKeyFingerprintLabel {
+    color: white;
+}
+
+#SplashScreenView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 494px;
+}
+
+#rectangleShape1 {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 317px;
+    height: 357px;
+    -webkit-border-image: url(Parts/Images/rectangleShape1.png) 0 1 0 1 stretch stretch;
+}
+
+#activityIndicator {
+    opacity: 0.6;
+    position: relative;
+    display: block;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    width: 62px;
+    height: 62px;
+    margin-top: 64px;
+    margin-left: 127px;
+}
+
+#text4 {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    text-align: center;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 63px;
+    width: auto;
+    min-height: 20px;
+    height: auto;
+}
+
+.selected #text4 {
+    color: white;
+}
+
+#AboutView {
+    width: 100%;
+    display: none;
+    position: relative;
+    height: auto;
+    min-height: 494px;
+}
+
+#AboutBrowser {
+    position: relative;
+    margin-left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-right: 0px;
+    width: auto;
+    min-height: 494px;
+    height: auto;
+}
+
+#div2 {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    height: 44px;
+    width: auto;
+    font-family: Helvetica;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    font-size: 16pt;
+    -webkit-border-image: url(Parts/Images/div2.png) 0 1 0 1 stretch stretch;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+}
+
+.div3_template {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    width: 70px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    top: 7px;
+    left: 5px;
+}
+
+#div4 {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#AboutListView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 450px;
+}
+
+#AboutDetailView {
+    width: 100%;
+    display: none;
+    position: relative;
+    height: auto;
+    min-height: 450px;
+}
+
+#AboutList {
+    overflow: hidden;
+    display: none;
+    padding: 0px;
+    margin-bottom: 17px;
+    margin-left: 9px;
+    background-color: white;
+    -webkit-margin-bottom-collapse: separate;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+    border-top-left-radius: 8px 8px;
+    border-top-right-radius: 8px 8px;
+    border-bottom-right-radius: 8px 8px;
+    border-bottom-left-radius: 8px 8px;
+    cursor: default;
+    -webkit-user-select: none;
+    position: relative;
+    -webkit-margin-top-collapse: separate;
+    margin-right: 9px;
+    margin-top: 16px;
+    width: auto;
+}
+
+.listRowTemplate1_template {
+    position: relative;
+    list-style-type: none;
+    height: 43px;
+    width: auto;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+}
+
+.label1_template {
+    position: absolute;
+    left: 9px;
+    top: 11px;
+    right: 30px;
+    width: auto;
+    color: black;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.arrow1_template {
+    position: absolute;
+    width: 8px;
+    height: 13px;
+    right: 10px;
+    top: 15px;
+    background-image: url(../Images/chevron.png);
+    background-repeat: no-repeat no-repeat;
+}
+
+.listRowTemplate1_template .DC_selectionBG {
+    background-image: url(../Images/selectedRowiPhone.png);
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(38, 127, 239);
+    -webkit-background-size: 100% 100%;
+}
+
+.listRowTemplate1_template.selected .label1_template {
+    color: white;
+}
+
+.listRowTemplate1_template.selected .arrow1_template {
+    background-image: url(../Images/chevron_white.png);
+}
+
+#button2 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 7px;
+    width: 72px;
+    left: 236px;
+}
+
+#button3 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 7px;
+    left: 237px;
+    width: 76px;
+}
+
+#AboutTitle {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    margin-top: 0px;
+    top: 21px;
+    left: 25px;
+    font-size: 21px;
+    font-weight: bold;
+    font-family: Arial;
+    right: 27px;
+    width: auto;
+    bottom: 235px;
+    height: auto;
+}
+
+.selected #AboutTitle {
+    color: white;
+}
+
+#AboutDetail {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Times New Roman';
+    left: 25px;
+    top: 86px;
+    right: 25px;
+    width: auto;
+    bottom: -127px;
+    height: auto;
+    font-size: 12px;
+}
+
+.selected #AboutDetail {
+    color: white;
+}
+
+#MessageTextArea {
+    color: black;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    margin-top: 0px;
+    margin-left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    display: block;
+    height: 261px;
+    background-color: rgb(251, 255, 214);
+    width: 298px;
+}
+
+#PeersList {
+    overflow: hidden;
+    display: none;
+    padding: 0px;
+    margin-top: 17px;
+    margin-bottom: 17px;
+    margin-left: 9px;
+    background-color: white;
+    -webkit-margin-bottom-collapse: separate;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+    border-top-left-radius: 8px 8px;
+    border-top-right-radius: 8px 8px;
+    border-bottom-right-radius: 8px 8px;
+    border-bottom-left-radius: 8px 8px;
+    cursor: default;
+    -webkit-user-select: none;
+    margin-right: 9px;
+    position: relative;
+    width: auto;
+    -webkit-margin-top-collapse: separate;
+}
+
+.listRowTemplate2_template {
+    position: relative;
+    list-style-type: none;
+    height: 43px;
+    width: auto;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+}
+
+.label2_template {
+    position: absolute;
+    left: 9px;
+    top: 11px;
+    right: 30px;
+    width: auto;
+    color: black;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.arrow2_template {
+    position: absolute;
+    width: 8px;
+    height: 13px;
+    right: 10px;
+    top: 15px;
+    background-image: url(../Images/chevron.png);
+    background-repeat: no-repeat no-repeat;
+}
+
+.listRowTemplate2_template .DC_selectionBG {
+    background-image: url(../Images/selectedRowiPhone.png);
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgb(38, 127, 239);
+    -webkit-background-size: 100% 100%;
+}
+
+.listRowTemplate2_template.selected .label2_template {
+    color: white;
+}
+
+.listRowTemplate2_template.selected .arrow2_template {
+    background-image: url(../Images/chevron_white.png);
+}
+
+#PeerDetailView {
+    width: 100%;
+    display: none;
+    position: relative;
+    min-height: 370px;
+    height: auto;
+}
+
+#checkbox {
+    width: 80px;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    height: 18px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    left: 98px;
+    top: 211px;
+}
+
+#div5 {
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    right: auto;
+    bottom: auto;
+    top: 2px;
+    left: 18px;
+}
+
+#text1 {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    text-align: center;
+    left: 98px;
+    top: 16px;
+    width: auto;
+    height: auto;
+}
+
+.selected #text1 {
+    color: white;
+}
+
+#text3 {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Courier New';
+    font-size: 14px;
+    width: 250px;
+    min-height: 39px;
+    left: 15px;
+    top: 154px;
+    bottom: 148px;
+    height: auto;
+    letter-spacing: 0px;
+}
+
+.selected #text3 {
+    color: white;
+}
+
+#box1 {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(172, 172, 172);
+    background-color: white;
+    border-top-left-radius: 8px 8px;
+    border-top-right-radius: 8px 8px;
+    border-bottom-right-radius: 8px 8px;
+    border-bottom-left-radius: 8px 8px;
+    position: absolute;
+    margin-top: 0px;
+    right: 0px;
+    bottom: 368px;
+    width: 280px;
+    height: 341px;
+    top: 13px;
+    left: 21px;
+}
+
+#text5 {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    top: 125px;
+    width: auto;
+    height: auto;
+    left: 15px;
+}
+
+.selected #text5 {
+    color: white;
 }

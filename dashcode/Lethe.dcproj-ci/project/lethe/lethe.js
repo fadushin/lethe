@@ -52,70 +52,6 @@ var Lethe = {
     
         var that = this;
         
-        backend = backend ? backend : {
-            
-            dummyChannels: {messages: []},
-            
-            ordinal: 0,
-            
-            join: function(channelName, peer) {
-                var dummyChannel = this.dummyChannels[channelName];
-                if (!dummyChannel) {
-                    dummyChannel = {peers: {}, messages: []};
-                    this.dummyChannels[channelName] = dummyChannel;
-                }
-                dummyChannel.peers[peer.id] = peer;
-            },
-
-            ping: function(channelName, peer) {
-                // no-op
-            },
-            
-            getPeers: function(channelName, peerNames) {
-                var dummyChannel = this.dummyChannels[channelName];
-                var ret = {add: [], remove: []};
-                if (!dummyChannel) {
-                    return ret;
-                }
-                var i
-                for (i = 0;  i < peerNames.length;  ++i) {
-                    var peerName = peerNames[i];
-                    var dummyPeer = dummyChannel.peers[peerName];
-                    if (!dummyPeer) {
-                        ret.remove.push(peerName);
-                    }
-                }
-                for (dummyPeerName in dummyChannel.peers) {
-                    if (!net_dushin_foundation.Lists.contains(dummyPeerName, peerNames)) {
-                        ret.add.push(dummyChannel.peers[dummyPeerName]);
-                    }
-                }
-                return ret;
-            },
-            
-            leave: function(channelName, peerId) {
-                delete this.dummyChannels[channelName];
-            },
-            
-            sendMessage: function(channelName, message) {
-                message.timestamp = this.ordinal++;
-                this.dummyChannels[channelName].messages.push(message);
-            },
-            
-            getAllMessages: function(channelName) {
-                return this.dummyChannels[channelName].messages;
-            },
-            
-            getMessagesSince: function(channelName, timestamp) {
-                return net_dushin_foundation.Lists.filter(
-                    function(message) {
-                        return message.timestamp > timestamp;
-                    },
-                    this.dummyChannels[channelName].messages
-                );
-            }
-        };
-        
         var BROWSER_STORAGE_WARNING = "Your browser does not support localStorage."
             + "  Your identity will not be preserved across sessions of your web browser."
             + "  Try an HTML5-compliant broswer, such as one based on WebKit.";
@@ -269,18 +205,30 @@ var Lethe = {
             },
             
             updateIdentity: function(oldName, identity) {
-                var channels = this.getChannels();
-                var i;
-                for (i = 0;  i < channels.length;  ++i) {
-                    var channel = channels[i];
-                    var channelName = channel.getName();
-                    if (oldName) {
-                        backend.leave(channelName);
-                    }
-                    var obj = identity.peer;
-                    backend.join(channelName, obj);
-                    channel.updatePeers();
-                }
+                var lethe = this;
+                var identity = lethe.getIdentity();
+                var oldName = identity.getName();
+                setTimeout(
+                    function() {
+                        var tmpIdentity = lethe.getTmpIdentity();
+                        identity.assign(tmpIdentity);
+                        lethe.setStoredIdentity(identity);
+                        //
+                        var channels = lethe.getChannels();
+                        var i;
+                        for (i = 0;  i < channels.length;  ++i) {
+                            var channel = channels[i];
+                            var channelName = channel.getName();
+                            if (oldName) {
+                                backend.leave(channelName);
+                            }
+                            var obj = identity.peer;
+                            backend.join(channelName, obj);
+                            channel.updatePeers();
+                        }
+                    },
+                    200
+                );
             },
             
             sendMessage: function(channelName, messageText) {
@@ -322,9 +270,11 @@ Lethe.KVO.deserialize = function(str) {
 
 
 Lethe.init = function() {
-    var lethe = Lethe.create(Lethe.serverBackend.create());
+    // var lethe = Lethe.create(Lethe.serverBackend.create());
+    var lethe = Lethe.create(Lethe.dummyBackend);
     lethe.setIdentity(new Lethe.Identity("", "", ""));
     lethe.setTmpIdentity(new Lethe.Identity("", "", ""));
+    lethe.getModel().setValueForKeyPath([], "content.channels");
     this.instance = lethe;
     return lethe;
 };
@@ -378,3 +328,68 @@ Lethe.serverBackend = {
         };
     }
 };
+
+Lethe.dummyBackend = {
+            
+    dummyChannels: {messages: []},
+    
+    ordinal: 0,
+    
+    join: function(channelName, peer) {
+        var dummyChannel = this.dummyChannels[channelName];
+        if (!dummyChannel) {
+            dummyChannel = {peers: {}, messages: []};
+            this.dummyChannels[channelName] = dummyChannel;
+        }
+        dummyChannel.peers[peer.id] = peer;
+    },
+
+    ping: function(channelName, peer) {
+        // no-op
+    },
+    
+    getPeers: function(channelName, peerNames) {
+        var dummyChannel = this.dummyChannels[channelName];
+        var ret = {add: [], remove: []};
+        if (!dummyChannel) {
+            return ret;
+        }
+        var i
+        for (i = 0;  i < peerNames.length;  ++i) {
+            var peerName = peerNames[i];
+            var dummyPeer = dummyChannel.peers[peerName];
+            if (!dummyPeer) {
+                ret.remove.push(peerName);
+            }
+        }
+        for (dummyPeerName in dummyChannel.peers) {
+            if (!net_dushin_foundation.Lists.contains(dummyPeerName, peerNames)) {
+                ret.add.push(dummyChannel.peers[dummyPeerName]);
+            }
+        }
+        return ret;
+    },
+    
+    leave: function(channelName, peerId) {
+        delete this.dummyChannels[channelName];
+    },
+    
+    sendMessage: function(channelName, message) {
+        message.timestamp = this.ordinal++;
+        this.dummyChannels[channelName].messages.push(message);
+    },
+    
+    getAllMessages: function(channelName) {
+        return this.dummyChannels[channelName].messages;
+    },
+    
+    getMessagesSince: function(channelName, timestamp) {
+        return net_dushin_foundation.Lists.filter(
+            function(message) {
+                return message.timestamp > timestamp;
+            },
+            this.dummyChannels[channelName].messages
+        );
+    }
+};
+

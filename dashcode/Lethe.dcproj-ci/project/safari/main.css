@@ -275,7 +275,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     color: white;
 }
 
-#ChannelStackLayout {
+#ChannelStack {
     overflow: hidden;
     z-index: 0;
     position: absolute;
@@ -760,7 +760,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     color: white;
 }
 
-#MainStackLayout {
+#LetheStack {
     overflow: hidden;
     z-index: 0;
     position: absolute;
@@ -773,14 +773,14 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     height: 620px;
 }
 
-#MainView {
+#ChannelsView {
     width: 100%;
     display: none;
     position: relative;
     min-height: 633px;
 }
 
-#EditIdentityView {
+#IdentityView {
     width: 100%;
     display: none;
     position: relative;
@@ -1058,7 +1058,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     bottom: auto;
     margin-top: 0px;
     top: 463px;
-    left: 750px;
+    left: 748px;
 }
 
 #GenerateKeyIndicator {
@@ -1073,7 +1073,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     margin-left: auto;
 }
 
-#SwitchToPeersViewButton1 {
+#AboutButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -1274,4 +1274,61 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
 
 .selected #text4 {
     color: white;
+}
+
+#SplashScreenView {
+    width: 100%;
+    min-height: 620px;
+    display: none;
+    position: relative;
+}
+
+#rectangleShape {
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    width: 898px;
+    height: 620px;
+    -webkit-border-image: url(Parts/Images/rectangleShape.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/rectangleShape.png) 0 1 0 1 stretch stretch;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+#text5 {
+    color: black;
+    font-family: Helvetica;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    text-align: center;
+    margin-top: 108px;
+    margin-left: 310px;
+    width: auto;
+    margin-right: 304px;
+    min-height: 20px;
+    height: auto;
+}
+
+.selected #text5 {
+    color: white;
+}
+
+#activityIndicator {
+    opacity: 0.6;
+    position: relative;
+    display: block;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    width: 62px;
+    height: 62px;
+    margin-top: 147px;
+    margin-left: 418px;
 }

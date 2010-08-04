@@ -25,94 +25,26 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-//
-// Function: load()
-// Called by HTML body element's onload event when the web application is ready to start
-//
-function load()
-{
-    dashcode.setupParts();
-    setTimeout(
-        function() {
-            var lethe = Lethe.init();
-            var identity = lethe.getStoredIdentity();
-            if (identity) {
-                lethe.getIdentity().assign(identity);
-            } else {
-                modifyIdentity();
-            }
-        }, 
-        1000
-    );
-}
-
-function generateRSAKey(event)
-{
-    Lethe.instance.regenerateTmpIdentityKey();
-}
-
-pubKeyFingerprint = Class.create(
-    DC.ValueTransformer,
-    {
-        transformedValue: function(value){
-            if (value === Lethe.TAG_GENERATING) {
-                return '';
-            }
-            return net_dushin_crypto.KeyUtil.keyFingerprint(value);
-        }
-    }
-);
-
-
-function modifyIdentity(event)
-{
-    var identity = Lethe.instance.getIdentity();
-    var tmpIdentity = Lethe.instance.getTmpIdentity();
-    tmpIdentity.assign(identity);
-    var layout = document.getElementById("LetheStack").object;
-    layout.setCurrentView("IdentityView");
-}
 
 
 
-function channelSelected(event)
-{
+
+function channelSelected(event) {
+    var browser = document.getElementById('ChannelBrowser').object;
     var list = document.getElementById("ChannelList").object;
-    var browser = document.getElementById('LetheBrowser').object;
-    var selectedObjects = list.selectedObjects();
-    
+    var selectedObjects = list.selectedObjects();    
     if (selectedObjects && (1 == selectedObjects.length)){
-        // The Browser's goForward method is used to make the browser push down to a new level.
-        // Going back to previous levels is handled automatically.
-        browser.goForward(document.getElementById('MessageView'), selectedObjects[0].valueForKey("name"));
+        browser.goForward(document.getElementById('ChannelDetailsView'), selectedObjects[0].valueForKey("name"));
     }    
 }
 
+function showAboutDetailView(event) {
+    var browser = document.getElementById('AboutBrowser').object; 
+    browser.goForward('AboutDetailView', 'Next Level');
+}
 
-function modifyIdentitySelected(event)
-{
+// is this used?
+function modifyIdentitySelected(event) {
     var browser = document.getElementById('LetheBrowser').object;
     browser.goForward(document.getElementById('IdentityView'), "Identity");
 }
-
-
-function showIdentityView(event)
-{
-    var stackLayout = document.getElementById('LetheStack').object;
-    stackLayout.setCurrentView('IdentityView');
-}
-
-
-function showChannelsView(event)
-{
-    var stackLayout = document.getElementById('LetheStack').object;
-    stackLayout.setCurrentView('ChannelsView');
-}
-
-
-showActivityMonitor = Class.create(DC.ValueTransformer,{
-    transformedValue: function(value){
-        return value === Lethe.TAG_GENERATING;
-    }
-});
-
