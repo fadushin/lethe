@@ -1,0 +1,2028 @@
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Scripts/MainController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Scripts/MainController.js
+99a100,102
+>             if (!this.expandedKeyPaths.hasOwnProperty(keyPath)) {
+>                 continue;
+>             }
+140a144,146
+>             if (!this.displayIndexes.hasOwnProperty(key)) {
+>                 continue;
+>             }
+238c244
+< };
+\ No newline at end of file
+---
+> };
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/Scripts: MainController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari/Parts/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari/Parts/parts.js
+18a19,21
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari/Parts: parts.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari/main.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari/main.js
+49a50,52
+>             if (!strings.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/DataSourceEditor/safari: main.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/Transitions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/Transitions.js
+74a75,77
+>         if (!properties.hasOwnProperty(property)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts: Transitions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/designTimeSupport.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/designTimeSupport.js
+24c24,27
+<         for(var transformer in DC.namedTransformers) {
+---
+>         for (var transformer in DC.namedTransformers) {
+>             if (!DC.namedTransformers.hasOwnProperty(transformer)) {
+>                 continue;
+>             }
+53c56,59
+<         for(var x in this){
+---
+>         for (var x in this) {
+>             if (!this.hasOwnProperty(x)) {
+>                 continue;
+>             }
+114c120
+< )
+\ No newline at end of file
+---
+> )
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources: designTimeSupport.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Resources/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources/parts.js
+20a21,23
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Resources: parts.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Scripts/MainController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Scripts/MainController.js
+99a100,102
+>             if (!this.expandedKeyPaths.hasOwnProperty(keyPath)) {
+>                 continue;
+>             }
+140a144,146
+>             if (!this.displayIndexes.hasOwnProperty(key)) {
+>                 continue;
+>             }
+238c244
+< };
+\ No newline at end of file
+---
+> };
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/Scripts: MainController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari/Parts/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari/Parts/parts.js
+18a19,21
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari/Parts: parts.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari/main.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari/main.js
+49a50,52
+>             if (!strings.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/DataSourceEditor/safari: main.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/Transitions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/Transitions.js
+74a75,77
+>         if (!properties.hasOwnProperty(property)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts: Transitions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/designTimeSupport.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/designTimeSupport.js
+24c24,27
+<         for(var transformer in DC.namedTransformers) {
+---
+>         for (var transformer in DC.namedTransformers) {
+>             if (!DC.namedTransformers.hasOwnProperty(transformer)) {
+>                 continue;
+>             }
+53c56,59
+<         for(var x in this){
+---
+>         for (var x in this) {
+>             if (!this.hasOwnProperty(x)) {
+>                 continue;
+>             }
+114c120
+< )
+\ No newline at end of file
+---
+> )
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources: designTimeSupport.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources/parts.js
+20a21,23
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/A/Resources: parts.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Scripts/MainController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Scripts/MainController.js
+99a100,102
+>             if (!this.expandedKeyPaths.hasOwnProperty(keyPath)) {
+>                 continue;
+>             }
+140a144,146
+>             if (!this.displayIndexes.hasOwnProperty(key)) {
+>                 continue;
+>             }
+238c244
+< };
+\ No newline at end of file
+---
+> };
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/Scripts: MainController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari/Parts/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari/Parts/parts.js
+18a19,21
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari/Parts: parts.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari/main.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari/main.js
+49a50,52
+>             if (!strings.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/DataSourceEditor/safari: main.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/List.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/List.js
+550a551,553
+>             if (!templateElements.hasOwnProperty(key)) {
+>                 continue;
+>             }
+719c722
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts: List.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/Transitions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/Transitions.js
+74a75,77
+>         if (!properties.hasOwnProperty(property)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts: Transitions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/Bindable.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/Bindable.js
+37a38,40
+>             if (!this.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+221a225,227
+>             if (!parameters.hasOwnProperty(p)) {
+>                 continue;
+>             }
+324c330,333
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!this.bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+325a335
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: Bindable.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/function-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/function-additions.js
+121c121,124
+<             for (var p in points)
+---
+>             for (var p in points) {
+>                 if (!points.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+123a127
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: function-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/kvo.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/kvo.js
+701a702,704
+>             if (!this.hasOwnProperty(k)) {
+>                 continue;
+>             }
+993a997,999
+>                 if (!observers.hasOwnProperty(observerIndex)) {
+>                     continue;
+>                 }
+1029a1036,1038
+>             if (!this.__observers.hasOwnProperty(observerKeyPath)) {
+>                 continue;
+>             }
+1414a1424,1426
+>         if (!DC.KVO.prototype.hasOwnProperty(p)) {
+>             continue;
+>         }
+1424c1436,1439
+<         for (p in depends)
+---
+>         for (p in depends) {
+>             if (!depends.hasOwnProperty(p)) {
+>                 continue;
+>             }
+1425a1441
+>         }
+1448a1465,1467
+>         if (!obj.hasOwnProperty(p)) {
+>             continue;
+>         }
+1483c1502,1505
+<     for (var p in depends)
+---
+>     for (var p in depends) {
+>         if (!depends.hasOwnProperty(p)) {
+>             continue;
+>         }
+1484a1507
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: kvo.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/object-additions.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/object-additions.js
+32a33,35
+>         if (!defaults.hasOwnProperty(p)) {
+>             continue;
+>         }
+44c47,50
+<     for (var p in extensions)
+---
+>     for (var p in extensions) {
+>         if (!extensions.hasOwnProperty(p)) {
+>             continue;
+>         }
+45a52
+>     }
+55c62,65
+<     for (prop in obj1)
+---
+>     for (prop in obj1) {
+>         if (!obj1.hasOwnProperty(prop)) {
+>             continue;
+>         }
+56a67
+>     }
+59a71,73
+>         if (!p2.hasOwnProperty(prop)) {
+>             continue;
+>         }
+182a197,199
+>             if (!obj.hasOwnProperty(key)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: object-additions.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/oop.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/oop.js
+83a84,86
+>             if (!obj.__factories__.hasOwnProperty(p)) {
+>                 continue;
+>             }
+398a402,404
+>                 if (!obj.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+430a437,439
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+449c458,461
+<                             for (var p in decl)
+---
+>                             for (var p in decl) {
+>                                 if (!decl.hasOwnProperty(p)) {
+>                                     continue;
+>                                 }
+450a463
+>                             }
+455c468
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: oop.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/set.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core/set.js
+46c46,49
+<     for (p in s2)
+---
+>     for (p in s2) {
+>         if (!s2.hasOwnProperty(p)) {
+>             continue;
+>         }
+47a51
+>     }
+60a65,67
+>         if (!s1.hasOwnProperty(p)) {
+>             continue;
+>         }
+103c110,113
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+104a115
+>     }
+118c129,132
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+119a134
+>     }
+132c147,150
+<     for (e in set)
+---
+>     for (e in set) {
+>         if (!set.hasOwnProperty(e)) {
+>             continue;
+>         }
+133a152
+>     }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/core: set.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom/element-ie.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom/element-ie.js
+35a36,38
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom: element-ie.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom/element.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom/element.js
+194c194,197
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+195a199
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/dom: element.js.ORIG
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/external: sizzle_c.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/net/XHR.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/net/XHR.js
+177c177,180
+<             for (var h in headers)
+---
+>             for (var h in headers) {
+>                 if (!headers.hasOwnProperty(h)) {
+>                     continue;
+>                 }
+178a182
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/net: XHR.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/utilities.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/utilities.js
+24a25,27
+>             if (!dashcodeDataSources.hasOwnProperty(id)) {
+>                 continue;
+>             }
+36a40,42
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+43a50,52
+>             if (!allShapes.hasOwnProperty(name)) {
+>                 continue;
+>             }
+49a59,61
+>         if (!dashcodePartSpecs.hasOwnProperty(id)) {
+>             continue;
+>         }
+140a153,155
+>             if (!partSpec.propertyValues.hasOwnProperty(p)) {
+>                 continue;
+>             }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core: utilities.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/Page.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/Page.js
+112a113,115
+>                 if (!event.hasOwnProperty(p)) {
+>                     continue;
+>                 }
+223a227,229
+>             if (!mouseOverIds.hasOwnProperty(id)) {
+>                 continue;
+>             }
+466a473,475
+>             if (!viewLookup.hasOwnProperty(id)) {
+>                 continue;
+>             }
+599c608
+< })();
+\ No newline at end of file
+---
+> })();
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views: Page.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/View.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/View.js
+170a171,173
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+179c182,185
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+180a187
+>         }
+202c209,212
+<         for (var b in this.bindings)
+---
+>         for (var b in this.bindings) {
+>             if (!bindings.hasOwnProperty(b)) {
+>                 continue;
+>             }
+203a214
+>         }
+917c928
+< }
+\ No newline at end of file
+---
+> }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views: View.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/ViewController.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/ViewController.js
+109a110,112
+>             if (!structure.hasOwnProperty(p)) {
+>                 continue;
+>             }
+118c121,124
+<         for (p in factories)
+---
+>         for (p in factories) {
+>             if (!factories.hasOwnProperty(p)) {
+>                 continue;
+>             }
+119a126
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views: ViewController.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/view-core.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views/view-core.js
+40c40,43
+<         for (var p in styles)
+---
+>         for (var p in styles) {
+>             if (!styles.hasOwnProperty(p)) {
+>                 continue;
+>             }
+41a45
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/Parts/core/views: view-core.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/designTimeSupport.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/designTimeSupport.js
+24c24,27
+<         for(var transformer in DC.namedTransformers) {
+---
+>         for (var transformer in DC.namedTransformers) {
+>             if (!DC.namedTransformers.hasOwnProperty(transformer)) {
+>                 continue;
+>             }
+53c56,59
+<         for(var x in this){
+---
+>         for (var x in this) {
+>             if (!this.hasOwnProperty(x)) {
+>                 continue;
+>             }
+114c120
+< )
+\ No newline at end of file
+---
+> )
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources: designTimeSupport.js.ORIG
+diff -r Dashcode.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/parts.js Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources/parts.js
+20a21,23
+>         if (!scripts.hasOwnProperty(index)) {
+>             continue;
+>         }
+Only in Dashcode-tweaked.app/Contents/Frameworks/CYKit.framework/Versions/Current/Resources: parts.js.ORIG

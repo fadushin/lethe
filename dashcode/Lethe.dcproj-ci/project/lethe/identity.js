@@ -25,6 +25,14 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+
+__uses("BigInteger.init1.js");
+__uses("BigInteger.init2.js");
+__uses("RSA.init1.js");
+__uses("RSA.init2.js");
+__uses("RSA.init3.js");
+
+
 Lethe.Identity = Class.create(
     Lethe.KVO,
     {
@@ -71,21 +79,44 @@ Lethe.Identity = Class.create(
         
         regenerate: function() {
             var rsa = net_dushin_crypto.KeyUtil.createRSA();
-            rsa.generate(512, 65537);
-            var lprivKey = net_dushin_crypto.KeyUtil.encodePrivateKey(rsa);
-            var lpubKey = net_dushin_crypto.KeyUtil.encodePublicKey(rsa);
-            this.setValueForKeyPath(
-                lprivKey, 
-                "privKey"
-            );
-            this.setValueForKeyPath(
-                lpubKey, 
-                "pubKey"
-            );
-            var lsigner = net_dushin_crypto.SignerFactory.createSigner({privateKey: lprivKey});
-            this.setValueForKeyPath(
-                lsigner, 
-                "signer"
+            var that = this;
+            
+            var progress = function(i) {
+                /*
+                if ((i % 100) === 0) {
+                    console.log("progress(" + i + ")");
+                }
+                */
+            };
+            var result = function(data, rsaResult) {
+                console.log("result(" + data + ", " + rsa + ")");
+                var lprivKey = net_dushin_crypto.KeyUtil.encodePrivateKey(rsa);
+                var lpubKey = net_dushin_crypto.KeyUtil.encodePublicKey(rsa);
+                that.setValueForKeyPath(
+                    lprivKey, 
+                    "privKey"
+                );
+                that.setValueForKeyPath(
+                    lpubKey, 
+                    "pubKey"
+                );
+                var lsigner = net_dushin_crypto.SignerFactory.createSigner({privateKey: lprivKey});
+                that.setValueForKeyPath(
+                    lsigner, 
+                    "signer"
+                );
+
+            }
+            var done = function(succeeded, count, time ,startTime, finishTime) {
+                console.log("RSA keygen done(" + succeeded + ", " + count + ", " + time + ", " + startTime + ", " + finishTime + ")");
+            }
+            
+            
+            rsa.generateAsync(
+                512, 65537, 
+                progress, 
+                result, 
+                done
             );
         },
         

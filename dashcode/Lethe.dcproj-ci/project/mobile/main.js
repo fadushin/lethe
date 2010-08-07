@@ -42,9 +42,3 @@ function showAboutDetailView(event) {
     var browser = document.getElementById('AboutBrowser').object; 
     browser.goForward('AboutDetailView', 'Next Level');
 }
-
-// is this used?
-function modifyIdentitySelected(event) {
-    var browser = document.getElementById('LetheBrowser').object;
-    browser.goForward(document.getElementById('IdentityView'), "Identity");
-}

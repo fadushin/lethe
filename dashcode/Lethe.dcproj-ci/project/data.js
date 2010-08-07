@@ -1,4 +1,5 @@
 {
+    CONST_TRUE: true,
     starting: true,
     
     identity: {

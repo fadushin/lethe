@@ -26,7 +26,7 @@ var dashcodePartSpecs = {
     "IdentityButton": { "initialHeight": 26, "initialWidth": 56, "leftImageWidth": 5, "onclick": "modifyIdentity", "rightImageWidth": 5, "text": "Modify", "view": "DC.PushButton" },
     "IdentityCancelButton": { "initialHeight": 30, "initialWidth": 82, "leftImageWidth": 5, "onclick": "identityViewCancel", "rightImageWidth": 5, "text": "Cancel", "view": "DC.PushButton" },
     "IdentityDoneButton": { "initialHeight": 30, "initialWidth": 72, "leftImageWidth": 5, "onclick": "identityViewOk", "rightImageWidth": 5, "text": "Done", "view": "DC.PushButton" },
-    "IdentityFingerprintActivityMonitor": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showGeneratingActivityMonitor" }, "visibleBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showGeneratingActivityMonitor" } }, "view": "DC.ActivityIndicator" },
+    "IdentityFingerprintActivityMonitor": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.CONST_TRUE" }, "visibleBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showGeneratingActivityMonitor" } }, "view": "DC.ActivityIndicator" },
     "IdentityFingerprintLabel": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "IdentityFingerprintRegenerateButton": { "initialHeight": 30, "initialWidth": 109, "leftImageWidth": 5, "onclick": "generateRSAKey", "rightImageWidth": 5, "text": "Regenerate", "view": "DC.PushButton" },
     "IdentityKeyFingerprintLabel": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
@@ -50,6 +50,7 @@ var dashcodePartSpecs = {
     "text4": { "text": "Lethe 0.1-SNASPHOT", "view": "DC.Text" },
     "text5": { "text": "Key Fingerprint:", "view": "DC.Text" }
 };
+
 
 
 
