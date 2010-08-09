@@ -65,6 +65,13 @@ net_dushin_foundation.Lists = {
             pred(list[i]);
         }
     },
+
+    applyAsync: function(pred, list) {
+        var i;
+        for (i = 0;  i < list.length;  ++i) {
+            net_dushin_foundation.Async.exec({f: function(x){pred(x)}, args: list[i]});
+        }
+    },
     
     contains: function(elt, list) {
         var i;

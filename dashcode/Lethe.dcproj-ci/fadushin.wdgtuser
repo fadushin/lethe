@@ -28,7 +28,9 @@
 		<string>initSOAEP</string>
 		<key>foundation/exception.js:77</key>
 		<string>createIllegalArgumentException</string>
-		<key>lethe/lethe.js:277</key>
+		<key>lethe/channel.js:136</key>
+		<string>-</string>
+		<key>lethe/lethe.js:292</key>
 		<string>-init</string>
 		<key>mobile/main.js:29</key>
 		<string></string>
@@ -133,8 +135,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {904, 110}}</string>
-			<string>{{0, 120}, {904, 536}}</string>
+			<string>{{0, 0}, {954, 220}}</string>
+			<string>{{0, 230}, {954, 426}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -144,7 +146,7 @@
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-08-06T21:55:54Z</date>
+		<date>2010-08-08T19:46:11Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -279,6 +281,17 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
 				<integer>2</integer>
 			</array>
 			<array>
@@ -293,6 +306,116 @@
 				<integer>2</integer>
 				<integer>0</integer>
 				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>4</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>4</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>2</integer>
+				<integer>1</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
@@ -300,43 +423,45 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
 				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>6</integer>
+				<integer>1</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
-			<string>PeerView</string>
 			<string>view1</string>
 			<string>view3</string>
 			<string>mainView</string>
+			<string>AboutView</string>
 			<string>EditIdentityView</string>
 			<string>MessageView</string>
-			<string>IdentityView</string>
-			<string>editIdentityView</string>
-			<string>view2</string>
 			<string>PeersView</string>
+			<string>editIdentityView</string>
+			<string>PeerView</string>
+			<string>view2</string>
 			<string>MainView</string>
 		</array>
 	</dict>
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>MobileWeb</string>
+	<string>Desktop</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {330, 677}}</string>
-			<string>{{331, 0}, {905, 677}}</string>
+			<string>{{0, 0}, {280, 677}}</string>
+			<string>{{281, 0}, {955, 677}}</string>
 		</array>
 	</dict>
 	<key>MainWindowFrame</key>
-	<string>45 59 1235 719 0 0 1280 778 </string>
+	<string>42 59 1235 719 0 0 1280 778 </string>
 	<key>MobileWeb</key>
 	<dict>
 		<key>Objects view expanded items</key>
@@ -608,34 +733,24 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>3</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
 				<integer>0</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>1</integer>
+				<integer>2</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
+				<integer>2</integer>
 				<integer>0</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>3</integer>
+				<integer>2</integer>
 				<integer>0</integer>
-				<integer>1</integer>
 				<integer>1</integer>
 			</array>
 			<array>
@@ -647,18 +762,15 @@
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>1</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
 				<integer>0</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>9223372036854775807</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
@@ -666,17 +778,17 @@
 			<string>ChannelDetailView</string>
 			<string>view3</string>
 			<string>AboutDetailView</string>
+			<string>PeerDetailView</string>
 			<string>view1</string>
+			<string>AboutView</string>
 			<string>ChannelDetailsView</string>
 			<string>ChannelsDetailsView</string>
 			<string>ChannelView</string>
 			<string>PeerView</string>
-			<string>view2</string>
 			<string>ChannelsListView</string>
-			<string>ChannelsView</string>
+			<string>view2</string>
 			<string>PeerListView</string>
 			<string>MessageView</string>
-			<string>MessagesView</string>
 		</array>
 	</dict>
 	<key>NavigatorSplitViewGeometry</key>
@@ -689,8 +801,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {332, 291}}</string>
-			<string>{{0, 301}, {332, 355}}</string>
+			<string>{{0, 0}, {282, 290}}</string>
+			<string>{{0, 300}, {282, 356}}</string>
 		</array>
 	</dict>
 </dict>

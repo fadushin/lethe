@@ -242,23 +242,38 @@ var Lethe = {
                 var peers = channel.getPeers();
                 var messages = channel.valueForKeyPath('messages');
                 var signMessage = channel.valueForKeyPath('signMessages');
-                if (signMessage) {
-                    contents = identity.signer.sign(contents);
-                }
-                var recipientEncryptors = net_dushin_foundation.Lists.filterMap(
-                    function(peer) {
-                        return peer.encryptTo ? peer.encryptor : false; 
+                //
+                // (possibly) sign and encrypt the message, and send it.  Do this as asynchronously as possible.
+                //
+                net_dushin_foundation.Async.exec({
+                    f: function(contents) {
+                        return signMessage ? identity.signer.sign(contents) : contents;
                     },
-                    peers
-                );
-                if (recipientEncryptors.length > 0) {
-                    contents = bulkEncryptor.encrypt(contents, recipientEncryptors);
-                }
-                var message = new Lethe.Message(contents);
-                
-                backend.sendMessage(channelName, message.serialize());
-                
-                channel.updateMessages();
+                    args: contents,
+                    resultCallback: function(contents) {
+                        var recipientEncryptors = net_dushin_foundation.Lists.filterMap(
+                            function(peer) {
+                                return peer.encryptTo ? peer.encryptor : false; 
+                            },
+                            peers
+                        );
+                        net_dushin_foundation.Async.exec({
+                            f: function(contents) {
+                                if (recipientEncryptors.length > 0) {
+                                    contents = bulkEncryptor.encrypt(contents, recipientEncryptors);
+                                }
+                                return new Lethe.Message(contents);
+                            },
+                            args: contents,
+                            resultCallback: function(message) {
+                                backend.sendMessage(channelName, message.serialize());
+                                net_dushin_foundation.Async.exec(
+                                    {f: function() { channel.updateMessages(); }}
+                                );
+                            }
+                        });
+                    }
+                });
             }
         };
     }

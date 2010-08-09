@@ -68,9 +68,10 @@ Lethe.Channel = Class.create(
             if (!this.checkRunning()) {
                 return;
             }
-            this.ping();
-            this.updatePeers();
-            this.updateMessages();
+            var that = this;
+            net_dushin_foundation.Async.exec({f: function(){that.ping()}});
+            net_dushin_foundation.Async.exec({f: function(){that.updatePeers()}});
+            net_dushin_foundation.Async.exec({f: function(){that.updateMessages()}});
         },
         
         checkRunning: function() {
@@ -85,7 +86,7 @@ Lethe.Channel = Class.create(
         ping: function() {
             var identity = Lethe.instance.getIdentity();
             var channelName = this.name;
-            this.valueForKeyPath('backend').ping(channelName, identity.peer.id);
+            this.valueForKeyPath('backend').ping(channelName, identity.peer.id, function(){});
         },
 
         updatePeers: function() {
@@ -112,31 +113,35 @@ Lethe.Channel = Class.create(
             //
             // Remove the peers that should be removed from the model,
             //
-            var i;
-            for (i = 0;  i < peerUpdate.remove.length;  ++i) {
-                var peerId = peerUpdate.remove[i];
-                var peer = net_dushin_foundation.Lists.find(
-                    function(peer) {
-                        return peer.valueForKeyPath('peerId') === peerId;
-                    },
-                    peers
-                );
-                if (peer != null) {
-                    peers.removeObject(peer);
-                }
-            }
+            net_dushin_foundation.Lists.applyAsync(
+                function(peerId) {
+                    var peer = net_dushin_foundation.Lists.find(
+                        function(peer) {
+                            return peer.valueForKeyPath('peerId') === peerId;
+                        },
+                        peers
+                    );
+                    if (peer != null) {
+                        peers.removeObject(peer);
+                    }
+                },
+                peerUpdate.remove
+            );
             //
             // and add the ones that should be added.
             //
-            for (i = 0;  i < peerUpdate.add.length;  ++i) {
-                try {
-                    var parsedPeer = Lethe.Peer.parse(peerUpdate.add[i]);
-                    peers.addObject(parsedPeer);
-                } catch (e) {
-                    console.log("An error occurred parsing a peer from the server:");
-                    console.log(e);
-                }
-            }
+            net_dushin_foundation.Lists.applyAsync(
+                function(addedPeer) {
+                    try {
+                        var parsedPeer = Lethe.Peer.parse(addedPeer);
+                        peers.addObject(parsedPeer);
+                    } catch (e) {
+                        console.log("An error occurred parsing a peer from the server:");
+                        console.log(e);
+                    }
+                },
+                peerUpdate.add
+            );
         },
         
         updateMessages: function() {
@@ -153,31 +158,26 @@ Lethe.Channel = Class.create(
                 newMessages = backend.getMessagesSince(channelName, lastMessage.getTimestamp());
             }
             var that = this;
-            var processedMessages = net_dushin_foundation.Lists.map(
+            var processedMessages = net_dushin_foundation.Lists.applyAsync(
                 function(newMessage) {
                     var message = Lethe.Message.parse(newMessage);
                     if (message.isPlaintext()) {
-                        return message;
+                        // no-op
+                    } else {
+                        if (message.isSignedOnly()) {
+                            message.verify(peers, message.contents);
+                        } else {
+                            if (message.isEncrypted()) {
+                                message.tryDecrypt(identity);
+                            }
+                            if (message.isSignedAndDecrypted()) {
+                                message.verify(peers, message.decryptedContents);
+                            }
+                        }
                     }
-                    if (message.isSignedOnly()) {
-                        message.verify(peers, message.contents);
-                        return message;
-                    }
-                    if (message.isEncrypted()) {
-                        message.tryDecrypt(identity);
-                    }
-                    if (message.isSignedAndDecrypted()) {
-                        message.verify(peers, message.decryptedContents);
-                    }
-                    return message;
-                },
-                newMessages
-            );
-            net_dushin_foundation.Lists.apply(
-                function(message) {
                     messages.addObject(message);
                 },
-                processedMessages
+                newMessages
             );
         },
         

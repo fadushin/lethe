@@ -117,7 +117,7 @@ Lethe.Message = Class.create(
             }
         },
         
-        toString: function() {
+        asString: function() {
             var prefix = "";
             var contents;
             if (this.isEncrypted()) {

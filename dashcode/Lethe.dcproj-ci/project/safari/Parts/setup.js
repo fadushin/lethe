@@ -10,9 +10,11 @@ var dashcodePartSpecs = {
     "AboutList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.about.sections" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
     "activityIndicator": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.starting" }, "visibleBinding": { "keypath": "lethe.content.starting" } }, "view": "DC.ActivityIndicator" },
     "AddChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "addChannel", "rightImageWidth": 5, "text": "+", "view": "DC.PushButton" },
+    "ChannelBox": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "view": "DC.View" },
     "ChannelLabel": { "text": "Channels", "view": "DC.Text" },
     "ChannelList": { "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.channels" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
-    "ChannelStack": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "subviewsTransitions": [{ "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "push" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
+    "ChannelSplitLayout": { "flexibleViewIndex": 1, "initialSize": 898, "initialSplitterSize": 10, "isVertical": true, "splitterPosition": 159, "view": "DC.SplitLayout" },
+    "ChannelStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "flip" }, { "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "flip" }], "view": "DC.StackLayout" },
     "EditIdentityCancelButton": { "initialHeight": 30, "initialWidth": 80, "leftImageWidth": 5, "onclick": "identityViewCancel", "rightImageWidth": 5, "text": "cancel", "view": "DC.PushButton" },
     "EditIdentityOkButton": { "initialHeight": 30, "initialWidth": 56, "leftImageWidth": 5, "onclick": "identityViewOk", "propertyValues": { "enabledBinding": { "keypath": "lethe.content.tmp.id.pubKey" } }, "rightImageWidth": 5, "text": "ok", "view": "DC.PushButton" },
     "EncryptToLabel": { "text": "Encrypt", "view": "DC.Text" },
@@ -27,23 +29,20 @@ var dashcodePartSpecs = {
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprintLabel": { "text": "Key Fingerprint:", "view": "DC.Text" },
     "LetheStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }, { "direction": "left-right", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "none" }], "view": "DC.StackLayout" },
-    "MessagesLabel": { "text": "Messages", "view": "DC.Text" },
+    "MessagesButton": { "initialHeight": 30, "initialWidth": 101, "leftImageWidth": 5, "onclick": "showMessagesView", "rightImageWidth": 1, "text": "Messages", "view": "DC.PushButton" },
     "MessagesTextArea": { "propertyValues": { "valueBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToText" } }, "view": "DC.TextField" },
     "ModifyIdentityNameButton": { "initialHeight": 23, "initialWidth": 61, "leftImageWidth": 5, "onclick": "modifyIdentity", "rightImageWidth": 5, "text": "Modify...", "view": "DC.PushButton" },
     "PeerFingerprintHeaderLabel": { "text": "Key Fingerprint", "view": "DC.Text" },
     "PeerFingerprintLabel": { "propertyValues": { "textBinding": { "keypath": "*.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "PeerNameHeaderLabel": { "text": "Peer Name", "view": "DC.Text" },
     "PeerNameLabel": { "propertyValues": { "textBinding": { "keypath": "*.name" } }, "text": "name", "view": "DC.Text" },
-    "PeersLabel": { "text": "Peers", "view": "DC.Text" },
+    "PeersButton": { "initialHeight": 30, "initialWidth": 76, "leftImageWidth": 1, "onclick": "showPeersView", "rightImageWidth": 5, "text": "Peers", "view": "DC.PushButton" },
     "PeersList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "PeerNameLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "ChannelList.selection.peers" } }, "sampleRows": 3, "useDataSource": true, "view": "DC.List" },
     "RemoveChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "removeChannel", "propertyValues": { "enabledBinding": { "keypath": "ChannelList.hasSelection" } }, "rightImageWidth": 5, "text": "-", "view": "DC.PushButton" },
     "rowLabel": { "propertyValues": { "textBinding": { "keypath": "*.name" } }, "text": "Item", "view": "DC.Text" },
     "rowLabel1": { "propertyValues": { "textBinding": { "keypath": "*.title" } }, "text": "Item", "view": "DC.Text" },
     "SendMessageButton": { "initialHeight": 21, "initialWidth": 71, "leftImageWidth": 5, "onclick": "sendMessage", "rightImageWidth": 5, "text": "Send", "view": "DC.PushButton" },
-    "splitLayout": { "flexibleViewIndex": 1, "initialSize": 898, "initialSplitterSize": 10, "isVertical": true, "splitterPosition": 159, "view": "DC.SplitLayout" },
     "splitLayout1": { "flexibleViewIndex": 1, "initialSize": 781, "initialSplitterSize": 8, "isVertical": true, "splitterPosition": 192, "view": "DC.SplitLayout" },
-    "SwitchToMessagesViewButton": { "initialHeight": 22, "initialWidth": 95, "leftImageWidth": 5, "onclick": "showMessagesView", "rightImageWidth": 5, "text": "Messages...", "view": "DC.PushButton" },
-    "SwitchToPeersViewButton": { "initialHeight": 21, "initialWidth": 64, "leftImageWidth": 5, "onclick": "showPeersView", "rightImageWidth": 5, "text": "Peers...", "view": "DC.PushButton" },
     "text": { "text": "Name:", "view": "DC.Text" },
     "text1": { "propertyValues": { "textBinding": { "keypath": "AboutList.selection.title" } }, "text": "Text", "view": "DC.Text" },
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
@@ -55,6 +54,8 @@ var dashcodePartSpecs = {
     "view2": { "propertyValues": { "visibleBinding": { "keypath": "AboutList.hasSelection" } }, "view": "DC.View" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
+
 
 
 

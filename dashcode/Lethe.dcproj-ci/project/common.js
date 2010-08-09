@@ -45,6 +45,15 @@ function load()
         }, 
         1000
     );
+    
+    
+    net_dushin_foundation.Lists.applyAsync(
+        function(e) {
+            console.log(e);
+        },
+        ["a", "b", "c"]
+    );
+    
 }
 
 //
@@ -189,7 +198,7 @@ messagesToText = Class.create(
             var s = "";
             for (i = 0;  i < messages.length; ++i) {
                 var message = messages[i];
-                s += message.toString() + '\n';
+                s += message.asString() + '\n';
             }
             return s;
         }

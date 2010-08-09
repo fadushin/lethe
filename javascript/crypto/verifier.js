@@ -146,6 +146,60 @@ net_dushin_crypto.VerifierFactory = {
                 //
                 var deserializedObject = jsonrpc.unmarshall(utf82str(serializedObject));
                 return {status: true, value: deserializedObject};
+            },
+            
+            
+            /**
+             * {status: <boolean>, value: <object>} verifyAsync(object, resultCallback)
+             *
+             * @param       object
+             *              The signed object to verify.  This must be a signed object,
+             *              conforming to the definition at XXX
+             *
+             * @param       resultCallback
+             *              
+             *
+             * @return      an object, with the following elements:
+             *                  status:     true, if the signature over the data is valid; 
+             *                              false, otherwise
+             *                  value:      the deserialized form of the input object, if
+             *                              status is true; undefined, otherwise.
+             *
+             * @exception   if the supplied object is not a signed object
+             */
+            verifyAsync: function(object) {
+                if (object.type !== "signed") {
+                    throw net_dushin_foundation.ExceptionFactory.createException(
+                        {
+                            message: "Message is not a signed object message."
+                        }
+                    );
+                }
+                // assert object.serialized
+                //
+                // check that the hash for the serialized object matches the
+                // hash in the signed message
+                //
+                var serializedObject = base64_decode(object.serialized);
+                var hashValue = sha.hash(serializedObject);
+                // assert object.hash
+                if (base64_encode(hashValue) !== object.hash) {
+                    return {status: false};
+                }
+                //
+                // Check that the decrypted signature is the hash (but chop
+                // off the bytes after the hash length, due to padding)
+                //
+                var expected = rsa.publicDecrypt(base64_decode(object.signature));
+                var decrypted = base64_encode(expected.slice(0, hashValue.length));
+                if (decrypted !== object.hash) {
+                    return {status: false};
+                }
+                //
+                // return the unmarshalled object, if the signature checks out
+                //
+                var deserializedObject = jsonrpc.unmarshall(utf82str(serializedObject));
+                return {status: true, value: deserializedObject};
             }
         };
     }
