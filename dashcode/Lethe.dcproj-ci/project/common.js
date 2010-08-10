@@ -69,7 +69,15 @@ function modifyIdentity(event) {
 }
 
 function generateRSAKey(event) {
-    Lethe.instance.regenerateTmpIdentityKey();
+    var model = Lethe.instance.getModel();
+    model.setValueForKeyPath(0, "content.tmp.step");
+    var progress = function(i) {
+        if ((i % 10) === 0) {
+            model.setValueForKeyPath(i, "content.tmp.step");
+        }
+    };
+
+    Lethe.instance.regenerateTmpIdentityKey(progress);
 }
 
 function identityViewOk(event) {
@@ -198,9 +206,20 @@ messagesToText = Class.create(
             var s = "";
             for (i = 0;  i < messages.length; ++i) {
                 var message = messages[i];
-                s += message.asString() + '\n';
+                if (message.asString) {
+                    s += message.asString() + '\n';
+                }
             }
             return s;
+        }
+    }
+);
+
+editIdentityDoneButtonEnableable = Class.create(
+    DC.ValueTransformer,
+    {
+        transformedValue: function(value){
+            return value && value !== Lethe.TAG_GENERATING;
         }
     }
 );

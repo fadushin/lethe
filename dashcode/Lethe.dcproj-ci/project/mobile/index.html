@@ -65,11 +65,14 @@
                     <div id="IdentityDoneButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
                     <div id="text" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
                 </div>
+                <div id="DescriptionLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
                 <div id="IdentityNameLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
                 <input id="IdentityNameTextField" type="text" name="" value="" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.textfield">
+                <div id="IdentityFingerprintDescription" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
                 <div id="IdentityFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
                 <div id="IdentityFingerprintRegenerateButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
-                <img id="IdentityFingerprintActivityMonitor" apple-part="com.apple.Dashcode.part.activityindicator" src="../Images/ActivityIndicator.png" style="-webkit-animation-name: none; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; ">
+                <img id="GenerateKeyIndicator" apple-part="com.apple.Dashcode.part.activityindicator" src="../Images/ActivityIndicator.png" style="-webkit-animation-name: none; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; ">
+                <div id="StepLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
             </div>
         </div><div id="ChannelsView" apple-part-locked="true">
             <div id="ChannelBrowser" apple-part="com.apple.Dashcode.part.browser">
@@ -116,9 +119,10 @@
                                         <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input1" apple-group="checkbox">
                                         <div id="div5">Encrypt</div>
                                     </div>
-                                    <div id="text1" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                                    <div id="text1" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
                                     <div id="text3" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
                                     <div id="text5" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                                    <div id="text6" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
                                 </div>
                             </div></div>
                     </div></div>
@@ -144,7 +148,9 @@
                         </ul>
                     </div><div id="AboutDetailView" apple-part-locked="true">
                         <div id="AboutTitle" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
-                        <div id="AboutDetail" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                        <div id="AboutDetailBox" apple-part="com.apple.Dashcode.part.roundedbox">
+                            <div id="AboutDetail" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                        </div>
                     </div></div>
             </div>
         </div></div>

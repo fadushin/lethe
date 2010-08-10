@@ -26,10 +26,10 @@ body {
     position: absolute;
     bottom: auto;
     margin-top: 0px;
-    top: 30px;
-    left: 0px;
-    right: 0px;
+    top: 28px;
     width: auto;
+    left: -1px;
+    right: -1px;
 }
 
 .listRowTemplate_template {
@@ -41,11 +41,11 @@ body {
     border-bottom-style: solid;
     border-bottom-color: rgb(224, 224, 224);
     margin-left: 0px;
-    background-color: rgb(255, 255, 255);
     margin-right: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     width: auto;
+    background-color: rgb(255, 252, 203);
 }
 
 .rowLabel_template {
@@ -92,8 +92,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
 
 #ChannelSelectionBox {
     overflow: auto;
-    height: 224px;
     min-width: 57px;
+    height: 515px;
     bottom: 0px;
 }
 
@@ -702,17 +702,17 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     position: absolute;
     margin-top: 0px;
     opacity: 1;
-    left: 32px;
     -webkit-box-reflect: below 1px -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.339844))) 0 0 0 0 stretch stretch;
     border-top-left-radius: 20px 20px;
     border-top-right-radius: 20px 20px;
     border-bottom-left-radius: 20px 20px;
     border-bottom-right-radius: 20px 20px;
-    top: 54px;
-    right: 33px;
     width: auto;
-    bottom: 221px;
     height: auto;
+    right: 122px;
+    bottom: 228px;
+    left: 121px;
+    top: 47px;
 }
 
 #EditIdentityOkButton {
@@ -735,8 +735,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     position: absolute;
     bottom: auto;
     margin-top: 0px;
-    top: 274px;
-    right: 34px;
+    top: 268px;
+    right: 26px;
     margin-left: auto;
 }
 
@@ -760,8 +760,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     position: absolute;
     bottom: auto;
     margin-top: 0px;
-    top: 274px;
-    right: 98px;
+    top: 268px;
+    right: 87px;
     margin-left: auto;
 }
 
@@ -772,8 +772,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
-    top: 181px;
-    left: 292px;
+    top: 99px;
+    left: 92px;
     width: auto;
     height: auto;
 }
@@ -789,8 +789,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
-    left: 232px;
-    top: 212px;
+    top: 164px;
+    left: 92px;
     width: auto;
     height: auto;
 }
@@ -804,13 +804,13 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
-    height: 16px;
     font-size: 12px;
     font-weight: bold;
     font-family: 'Courier New';
-    top: 215px;
-    left: 342px;
-    right: 122px;
+    height: 21px;
+    top: 193px;
+    left: 92px;
+    right: 126px;
     width: auto;
 }
 
@@ -836,9 +836,9 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     bottom: auto;
     margin-top: 0px;
     height: 23px;
-    width: 86px;
-    top: 208px;
-    left: 134px;
+    width: 72px;
+    top: 222px;
+    left: 92px;
 }
 
 #GenerateKeyIndicator {
@@ -855,12 +855,12 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
 
 #textField {
     position: absolute;
-    width: 70px;
     color: black;
     font-family: HelveticaNeue;
     font-size: 10pt;
-    left: 342px;
-    top: 179px;
+    width: 242px;
+    top: 119px;
+    left: 92px;
 }
 
 #IdentityNameTextLabel {
@@ -953,14 +953,15 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
 
 #GenerateKeyIndicator {
     opacity: 0.6;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
     width: 19px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    display: block;
     height: 19px;
-    top: 212px;
-    right: 474px;
-    margin-left: auto;
+    position: absolute;
+    right: auto;
+    top: 222px;
+    left: 170px;
 }
 
 #AboutButton {
@@ -1198,15 +1199,15 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     font-size: 17px;
     text-overflow: ellipsis;
     overflow: hidden;
-    position: relative;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     text-align: center;
-    margin-top: 108px;
-    margin-left: 310px;
+    position: absolute;
+    margin-top: 0px;
+    left: 366px;
+    top: 137px;
+    right: 366px;
     width: auto;
-    margin-right: 304px;
-    min-height: 20px;
     height: auto;
 }
 
@@ -1216,14 +1217,17 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
 
 #activityIndicator {
     opacity: 0.6;
-    position: relative;
     display: block;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     width: 62px;
     height: 62px;
-    margin-top: 147px;
-    margin-left: 418px;
+    position: absolute;
+    left: 418px;
+    top: 183px;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
 }
 
 #MessagesButton {
@@ -1282,4 +1286,62 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     overflow: auto;
     height: 320px;
     width: 527px;
+}
+
+#StepLabel {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-size: 12px;
+    font-family: 'Courier New';
+    top: 222px;
+    left: 193px;
+    right: 352px;
+    width: auto;
+    bottom: 74px;
+    height: auto;
+}
+
+.selected #StepLabel {
+    color: white;
+}
+
+#DescriptionLabel {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: Arial;
+    font-size: 15px;
+    color: rgb(0, 0, 255);
+    font-style: italic;
+    top: 14px;
+    left: 92px;
+    right: 332px;
+    width: auto;
+    bottom: 239px;
+    height: auto;
+}
+
+.selected #DescriptionLabel {
+    color: white;
+}
+
+#text6 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    left: 15px;
+    top: 16px;
+    width: auto;
+    height: auto;
+}
+
+.selected #text6 {
+    color: white;
 }

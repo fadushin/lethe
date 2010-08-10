@@ -43,7 +43,8 @@
             name: "",
             privKey: "",
             pubKey: ""
-        }
+        },
+        step: 0
     },
     
     about: {

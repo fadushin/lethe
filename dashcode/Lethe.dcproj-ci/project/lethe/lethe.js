@@ -98,7 +98,7 @@ var Lethe = {
                 this.getModel().setValueForKeyPath(identity, "content.tmp.id");
             },
             
-            regenerateTmpIdentityKey: function() {
+            regenerateTmpIdentityKey: function(progress) {
                 var identity = this.getTmpIdentity();
                 identity.setValueForKeyPath(
                     Lethe.TAG_GENERATING,
@@ -106,7 +106,7 @@ var Lethe = {
                 );
                 setTimeout(
                     function() {
-                        identity.regenerate();
+                        identity.regenerate(progress);
                     },
                     100
                 );

@@ -77,17 +77,10 @@ Lethe.Identity = Class.create(
             this.name = nom;
         },
         
-        regenerate: function() {
+        regenerate: function(progress) {
             var rsa = net_dushin_crypto.KeyUtil.createRSA();
             var that = this;
             
-            var progress = function(i) {
-                /*
-                if ((i % 100) === 0) {
-                    console.log("progress(" + i + ")");
-                }
-                */
-            };
             var result = function(data, rsaResult) {
                 console.log("result(" + data + ", " + rsa + ")");
                 var lprivKey = net_dushin_crypto.KeyUtil.encodePrivateKey(rsa);

@@ -135,8 +135,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {954, 220}}</string>
-			<string>{{0, 230}, {954, 426}}</string>
+			<string>{{0, 0}, {954, 634}}</string>
+			<string>{{0, 644}, {954, 12}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -146,7 +146,7 @@
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-08-08T19:46:11Z</date>
+		<date>2010-08-10T01:54:18Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -278,178 +278,32 @@
 				<integer>0</integer>
 				<integer>1</integer>
 			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>4</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>4</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-			</array>
 		</array>
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>3</integer>
-				<integer>2</integer>
-				<integer>1</integer>
+				<integer>4</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
+			<string>view2</string>
 			<string>view1</string>
 			<string>view3</string>
 			<string>mainView</string>
-			<string>AboutView</string>
 			<string>EditIdentityView</string>
 			<string>MessageView</string>
-			<string>PeersView</string>
-			<string>editIdentityView</string>
+			<string>IdentityView</string>
 			<string>PeerView</string>
-			<string>view2</string>
+			<string>PeersView</string>
 			<string>MainView</string>
+			<string>editIdentityView</string>
 		</array>
 	</dict>
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>Desktop</string>
+	<string>MobileWeb</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
@@ -461,7 +315,7 @@
 		</array>
 	</dict>
 	<key>MainWindowFrame</key>
-	<string>42 59 1235 719 0 0 1280 778 </string>
+	<string>45 59 1235 719 0 0 1280 778 </string>
 	<key>MobileWeb</key>
 	<dict>
 		<key>Objects view expanded items</key>
@@ -733,12 +587,63 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>3</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+				<integer>0</integer>
+				<integer>1</integer>
 				<integer>0</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
@@ -756,12 +661,51 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
 				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
 				<integer>0</integer>
 			</array>
 		</array>
@@ -770,24 +714,23 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>3</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelDetailView</string>
 			<string>view3</string>
-			<string>AboutDetailView</string>
 			<string>PeerDetailView</string>
 			<string>view1</string>
-			<string>AboutView</string>
+			<string>AboutListView</string>
 			<string>ChannelDetailsView</string>
 			<string>ChannelsDetailsView</string>
 			<string>ChannelView</string>
 			<string>PeerView</string>
-			<string>ChannelsListView</string>
 			<string>view2</string>
+			<string>ChannelsListView</string>
 			<string>PeerListView</string>
+			<string>IdentityView</string>
 			<string>MessageView</string>
 		</array>
 	</dict>
@@ -801,8 +744,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {282, 290}}</string>
-			<string>{{0, 300}, {282, 356}}</string>
+			<string>{{0, 0}, {282, 289}}</string>
+			<string>{{0, 299}, {282, 357}}</string>
 		</array>
 	</dict>
 </dict>

@@ -136,8 +136,8 @@ Lethe.Channel = Class.create(
                         var parsedPeer = Lethe.Peer.parse(addedPeer);
                         peers.addObject(parsedPeer);
                     } catch (e) {
-                        console.log("An error occurred parsing a peer from the server:");
-                        console.log(e);
+                        // console.log("An error occurred parsing a peer from the server:");
+                        // console.log(e);
                     }
                 },
                 peerUpdate.add
