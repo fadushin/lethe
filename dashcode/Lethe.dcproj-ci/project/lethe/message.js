@@ -153,8 +153,52 @@ Lethe.Message = Class.create(
             return prefix + contents;
         },
         
+        toHtml: function(
+            plaintext, encrypted, decrypted, unsigned, verified, unverified
+        ) {
+            var prefix = "";
+            var contents;
+            if (!this.isEncrypted() && !this.isSigned()) { // plaintext
+                prefix += this.img(plaintext);
+                prefix += this.img(unsigned);
+                contents = this.renderContentsHtml(this.contents);
+            } else if (!this.isEncrypted() && this.isSigned() && !this.isVerified()) { // plaintext signed unverified
+                prefix += this.img(plaintext);
+                prefix += this.img(unverified);
+                contents = "...";
+            } else if (!this.isEncrypted() && this.isSigned() && this.isVerified()) { // plaintext signed verified
+                prefix += this.img(plaintext);
+                prefix += this.img(verified);
+                contents = this.renderContentsHtml(this.verifiedResults.value);
+            } else if (this.isEncrypted() && !this.isDecrypted()) { // undecrypted
+                prefix += this.img(encrypted);
+                contents = "...";
+            } else if (this.isDecrypted() && !this.isSigned()) { // decrypted and not signed
+                prefix += this.img(decrypted);
+                prefix += this.img(unsigned);
+                contents = this.renderContentsHtml(this.decryptedContents);
+            } else if (this.isDecrypted() && this.isSigned() && this.isVerified()) { // decrypted, signed, and verified
+                prefix += this.img(decrypted);
+                prefix += this.img(verified);
+                contents = this.renderContentsHtml(this.verifiedResults.value);
+            } else if (this.isDecrypted() && !this.isVerified()) { // decrypted, signed, and unverified
+                prefix += this.img(decrypted);
+                prefix += this.img(unverified);
+                contents = "...";
+            }
+            return "<p>" + prefix + contents + "</p>";
+        },
+        
+        img: function(path) {
+            return "<img src=\"" + path + "\"/> ";
+        },
+        
         renderContents: function(c) {
             return c.from + ': ' + c.messageText;
+        },
+        
+        renderContentsHtml: function(c) {
+            return "<b>" + c.from + ":</b> " + c.messageText;
         }
     }
 );

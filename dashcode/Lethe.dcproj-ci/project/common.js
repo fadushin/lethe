@@ -45,15 +45,6 @@ function load()
         }, 
         1000
     );
-    
-    
-    net_dushin_foundation.Lists.applyAsync(
-        function(e) {
-            console.log(e);
-        },
-        ["a", "b", "c"]
-    );
-    
 }
 
 //
@@ -208,6 +199,33 @@ messagesToText = Class.create(
                 var message = messages[i];
                 if (message.asString) {
                     s += message.asString() + '\n';
+                }
+            }
+            return s;
+        }
+    }
+);
+
+messagesToHtml = Class.create(
+    DC.ValueTransformer,
+    {
+        transformedValue: function(messages){
+            var i;
+            var s = "";
+            for (i = 0;  i < messages.length; ++i) {
+                var message = messages[i];
+                if (message.toHtml) {
+                    if (i > 0) {
+                        s += "<hr>";
+                    }
+                    s += message.toHtml(
+                        "../Images/lethe/plaintext.png",
+                        "../Images/lethe/encrypted.png",
+                        "../Images/lethe/decrypted.png",
+                        "../Images/lethe/unsigned.png",
+                        "../Images/lethe/verified.png",
+                        "../Images/lethe/unverified.png"
+                    );
                 }
             }
             return s;

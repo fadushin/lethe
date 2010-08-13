@@ -253,7 +253,8 @@ var Lethe = {
                     resultCallback: function(contents) {
                         var recipientEncryptors = net_dushin_foundation.Lists.filterMap(
                             function(peer) {
-                                return peer.encryptTo ? peer.encryptor : false; 
+                                var encryptTo = peer.valueForKeyPath('encryptTo');
+                                return encryptTo ? peer.encryptor : false; 
                             },
                             peers
                         );
@@ -378,8 +379,10 @@ Lethe.dummyBackend = {
             }
         }
         for (dummyPeerName in dummyChannel.peers) {
-            if (!net_dushin_foundation.Lists.contains(dummyPeerName, peerNames)) {
-                ret.add.push(dummyChannel.peers[dummyPeerName]);
+            if (dummyChannel.peers.hasOwnProperty(dummyPeerName)) {
+                if (!net_dushin_foundation.Lists.contains(dummyPeerName, peerNames)) {
+                    ret.add.push(dummyChannel.peers[dummyPeerName]);
+                }
             }
         }
         return ret;

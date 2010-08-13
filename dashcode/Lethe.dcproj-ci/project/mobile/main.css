@@ -20,14 +20,12 @@ body {
     margin-top: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    width: 317px;
-    height: 34px;
+    position: relative;
+    margin-left: 0px;
+    width: auto;
+    margin-right: 0px;
+    height: 32px;
     -webkit-border-image: url(Parts/Images/Footer.png) 0 1 0 1 stretch stretch;
-    left: -1px;
-    top: 325px;
 }
 
 #IdentityButton {
@@ -43,13 +41,13 @@ body {
     cursor: default;
     -webkit-user-select: none;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     width: 56px;
     height: 26px;
-    top: 6px;
+    top: 4px;
     left: 3px;
+    margin-right: auto;
 }
 
 #IdentityBox {
@@ -68,7 +66,7 @@ body {
     margin-top: 0px;
     margin-right: 0px;
     width: auto;
-    min-height: 354px;
+    min-height: 356px;
     height: auto;
 }
 
@@ -80,12 +78,12 @@ body {
     overflow: hidden;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    margin-top: 0px;
-    left: 24px;
-    top: 160px;
-    right: 227px;
+    position: relative;
+    margin-right: 227px;
+    margin-left: 24px;
+    margin-top: 6px;
     width: auto;
+    min-height: 20px;
     height: auto;
 }
 
@@ -94,29 +92,33 @@ body {
 }
 
 #IdentityNameTextField {
-    position: absolute;
     color: black;
     font-family: HelveticaNeue;
     font-size: 10pt;
-    left: 24px;
     width: 263px;
-    top: 183px;
+    margin-top: 5px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #IdentityFingerprintLabel {
     color: black;
     text-overflow: ellipsis;
     overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
     font-family: 'Courier New';
     font-size: 15px;
-    left: 24px;
-    top: 242px;
-    right: 21px;
-    width: auto;
-    bottom: 71px;
-    height: auto;
+    margin-top: 5px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    width: 274px;
+    height: 41px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .selected #IdentityFingerprintLabel {
@@ -136,13 +138,13 @@ body {
     -webkit-dashboard-region: dashboard-region(control rectangle);
     cursor: default;
     -webkit-user-select: none;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
     width: 95px;
-    top: 288px;
-    left: 109px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    margin-top: 1px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #LetheStack {
@@ -150,12 +152,13 @@ body {
     z-index: 0;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    width: 318px;
     margin-top: 0px;
-    height: 358px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-left: 0px;
+    position: relative;
+    width: auto;
+    margin-right: 0px;
+    min-height: 358px;
+    height: auto;
 }
 
 #IdentityView {
@@ -169,8 +172,8 @@ body {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 459px;
     height: auto;
+    min-height: 358px;
 }
 
 #ChannelBrowser {
@@ -200,9 +203,9 @@ body {
     border-top-width: 0px;
     border-bottom-width: 0px;
     -webkit-border-image: url(Parts/Images/ChannelBrowserHeader.png) 0 1 0 1 stretch stretch;
-    width: auto;
-    margin-right: 0px;
     margin-left: 0px;
+    margin-right: 0px;
+    width: auto;
 }
 
 .div1_template {
@@ -343,12 +346,11 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     width: 101px;
-    left: 71px;
-    top: 8px;
+    top: 7px;
+    left: 36px;
 }
 
 #PeersButton {
@@ -367,12 +369,11 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     width: 76px;
-    top: 8px;
-    left: 170px;
+    top: 7px;
+    left: 135px;
 }
 
 #ChannelStack {
@@ -381,17 +382,16 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     margin-top: 0px;
-    position: absolute;
-    left: 0px;
-    top: 45px;
     border-top-left-radius: 0px 0px;
     border-top-right-radius: 0px 0px;
     border-bottom-left-radius: 0px 0px;
     border-bottom-right-radius: 0px 0px;
-    right: 0px;
-    width: auto;
-    bottom: 1px;
+    min-height: 236px;
     height: auto;
+    margin-left: 0px;
+    position: relative;
+    width: auto;
+    margin-right: 0px;
 }
 
 #MessagesView {
@@ -415,12 +415,13 @@ body {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    top: 0px;
-    left: 0px;
-    width: 318px;
     height: 48px;
     opacity: 1;
+    left: 0px;
+    width: auto;
+    right: 0px;
     -webkit-border-image: url(Parts/Images/IdentityHeader.png) 0 1 0 1 stretch stretch;
+    top: 0px;
 }
 
 #IdentityCancelButton {
@@ -443,6 +444,7 @@ body {
     top: 9px;
     width: 82px;
     left: 9px;
+    margin-right: auto;
 }
 
 #IdentityDoneButton {
@@ -459,12 +461,12 @@ body {
     cursor: default;
     -webkit-user-select: none;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     top: 9px;
-    left: 236px;
     width: 72px;
+    right: 10px;
+    margin-left: auto;
 }
 
 #text {
@@ -472,13 +474,17 @@ body {
     font-size: 17px;
     text-overflow: ellipsis;
     overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    left: 131px;
-    top: 14px;
-    width: auto;
-    height: auto;
     color: rgb(255, 255, 255);
+    margin-top: 14px;
+    margin-left: 131px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    width: auto;
+    margin-right: 132px;
+    min-height: 20px;
+    height: auto;
+    text-align: center;
 }
 
 .selected #text {
@@ -492,10 +498,12 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     display: block;
-    margin-left: 0px;
-    position: relative;
-    margin-top: 5px;
-    width: 297px;
+    position: absolute;
+    top: 5px;
+    bottom: auto;
+    margin-top: 0px;
+    left: 1px;
+    width: 232px;
 }
 
 #SendMessageButton {
@@ -513,24 +521,26 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
-    height: 24px;
-    left: 0px;
-    top: 205px;
-    width: 303px;
+    top: 5px;
+    width: 58px;
+    left: 244px;
+    height: 21px;
 }
 
 #box {
     border-color: black;
     border-width: 1px;
-    position: absolute;
     margin-top: 0px;
-    width: 303px;
-    top: 0px;
-    height: 232px;
-    left: 7px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    min-height: 233px;
+    height: auto;
+    margin-right: 6px;
+    margin-left: 6px;
+    width: auto;
 }
 
 #SignMessagesCheckbox {
@@ -540,8 +550,9 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     margin-top: 10px;
-    margin-left: 119px;
     width: 112px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #div {
@@ -561,14 +572,15 @@ body {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    margin-top: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: relative;
-    margin-left: 0px;
-    width: 318px;
     height: 34px;
     -webkit-border-image: url(Parts/Images/rectangleShape.png) 0 1 0 1 stretch stretch;
+    margin-top: -1px;
+    margin-left: 0px;
+    margin-right: 1px;
+    width: auto;
 }
 
 #button {
@@ -586,13 +598,13 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     width: 26px;
     height: 26px;
     top: 4px;
-    left: 253px;
+    right: 38px;
+    margin-left: auto;
 }
 
 #button1 {
@@ -611,12 +623,12 @@ body {
     -webkit-margin-bottom-collapse: separate;
     margin-top: 0px;
     position: absolute;
-    right: auto;
     bottom: auto;
     width: 26px;
     height: 26px;
     top: 4px;
-    left: 285px;
+    right: 6px;
+    margin-left: auto;
 }
 
 #text2 {
@@ -627,12 +639,12 @@ body {
     position: absolute;
     margin-top: 0px;
     font-size: 12px;
-    top: 12px;
-    left: 67px;
-    right: 186px;
+    height: 15px;
+    text-align: center;
+    top: 9px;
+    left: 62px;
+    right: 191px;
     width: auto;
-    bottom: 7px;
-    height: auto;
 }
 
 .selected #text2 {
@@ -650,9 +662,9 @@ body {
     top: 6px;
     left: 127px;
     right: 4px;
-    width: auto;
-    bottom: 4px;
-    height: auto;
+    margin-left: auto;
+    width: 186px;
+    height: 24px;
 }
 
 .selected #IdentityKeyFingerprintLabel {
@@ -666,21 +678,6 @@ body {
     min-height: 358px;
 }
 
-#rectangleShape1 {
-    border-left-width: 1px;
-    border-right-width: 1px;
-    border-top-width: 0px;
-    border-bottom-width: 0px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    margin-top: 0px;
-    margin-left: 0px;
-    width: 317px;
-    height: 357px;
-    -webkit-border-image: url(Parts/Images/rectangleShape1.png) 0 1 0 1 stretch stretch;
-}
-
 #activityIndicator {
     opacity: 0.6;
     position: relative;
@@ -690,10 +687,11 @@ body {
     width: 62px;
     height: 62px;
     margin-top: 64px;
-    margin-left: 127px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-#text4 {
+#Title {
     color: black;
     font-family: Helvetica;
     font-size: 17px;
@@ -711,7 +709,7 @@ body {
     height: auto;
 }
 
-.selected #text4 {
+.selected #Title {
     color: white;
 }
 
@@ -730,7 +728,7 @@ body {
     -webkit-margin-bottom-collapse: separate;
     margin-right: 0px;
     width: auto;
-    min-height: 494px;
+    min-height: 359px;
     height: auto;
 }
 
@@ -775,17 +773,20 @@ body {
     position: relative;
     left: 0px;
     top: 0px;
-    width: auto;
-    height: auto;
     overflow: hidden;
     z-index: 0;
+    min-height: 315px;
+    height: auto;
+    width: auto;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 #AboutListView {
     width: 100%;
     display: none;
     position: relative;
-    min-height: 450px;
+    min-height: 315px;
 }
 
 #AboutDetailView {
@@ -793,15 +794,13 @@ body {
     display: none;
     position: relative;
     height: auto;
-    min-height: 450px;
+    min-height: 315px;
 }
 
 #AboutList {
     overflow: hidden;
     display: none;
     padding: 0px;
-    margin-bottom: 17px;
-    margin-left: 9px;
     background-color: white;
     -webkit-margin-bottom-collapse: separate;
     border-width: 1px;
@@ -813,11 +812,12 @@ body {
     border-bottom-left-radius: 8px 8px;
     cursor: default;
     -webkit-user-select: none;
-    position: relative;
     -webkit-margin-top-collapse: separate;
-    margin-right: 9px;
     margin-top: 16px;
+    margin-left: 9px;
+    position: relative;
     width: auto;
+    margin-right: 9px;
 }
 
 .listRowTemplate1_template {
@@ -875,7 +875,7 @@ body {
     background-image: url(../Images/chevron_white.png);
 }
 
-#button2 {
+#AboutDoneButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -889,15 +889,15 @@ body {
     cursor: default;
     -webkit-user-select: none;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     top: 7px;
     width: 72px;
-    left: 236px;
+    right: 11px;
+    margin-left: auto;
 }
 
-#button3 {
+#AboutButton {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 12px;
@@ -911,12 +911,12 @@ body {
     cursor: default;
     -webkit-user-select: none;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
     top: 7px;
-    left: 237px;
     width: 76px;
+    right: 5px;
+    margin-left: auto;
 }
 
 #AboutTitle {
@@ -925,16 +925,15 @@ body {
     overflow: hidden;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    margin-top: 0px;
-    top: 21px;
-    left: 25px;
     font-size: 21px;
     font-weight: bold;
     font-family: Arial;
-    right: 27px;
+    position: relative;
+    margin-left: 19px;
+    margin-top: 23px;
     width: auto;
-    bottom: 235px;
+    margin-right: 33px;
+    min-height: 29px;
     height: auto;
 }
 
@@ -952,30 +951,15 @@ body {
     font-size: 12px;
     position: relative;
     margin-top: 7px;
-    margin-left: 7px;
-    margin-right: 9px;
+    margin-left: 19px;
+    margin-right: 20px;
     width: auto;
-    min-height: 349px;
+    min-height: 238px;
     height: auto;
 }
 
 .selected #AboutDetail {
     color: white;
-}
-
-#MessageTextArea {
-    color: black;
-    font-family: HelveticaNeue;
-    font-size: 10pt;
-    margin-top: 0px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    display: block;
-    background-color: rgb(251, 255, 214);
-    width: 298px;
-    height: 169px;
-    margin-left: 0px;
 }
 
 #PeersList {
@@ -1073,11 +1057,13 @@ body {
     -webkit-margin-bottom-collapse: separate;
     height: 18px;
     position: absolute;
-    right: auto;
     bottom: auto;
     margin-top: 0px;
-    left: 100px;
     top: 177px;
+    right: 100px;
+    margin-left: auto;
+    left: 100px;
+    margin-right: auto;
 }
 
 #div5 {
@@ -1141,14 +1127,15 @@ body {
     border-top-right-radius: 8px 8px;
     border-bottom-right-radius: 8px 8px;
     border-bottom-left-radius: 8px 8px;
-    position: absolute;
-    margin-top: 0px;
-    right: 0px;
-    bottom: 368px;
-    width: 280px;
-    height: 211px;
-    left: 18px;
-    top: 10px;
+    margin-top: 10px;
+    margin-left: 18px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    width: auto;
+    margin-right: 21px;
+    min-height: 211px;
+    height: auto;
 }
 
 #text5 {
@@ -1169,34 +1156,17 @@ body {
     color: white;
 }
 
-#AboutDetailBox {
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(172, 172, 172);
-    background-color: white;
-    border-top-left-radius: 8px 8px;
-    border-top-right-radius: 8px 8px;
-    border-bottom-right-radius: 8px 8px;
-    border-bottom-left-radius: 8px 8px;
-    width: 267px;
-    margin-top: 62px;
-    margin-left: 25px;
+#GenerateKeyIndicator {
+    opacity: 0.6;
+    width: 46px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: relative;
-    height: 366px;
-}
-
-#GenerateKeyIndicator {
-    opacity: 0.6;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    width: 46px;
+    display: block;
     height: 46px;
-    top: 237px;
-    left: 120px;
+    margin-top: 8px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #IdentityFingerprintDescription {
@@ -1207,12 +1177,12 @@ body {
     overflow: hidden;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    margin-top: 0px;
-    top: 215px;
-    left: 24px;
-    right: 166px;
+    margin-top: 9px;
+    margin-left: 24px;
+    position: relative;
     width: auto;
+    margin-right: 166px;
+    min-height: 20px;
     height: auto;
 }
 
@@ -1241,17 +1211,18 @@ body {
 #DescriptionLabel {
     text-overflow: ellipsis;
     overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
     font-family: Arial;
     font-size: 15px;
     color: rgb(0, 0, 255);
     font-style: italic;
-    left: 33px;
-    top: 70px;
-    right: 34px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    margin-right: 43px;
+    margin-top: 57px;
+    margin-left: 24px;
     width: auto;
-    bottom: 233px;
+    min-height: 51px;
     height: auto;
 }
 
@@ -1263,18 +1234,65 @@ body {
     color: black;
     text-overflow: ellipsis;
     overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
     font-size: 12px;
     font-family: 'Courier New';
-    top: 253px;
-    left: 168px;
-    right: 92px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    text-align: center;
+    margin-top: 1px;
+    margin-left: 129px;
     width: auto;
-    bottom: 87px;
+    margin-right: 131px;
+    min-height: 18px;
     height: auto;
 }
 
 .selected #StepLabel {
     color: white;
+}
+
+#ButtonBox {
+    border-color: black;
+    border-width: 1px;
+    margin-top: 3px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    height: 44px;
+    width: 249px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#MessageText {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    margin-left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-right: 0px;
+    width: auto;
+    min-height: 27px;
+    height: auto;
+    font-family: 'Courier New';
+    font-size: 12px;
+}
+
+.selected #MessageText {
+    color: white;
+}
+
+#SendMessageBox {
+    border-color: black;
+    border-width: 1px;
+    position: relative;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    height: 33px;
+    width: 308px;
+    margin-left: auto;
+    margin-right: auto;
 }
