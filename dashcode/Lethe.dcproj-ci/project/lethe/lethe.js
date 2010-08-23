@@ -152,6 +152,10 @@ var Lethe = {
                 setStoredItem("net.dushin.lethe.identity", str);
             },
             
+            getTrustedPeers: function() {
+                return this.getModel().valueForKeyPath("content.trustedPeers");
+            },
+            
             joinChannel: function(channelName) {
                 var identity = this.getIdentity();
                 var channels = this.getChannels();
@@ -168,7 +172,7 @@ var Lethe = {
                 //
                 // Join the channel (on the back end)
                 //
-                var obj = identity.peer;
+                var obj = identity.toPeerObject();
                 backend.join(channelName, obj);
                 //
                 // Create the channel and add it to the list of channels
@@ -181,7 +185,7 @@ var Lethe = {
                 var identity = this.getIdentity()
                 var channels = this.getChannels();
                 var channelName = channel.valueForKeyPath('name');
-                var peerId = identity.peer.id;
+                var peerId = identity.toPeerObject().id;
                 //
                 // Signal the update function to stop
                 //
@@ -222,7 +226,7 @@ var Lethe = {
                             if (oldName) {
                                 backend.leave(channelName);
                             }
-                            var obj = identity.peer;
+                            var obj = identity.toPeerObject();
                             backend.join(channelName, obj);
                             channel.updatePeers();
                         }
@@ -263,7 +267,12 @@ var Lethe = {
                                 if (recipientEncryptors.length > 0) {
                                     contents = bulkEncryptor.encrypt(contents, recipientEncryptors);
                                 }
-                                return new Lethe.Message(contents);
+                                return new Lethe.Message(
+                                    {
+                                        contents: contents, 
+                                        signingPeer: signMessage ? identity.getPeer() : null
+                                    }
+                                );
                             },
                             args: contents,
                             resultCallback: function(message) {

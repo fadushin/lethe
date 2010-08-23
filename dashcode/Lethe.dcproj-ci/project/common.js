@@ -121,6 +121,19 @@ function sendMessage(event)
     lethe.sendMessage(channelName, messageText);
 }
 
+//
+// Trusted Peer Management
+//
+
+function addTrustedPeer(event)
+{
+    var result = confirm("Are you sure you want to add this peer to the list of trusted peers?");
+    if (result) {
+        // TODO
+    }
+}
+
+
 
 //
 // View Selection/Change
@@ -134,6 +147,12 @@ function showIdentityView() {
 function showChannelsView() {
     var layout = document.getElementById("LetheStack").object;
     layout.setCurrentView("ChannelsView");
+}
+
+function showTrustedPeersView(event)
+{
+    var layout = document.getElementById("LetheStack").object;
+    layout.setCurrentView("TrustedPeersView");
 }
 
 function showAboutView() {

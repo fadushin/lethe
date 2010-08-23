@@ -53,7 +53,7 @@ Lethe.Identity = Class.create(
             this.decryptor = privKey ? net_dushin_crypto.DecryptorFactory.createDecryptor(
                 {privateKey: privKey}
             ) : null;
-            this.peer = pubKey ? this.toPeerObject() : null;
+            this.peer = pubKey ? new Lethe.Peer({name: name, pubKey: pubKey, isTrusted: true}) : null;
         },
         
         assign: function(identity) {
@@ -66,7 +66,7 @@ Lethe.Identity = Class.create(
                 {privateKey: identity.privKey}
             ) : null;
             this.setValueForKeyPath(identity.name, "name");
-            this.peer = identity.pubKey ? this.toPeerObject() : null;
+            this.peer = identity.pubKey ? new Lethe.Peer({name: identity.name, pubKey: identity.pubKey, isTrusted: true}) : null;
         },
         
         getName: function() {
@@ -75,6 +75,10 @@ Lethe.Identity = Class.create(
         
         setName: function(nom) {
             this.name = nom;
+        },
+        
+        getPeer: function() {
+            return this.peer;
         },
         
         regenerate: function(progress) {
@@ -98,13 +102,10 @@ Lethe.Identity = Class.create(
                     lsigner, 
                     "signer"
                 );
-
-            }
+            };
             var done = function(succeeded, count, time ,startTime, finishTime) {
                 console.log("RSA keygen done(" + succeeded + ", " + count + ", " + time + ", " + startTime + ", " + finishTime + ")");
-            }
-            
-            
+            };
             rsa.generateAsync(
                 512, 65537, 
                 progress, 
@@ -122,27 +123,9 @@ Lethe.Identity = Class.create(
                 }
             );
         },
-
-        createPeerBlob: function() {
-            var name = this.valueForKeyPath("name");
-            var pubKey = this.valueForKeyPath("pubKey");
-            var signer = this.signer; // this.valueForKeyPath("signer");
-            var signedObject = signer.sign({name: name});
-            return net_dushin_foundation.Serialization.serialize(
-                {
-                    pubKey: pubKey, 
-                    signedData: signedObject
-                }
-            );
-        },
         
         toPeerObject: function() {
-            var blob = this.createPeerBlob();
-            var id = net_dushin_foundation.Serialization.sha1Hash(blob);
-            return {
-                id: id,
-                blob: blob
-            };
+            return this.peer.toPeerObject();
         },
         
         setKey: function(privKey, pubKey) {

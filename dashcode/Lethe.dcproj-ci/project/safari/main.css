@@ -148,13 +148,13 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     margin-top: 0px;
-    -webkit-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
-    -moz-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
     margin-left: 0px;
     position: relative;
     width: auto;
     margin-right: -1px;
-    height: 37px;
+    height: 35px;
+    -webkit-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/TitleBar.png) 0 1 0 1 stretch stretch;
 }
 
 #TitleText {
@@ -282,8 +282,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     width: 100%;
     display: none;
     position: relative;
-    height: auto;
     min-height: 414px;
+    height: auto;
 }
 
 #MessageTextField {
@@ -387,10 +387,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     margin-top: 0px;
     height: 16px;
-    right: 470px;
+    top: 10px;
+    right: 589px;
     margin-left: auto;
     width: 101px;
-    top: 8px;
 }
 
 .selected #KeyFingerprintLabel {
@@ -407,8 +407,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     font-family: 'Courier New';
     height: 15px;
     width: 441px;
-    top: 10px;
-    right: 24px;
+    top: 12px;
+    right: 143px;
     margin-left: auto;
 }
 
@@ -424,12 +424,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     -webkit-user-select: none;
     -moz-user-select: none;
     opacity: 1;
-    width: 666px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: relative;
-    margin-left: 19px;
-    margin-top: 68px;
+    width: 701px;
+    margin-left: 7px;
+    margin-top: 66px;
 }
 
 .listRowTemplate1_template {
@@ -497,7 +497,7 @@ body.DC_windowInactive .listRowTemplate1_template.selected {
     white-space: nowrap;
     top: 0px;
     left: 75px;
-    right: 477px;
+    right: 511px;
     width: auto;
 }
 
@@ -511,14 +511,14 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     position: absolute;
     margin-top: 0px;
     font-size: 12px;
-    left: 199px;
-    top: 3px;
-    right: 0px;
-    width: auto;
-    bottom: 7px;
-    height: auto;
     font-weight: bold;
     font-family: 'Courier New';
+    top: 3px;
+    left: 178px;
+    right: 78px;
+    width: auto;
+    bottom: 5px;
+    height: auto;
 }
 
 .selected .PeerFingerprintLabel_template {
@@ -560,8 +560,8 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     width: 69px;
     -webkit-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
-    left: 19px;
     top: 38px;
+    left: 4px;
 }
 
 #EncryptToLabel {
@@ -591,11 +591,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: 123px;
+    top: 38px;
+    width: 104px;
     -webkit-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
-    left: 89px;
-    top: 38px;
+    left: 74px;
 }
 
 #PeerNameHeaderLabel {
@@ -625,11 +625,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: 470px;
+    top: 38px;
+    width: 455px;
     -webkit-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
-    left: 213px;
-    top: 38px;
+    left: 179px;
 }
 
 #PeerFingerprintHeaderLabel {
@@ -1431,4 +1431,366 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     margin-right: 33px;
     border-style: solid;
     border-color: rgb(188, 188, 188);
+}
+
+#TrustedPeersView {
+    width: 100%;
+    min-height: 555px;
+    display: none;
+    position: relative;
+}
+
+#TrustedPeersPane {
+    border-color: black;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    background-color: rgb(147, 147, 147);
+    margin-top: 0px;
+    position: absolute;
+    height: auto;
+    right: -10px;
+    bottom: -42px;
+    width: 926px;
+    min-height: 587px;
+    top: 10px;
+    left: 10px;
+}
+
+#TrustedPeersBox {
+    border-color: black;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    background-color: rgb(255, 255, 255);
+    opacity: 1;
+    -webkit-box-reflect: below 1px -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.339844))) 0 0 0 0 stretch stretch;
+    border-top-left-radius: 20px 20px;
+    border-top-right-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+    position: absolute;
+    margin-top: 0px;
+    width: auto;
+    height: auto;
+    right: 33px;
+    bottom: 74px;
+    top: 29px;
+    left: 32px;
+}
+
+#box6 {
+    border-color: black;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    height: 58px;
+    margin-top: 0px;
+    position: absolute;
+    bottom: auto;
+    left: 36px;
+    top: 393px;
+    right: 27px;
+    width: auto;
+}
+
+#TrustedPeersBoxOkButton {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 30px;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    width: 56px;
+    position: absolute;
+    top: 19px;
+    right: 11px;
+    margin-left: auto;
+}
+
+#ModifyIdentityNameButton1 {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    height: 23px;
+    width: 95px;
+    top: 6px;
+    right: 9px;
+    margin-left: auto;
+}
+
+#PeerNameHeader1 {
+    position: absolute;
+    height: 30px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    width: 121px;
+    left: 108px;
+    top: 56px;
+    -webkit-border-image: url(Parts/Images/PeerNameHeader1.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/PeerNameHeader1.png) 0 1 0 1 stretch stretch;
+}
+
+#PeerNameHeaderLabel1 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 16px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    top: 7px;
+    left: 6px;
+    width: auto;
+}
+
+.selected #PeerNameHeaderLabel1 {
+    color: white;
+}
+
+#PeerFingerprintHeader1 {
+    position: absolute;
+    height: 30px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    width: 468px;
+    left: 232px;
+    top: 56px;
+    -webkit-border-image: url(Parts/Images/PeerFingerprintHeader1.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/PeerFingerprintHeader1.png) 0 1 0 1 stretch stretch;
+}
+
+#PeerFingerprintHeaderLabel1 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 16px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    top: 7px;
+    left: 4px;
+    right: 291px;
+    width: auto;
+}
+
+.selected #PeerFingerprintHeaderLabel1 {
+    color: white;
+}
+
+#TrustedPeersList {
+    overflow: hidden;
+    display: none;
+    padding: 0px;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    opacity: 1;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: relative;
+    width: 666px;
+    margin-left: 36px;
+    margin-top: 85px;
+}
+
+.listRowTemplate3_template {
+    position: relative;
+    list-style-type: none;
+    overflow: hidden;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(224, 224, 224);
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 3px;
+    height: 24px;
+    margin-right: 0px;
+    margin-left: 70px;
+    width: auto;
+}
+
+.listRowTemplate3_template.selected {
+    background-color: rgb(56, 121, 217);
+}
+
+body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel_template {
+    color: white;
+}
+
+body.DC_windowInactive .listRowTemplate3_template.selected {
+    background-color: rgb(212, 212, 212);
+}
+
+body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel_template {
+    color: white;
+}
+
+.PeerNameLabel1_template {
+    position: absolute;
+    height: 17px;
+    font-size: 13px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    top: 5px;
+    left: 90px;
+    right: 166px;
+    width: auto;
+}
+
+body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel1_template {
+    color: white;
+}
+
+.PeerNameLabel1_template {
+    position: absolute;
+    height: 17px;
+    font-size: 13px;
+    font-family: Helvetica, Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: auto;
+    right: 544px;
+    left: 8px;
+    top: 0px;
+}
+
+body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel1_template {
+    color: white;
+}
+
+body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1_template {
+    color: white;
+}
+
+body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1_template {
+    color: white;
+}
+
+.PeerFingerprintLabel1_template {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Courier New';
+    top: 0px;
+    left: 145px;
+    right: 54px;
+    width: auto;
+    bottom: 10px;
+    height: auto;
+}
+
+.selected .PeerFingerprintLabel1_template {
+    color: white;
+}
+
+#text1 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    top: 19px;
+    left: 386px;
+    width: auto;
+    height: auto;
+}
+
+.selected #text1 {
+    color: white;
+}
+
+#PeerFingerprintHeader2 {
+    position: absolute;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    height: 30px;
+    left: 634px;
+    top: 38px;
+    width: 60px;
+    -webkit-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
+}
+
+#PeerFingerprintHeaderLabel2 {
+    font-size: 13px;
+    font-family: 'Lucida Grande', Arial, sans-serif;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 16px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    bottom: auto;
+    margin-top: 0px;
+    top: 7px;
+    width: 43px;
+    left: 3px;
+}
+
+.selected #PeerFingerprintHeaderLabel2 {
+    color: white;
+}
+
+.checkbox_template {
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    height: 18px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 0px;
+    width: 37px;
+    left: 638px;
+}
+
+#input2 {
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 0px;
+    width: auto;
+    margin-right: 22px;
+    margin-left: 3px;
+    height: auto;
 }

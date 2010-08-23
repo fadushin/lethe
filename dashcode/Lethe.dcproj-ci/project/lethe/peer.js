@@ -28,49 +28,43 @@
 Lethe.Peer = Class.create(
     Lethe.KVO,
     {
-        constructor: function(peerId, name, pubKey, verifier, encryptTo) {
+        constructor: function(spec) {
+            var name = spec.name;
+            var pubKey = spec.pubKey;
+            var isTrusted = spec.isTrusted ? spec.isTrusted : false;
+            var blob = spec.blob ? spec.blob : net_dushin_foundation.Serialization.serialize(
+                {name: name, pubKey: pubKey}
+            );
             this.base(
                 {
-                    peerId: peerId,
                     name: name, 
                     pubKey: pubKey, 
-                    encryptTo: encryptTo,
+                    encryptTo: false,
+                    isTrusted: isTrusted,
                     //
                     //
                     //
                     encryptor: net_dushin_crypto.EncryptorFactory.createEncryptor(
                         {publicKey: pubKey}
                     ),
-                    verifier: verifier ? verifier : net_dushin_crypto.VerifierFactory.createVerifier(
+                    verifier: net_dushin_crypto.VerifierFactory.createVerifier(
                         {publicKey: pubKey}
-                    )
+                    ),
+                    peerObject: {
+                        id: net_dushin_foundation.Serialization.sha1Hash(blob),
+                        blob: blob
+                    }
                 }
             );
+        },
+        
+        toPeerObject: function() {
+            return this.peerObject;
         }
     }
 );
 
-Lethe.Peer.parse = function(obj) {
-    var deblob = net_dushin_foundation.Serialization.deserialize(obj.blob);
-    var verifier = net_dushin_crypto.VerifierFactory.createVerifier(
-        {publicKey: deblob.pubKey}
-    );
-    try {
-        var result = verifier.verify(deblob.signedData);
-        if (!result.status) {
-            alert("Signature verification failed!");
-            throw "Signature verification failed";
-        }
-        var verifiedData = result.value;
-        return new Lethe.Peer(
-            obj.id,
-            verifiedData.name,
-            deblob.pubKey,
-            verifier,
-            false
-        );
-    } catch (e) {
-        alert(e);
-        throw e;
-    }
+Lethe.Peer.parse = function(peerObject) {
+    var deblob = net_dushin_foundation.Serialization.deserialize(peerObject.blob);
+    return new Lethe.Peer({name: deblob.name, pubKey: deblob.pubKey, blob: peerObject.blob});
 };

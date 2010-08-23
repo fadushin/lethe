@@ -99,7 +99,7 @@ Lethe.Channel = Class.create(
             var peers = this.valueForKeyPath('peers');
             var peerIds = net_dushin_foundation.Lists.map(
                 function(peer) {
-                    return peer.valueForKeyPath('peerId');
+                    return peer.valueForKeyPath('peerObject').id;
                 },
                 peers
             );
@@ -109,7 +109,8 @@ Lethe.Channel = Class.create(
             // list of the peer IDs that should be removed, and a list of
             // peers that should be added.
             //
-            var peerUpdate = this.valueForKeyPath('backend').getPeers(channelName, peerIds);
+            var backend = this.valueForKeyPath('backend');
+            var peerUpdate = backend.getPeers(channelName, peerIds);
             //
             // Remove the peers that should be removed from the model,
             //
@@ -117,7 +118,7 @@ Lethe.Channel = Class.create(
                 function(peerId) {
                     var peer = net_dushin_foundation.Lists.find(
                         function(peer) {
-                            return peer.valueForKeyPath('peerId') === peerId;
+                            return peer.valueForKeyPath('peerObject').id === peerId;
                         },
                         peers
                     );
@@ -137,7 +138,7 @@ Lethe.Channel = Class.create(
                         peers.addObject(parsedPeer);
                     } catch (e) {
                         // console.log("An error occurred parsing a peer from the server:");
-                        // console.log(e);
+                        console.error(e);
                     }
                 },
                 peerUpdate.add

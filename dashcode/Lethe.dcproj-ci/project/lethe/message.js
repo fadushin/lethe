@@ -28,14 +28,19 @@
 Lethe.Message = Class.create(
     Lethe.KVO,
     {
-        constructor: function(contents, uuid, timestamp) {
+        constructor: function(spec) {
+            var contents = spec.contents;
+            var uuid = spec.uuid ? spec.uuid : Math.uuid();
+            var timestamp = spec.timestamp ? spec.timestamp : null;
+            var signingPeer = spec.signingPeer ? spec.signingPeer : null;
             this.base(
                 {
                     contents: contents,
                     decryptedContents: null,
                     verifiedResults: null,
-                    uuid: uuid ? uuid : Math.uuid(),
-                    timestamp: timestamp ? timestamp : null
+                    uuid: uuid,
+                    timestamp: timestamp,
+                    signingPeer: signingPeer
                 }
             );
         },
@@ -78,7 +83,12 @@ Lethe.Message = Class.create(
         
         serialize: function() {
             return {
-                blob: net_dushin_foundation.Serialization.serialize(this.contents),
+                blob: net_dushin_foundation.Serialization.serialize(
+                    {
+                        contents: this.contents,
+                        signingPeer: this.signingPeer ? this.signingPeer.toPeerObject() : null
+                    }
+                ),
                 uuid: this.uuid
             };
         },
@@ -115,42 +125,6 @@ Lethe.Message = Class.create(
             } catch (e) {
                 console.log("decryption failed");
             }
-        },
-        
-        asString: function() {
-            var prefix = "";
-            var contents;
-            if (this.isEncrypted()) {
-                if (this.isDecrypted()) {
-                    prefix += "DECRYPTED::";
-                } else {
-                    prefix += "ENCRYPTED::";
-                    contents = "...";
-                }
-            } else {
-                prefix += "UNENCRYPTED::";
-            }
-            if (this.isSigned()) {
-                if (this.isVerified()) {
-                    var results = this.verifiedResults;
-                    prefix += "SIGNATURE-VERIFIED::";
-                        /*
-                        + net_dushin_crypto.KeyUtil.keyFingerprint(results.peer.pubKey)
-                        + ")::";
-                        */ 
-                    contents = this.renderContents(results.value);
-                } else {
-                    prefix += "SIGNATURE-UNVERIFIED::";
-                    // this won't work
-                    contents = "...";
-                }
-            } else {
-                prefix += "UNSIGNED::";
-                contents = this.renderContents(
-                    this.isDecrypted() ? this.decryptedContents : this.contents
-                );
-            }
-            return prefix + contents;
         },
         
         toHtml: function(
@@ -193,10 +167,6 @@ Lethe.Message = Class.create(
             return "<img src=\"" + path + "\"/> ";
         },
         
-        renderContents: function(c) {
-            return c.from + ': ' + c.messageText;
-        },
-        
         renderContentsHtml: function(c) {
             return "<b>" + c.from + ":</b> " + c.messageText;
         }
@@ -204,6 +174,15 @@ Lethe.Message = Class.create(
 );
 
 Lethe.Message.parse = function(obj) {
-    var contents = net_dushin_foundation.Serialization.deserialize(obj.blob);
-    return new Lethe.Message(contents, obj.uuid, obj.timestamp);
+    var deblob = net_dushin_foundation.Serialization.deserialize(obj.blob);
+    var contents = deblob.contents;
+    var signingPeer = deblob.signingPeer ? Lethe.Peer.parse(deblob.signingPeer) : null;
+    return new Lethe.Message(
+        {
+            contents: contents, 
+            uuid: obj.uuid, 
+            timestamp: obj.timestamp,
+            signingPeer: signingPeer
+        }
+    );
 };
