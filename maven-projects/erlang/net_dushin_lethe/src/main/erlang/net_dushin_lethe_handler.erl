@@ -82,20 +82,43 @@ handle_rpc(_State, {call, Method, Params} = _Request, Session) ->
 %
 %
 %
-get_response(update, [ChannelId, PeerName, {struct, [{update_peers, UpdatePeers}, {update_messages, Since}]}]) ->
-    net_dushin_lethe_server:ping(
+get_response(
+    update, 
+    [
+        ChannelId,
+        {
+            struct,
+            [
+                {ping, PeerName},
+                {update_peers, UpdatePeers},
+                {update_messages, Since}
+            ]
+        }
+    ]
+) ->
+    Ping = (catch net_dushin_lethe_server:ping(
         list_to_atom(ChannelId),
         list_to_atom(PeerName)
-    ),
-    PeerUpdate = get_response(get_peers, [ChannelId, UpdatePeers]),
-    MessageUpdate = get_response(get_messages_since, [ChannelId, Since]),
-    {
-        struct,
-        [
-            {peer_update, PeerUpdate},
-            {message_update, MessageUpdate}
-        ]
-    };
+    )),
+    case Ping of
+        {error, peer_does_not_exist} ->
+            {struct, [{error, "PEER_DOES_NOT_EXIST"}]};
+        _ ->
+            PeerUpdate = get_response(get_peers, [ChannelId, UpdatePeers]),
+            MessageUpdate = case Since of
+                "all" ->
+                    get_response(get_messages, [ChannelId]);
+                _ ->
+                    get_response(get_messages_since, [ChannelId, Since])
+            end,
+            {
+                struct,
+                [
+                    {peer_update, PeerUpdate},
+                    {message_update, MessageUpdate}
+                ]
+            }
+    end;
 
 get_response(get_channels, _Params) ->
     channels_to_json(net_dushin_lethe_server:get_channels());

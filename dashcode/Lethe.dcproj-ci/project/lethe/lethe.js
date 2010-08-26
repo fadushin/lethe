@@ -309,7 +309,7 @@ Lethe.serverBackend = {
     
     jsonrpc: JSOlait.imprt("jsonrpc"),
     
-    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "get_messages_since", "post_message"],
+    methods: ["get_channels", "get_peers", "join", "leave", "get_messages", "get_messages_since", "post_message", "update"],
     
     create: function(spec) {
     
@@ -326,14 +326,6 @@ Lethe.serverBackend = {
             join: function(channelName, peer) {
                 return proxy.join(channelName, peer);
             },
-
-            ping: function(channelName, peer) {
-                return pinger.notify(channelName, peer);
-            },
-
-            getPeers: function(channelName, peerNames) {
-                return proxy.get_peers(channelName, peerNames);
-            },
             
             leave: function(channelName, peerId) {
                 return proxy.leave(channelName, peerId);
@@ -343,12 +335,26 @@ Lethe.serverBackend = {
                 return proxy.post_message(channelName, message);
             },
             
+            /*
+            ping: function(channelName, peer) {
+                return pinger.notify(channelName, peer);
+            },
+
+            getPeers: function(channelName, peerNames) {
+                return proxy.get_peers(channelName, peerNames);
+            },
+            
             getAllMessages: function(channelName) {
                 return proxy.get_messages(channelName);
             },
             
             getMessagesSince: function(channelName, timestamp) {
                 return proxy.get_messages_since(channelName, timestamp);
+            },
+            */
+            
+            update: function(channelName, obj, callback) {
+                return proxy.update(channelName, obj, callback);
             }
         };
     }
@@ -417,6 +423,22 @@ Lethe.dummyBackend = {
             },
             this.dummyChannels[channelName].messages
         );
+    },
+            
+    update: function(channelName, obj, callback) {
+        var peerUpdate = this.getPeers(channelName, obj.update_peers);
+        var messageUpdate = obj.update_messages === "all" ?
+            this.getAllMessages(channelName) :
+            this.getMessagesSince(channelName, obj.update_messages);
+        var result = {
+            peer_update: peerUpdate,
+            message_update: messageUpdate
+        };
+        if (callback) {
+            callback(result, null);
+        } else {
+            return result;
+        }
     }
 };
 

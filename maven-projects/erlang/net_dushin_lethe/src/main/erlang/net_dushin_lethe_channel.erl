@@ -271,7 +271,7 @@ channel_loop(Ctx) ->
         %%
         %%
         {ClientPid, stop} ->
-            ?LETHE_INFO("Channel Loop ~p stopping...", [ChannelId]),
+            ?LETHE_INFO("Channel ~p stopping...", [ChannelId]),
             channel_stop(Ctx),
             net_dushin_lethe_rpc:response(ClientPid, ok);
         %%
@@ -341,19 +341,19 @@ peer_loop(Ctx, Peers) ->
         %%
         %%
         {ClientPid, stop} ->
-            ?LETHE_INFO("Peer Loop ~p stopping", [ChannelId]),
+            ?LETHE_DEBUG("Peer Loop ~p stopping", [ChannelId]),
             net_dushin_lethe_rpc:response(ClientPid, ok);
             %% done
         %%
         %%
         %%
         {ClientPid, {join, Peer}} ->
-            ?LETHE_INFO("Peer Loop ~p join of peer ~p", [ChannelId, Peer]),
+            ?LETHE_INFO("Channel ~p: peer joined: ~p", [ChannelId, Peer#peer.name]),
             case add_peer(Peer, Peers, Ctx#peer_context.max_peers) of
                 too_many_peers ->
                     ?LETHE_WARNING(
                         "Too many peers on channel ~p;  Peer ~p rejected", 
-                        [ChannelId, Peer]
+                        [ChannelId, Peer#peer.name]
                     ),
                     net_dushin_lethe_rpc:response(ClientPid, {error, too_many_peers}),
                     peer_loop(Ctx, Peers);
@@ -378,7 +378,7 @@ peer_loop(Ctx, Peers) ->
                     {ok, UpdatedPeers}
             end,
             net_dushin_lethe_rpc:response(ClientPid, Response),
-            ?LETHE_DEBUG("After ping, NewPeers = ~p", [NewPeers]),
+            ?LETHE_DEBUG("After ping, NewPeers = ~4p", [NewPeers]),
             peer_loop(Ctx, NewPeers);
         %%
         %%
@@ -391,7 +391,7 @@ peer_loop(Ctx, Peers) ->
         %% Remove the peer identified by the specified name from the list of peers
         %%
         {ClientPid, {leave, PeerName}} ->
-            ?LETHE_INFO("Peer Loop ~p; peer ~p leaving", [ChannelId, PeerName]),
+            ?LETHE_INFO("Channel ~p; peer leaving: ~p", [ChannelId, PeerName]),
             NewPeers = remove_peer(PeerName, Peers),
             net_dushin_lethe_rpc:response(ClientPid, ok),
             peer_loop(Ctx, NewPeers);
@@ -425,15 +425,15 @@ message_loop(Ctx, Messages) ->
         %%
         %%
         {ClientPid, stop} ->
-			?LETHE_INFO("Message Loop ~p stopping", [ChannelId]),
+			?LETHE_DEBUG("Message Loop ~p stopping", [ChannelId]),
             net_dushin_lethe_rpc:response(ClientPid, ok);
         %%
         %%
         %%
         {ClientPid, {post, Message}} ->
-            ?LETHE_INFO("Message Loop ~p; adding message ~p", [ChannelId, Message]),
             NewMessages = [NewMessage | _] = 
                 add_message(Message, Messages, Ctx#message_context.max_messages),
+            ?LETHE_INFO("Channel ~p; added message ~p", [ChannelId, NewMessage#message.timestamp]),
             net_dushin_lethe_rpc:response(ClientPid, NewMessage),
             message_loop(Ctx, NewMessages);
         %%
@@ -506,7 +506,7 @@ find_peers(PeerNames, Peers) ->
     Remove = [PeerName || PeerName <- PeerNames, not(peer_name_occurs(PeerName, Peers))],
     case Remove of
         [] -> ok;
-        NonEmpty -> ?LETHE_DEBUG("The following peers had been removed: ~p", [NonEmpty])
+        NonEmpty -> ?LETHE_DEBUG("The following peers had been removed: ~4p", [NonEmpty])
     end,
     {
         Add,
@@ -544,7 +544,7 @@ filter_stale_messages(Messages, TimeoutMs) ->
             Ret = is_not_stale(Message#message.timestamp, TimeoutMs),
             case Ret of
                 false ->
-                    ?LETHE_DEBUG("Message is stale: ~p", [Message]);
+                    ?LETHE_INFO("Message ~p is stale -- removing", [Message#message.timestamp]);
                 _ ->
                     ok
             end,
@@ -598,7 +598,7 @@ filter_stale_peers(Peers, TimeoutMs) ->
             Ret = is_not_stale(Peer#peer.last_update, TimeoutMs),
             case Ret of
                 false ->
-                    ?LETHE_DEBUG("Peer is stale: ~p", [Peer]);
+                    ?LETHE_INFO("Peer ~p is stale -- removing...", [Peer#peer.name]);
                 _ ->
                     ok
             end,

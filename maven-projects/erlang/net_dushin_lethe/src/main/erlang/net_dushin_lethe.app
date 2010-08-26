@@ -48,7 +48,7 @@
                         log_args, [
                             {
                                 filter, [
-                                    {net_dushin_lethe_channel, [debug, info, warning, severe]},
+                                    {net_dushin_lethe_channel, [info, warning, severe]},
                                     {net_dushin_lethe_handler, []}
                                 ]
                             }

@@ -164,5 +164,10 @@ date_time() ->
     {Year, Month, Day} = erlang:date(),
     {Hour, Minute, Second} = erlang:time(),
     % "[" ++ Year ++ "-" ++ Month ++ "-" ++ Day ++ " " ++ Hour ++ ":" ++ Minute ++ ":" ++ Second ++ "]".
-    io_lib:format("[~p-~p-~p ~p:~p:~p]", [Year, Month, Day, Hour, Minute, Second]).
+    io_lib:format("[~s-~s-~s ~s:~s:~s]", [pad(Year), pad(Month), pad(Day), pad(Hour), pad(Minute), pad(Second)]).
 
+pad(Num) ->
+    case (Num >= 0) and (Num < 10) of
+        true -> "0" ++ integer_to_list(Num);
+        false -> integer_to_list(Num)
+    end.

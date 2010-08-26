@@ -68,6 +68,8 @@ net_dushin_foundation.Async = {
                 } catch (e) {
                     if (exceptionCallback) {
                         exceptionCallback(e);
+                    } else {
+                        console.error(e);
                     }
                     return;
                 }

@@ -3,14 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Breakpoints</key>
-	<dict>
-		<key>common.js:110</key>
-		<string>sendMessage</string>
-		<key>lethe/lethe.js:239</key>
-		<string>create</string>
-		<key>lethe/lethe.js:248</key>
-		<string>create</string>
-	</dict>
+	<dict/>
 	<key>BreakpointsFrame</key>
 	<string>483 285 673 467 0 0 1280 778 </string>
 	<key>CYSavedWindowFrame</key>
@@ -18,25 +11,25 @@
 	<key>ContentSplitViewGeometry</key>
 	<dict>
 		<key>ContentSplitViewConfig</key>
-		<integer>8</integer>
+		<integer>24</integer>
 		<key>SplitViewConfig</key>
 		<integer>3</integer>
 		<key>_indexOfCollapsedView</key>
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {942, 473}}</string>
-			<string>{{0, 483}, {942, 173}}</string>
+			<string>{{0, 0}, {942, 145}}</string>
+			<string>{{0, 155}, {942, 501}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>0</integer>
+	<integer>5</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-08-13T01:47:57Z</date>
+		<date>2010-08-26T11:01:22Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -371,41 +364,6 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
 				<integer>4</integer>
 				<integer>0</integer>
 				<integer>0</integer>
@@ -418,29 +376,6 @@
 				<integer>4</integer>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>1</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
 				<integer>1</integer>
 				<integer>0</integer>
 			</array>
@@ -468,7 +403,7 @@
 				<integer>4</integer>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
+				<integer>2</integer>
 			</array>
 			<array>
 				<integer>0</integer>
@@ -476,6 +411,24 @@
 				<integer>4</integer>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
 				<integer>1</integer>
 			</array>
 			<array>
@@ -484,9 +437,6 @@
 				<integer>2</integer>
 				<integer>1</integer>
 				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>3</integer>
 			</array>
 			<array>
 				<integer>0</integer>
@@ -494,29 +444,6 @@
 				<integer>2</integer>
 				<integer>1</integer>
 				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>5</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>4</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>4</integer>
 				<integer>0</integer>
 			</array>
 			<array>
@@ -561,8 +488,6 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>1</integer>
-				<integer>1</integer>
-				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
@@ -571,33 +496,29 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>1</integer>
-				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
 				<integer>4</integer>
 				<integer>0</integer>
-				<integer>3</integer>
+				<integer>0</integer>
+				<integer>0</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
+				<integer>4</integer>
 				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>0</integer>
+				<integer>4</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
