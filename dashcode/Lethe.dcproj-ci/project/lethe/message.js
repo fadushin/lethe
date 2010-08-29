@@ -94,6 +94,25 @@ Lethe.Message = Class.create(
         },
         
         verify: function(peers, contents) {
+            var signingPeer = this.signingPeer;
+            var peerId = signingPeer.toPeerObject().id;
+            var result = signingPeer.verifier.verify(contents);
+            if (result.status) {;
+                this.verifiedResults = {peer: signingPeer, value: result.value}
+            } else {
+                console.log("Signed message failed validation!!!");
+            }
+            /*
+            var peer = net_dushin_foundation.Lists.find(
+                function(peer) {
+                    return (peer.toPeerObject().id === peerId);
+                },
+                peers
+            );
+            if (peer && peer.isTrusted) {
+            }
+
+
             var that = this;
             var results = net_dushin_foundation.Lists.mapFirst(
                 function(peer) {
@@ -115,6 +134,7 @@ Lethe.Message = Class.create(
             } else {
                 this.verifiedResults = results;
             }
+            */
         },
         
         tryDecrypt: function(identity) {
@@ -128,7 +148,7 @@ Lethe.Message = Class.create(
         },
         
         toHtml: function(
-            plaintext, encrypted, decrypted, unsigned, verified, unverified
+            trusted, plaintext, encrypted, decrypted, unsigned, verified, unverified
         ) {
             var prefix = "";
             var contents;

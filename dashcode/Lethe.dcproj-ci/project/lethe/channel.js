@@ -161,10 +161,12 @@ Lethe.Channel = Class.create(
                         //
                         // and add the ones that should be added.
                         //
+                        var identityPeerObject = identity.toPeerObject();
                         net_dushin_foundation.Lists.applyAsync(
                             function(addedPeer) {
                                 try {
-                                    var parsedPeer = Lethe.Peer.parse(addedPeer);
+                                    var isTrusted = addedPeer.id === identityPeerObject.id;
+                                    var parsedPeer = Lethe.Peer.parse(addedPeer, isTrusted);
                                     peers.addObject(parsedPeer);
                                 } catch (e) {
                                     // console.log("An error occurred parsing a peer from the server:");

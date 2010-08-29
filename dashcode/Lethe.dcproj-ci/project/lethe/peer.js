@@ -64,7 +64,7 @@ Lethe.Peer = Class.create(
     }
 );
 
-Lethe.Peer.parse = function(peerObject) {
+Lethe.Peer.parse = function(peerObject, isTrusted) {
     var deblob = net_dushin_foundation.Serialization.deserialize(peerObject.blob);
-    return new Lethe.Peer({name: deblob.name, pubKey: deblob.pubKey, blob: peerObject.blob});
+    return new Lethe.Peer({name: deblob.name, pubKey: deblob.pubKey, blob: peerObject.blob, isTrusted: isTrusted});
 };

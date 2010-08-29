@@ -8,7 +8,7 @@
         pubKey: ""
     },
     channels: [
-        
+        /*
         { 
             name: "Acadia",
             signMessages: true,
@@ -37,7 +37,7 @@
                 }
             ]
         }
-        
+        */
     ],
     
     tmp: {

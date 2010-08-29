@@ -238,6 +238,7 @@ messagesToHtml = Class.create(
                         s += "<hr>";
                     }
                     s += message.toHtml(
+                        "../Images/lethe/trusted.png",
                         "../Images/lethe/plaintext.png",
                         "../Images/lethe/encrypted.png",
                         "../Images/lethe/decrypted.png",
@@ -257,6 +258,23 @@ editIdentityDoneButtonEnableable = Class.create(
     {
         transformedValue: function(value){
             return value && value !== Lethe.TAG_GENERATING;
+        }
+    }
+);
+
+
+filterIdentity = Class.create(
+    DC.ValueTransformer,
+    {
+        transformedValue: function(value){
+            var identityPeerId = Lethe.instance.getIdentity().toPeerObject().id;
+            var ret = net_dushin_foundation.Lists.filter(
+                function(peer) {
+                    return (peer.toPeerObject().id === identityPeerId) ? null : peer;
+                },
+                value
+            );
+            return ret;
         }
     }
 );

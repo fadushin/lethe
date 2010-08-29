@@ -173,12 +173,20 @@ var Lethe = {
                 // Join the channel (on the back end)
                 //
                 var obj = identity.toPeerObject();
-                backend.join(channelName, obj);
-                //
-                // Create the channel and add it to the list of channels
-                //
-                var channel = new Lethe.Channel(channelName, backend);
-                channels.addObject(channel);
+                backend.join(
+                    channelName, obj,
+                    function(result, error) {
+                        if (!error) {
+                            //
+                            // Create the channel and add it to the list of channels
+                            //
+                            var channel = new Lethe.Channel(channelName, backend);
+                            channels.addObject(channel);
+                        } else {
+                            console.error(error);
+                        }
+                    }
+                );
             },
             
             leaveChannel: function(channel) {
@@ -193,19 +201,27 @@ var Lethe = {
                 //
                 // remove the channel from the back end
                 //
-                backend.leave(channelName, peerId);
-                //
-                // remove it from the model
-                //
-                var index = net_dushin_foundation.Lists.indexOf(
-                    function(chan) {
-                        return chan.getName() === channelName
-                    },
-                    channels
+                backend.leave(
+                    channelName, peerId,
+                    function(result, error) {
+                        if (!error) {
+                            //
+                            // remove it from the model
+                            //
+                            var index = net_dushin_foundation.Lists.indexOf(
+                                function(chan) {
+                                    return chan.getName() === channelName
+                                },
+                                channels
+                            );
+                            if (index !== -1) {
+                                channels.removeObjectAtIndex(index);
+                            }
+                        } else {
+                            console.error(error);
+                        }
+                    }
                 );
-                if (index !== -1) {
-                    channels.removeObjectAtIndex(index);
-                }
             },
             
             updateIdentity: function(oldName, identity) {
@@ -224,11 +240,20 @@ var Lethe = {
                             var channel = channels[i];
                             var channelName = channel.getName();
                             if (oldName) {
+                                // TODO callback?
                                 backend.leave(channelName);
                             }
                             var obj = identity.toPeerObject();
-                            backend.join(channelName, obj);
-                            channel.updatePeers();
+                            backend.join(
+                                channelName, obj,
+                                function(result, error) {
+                                    if (!error) {
+                                        channel.updateAll();
+                                    } else {
+                                        console.error(error);
+                                    }
+                                }
+                            );
                         }
                     },
                     200
@@ -276,9 +301,19 @@ var Lethe = {
                             },
                             args: contents,
                             resultCallback: function(message) {
-                                backend.sendMessage(channelName, message.serialize());
-                                net_dushin_foundation.Async.exec(
-                                    {f: function() { channel.updateMessages(); }}
+                                backend.sendMessage(
+                                    channelName, message.serialize(),
+                                    function(result, error) {
+                                        if (!error) {
+                                            /*
+                                            net_dushin_foundation.Async.exec(
+                                                {f: function() { channel.updateAll(); }}
+                                            );
+                                            */
+                                        } else {
+                                            console.error(error);
+                                        }
+                                    }
                                 );
                             }
                         });
@@ -323,16 +358,16 @@ Lethe.serverBackend = {
     
     
         return {
-            join: function(channelName, peer) {
-                return proxy.join(channelName, peer);
+            join: function(channelName, peer, callback) {
+                return proxy.join(channelName, peer, callback);
             },
             
-            leave: function(channelName, peerId) {
-                return proxy.leave(channelName, peerId);
+            leave: function(channelName, peerId, callback) {
+                return proxy.leave(channelName, peerId, callback);
             },
             
-            sendMessage: function(channelName, message) {
-                return proxy.post_message(channelName, message);
+            sendMessage: function(channelName, message, callback) {
+                return proxy.post_message(channelName, message, callback);
             },
             
             /*
@@ -366,14 +401,44 @@ Lethe.dummyBackend = {
     
     ordinal: 0,
     
-    join: function(channelName, peer) {
+    join: function(channelName, peer, callback) {
         var dummyChannel = this.dummyChannels[channelName];
         if (!dummyChannel) {
             dummyChannel = {peers: {}, messages: []};
             this.dummyChannels[channelName] = dummyChannel;
         }
         dummyChannel.peers[peer.id] = peer;
+        callback(null, null);
     },
+    
+    leave: function(channelName, peerId, callback) {
+        delete this.dummyChannels[channelName];
+        callback(null, null);
+    },
+    
+    sendMessage: function(channelName, message, callback) {
+        message.timestamp = this.ordinal++;
+        this.dummyChannels[channelName].messages.push(message);
+        callback(null, null);
+    },
+            
+    update: function(channelName, obj, callback) {
+        var peerUpdate = this.getPeers(channelName, obj.update_peers);
+        var messageUpdate = obj.update_messages === "all" ?
+            this.getAllMessages(channelName) :
+            this.getMessagesSince(channelName, obj.update_messages);
+        var result = {
+            peer_update: peerUpdate,
+            message_update: messageUpdate
+        };
+        if (callback) {
+            callback(result, null);
+        } else {
+            return result;
+        }
+    },
+    
+    
 
     ping: function(channelName, peer) {
         // no-op
@@ -403,15 +468,6 @@ Lethe.dummyBackend = {
         return ret;
     },
     
-    leave: function(channelName, peerId) {
-        delete this.dummyChannels[channelName];
-    },
-    
-    sendMessage: function(channelName, message) {
-        message.timestamp = this.ordinal++;
-        this.dummyChannels[channelName].messages.push(message);
-    },
-    
     getAllMessages: function(channelName) {
         return this.dummyChannels[channelName].messages;
     },
@@ -423,22 +479,6 @@ Lethe.dummyBackend = {
             },
             this.dummyChannels[channelName].messages
         );
-    },
-            
-    update: function(channelName, obj, callback) {
-        var peerUpdate = this.getPeers(channelName, obj.update_peers);
-        var messageUpdate = obj.update_messages === "all" ?
-            this.getAllMessages(channelName) :
-            this.getMessagesSince(channelName, obj.update_messages);
-        var result = {
-            peer_update: peerUpdate,
-            message_update: messageUpdate
-        };
-        if (callback) {
-            callback(result, null);
-        } else {
-            return result;
-        }
     }
 };
 
