@@ -287,6 +287,12 @@ var Lethe = {
                             },
                             peers
                         );
+                        //
+                        // Add the identity (peer), if the message is at all encrypted
+                        //
+                        if (recipientEncryptors.length > 0) {
+                            recipientEncryptors.push(identity.getPeer().encryptor);
+                        }
                         net_dushin_foundation.Async.exec({
                             f: function(contents) {
                                 if (recipientEncryptors.length > 0) {
@@ -397,14 +403,37 @@ Lethe.serverBackend = {
 
 Lethe.dummyBackend = {
             
-    dummyChannels: {messages: []},
-    
-    ordinal: 0,
+    dummyChannels: {
+        'test': {
+            peers: { 
+                /* Alice */
+                'yGq9p3Je9ewx21FW60X4nav8ONU=': {
+                    id: 'yGq9p3Je9ewx21FW60X4nav8ONU=', 
+                    blob: 'eyJuYW1lIjogIkFsaWNlIiwgInB1YktleSI6ICJBNkgyemNyR0JDdTVqT3VkS3pkbUQrd1ArUDFGOGU0Ylh2WW5NNnFqRFFEWEtKVU9CdVlIdDQ0Y2pWNU5ncW54VlQyOXNMdC9HSjJ6UEZSVHR5NXdIcVc1YjF0dlVYNUFodU5YV0ZTYk1Tc1N3WFZEWTI0MjYrWjlUT3J3b3UrbWZIYjZURjg4WlRGL2JuWUIzV2h5K1E9PSJ9'
+                },
+                /* Bob */
+                'U979yYhpcqqpRQauwZFye/1HBtk="': {
+                    id: 'U979yYhpcqqpRQauwZFye/1HBtk="', 
+                    blob: 'eyJuYW1lIjogIkJvYiIsICJwdWJLZXkiOiAiSnYvU1p3ajAzNXBYdGxwQ042TzhnQktRUThNb2FLZTk4dGsrcVVLTHkwQjNDRCtCWXpSeURGVVF4RlBkNklGL09Fd3N2Uk1RelF6ckkyWmRVUWNCRnpoVG9rOTdWOFZ5Rk1IeXJnY1ZyVTZDZ3FUaGNPVG9KVHJVVzlwdG9KeHBESGRaZHFXM1ZveU5FbWFrdVJzQU9nPT0ifQ=='
+                },
+            }, 
+            messages: [
+                {
+                    uuid: '361B2C17-4457-4AC8-B40E-EF72F9B0D84A',
+                    timestamp: '0',
+                    blob: 'eyJjb250ZW50cyI6IHsidHlwZSI6ICJzaWduZWQiLCAic2VyaWFsaXplZCI6ICJleUowZVhCbElqb2dJbkJzWVdsdWRHVjRkQ0lzSUNKbWNtOXRJam9nSWtGc2FXTmxJaXdnSW0xbGMzTmhaMlZVWlhoMElqb2dJa2hwSUVKdllpRWlmUT09IiwgImhhc2giOiAieVhRc0FKSTRsY2RSS2xERjVid1l1WEpPUUo0PSIsICJzaWduYXR1cmUiOiAiWnUrdlg1VHNZTUNTNTN2Q2JJRmtpdEIrcjRINEFTNEpQNkNYQUxLSEFFK3JvUDR2dHV0cTU5RG82OHJ3THl3WkVjNmsxVmxlWHY1LzZNSk1GYWZFTFE9PSJ9LCAic2lnbmluZ1BlZXIiOiB7ImlkIjogInlHcTlwM0plOWV3eDIxRlc2MFg0bmF2OE9OVT0iLCAiYmxvYiI6ICJleUp1WVcxbElqb2dJa0ZzYVdObElpd2dJbkIxWWt0bGVTSTZJQ0pCTmtneWVtTnlSMEpEZFRWcVQzVmtTM3BrYlVRcmQxQXJVREZHT0dVMFlsaDJXVzVOTm5GcVJGRkVXRXRLVlU5Q2RWbElkRFEwWTJwV05VNW5jVzU0VmxReU9YTk1kQzlIU2pKNlVFWlNWSFI1TlhkSWNWYzFZakYwZGxWWU5VRm9kVTVZVjBaVFlrMVRjMU4zV0ZaRVdUSTBNallyV2psVVQzSjNiM1VyYldaSVlqWlVSamc0V2xSR0wySnVXVUl6VjJoNUsxRTlQU0o5In19'
+                }
+            ]
+        }
+    },
     
     join: function(channelName, peer, callback) {
         var dummyChannel = this.dummyChannels[channelName];
         if (!dummyChannel) {
-            dummyChannel = {peers: {}, messages: []};
+            dummyChannel = {
+                peers: {},
+                messages: []
+            };
             this.dummyChannels[channelName] = dummyChannel;
         }
         dummyChannel.peers[peer.id] = peer;
@@ -417,7 +446,7 @@ Lethe.dummyBackend = {
     },
     
     sendMessage: function(channelName, message, callback) {
-        message.timestamp = this.ordinal++;
+        message.timestamp = this.dummyChannels[channelName].messages.length;
         this.dummyChannels[channelName].messages.push(message);
         callback(null, null);
     },

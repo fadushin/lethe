@@ -121,6 +121,12 @@ function sendMessage(event)
     lethe.sendMessage(channelName, messageText);
 }
 
+function sendMessageOnEnter(event) {
+    if (event.charCode === 13) {
+        sendMessage(event);
+    }
+}
+
 //
 // Trusted Peer Management
 //

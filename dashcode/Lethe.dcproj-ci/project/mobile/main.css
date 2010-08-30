@@ -502,8 +502,8 @@ body {
     top: 5px;
     bottom: auto;
     margin-top: 0px;
-    left: 1px;
     width: 232px;
+    left: 0px;
 }
 
 #SendMessageButton {

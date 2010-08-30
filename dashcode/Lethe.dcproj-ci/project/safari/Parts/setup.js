@@ -32,7 +32,7 @@ var dashcodePartSpecs = {
     "image1": { "view": "DC.ImageLayout" },
     "input": { "propertyValues": { "checkedBinding": { "keypath": "*.encryptTo" } }, "view": "DC.ToggleButton" },
     "input1": { "propertyValues": { "checkedBinding": { "keypath": "ChannelList.selection.signMessages" } }, "view": "DC.ToggleButton" },
-    "input2": { "propertyValues": { "checkedBinding": { "keypath": "PeersList.selection.isTrusted" } }, "view": "DC.ToggleButton" },
+    "input2": { "propertyValues": { "checkedBinding": { "keypath": "*.isTrusted" } }, "view": "DC.ToggleButton" },
     "KeyFingerprint": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
     "KeyFingerprint2": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
@@ -70,6 +70,7 @@ var dashcodePartSpecs = {
     "TrustedPeersList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "PeerNameLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.trustedPeers" } }, "sampleRows": 3, "useDataSource": true, "view": "DC.List" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 

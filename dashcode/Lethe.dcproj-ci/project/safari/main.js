@@ -27,28 +27,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-function sendMessageOnEnter(event) {
-    if (event.charCode === 13) {
-        sendMessage(event);
-    }
-}
-
-
-
-
 // is this used?
+/*
 isNotGenerating = Class.create(DC.ValueTransformer,{
     transformedValue: function(value){
 		return value !== Lethe.TAG_GENERATING;
     }
 });
-
+*/

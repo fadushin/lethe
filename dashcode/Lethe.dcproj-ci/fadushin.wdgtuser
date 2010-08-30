@@ -4,7 +4,7 @@
 <dict>
 	<key>Breakpoints</key>
 	<dict>
-		<key>lethe/lethe.js:310</key>
+		<key>lethe/lethe.js:316</key>
 		<string>create</string>
 	</dict>
 	<key>BreakpointsFrame</key>
@@ -21,8 +21,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {942, 473}}</string>
-			<string>{{0, 483}, {942, 173}}</string>
+			<string>{{0, 0}, {942, 125}}</string>
+			<string>{{0, 135}, {942, 521}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -32,7 +32,7 @@
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-08-26T11:01:22Z</date>
+		<date>2010-08-30T16:58:09Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -537,27 +537,6 @@
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>4</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>4</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
 				<integer>2</integer>
 			</array>
 			<array>
@@ -569,6 +548,16 @@
 				<integer>1</integer>
 				<integer>1</integer>
 				<integer>9</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
@@ -580,8 +569,9 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>1</integer>
+				<integer>0</integer>
 				<integer>1</integer>
-				<integer>9</integer>
+				<integer>0</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
@@ -592,7 +582,7 @@
 			<string>mainView</string>
 			<string>EditIdentityView</string>
 			<string>MessageView</string>
-			<string>PeersView</string>
+			<string>MessagesView</string>
 			<string>PeerView</string>
 			<string>editIdentityView</string>
 			<string>MainView</string>
@@ -602,7 +592,7 @@
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>Desktop</string>
+	<string>MobileWeb</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
@@ -1059,6 +1049,39 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
 				<integer>1</integer>
 			</array>
 			<array>
@@ -1069,24 +1092,14 @@
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>0</integer>
-			</array>
-		</array>
+		<array/>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelDetailView</string>
-			<string>ChannelListView</string>
 			<string>view3</string>
-			<string>PeerDetailView</string>
 			<string>view1</string>
 			<string>AboutListView</string>
+			<string>ChannelDetailsView</string>
 			<string>ChannelsDetailsView</string>
 			<string>ChannelView</string>
 			<string>PeerView</string>
@@ -1095,6 +1108,7 @@
 			<string>PeerListView</string>
 			<string>ChannelsView</string>
 			<string>MessageView</string>
+			<string>MessagesView</string>
 		</array>
 	</dict>
 	<key>NavigatorSplitViewGeometry</key>

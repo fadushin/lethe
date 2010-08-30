@@ -136,6 +136,7 @@ Lethe.Channel = Class.create(
                                 backend.join(channelName, obj);
                             } else {
                                 // unhandled
+                                console.error("Unhandled error: " + result.error);
                             }
                             return;
                         }
@@ -181,18 +182,20 @@ Lethe.Channel = Class.create(
                         var that = this;
                         var processedMessages = net_dushin_foundation.Lists.applyAsync(
                             function(newMessage) {
-                                var message = Lethe.Message.parse(newMessage);
+                                var message = Lethe.Message.parse(
+                                    {messageObject: newMessage, peers: peers}
+                                );
                                 if (message.isPlaintext()) {
                                     // no-op
                                 } else {
                                     if (message.isSignedOnly()) {
-                                        message.verify(peers, message.contents);
+                                        message.verify([identity.getPeer()], message.contents);
                                     } else {
                                         if (message.isEncrypted()) {
                                             message.tryDecrypt(identity);
                                         }
                                         if (message.isSignedAndDecrypted()) {
-                                            message.verify(peers, message.decryptedContents);
+                                            message.verify([identity.getPeer()], message.decryptedContents);
                                         }
                                     }
                                 }
@@ -201,6 +204,7 @@ Lethe.Channel = Class.create(
                             newMessages
                         );
                     } else if (err) {
+                        console.error(err);
                     }
                 }
             );

@@ -1749,29 +1749,6 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     color: white;
 }
 
-.checkbox_template {
-    font-family: HelveticaNeue;
-    font-size: 10pt;
-    height: 18px;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    top: 0px;
-    width: 37px;
-    left: 638px;
-}
-
-#input2 {
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    margin-top: 0px;
-    width: auto;
-    margin-right: 22px;
-    margin-left: 3px;
-    height: auto;
-}
-
 #KeyFingerprint2 {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1890,4 +1867,17 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     right: 9px;
     margin-left: auto;
     visibility: hidden;
+}
+
+.TrustCheckbox_template {
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    height: 18px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 0px;
+    width: 24px;
+    left: 637px;
 }

@@ -42,6 +42,3 @@ function showAboutDetailView(event) {
     var browser = document.getElementById('AboutBrowser').object; 
     browser.goForward('AboutDetailView', 'Next Level');
 }
-
-
-

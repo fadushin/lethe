@@ -162,7 +162,7 @@ Lethe.Message = Class.create(
                 contents = "...";
             } else if (!this.isEncrypted() && this.isSigned() && this.isVerified()) { // plaintext signed verified
                 prefix += this.img(plaintext);
-                prefix += this.img(verified);
+                prefix += this.signingPeer.isTrusted ? this.img(trusted) : this.img(verified);
                 contents = this.renderContentsHtml(this.verifiedResults.value);
             } else if (this.isEncrypted() && !this.isDecrypted()) { // undecrypted
                 prefix += this.img(encrypted);
@@ -173,7 +173,7 @@ Lethe.Message = Class.create(
                 contents = this.renderContentsHtml(this.decryptedContents);
             } else if (this.isDecrypted() && this.isSigned() && this.isVerified()) { // decrypted, signed, and verified
                 prefix += this.img(decrypted);
-                prefix += this.img(verified);
+                prefix += this.signingPeer.isTrusted ? this.img(trusted) : this.img(verified);
                 contents = this.renderContentsHtml(this.verifiedResults.value);
             } else if (this.isDecrypted() && !this.isVerified()) { // decrypted, signed, and unverified
                 prefix += this.img(decrypted);
@@ -193,16 +193,24 @@ Lethe.Message = Class.create(
     }
 );
 
-Lethe.Message.parse = function(obj) {
-    var deblob = net_dushin_foundation.Serialization.deserialize(obj.blob);
+Lethe.Message.parse = function(spec) {
+    var messageObject = spec.messageObject;
+    var peers = spec.peers;
+    var deblob = net_dushin_foundation.Serialization.deserialize(messageObject.blob);
     var contents = deblob.contents;
     var signingPeer = deblob.signingPeer ? Lethe.Peer.parse(deblob.signingPeer) : null;
+    var knownPeer = net_dushin_foundation.Lists.find(
+        function(peer) {
+            return peer.toPeerObject().id === signingPeer.toPeerObject().id
+        },
+        peers
+    );
     return new Lethe.Message(
         {
             contents: contents, 
-            uuid: obj.uuid, 
-            timestamp: obj.timestamp,
-            signingPeer: signingPeer
+            uuid: messageObject.uuid, 
+            timestamp: messageObject.timestamp,
+            signingPeer: knownPeer ? knownPeer : signingPeer
         }
     );
 };
