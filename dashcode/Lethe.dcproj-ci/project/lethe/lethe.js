@@ -224,39 +224,50 @@ var Lethe = {
                 );
             },
             
-            updateIdentity: function(oldName, identity) {
+            updateIdentity: function() {
                 var lethe = this;
                 var identity = lethe.getIdentity();
-                var oldName = identity.getName();
-                setTimeout(
-                    function() {
-                        var tmpIdentity = lethe.getTmpIdentity();
-                        identity.assign(tmpIdentity);
-                        lethe.setStoredIdentity(identity);
-                        //
-                        var channels = lethe.getChannels();
-                        var i;
-                        for (i = 0;  i < channels.length;  ++i) {
-                            var channel = channels[i];
-                            var channelName = channel.getName();
-                            if (oldName) {
-                                // TODO callback?
-                                backend.leave(channelName);
-                            }
-                            var obj = identity.toPeerObject();
-                            backend.join(
-                                channelName, obj,
+                var oldIdentityPeerId = identity.getPeer() ? identity.getPeer().toPeerObject().id : null;
+                var tmpIdentity = lethe.getTmpIdentity();
+                identity.assign(tmpIdentity);
+                //
+                // Store the identity in persistent storage
+                //
+                net_dushin_foundation.Async.exec(
+                    {
+                        f: function() {
+                            lethe.setStoredIdentity(identity);
+                        }
+                    }
+                );
+                //
+                // Leave then rejoin each channel
+                //
+                var channels = lethe.getChannels();
+                net_dushin_foundation.Lists.applyAsync(
+                    function(channel) {
+                        var channelName = channel.getName();
+                        if (oldIdentityPeerId) {
+                            backend.leave(
+                                channelName, oldIdentityPeerId, 
                                 function(result, error) {
-                                    if (!error) {
-                                        channel.updateAll();
-                                    } else {
+                                    if (error) {
                                         console.error(error);
                                     }
                                 }
                             );
                         }
+                        var peerObject = identity.toPeerObject();
+                        backend.join(
+                            channelName, peerObject,
+                            function(result, error) {
+                                if (error) {
+                                    console.error(error);
+                                }
+                            }
+                        );
                     },
-                    200
+                    channels
                 );
             },
             
@@ -437,18 +448,24 @@ Lethe.dummyBackend = {
             this.dummyChannels[channelName] = dummyChannel;
         }
         dummyChannel.peers[peer.id] = peer;
-        callback(null, null);
+        if (callback) {
+            callback(null, null);
+        }
     },
     
     leave: function(channelName, peerId, callback) {
-        delete this.dummyChannels[channelName];
-        callback(null, null);
+        delete this.dummyChannels[channelName].peers[peerId];
+        if (callback) {
+            callback(null, null);
+        }
     },
     
     sendMessage: function(channelName, message, callback) {
         message.timestamp = this.dummyChannels[channelName].messages.length;
         this.dummyChannels[channelName].messages.push(message);
-        callback(null, null);
+        if (callback) {
+            callback(null, null);
+        }
     },
             
     update: function(channelName, obj, callback) {

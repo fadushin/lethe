@@ -502,8 +502,8 @@ body {
     top: 5px;
     bottom: auto;
     margin-top: 0px;
-    width: 232px;
     left: 0px;
+    width: 226px;
 }
 
 #SendMessageButton {
@@ -538,9 +538,9 @@ body {
     position: relative;
     min-height: 233px;
     height: auto;
+    width: auto;
     margin-right: 6px;
     margin-left: 6px;
-    width: auto;
 }
 
 #SignMessagesCheckbox {
@@ -1049,7 +1049,7 @@ body {
     min-height: 236px;
 }
 
-#checkbox {
+#EncryptToCheckbox {
     width: 80px;
     font-family: HelveticaNeue;
     font-size: 10pt;
@@ -1059,11 +1059,8 @@ body {
     position: absolute;
     bottom: auto;
     margin-top: 0px;
-    top: 177px;
-    right: 100px;
-    margin-left: auto;
-    left: 100px;
-    margin-right: auto;
+    top: 19px;
+    left: 15px;
 }
 
 #div5 {
@@ -1076,7 +1073,7 @@ body {
     left: 18px;
 }
 
-#text1 {
+#PeerName {
     color: black;
     font-size: 17px;
     text-overflow: ellipsis;
@@ -1086,18 +1083,18 @@ body {
     font-style: italic;
     font-family: 'Times New Roman';
     text-align: left;
-    top: 53px;
-    left: 114px;
-    right: 30px;
+    top: 108px;
+    left: 118px;
+    height: 20px;
+    right: 26px;
     width: auto;
-    height: auto;
 }
 
-.selected #text1 {
+.selected #PeerName {
     color: white;
 }
 
-#text3 {
+#KeyFingerprint {
     color: black;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1108,13 +1105,13 @@ body {
     width: 250px;
     min-height: 39px;
     letter-spacing: 0px;
+    top: 156px;
     left: 15px;
-    top: 126px;
-    bottom: 46px;
+    bottom: 16px;
     height: auto;
 }
 
-.selected #text3 {
+.selected #KeyFingerprint {
     color: white;
 }
 
@@ -1127,18 +1124,18 @@ body {
     border-top-right-radius: 8px 8px;
     border-bottom-right-radius: 8px 8px;
     border-bottom-left-radius: 8px 8px;
-    margin-top: 10px;
-    margin-left: 18px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: relative;
+    margin-top: 11px;
+    margin-left: 17px;
     width: auto;
-    margin-right: 21px;
+    margin-right: 22px;
     min-height: 211px;
     height: auto;
 }
 
-#text5 {
+#KeyFingerprintLabel {
     color: black;
     font-family: Helvetica;
     font-size: 17px;
@@ -1146,13 +1143,13 @@ body {
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
+    top: 133px;
     left: 15px;
-    top: 103px;
-    width: auto;
-    height: auto;
+    width: 119px;
+    height: 20px;
 }
 
-.selected #text5 {
+.selected #KeyFingerprintLabel {
     color: white;
 }
 
@@ -1190,7 +1187,7 @@ body {
     color: white;
 }
 
-#text6 {
+#PeerNameLabel {
     color: black;
     font-family: Helvetica;
     font-size: 17px;
@@ -1198,13 +1195,13 @@ body {
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
+    top: 108px;
     left: 15px;
-    top: 53px;
     width: auto;
     height: auto;
 }
 
-.selected #text6 {
+.selected #PeerNameLabel {
     color: white;
 }
 
@@ -1292,7 +1289,28 @@ body {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     height: 33px;
-    width: 308px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    width: auto;
+}
+
+#TrustCheckbox {
+    width: 80px;
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    height: 18px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    left: 15px;
+    top: 44px;
+}
+
+#div6 {
+    position: absolute;
+    top: 2px;
+    left: 18px;
+    text-align: left;
+    vertical-align: middle;
 }

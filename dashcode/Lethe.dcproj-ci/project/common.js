@@ -273,6 +273,9 @@ filterIdentity = Class.create(
     DC.ValueTransformer,
     {
         transformedValue: function(value){
+            if (!Lethe.instance) {
+                return;
+            }
             var identityPeerId = Lethe.instance.getIdentity().toPeerObject().id;
             var ret = net_dushin_foundation.Lists.filter(
                 function(peer) {

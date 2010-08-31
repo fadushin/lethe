@@ -30,6 +30,7 @@ var dashcodePartSpecs = {
     "IdentityNameTextLabel1": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.name" } }, "text": "Text", "view": "DC.Text" },
     "image": { "view": "DC.ImageLayout" },
     "image1": { "view": "DC.ImageLayout" },
+    "image2": { "view": "DC.ImageLayout" },
     "input": { "propertyValues": { "checkedBinding": { "keypath": "*.encryptTo" } }, "view": "DC.ToggleButton" },
     "input1": { "propertyValues": { "checkedBinding": { "keypath": "ChannelList.selection.signMessages" } }, "view": "DC.ToggleButton" },
     "input2": { "propertyValues": { "checkedBinding": { "keypath": "*.isTrusted" } }, "view": "DC.ToggleButton" },
@@ -62,7 +63,6 @@ var dashcodePartSpecs = {
     "text1": { "text": "Trusted Peers", "view": "DC.Text" },
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
     "text3": { "text": "Key Fingerprint:", "view": "DC.Text" },
-    "text4": { "text": "auto", "view": "DC.Text" },
     "text5": { "text": "Lethe 0.1-SNASPHOT", "view": "DC.Text" },
     "textField": { "propertyValues": { "valueBinding": { "keypath": "lethe.content.tmp.id.name" } }, "view": "DC.TextField" },
     "TitleText": { "text": "Lethe Messenger 0.1-SNAPSHOT", "view": "DC.Text" },
@@ -70,6 +70,7 @@ var dashcodePartSpecs = {
     "TrustedPeersList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "PeerNameLabel1", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.trustedPeers" } }, "sampleRows": 3, "useDataSource": true, "view": "DC.List" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 

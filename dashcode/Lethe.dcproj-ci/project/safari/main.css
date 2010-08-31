@@ -483,8 +483,8 @@ body.DC_windowInactive .listRowTemplate1_template.selected {
     bottom: auto;
     margin-top: 0px;
     top: 0px;
-    left: 8px;
     width: 23px;
+    left: 16px;
 }
 
 .PeerNameLabel_template {
@@ -496,8 +496,8 @@ body.DC_windowInactive .listRowTemplate1_template.selected {
     overflow: hidden;
     white-space: nowrap;
     top: 0px;
-    left: 75px;
-    right: 511px;
+    left: 99px;
+    right: 487px;
     width: auto;
 }
 
@@ -513,11 +513,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     font-size: 12px;
     font-weight: bold;
     font-family: 'Courier New';
-    top: 3px;
-    left: 178px;
-    right: 78px;
+    top: 0px;
+    left: 204px;
+    right: 52px;
     width: auto;
-    bottom: 5px;
+    bottom: 8px;
     height: auto;
 }
 
@@ -557,11 +557,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: 69px;
+    width: 51px;
     -webkit-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
-    top: 38px;
     left: 4px;
+    top: 38px;
 }
 
 #EncryptToLabel {
@@ -573,10 +573,10 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: absolute;
-    top: 7px;
     bottom: auto;
     margin-top: 0px;
-    left: 9px;
+    top: 7px;
+    left: 0px;
     width: auto;
 }
 
@@ -591,11 +591,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    top: 38px;
     width: 104px;
     -webkit-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
-    left: 74px;
+    top: 38px;
+    left: 99px;
 }
 
 #PeerNameHeaderLabel {
@@ -625,11 +625,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    top: 38px;
-    width: 455px;
     -webkit-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
-    left: 179px;
+    top: 38px;
+    left: 204px;
+    width: 490px;
 }
 
 #PeerFingerprintHeaderLabel {
@@ -1722,9 +1722,9 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    left: 634px;
     top: 38px;
-    width: 60px;
+    left: 56px;
+    width: 42px;
     -webkit-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
 }
@@ -1757,12 +1757,12 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     font-size: 12px;
     height: 15px;
     width: 441px;
-    top: 79px;
     font-weight: bold;
     font-style: italic;
     font-family: 'Courier New';
     color: rgb(168, 168, 168);
-    left: 184px;
+    top: 75px;
+    left: 208px;
 }
 
 .selected #KeyFingerprint2 {
@@ -1775,34 +1775,16 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     overflow: hidden;
     position: absolute;
     margin-top: 0px;
-    left: 78px;
-    top: 75px;
     color: rgb(168, 168, 168);
     width: 82px;
-    height: 21px;
     font-style: italic;
     font-family: 'Lucida Bright';
-}
-
-.selected #IdentityNameTextLabel1 {
-    color: white;
-}
-
-#text4 {
-    font-size: 13px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
+    left: 102px;
     top: 75px;
-    font-family: 'Lucida Calligraphy';
-    left: 10px;
-    color: rgb(168, 168, 168);
-    width: 32px;
     height: 17px;
 }
 
-.selected #text4 {
+.selected #IdentityNameTextLabel1 {
     color: white;
 }
 
@@ -1813,8 +1795,8 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     margin-top: 0px;
     height: 12px;
     width: 24px;
-    top: 82px;
-    left: 639px;
+    top: 75px;
+    left: 63px;
 }
 
 #inner_image1 {
@@ -1877,7 +1859,31 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 0px;
     width: 24px;
-    left: 637px;
+    top: 0px;
+    left: 62px;
+}
+
+#image2 {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 75px;
+    left: 24px;
+}
+
+#inner_image2 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
 }
