@@ -199,12 +199,12 @@ Lethe.Message.parse = function(spec) {
     var deblob = net_dushin_foundation.Serialization.deserialize(messageObject.blob);
     var contents = deblob.contents;
     var signingPeer = deblob.signingPeer ? Lethe.Peer.parse(deblob.signingPeer) : null;
-    var knownPeer = net_dushin_foundation.Lists.find(
+    var knownPeer = signingPeer ? net_dushin_foundation.Lists.find(
         function(peer) {
             return peer.toPeerObject().id === signingPeer.toPeerObject().id
         },
         peers
-    );
+    ) : null;
     return new Lethe.Message(
         {
             contents: contents, 
