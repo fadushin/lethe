@@ -53,7 +53,7 @@
     <script type="text/javascript" src="../lethe/message.js" charset="utf-8"></script>
     <script type="text/javascript" src="../common.js" charset="utf-8"></script>
 </head>
-<body onload="load();">
+<body onload="load();" onunload="unload();">
     <div id="LetheStack" apple-part="com.apple.Dashcode.part.StackLayout"><div id="SplashScreenView" apple-part-locked="true">
             <div id="rectangleShape" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;">
                 <div id="text5" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
@@ -122,7 +122,7 @@
                                 <div id="PeerFingerprintHeaderLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
                             </div>
                             <ul id="PeersList" apple-part="com.apple.Dashcode.part.widgetList" class="">
-                                <li id="listRowTemplate1" apple-template="true" class="listRowTemplate1_template" style="">
+                                <li id="listRowTemplate1" apple-template="true" class="listRowTemplate1_template first" style="">
                                     <div id="EncryptToheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="EncryptToheckbox_template checkbox1_template">
                                         <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox" class="input_template input_template">
                                     </div>

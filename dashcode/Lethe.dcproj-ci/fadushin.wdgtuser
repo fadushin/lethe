@@ -4,7 +4,7 @@
 <dict>
 	<key>Breakpoints</key>
 	<dict>
-		<key>lethe/lethe.js:327</key>
+		<key>lethe/lethe.js:326</key>
 		<string>create</string>
 	</dict>
 	<key>BreakpointsFrame</key>
@@ -21,8 +21,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {936, 214}}</string>
-			<string>{{0, 224}, {936, 432}}</string>
+			<string>{{0, 0}, {936, 108}}</string>
+			<string>{{0, 118}, {936, 538}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -32,7 +32,7 @@
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-09-01T01:25:52Z</date>
+		<date>2010-09-01T04:49:23Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -567,9 +567,6 @@
 				<integer>0</integer>
 				<integer>1</integer>
 			</array>
-		</array>
-		<key>Objects view last selections</key>
-		<array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
@@ -578,6 +575,14 @@
 				<integer>2</integer>
 				<integer>1</integer>
 				<integer>1</integer>
+				<integer>4</integer>
+				<integer>0</integer>
+				<integer>3</integer>
+			</array>
+		</array>
+		<key>Objects view last selections</key>
+		<array>
+			<array>
 				<integer>4</integer>
 			</array>
 		</array>
@@ -599,7 +604,7 @@
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>MobileWeb</string>
+	<string>Desktop</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
@@ -1045,11 +1050,7 @@
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array>
-			<array>
-				<integer>4</integer>
-			</array>
-		</array>
+		<array/>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelDetailView</string>
@@ -1078,8 +1079,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {300, 351}}</string>
-			<string>{{0, 361}, {300, 295}}</string>
+			<string>{{0, 0}, {300, 209}}</string>
+			<string>{{0, 219}, {300, 437}}</string>
 		</array>
 	</dict>
 </dict>

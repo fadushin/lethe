@@ -322,11 +322,9 @@ var Lethe = {
                                     channelName, message.serialize(),
                                     function(result, error) {
                                         if (!error) {
-                                            /*
                                             net_dushin_foundation.Async.exec(
                                                 {f: function() { channel.updateAll(); }}
                                             );
-                                            */
                                         } else {
                                             console.error(error);
                                         }

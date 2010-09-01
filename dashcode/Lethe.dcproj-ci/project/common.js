@@ -29,8 +29,7 @@
 // startup/shutdown
 //
 
-function load()
-{
+function load() {
     dashcode.setupParts();
     setTimeout(
         function() {
@@ -44,6 +43,16 @@ function load()
             }
         }, 
         1000
+    );
+}
+
+function unload() {
+    var lethe = Lethe.instance;
+    net_dushin_foundation.Lists.apply(
+        function(channel) {
+            lethe.leaveChannel(channel);
+        },
+        lethe.getChannels()
     );
 }
 

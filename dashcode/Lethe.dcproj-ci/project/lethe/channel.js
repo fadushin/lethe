@@ -64,6 +64,12 @@ Lethe.Channel = Class.create(
             return this.messages;
         },
         
+        setMessages: function(messages) {
+            var tmp = this.messages;
+            this.messages = messages;
+            return tmp;
+        },
+        
         checkRunning: function() {
             if (!this.running) {
                 console.log("Shutting down update function for channel " + this.channelName);
@@ -115,6 +121,7 @@ Lethe.Channel = Class.create(
                 var lastMessage = messages[messages.length - 1];
                 since = lastMessage.getTimestamp();
             }
+            var channel = this;
             backend.update(
                 channelName,
                 {
@@ -165,9 +172,33 @@ Lethe.Channel = Class.create(
                         var identityPeerObject = identity.toPeerObject();
                         net_dushin_foundation.Lists.applyAsync(
                             function(addedPeer) {
+                                var found = net_dushin_foundation.Lists.find(
+                                    function(peer) {
+                                        return peer.toPeerObject().id === addedPeer.id;
+                                    },
+                                    peers
+                                );
+                                if (found) {
+                                    return;
+                                }
                                 try {
                                     var isTrusted = addedPeer.id === identityPeerObject.id;
                                     var parsedPeer = Lethe.Peer.parse(addedPeer, isTrusted);
+                                    //
+                                    // update the list of messages, if the isTrusted flag gets changed
+                                    // (so that the messsages list gets re-rendered)
+                                    //
+                                    parsedPeer.addObserverForKeyPath(
+                                        {
+                                            trustedChanged: function(change){
+                                                // TODO there needs to be a better way to do this...
+                                                var tmp = channel.setMessages([]);
+                                                channel.setMessages(tmp);
+                                            }
+                                        }, 
+                                        'trustedChanged', 
+                                        'isTrusted'
+                                    );
                                     peers.addObject(parsedPeer);
                                 } catch (e) {
                                     // console.log("An error occurred parsing a peer from the server:");
@@ -179,12 +210,22 @@ Lethe.Channel = Class.create(
                         //
                         // process the new messages
                         //
-                        var that = this;
                         var processedMessages = net_dushin_foundation.Lists.applyAsync(
                             function(newMessage) {
                                 var message = Lethe.Message.parse(
                                     {messageObject: newMessage, peers: peers}
                                 );
+                                //
+                                // Skip the message, if it's already in the list (by UUID)
+                                //
+                                if (net_dushin_foundation.Lists.find(
+                                    function(msg) {
+                                        return message.getUUID() === msg.getUUID();
+                                    },
+                                    messages
+                                )) {
+                                    return;
+                                }
                                 if (message.isPlaintext()) {
                                     // no-op
                                 } else {
