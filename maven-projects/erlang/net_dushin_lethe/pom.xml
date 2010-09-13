@@ -38,15 +38,6 @@
     <name>Lethe Messenging Server in Erlang</name>
     <url>http://lethe.dushin.net/</url>
 
-    <!-- -->
-    <!-- Inherit settings from parent POM -->
-    <!-- -->
-    <parent>
-        <groupId>net.dushin.lethe</groupId>
-        <artifactId>lethe-parent</artifactId>
-        <version>0.1-SNAPSHOT</version>
-    </parent>
-
     <build>
         <plugins>
             <plugin>
@@ -60,12 +51,5 @@
             </plugin>
         </plugins>
     </build>
-    
-    <!-- -->
-    <!-- This section enumerates the dependencies this project has -->
-    <!-- on other projects or maven artifacts -->
-    <!-- -->
-    <dependencies>
 
-    </dependencies>
 </project>
