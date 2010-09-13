@@ -4,8 +4,8 @@
 <dict>
 	<key>Breakpoints</key>
 	<dict>
-		<key>lethe/lethe.js:326</key>
-		<string>create</string>
+		<key>lethe/channel.js:111</key>
+		<string></string>
 	</dict>
 	<key>BreakpointsFrame</key>
 	<string>483 285 673 467 0 0 1280 778 </string>
@@ -21,8 +21,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {936, 108}}</string>
-			<string>{{0, 118}, {936, 538}}</string>
+			<string>{{0, 0}, {936, 344}}</string>
+			<string>{{0, 354}, {936, 302}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -32,7 +32,7 @@
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-09-01T04:49:23Z</date>
+		<date>2010-09-09T12:15:15Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -583,7 +583,14 @@
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>4</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>8</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
@@ -604,7 +611,7 @@
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>Desktop</string>
+	<string>MobileWeb</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
@@ -965,45 +972,12 @@
 				<integer>2</integer>
 				<integer>0</integer>
 				<integer>1</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
 				<integer>1</integer>
 			</array>
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>0</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>1</integer>
 				<integer>0</integer>
 			</array>
 			<array>
@@ -1023,6 +997,28 @@
 				<integer>1</integer>
 				<integer>1</integer>
 				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
 				<integer>0</integer>
 			</array>
 			<array>
@@ -1033,6 +1029,28 @@
 				<integer>1</integer>
 				<integer>1</integer>
 				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
 				<integer>0</integer>
 				<integer>0</integer>
 			</array>
@@ -1044,18 +1062,120 @@
 				<integer>1</integer>
 				<integer>1</integer>
 				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+			</array>
+			<array>
 				<integer>0</integer>
 				<integer>0</integer>
 				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+				<integer>3</integer>
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array/>
+		<array>
+			<array>
+				<integer>4</integer>
+			</array>
+		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelDetailView</string>
 			<string>view3</string>
+			<string>PeerDetailView</string>
 			<string>view1</string>
+			<string>PeersView</string>
 			<string>AboutListView</string>
 			<string>ChannelDetailsView</string>
 			<string>ChannelsDetailsView</string>
@@ -1066,21 +1186,20 @@
 			<string>PeerListView</string>
 			<string>ChannelsView</string>
 			<string>MessageView</string>
-			<string>MessagesView</string>
 		</array>
 	</dict>
 	<key>NavigatorSplitViewGeometry</key>
 	<dict>
 		<key>ContentSplitViewConfig</key>
-		<integer>5</integer>
+		<integer>1</integer>
 		<key>SplitViewConfig</key>
 		<integer>3</integer>
 		<key>_indexOfCollapsedView</key>
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {300, 209}}</string>
-			<string>{{0, 219}, {300, 437}}</string>
+			<string>{{0, 0}, {300, 277}}</string>
+			<string>{{0, 287}, {300, 369}}</string>
 		</array>
 	</dict>
 </dict>

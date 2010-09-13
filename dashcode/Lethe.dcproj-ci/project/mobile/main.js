@@ -42,3 +42,18 @@ function showAboutDetailView(event) {
     var browser = document.getElementById('AboutBrowser').object; 
     browser.goForward('AboutDetailView', 'Next Level');
 }
+
+tryThis = Class.create(DC.ValueTransformer,{
+    transformedValue: function(value){
+        // Insert Code Here
+		return value;
+    }
+    // Uncomment to support a reverse transformation
+    /*
+    ,
+    reverseTransformedValue: function(value){
+        return value;
+    }
+   */
+});
+

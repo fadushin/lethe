@@ -110,30 +110,26 @@
                                 </div>
                             </div><div id="PeersView" apple-part-locked="true">
                                 <div id="SignMessagesCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox">
-                                    <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox">
+                                    <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="SignMessagesCheckboxInput" apple-group="checkbox">
                                     <div id="div">Sign Messages</div>
                                 </div>
                                 <ul id="PeersList" apple-part="com.apple.Dashcode.part.roundedRectangleList" class="">
                                     <li id="listRowTemplate2" apple-template="true" class="listRowTemplate2_template first" style="border-top-width: 0px; " onclick="showPeerDetailView(event)">
-                                        <div id="label2" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children label2_template" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
-                                        <div id="arrow2" apple-part="com.apple.Dashcode.part.box" class="arrow2_template">
+                                        <div id="PeerNameLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children PeerNameLabel_template" apple-text-overflow="ellipsis"></div>
+                                        <div id="PeerKeyFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children PeerKeyFingerprintLabel_template" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                        <div id="EncryptToCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="EncryptToCheckbox_template">
+                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox" class="input_template">
+                                        </div>
+                                        <div id="IsTrustedCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox1" class="IsTrustedCheckbox_template">
+                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input1" apple-group="checkbox1" class="input1_template">
                                         </div>
                                     </li>
                                 </ul>
-                            </div><div id="PeerDetailView" apple-part-locked="true">
-                                <div id="box1" apple-part="com.apple.Dashcode.part.roundedbox">
-                                    <div id="EncryptToCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox">
-                                        <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input1" apple-group="checkbox">
-                                        <div id="div5">Encrypt</div>
-                                    </div>
-                                    <div id="TrustCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox1">
-                                        <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input2" apple-group="checkbox1">
-                                        <div id="div6">Trust</div>
-                                    </div>
-                                    <div id="PeerNameLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
-                                    <div id="PeerName" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
-                                    <div id="KeyFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
-                                    <div id="KeyFingerprint" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                <div id="Footer1" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 0; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="Footer1">
+                                    <div id="text4" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                    <div id="IdentityKeyFingerprintLabel1" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="image" apple-group="image"><img class="apple-hidden" src="../Images/decrypted.png" id="inner_image" apple-group="image"></div>
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="image1" apple-group="image1"><img class="apple-hidden" src="../Images/trusted.png" id="inner_image1" apple-group="image1"></div>
                                 </div>
                             </div></div>
                     </div></div>

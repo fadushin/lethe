@@ -235,6 +235,7 @@ body {
     height: auto;
     overflow: hidden;
     z-index: 0;
+    margin-left: 0px;
 }
 
 #ChannelListView {
@@ -553,18 +554,6 @@ body {
     width: 112px;
     margin-left: auto;
     margin-right: auto;
-}
-
-#div {
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    width: auto;
-    height: auto;
-    right: -31px;
-    bottom: -2px;
-    top: 2px;
-    left: 18px;
 }
 
 #rectangleShape {
@@ -966,9 +955,7 @@ body {
     overflow: hidden;
     display: none;
     padding: 0px;
-    margin-top: 17px;
     margin-bottom: 17px;
-    margin-left: 9px;
     background-color: white;
     -webkit-margin-bottom-collapse: separate;
     border-width: 1px;
@@ -980,16 +967,17 @@ body {
     border-bottom-left-radius: 8px 8px;
     cursor: default;
     -webkit-user-select: none;
-    margin-right: 9px;
     position: relative;
-    width: auto;
     -webkit-margin-top-collapse: separate;
+    margin-left: 9px;
+    margin-right: 9px;
+    margin-top: 53px;
+    width: auto;
 }
 
 .listRowTemplate2_template {
     position: relative;
     list-style-type: none;
-    height: 43px;
     width: auto;
     overflow: hidden;
     margin: 0px;
@@ -997,31 +985,23 @@ body {
     border-width: 0px;
     border-style: solid;
     border-color: rgb(172, 172, 172);
+    height: 32px;
 }
 
-.label2_template {
+.PeerNameLabel_template {
     position: absolute;
-    left: 9px;
-    top: 11px;
-    right: 30px;
-    width: auto;
     color: black;
     font-family: Helvetica;
-    font-weight: bold;
-    font-size: 17px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-}
-
-.arrow2_template {
-    position: absolute;
-    width: 8px;
-    height: 13px;
-    right: 10px;
-    top: 15px;
-    background-image: url(../Images/chevron.png);
-    background-repeat: no-repeat no-repeat;
+    font-size: 12px;
+    top: 7px;
+    left: 62px;
+    right: 193px;
+    width: auto;
+    height: 15px;
+    text-align: center;
 }
 
 .listRowTemplate2_template .DC_selectionBG {
@@ -1033,123 +1013,7 @@ body {
     -webkit-background-size: 100% 100%;
 }
 
-.listRowTemplate2_template.selected .label2_template {
-    color: white;
-}
-
-.listRowTemplate2_template.selected .arrow2_template {
-    background-image: url(../Images/chevron_white.png);
-}
-
-#PeerDetailView {
-    width: 100%;
-    display: none;
-    position: relative;
-    height: auto;
-    min-height: 236px;
-}
-
-#EncryptToCheckbox {
-    width: 80px;
-    font-family: HelveticaNeue;
-    font-size: 10pt;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    height: 18px;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
-    top: 19px;
-    left: 15px;
-}
-
-#div5 {
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    right: auto;
-    bottom: auto;
-    top: 2px;
-    left: 18px;
-}
-
-#PeerName {
-    color: black;
-    font-size: 17px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    font-style: italic;
-    font-family: 'Times New Roman';
-    text-align: left;
-    top: 108px;
-    left: 118px;
-    height: 20px;
-    right: 26px;
-    width: auto;
-}
-
-.selected #PeerName {
-    color: white;
-}
-
-#KeyFingerprint {
-    color: black;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    font-family: 'Courier New';
-    font-size: 14px;
-    width: 250px;
-    min-height: 39px;
-    letter-spacing: 0px;
-    top: 156px;
-    left: 15px;
-    bottom: 16px;
-    height: auto;
-}
-
-.selected #KeyFingerprint {
-    color: white;
-}
-
-#box1 {
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(172, 172, 172);
-    background-color: white;
-    border-top-left-radius: 8px 8px;
-    border-top-right-radius: 8px 8px;
-    border-bottom-right-radius: 8px 8px;
-    border-bottom-left-radius: 8px 8px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    margin-top: 11px;
-    margin-left: 17px;
-    width: auto;
-    margin-right: 22px;
-    min-height: 211px;
-    height: auto;
-}
-
-#KeyFingerprintLabel {
-    color: black;
-    font-family: Helvetica;
-    font-size: 17px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    top: 133px;
-    left: 15px;
-    width: 119px;
-    height: 20px;
-}
-
-.selected #KeyFingerprintLabel {
+.listRowTemplate2_template.selected .PeerNameLabel_template {
     color: white;
 }
 
@@ -1184,24 +1048,6 @@ body {
 }
 
 .selected #IdentityFingerprintDescription {
-    color: white;
-}
-
-#PeerNameLabel {
-    color: black;
-    font-family: Helvetica;
-    font-size: 17px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    top: 108px;
-    left: 15px;
-    width: auto;
-    height: auto;
-}
-
-.selected #PeerNameLabel {
     color: white;
 }
 
@@ -1294,8 +1140,152 @@ body {
     width: auto;
 }
 
-#TrustCheckbox {
-    width: 80px;
+#Footer1 {
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    margin-top: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    height: 32px;
+    position: absolute;
+    bottom: auto;
+    left: 9px;
+    top: 39px;
+    right: 9px;
+    width: auto;
+    -webkit-border-image: url(Parts/Images/Footer1.png) 0 5 0 5 stretch stretch;
+    border-left-width: 5px;
+    border-right-width: 5px;
+}
+
+#text4 {
+    color: black;
+    font-family: Helvetica;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-size: 12px;
+    height: 15px;
+    text-align: center;
+    top: 9px;
+    left: 57px;
+    right: 196px;
+    width: auto;
+}
+
+.selected #text4 {
+    color: white;
+}
+
+#IdentityKeyFingerprintLabel1 {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Courier New';
+    font-size: 10px;
+    width: 186px;
+    height: 24px;
+    top: 4px;
+    right: 0px;
+    margin-left: auto;
+}
+
+.selected #IdentityKeyFingerprintLabel1 {
+    color: white;
+}
+
+#image {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 9px;
+    left: 9px;
+}
+
+#inner_image {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+#image1 {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    top: 9px;
+    left: 33px;
+}
+
+#inner_image1 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+.PeerKeyFingerprintLabel_template {
+    color: black;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 0px;
+    font-family: 'Courier New';
+    font-size: 10px;
+    width: 186px;
+    height: 24px;
+    top: 4px;
+    right: 4px;
+    margin-left: auto;
+}
+
+.selected .PeerKeyFingerprintLabel_template {
+    color: white;
+}
+
+#checkbox2 {
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-top: 4px;
+    margin-left: 36px;
+    width: auto;
+    margin-right: 235px;
+}
+
+#div {
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    left: 21px;
+    top: 0px;
+    right: -8px;
+    width: auto;
+    bottom: 0px;
+    height: auto;
+}
+
+.EncryptToCheckbox_template {
     font-family: HelveticaNeue;
     font-size: 10pt;
     height: 18px;
@@ -1303,14 +1293,20 @@ body {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    left: 15px;
-    top: 44px;
+    width: 19px;
+    top: 7px;
+    left: 8px;
 }
 
-#div6 {
+.IsTrustedCheckbox_template {
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    height: 18px;
     position: absolute;
-    top: 2px;
-    left: 18px;
-    text-align: left;
-    vertical-align: middle;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 22px;
+    left: 33px;
+    top: 7px;
 }

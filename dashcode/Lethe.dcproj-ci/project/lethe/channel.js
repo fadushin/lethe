@@ -84,11 +84,6 @@ Lethe.Channel = Class.create(
                 return;
             }
             var that = this;
-            /*
-            net_dushin_foundation.Async.exec({f: function(){that.ping()}});
-            net_dushin_foundation.Async.exec({f: function(){that.updatePeers()}});
-            net_dushin_foundation.Async.exec({f: function(){that.updateMessages()}});
-            */
             net_dushin_foundation.Async.exec({f: function(){that.updateAll()}});
         },
         
@@ -140,7 +135,15 @@ Lethe.Channel = Class.create(
                                 // Join the channel (on the back end)
                                 //
                                 var obj = identity.toPeerObject();
-                                backend.join(channelName, obj);
+                                backend.join(
+                                    channelName, obj,
+                                    function(result, error) {
+                                        if (error) {
+                                            console.error("Unable to re-join channel on account of:");
+                                            console.error(error);
+                                        }
+                                    }
+                                );
                             } else {
                                 // unhandled
                                 console.error("Unhandled error: " + result.error);
@@ -250,107 +253,6 @@ Lethe.Channel = Class.create(
                 }
             );
         },
-        
-        /*
-        ping: function() {
-            var identity = Lethe.instance.getIdentity();
-            var channelName = this.name;
-            this.valueForKeyPath('backend').ping(channelName, identity.peer.id, function(){});
-        },
-
-        updatePeers: function() {
-            var identity = Lethe.instance.getIdentity();
-            var channelName = this.name;
-            console.log("Updating channel " + channelName + "...");
-            //
-            // Get the peer ids out of the peers
-            //
-            var peers = this.valueForKeyPath('peers');
-            var peerIds = net_dushin_foundation.Lists.map(
-                function(peer) {
-                    return peer.valueForKeyPath('peerObject').id;
-                },
-                peers
-            );
-            //
-            // Call getPeers on the back end, for the channel name, and
-            // with the current list of peer IDs.  This will return a
-            // list of the peer IDs that should be removed, and a list of
-            // peers that should be added.
-            //
-            var backend = this.valueForKeyPath('backend');
-            var peerUpdate = backend.getPeers(channelName, peerIds);
-            //
-            // Remove the peers that should be removed from the model,
-            //
-            net_dushin_foundation.Lists.applyAsync(
-                function(peerId) {
-                    var peer = net_dushin_foundation.Lists.find(
-                        function(peer) {
-                            return peer.valueForKeyPath('peerObject').id === peerId;
-                        },
-                        peers
-                    );
-                    if (peer != null) {
-                        peers.removeObject(peer);
-                    }
-                },
-                peerUpdate.remove
-            );
-            //
-            // and add the ones that should be added.
-            //
-            net_dushin_foundation.Lists.applyAsync(
-                function(addedPeer) {
-                    try {
-                        var parsedPeer = Lethe.Peer.parse(addedPeer);
-                        peers.addObject(parsedPeer);
-                    } catch (e) {
-                        // console.log("An error occurred parsing a peer from the server:");
-                        console.error(e);
-                    }
-                },
-                peerUpdate.add
-            );
-        },
-        
-        updateMessages: function() {
-            var identity = Lethe.instance.getIdentity();
-            var peers = this.getPeers();
-            var messages = this.getMessages();
-            var backend = this.valueForKeyPath('backend');
-            var channelName = this.name;
-            var newMessages;
-            if (messages.length == 0) {
-                newMessages = backend.getAllMessages(channelName);
-            } else {
-                var lastMessage = messages[messages.length - 1];
-                newMessages = backend.getMessagesSince(channelName, lastMessage.getTimestamp());
-            }
-            var that = this;
-            var processedMessages = net_dushin_foundation.Lists.applyAsync(
-                function(newMessage) {
-                    var message = Lethe.Message.parse(newMessage);
-                    if (message.isPlaintext()) {
-                        // no-op
-                    } else {
-                        if (message.isSignedOnly()) {
-                            message.verify(peers, message.contents);
-                        } else {
-                            if (message.isEncrypted()) {
-                                message.tryDecrypt(identity);
-                            }
-                            if (message.isSignedAndDecrypted()) {
-                                message.verify(peers, message.decryptedContents);
-                            }
-                        }
-                    }
-                    messages.addObject(message);
-                },
-                newMessages
-            );
-        },
-        */
         
         shutdown: function() {
             this.running = false;
