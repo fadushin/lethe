@@ -54,18 +54,12 @@
     </distributionManagement>
 
     <modules>
-        <module>build-config</module>
-        <module>parent</module>
-        <module>messaging-interfaces</module>
-        <module>messaging-common</module>
-        <module>messaging-server</module>
-        <module>messaging-client</module>
-        <module>distribution</module>
+        <module>net_dushin_lethe</module>
     </modules>
 
     <profiles>
         <profile>
-            <id>fastinstall</id>
+            <id>fast</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
             </properties>
