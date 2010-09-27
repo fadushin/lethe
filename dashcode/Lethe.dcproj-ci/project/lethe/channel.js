@@ -166,6 +166,7 @@ Lethe.Channel = Class.create(
                                 );
                                 if (peer != null) {
                                     peers.removeObject(peer);
+                                    lethe.playPeerLeftSound();
                                 }
                             },
                             peerUpdate.remove
@@ -186,8 +187,8 @@ Lethe.Channel = Class.create(
                                     return;
                                 }
                                 try {
-                                    var isTrusted = addedPeer.id === identityPeerObject.id;
-                                    var parsedPeer = Lethe.Peer.parse(addedPeer, isTrusted);
+                                    var isMe = addedPeer.id === identityPeerObject.id;
+                                    var parsedPeer = Lethe.Peer.parse(addedPeer, isMe);
                                     //
                                     // update the list of messages, if the isTrusted flag gets changed
                                     // (so that the messsages list gets re-rendered)
@@ -204,6 +205,9 @@ Lethe.Channel = Class.create(
                                         'isTrusted'
                                     );
                                     peers.addObject(parsedPeer);
+                                    if (!isMe) {
+                                        lethe.playPeerJoinedSound();
+                                    }
                                 } catch (e) {
                                     // console.log("An error occurred parsing a peer from the server:");
                                     console.error(e);

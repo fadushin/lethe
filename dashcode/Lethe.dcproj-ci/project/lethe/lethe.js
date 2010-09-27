@@ -76,7 +76,9 @@ var Lethe = {
         
         var sounds = {
             "message-arrived": new Audio("../Sounds/message-arrived.wav"),
-            "message-sent": new Audio("../Sounds/message-sent.wav")
+            "message-sent": new Audio("../Sounds/message-sent.wav"),
+            "peer-joined": new Audio("../Sounds/peer-joined.wav"),
+            "peer-left": new Audio("../Sounds/peer-left.wav")
         }
         
         var playSound = function(name) {
@@ -173,6 +175,14 @@ var Lethe = {
             
             playMessageSentSound: function() {
                 return playSound("message-sent");
+            },
+            
+            playPeerJoinedSound: function() {
+                return playSound("peer-joined");
+            },
+            
+            playPeerLeftSound: function() {
+                return playSound("peer-left");
             },
             
             getSentMessages: function() {
@@ -342,6 +352,7 @@ var Lethe = {
                             },
                             args: contents,
                             resultCallback: function(message) {
+                                sentMessages[message.getUUID()] = message;
                                 backend.sendMessage(
                                     channelName, message.serialize(),
                                     function(result, error) {
@@ -350,7 +361,6 @@ var Lethe = {
                                                 {f: function() { channel.updateAll(); }}
                                             );
                                             lethe.playMessageSentSound();
-                                            sentMessages[message.getUUID()] = message;
                                         } else {
                                             console.error(error);
                                         }
