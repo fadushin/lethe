@@ -4,7 +4,7 @@
 <dict>
 	<key>Breakpoints</key>
 	<dict>
-		<key>lethe/channel.js:111</key>
+		<key>lethe/channel.js:112</key>
 		<string></string>
 	</dict>
 	<key>BreakpointsFrame</key>
@@ -21,12 +21,12 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {936, 344}}</string>
-			<string>{{0, 354}, {936, 302}}</string>
+			<string>{{0, 0}, {936, 455}}</string>
+			<string>{{0, 465}, {936, 191}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>5</integer>
+	<integer>0</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
@@ -589,8 +589,8 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>1</integer>
-				<integer>1</integer>
-				<integer>8</integer>
+				<integer>0</integer>
+				<integer>0</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
@@ -601,7 +601,7 @@
 			<string>mainView</string>
 			<string>EditIdentityView</string>
 			<string>MessageView</string>
-			<string>PeersView</string>
+			<string>MessagesView</string>
 			<string>PeerView</string>
 			<string>editIdentityView</string>
 			<string>MainView</string>
@@ -611,7 +611,7 @@
 	<key>EvaluatorFrame</key>
 	<string>303 171 586 442 0 0 1280 778 </string>
 	<key>Last selected product type</key>
-	<string>MobileWeb</string>
+	<string>Desktop</string>
 	<key>MainSplitViewGeometry</key>
 	<dict>
 		<key>_indexOfCollapsedView</key>
@@ -1164,11 +1164,7 @@
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array>
-			<array>
-				<integer>4</integer>
-			</array>
-		</array>
+		<array/>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelDetailView</string>
@@ -1191,7 +1187,7 @@
 	<key>NavigatorSplitViewGeometry</key>
 	<dict>
 		<key>ContentSplitViewConfig</key>
-		<integer>1</integer>
+		<integer>5</integer>
 		<key>SplitViewConfig</key>
 		<integer>3</integer>
 		<key>_indexOfCollapsedView</key>

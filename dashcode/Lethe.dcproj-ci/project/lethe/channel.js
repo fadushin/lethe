@@ -91,7 +91,8 @@ Lethe.Channel = Class.create(
             //
             // Get the identity and channel name
             //
-            var identity = Lethe.instance.getIdentity();
+            var lethe = Lethe.instance;
+            var identity = lethe.getIdentity();
             var channelName = this.name;
             console.log("Updating channel " + channelName + "...");
             //
@@ -244,6 +245,9 @@ Lethe.Channel = Class.create(
                                     }
                                 }
                                 messages.addObject(message);
+                                if (!lethe.getSentMessages()[message.getUUID()]) {
+                                    lethe.playMessageArrivedSound();
+                                }
                             },
                             newMessages
                         );

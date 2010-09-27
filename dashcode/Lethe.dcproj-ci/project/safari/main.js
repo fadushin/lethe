@@ -27,13 +27,3 @@
 
 
 
-// is this used?
-/*
-isNotGenerating = Class.create(DC.ValueTransformer,{
-    transformedValue: function(value){
-		return value !== Lethe.TAG_GENERATING;
-    }
-});
-*/
-
-

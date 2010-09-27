@@ -74,7 +74,18 @@ var Lethe = {
             }
         };
         
+        var sounds = {
+            "message-arrived": new Audio("../Sounds/message-arrived.wav"),
+            "message-sent": new Audio("../Sounds/message-sent.wav")
+        }
+        
+        var playSound = function(name) {
+            sounds[name].play();
+        };
+        
         var bulkEncryptor = net_dushin_crypto.EncryptorFactory.createBulkEncryptor();
+        
+        var sentMessages = {};
         
         return {
         
@@ -154,6 +165,18 @@ var Lethe = {
             
             getTrustedPeers: function() {
                 return this.getModel().valueForKeyPath("content.trustedPeers");
+            },
+            
+            playMessageArrivedSound: function() {
+                return playSound("message-arrived");
+            },
+            
+            playMessageSentSound: function() {
+                return playSound("message-sent");
+            },
+            
+            getSentMessages: function() {
+                return sentMessages;
             },
             
             joinChannel: function(channelName) {
@@ -272,6 +295,7 @@ var Lethe = {
             },
             
             sendMessage: function(channelName, messageText) {
+                var lethe = this;
                 var identity = this.getIdentity();
                 var contents = {
                     type: 'plaintext',
@@ -325,6 +349,8 @@ var Lethe = {
                                             net_dushin_foundation.Async.exec(
                                                 {f: function() { channel.updateAll(); }}
                                             );
+                                            lethe.playMessageSentSound();
+                                            sentMessages[message.getUUID()] = message;
                                         } else {
                                             console.error(error);
                                         }
