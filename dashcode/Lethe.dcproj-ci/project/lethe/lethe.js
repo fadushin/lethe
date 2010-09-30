@@ -75,10 +75,10 @@ var Lethe = {
         };
         
         var sounds = {
-            "message-arrived": new Audio("../Sounds/message-arrived.wav"),
-            "message-sent": new Audio("../Sounds/message-sent.wav"),
-            "peer-joined": new Audio("../Sounds/peer-joined.wav"),
-            "peer-left": new Audio("../Sounds/peer-left.wav")
+            "message-arrived": new Audio("../Sounds/message-arrived.mp3"),
+            "message-sent": new Audio("../Sounds/message-sent.mp3"),
+            "peer-joined": new Audio("../Sounds/peer-joined.mp3"),
+            "peer-left": new Audio("../Sounds/peer-left.mp3")
         }
         
         var playSound = function(name) {

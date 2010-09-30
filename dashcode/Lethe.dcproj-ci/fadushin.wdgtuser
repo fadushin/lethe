@@ -21,18 +21,18 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {936, 130}}</string>
-			<string>{{0, 140}, {936, 516}}</string>
+			<string>{{0, 0}, {936, 441}}</string>
+			<string>{{0, 451}, {936, 205}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>5</integer>
+	<integer>0</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-09-27T01:10:48Z</date>
+		<date>2010-09-29T18:59:42Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -583,7 +583,8 @@
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>4</integer>
+				<integer>0</integer>
+				<integer>0</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>

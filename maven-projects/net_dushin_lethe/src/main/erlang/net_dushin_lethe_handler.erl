@@ -242,7 +242,8 @@ messages_to_json(MessageList) ->
                     struct,
                     [
                         {timestamp, Message#message.timestamp},
-                        {blob, Message#message.blob}
+                        {blob, Message#message.blob},
+                        {uuid, Message#message.uuid}
                     ]
                 }
             end,
@@ -258,8 +259,8 @@ json_to_peer({struct, PropertyList}) ->
 
 json_to_message({struct, PropertyList}) ->
     #message {
-        blob = net_dushin_lethe_lists:find_value(PropertyList, blob)
-        % uuid = net_dushin_lethe_lists:find_value(PropertyList, uuid)
+        blob = net_dushin_lethe_lists:find_value(PropertyList, blob),
+        uuid = net_dushin_lethe_lists:find_value(PropertyList, uuid)
     }.
 
 %%

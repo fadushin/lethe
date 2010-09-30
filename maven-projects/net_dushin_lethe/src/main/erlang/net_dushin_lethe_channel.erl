@@ -433,7 +433,7 @@ message_loop(Ctx, Messages) ->
         {ClientPid, {post, Message}} ->
             NewMessages = [NewMessage | _] = 
                 add_message(Message, Messages, Ctx#message_context.max_messages),
-            ?LETHE_INFO("Channel ~p; added message ~p", [ChannelId, NewMessage#message.timestamp]),
+            ?LETHE_INFO("Channel ~p; added message ~p", [ChannelId, NewMessage#message.uuid]),
             net_dushin_lethe_rpc:response(ClientPid, NewMessage),
             message_loop(Ctx, NewMessages);
         %%
@@ -544,7 +544,7 @@ filter_stale_messages(Messages, TimeoutMs) ->
             Ret = is_not_stale(Message#message.timestamp, TimeoutMs),
             case Ret of
                 false ->
-                    ?LETHE_INFO("Message ~p is stale -- removing", [Message#message.timestamp]);
+                    ?LETHE_INFO("Message ~p is stale -- removing", [Message#message.uuid]);
                 _ ->
                     ok
             end,

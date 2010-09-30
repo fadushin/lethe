@@ -50,7 +50,7 @@
     message,
     {
         timestamp,
-        blob
-        % uuid
+        blob,
+        uuid
     }
 ).
