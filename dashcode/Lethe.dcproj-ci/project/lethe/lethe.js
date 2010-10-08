@@ -48,7 +48,7 @@ var Lethe = {
         }
     ),
     
-    create: function(backend) {
+    create: function(backend, queryString) {
     
         var that = this;
         
@@ -89,6 +89,32 @@ var Lethe = {
         
         var sentMessages = {};
         
+        var initialChannelIds = function() {
+            if (!queryString) {
+                return [];
+            }
+            try {
+                if (queryString.charAt(0) === '?') {
+                    var str = queryString.slice(1);
+                    return net_dushin_foundation.Lists.filterMap(
+                        function(query) {
+                            var s = query.split('=');
+                            if (s.length === 2 && s[0] === 'channel') {
+                                return s[1];
+                            } else {
+                                return null;
+                            }
+                        },
+                        str.split(';')
+                    );
+                } else {
+                    return [];
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }();
+        
         return {
         
             getModel: function() {
@@ -123,6 +149,14 @@ var Lethe = {
                     },
                     100
                 );
+            },
+            
+            getInitialChannelIds : function() {
+                return initialChannelIds;
+            },
+            
+            clearInitialChannelIds : function() {
+                initialChannelIds = [];
             },
             
             getChannels: function() {
@@ -380,9 +414,9 @@ Lethe.KVO.deserialize = function(str) {
 };
 
 
-Lethe.init = function() {
-    // var lethe = Lethe.create(Lethe.serverBackend.create());
-    var lethe = Lethe.create(Lethe.dummyBackend);
+Lethe.init = function(queryString) {
+    // var lethe = Lethe.create(Lethe.serverBackend.create(), queryString);
+    var lethe = Lethe.create(Lethe.dummyBackend, queryString);
     lethe.setIdentity(new Lethe.Identity("", "", ""));
     lethe.setTmpIdentity(new Lethe.Identity("", "", ""));
     lethe.getModel().setValueForKeyPath([], "content.channels");
@@ -457,7 +491,7 @@ Lethe.dummyBackend = {
                     blob: 'eyJuYW1lIjogIkFsaWNlIiwgInB1YktleSI6ICJBNkgyemNyR0JDdTVqT3VkS3pkbUQrd1ArUDFGOGU0Ylh2WW5NNnFqRFFEWEtKVU9CdVlIdDQ0Y2pWNU5ncW54VlQyOXNMdC9HSjJ6UEZSVHR5NXdIcVc1YjF0dlVYNUFodU5YV0ZTYk1Tc1N3WFZEWTI0MjYrWjlUT3J3b3UrbWZIYjZURjg4WlRGL2JuWUIzV2h5K1E9PSJ9'
                 },
                 /* Bob */
-                'U979yYhpcqqpRQauwZFye/1HBtk="': {
+                'U979yYhpcqqpRQauwZFye/1HBtk=': {
                     id: 'U979yYhpcqqpRQauwZFye/1HBtk="', 
                     blob: 'eyJuYW1lIjogIkJvYiIsICJwdWJLZXkiOiAiSnYvU1p3ajAzNXBYdGxwQ042TzhnQktRUThNb2FLZTk4dGsrcVVLTHkwQjNDRCtCWXpSeURGVVF4RlBkNklGL09Fd3N2Uk1RelF6ckkyWmRVUWNCRnpoVG9rOTdWOFZ5Rk1IeXJnY1ZyVTZDZ3FUaGNPVG9KVHJVVzlwdG9KeHBESGRaZHFXM1ZveU5FbWFrdVJzQU9nPT0ifQ=='
                 },

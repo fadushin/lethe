@@ -33,7 +33,7 @@ function load() {
     dashcode.setupParts();
     setTimeout(
         function() {
-            var lethe = Lethe.init();
+            var lethe = Lethe.init(location.search);
             var identity = lethe.getStoredIdentity();
             if (identity) {
                 lethe.getIdentity().assign(identity);
@@ -160,6 +160,14 @@ function showIdentityView() {
 }
 
 function showChannelsView() {
+    var lethe = Lethe.instance;
+    net_dushin_foundation.Lists.applyAsync(
+        function(channelId) {
+            lethe.joinChannel(channelId);
+        },
+        lethe.getInitialChannelIds()
+    );
+    lethe.clearInitialChannelIds();
     var layout = document.getElementById("LetheStack").object;
     layout.setCurrentView("ChannelsView");
 }

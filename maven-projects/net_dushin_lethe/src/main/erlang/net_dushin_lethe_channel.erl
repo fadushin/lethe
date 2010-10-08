@@ -201,6 +201,7 @@ channel_init(ChannelId, Config) ->
             loop = true
         }
     ),
+    ?LETHE_INFO("Channel ~p started", [ChannelId]),
     channel_loop(
         #channel_context {
             channel_id = ChannelId,
