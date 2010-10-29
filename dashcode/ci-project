@@ -4,8 +4,8 @@ PROJECT_NAME=Lethe
 PROJECT_SUFFIX=.dcproj
 PROJECT_CI=${PROJECT_NAME}${PROJECT_SUFFIX}-ci
 PROJECT_CO=${PROJECT_NAME}-co${PROJECT_SUFFIX}
-WDIR=$(pwd)
-JS_ROOT=${WDIR}/../javascript
+WDIR=$(dirname $0)
+JS_ROOT=${WDIR}/../../javascript
 
 if [ -e "${PROJECT_CO}" ] 
 then
