@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Lethe Mobile</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="YES">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" type="text/css" href="../Parts/ActivityIndicator.css">
+    <link rel="stylesheet" type="text/css" href="../Parts/Transitions.css">
+    <link rel="apple-touch-icon" href="Images/WebClipIcon.png">
+    <script type="text/javascript" src="Parts/parts.js" charset="utf-8"></script>
+    <script type="text/javascript" src="jsolait/jsolait.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/tools/packages.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/tools/trace.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/tools/elapse.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/tools/isarray.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/tools/binary.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/BigInteger.init1.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSA.init1.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/SecureRandom.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/BigInteger.init2.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSA.init2.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/nonstructured/nonstructured.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/BigInteger.init3.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSA.init3.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/Cipher.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/SOAEP.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAKeyFormat.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/jsSHA.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/SHA.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormat.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP.js"></script>
+    <script type="text/javascript" src="../thirdparty/ats.oka.nu/titaniumcore/js/crypto/RSAMessageFormatSOAEP_DIRECT.js"></script>
+    <script type="text/javascript" src="../thirdparty/com.broofa/uuid.js"></script>
+    <script type="text/javascript" src="../crypto/namespace.js"></script>
+    <script type="text/javascript" src="../crypto/signer.js"></script>
+    <script type="text/javascript" src="../crypto/verifier.js"></script>
+    <script type="text/javascript" src="../crypto/key.js"></script>
+    <script type="text/javascript" src="../crypto/encryptor.js"></script>
+    <script type="text/javascript" src="../crypto/decryptor.js"></script>
+    <script type="text/javascript" src="../foundation/namespace.js"></script>
+    <script type="text/javascript" src="../foundation/async.js"></script>
+    <script type="text/javascript" src="../foundation/lists.js"></script>
+    <script type="text/javascript" src="../foundation/exception.js"></script>
+    <script type="text/javascript" src="../foundation/serialization.js"></script>
+    <script type="text/javascript" src="../lethe/lethe.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/identity.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/channel.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/peer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../lethe/message.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../common.js" charset="utf-8"></script>
+    <script type="text/javascript" src="main.js" charset="utf-8"></script>
+</head>
+<body onload="load();" onunload="unload();">
+    <div id="LetheStack" apple-part="com.apple.Dashcode.part.StackLayout"><div id="SplashScreenView" apple-part-locked="true">
+            <div id="Title" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+            <img id="activityIndicator" apple-part="com.apple.Dashcode.part.activityindicator" src="../Images/ActivityIndicator.png" style="-webkit-animation-name: none; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; ">
+        </div><div id="IdentityView" apple-part-locked="true">
+            <div id="IdentityBox" apple-part="com.apple.Dashcode.part.roundedbox" apple-group="IdentityBox">
+                <div id="IdentityHeader" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.592156887,0.65882355,0.741176486,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-on: 0; shine-strength: 0.08; shine-alpha-level: 0.00; shine-height: 0.50; glass-arc-height: 0.00; shadow-include-shadow: 0;">
+                    <div id="IdentityCancelButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                    <div id="IdentityDoneButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                    <div id="text" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                </div>
+                <div id="DescriptionLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                <div id="IdentityNameLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                <input id="IdentityNameTextField" type="text" name="" value="" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.textfield">
+                <div id="IdentityFingerprintDescription" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                <div id="IdentityFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                <div id="IdentityFingerprintRegenerateButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                <img id="GenerateKeyIndicator" apple-part="com.apple.Dashcode.part.activityindicator" src="../Images/ActivityIndicator.png" style="-webkit-animation-name: none; -webkit-animation-duration: 1s; -webkit-animation-iteration-count: infinite; -webkit-animation-timing-function: linear; ">
+                <div id="StepLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+            </div>
+        </div><div id="ChannelsView" apple-part-locked="true">
+            <div id="ChannelBrowser" apple-part="com.apple.Dashcode.part.browser">
+                <div apple-part="com.apple.Dashcode.part.header" apple-part-locked="true" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.592156887,0.65882355,0.741176486,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 0,0,0,0; image-border: 0; image-border-color: 0.529399991,0.529399991,0.529399991,1; image-border-width: 1; shine-on: 1; shine-strength: 0.08; shine-alpha-level: 0.00; shine-height: 0.50; glass-arc-height: 0.00; shadow-include-shadow: 0;" id="ChannelBrowserHeader" apple-group="div">
+                    <div apple-part="com.apple.Dashcode.part.gobackbutton" apple-part-locked="true" class="apple-no-children dashcode-header-backbutton div1_template" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 11; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;" apple-template="true" id="div1"></div>
+                    <div id="AboutButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                </div>
+                <div apple-part="com.apple.Dashcode.part.StackLayout" apple-part-locked="true" id="ChannelBrowserStack"><div id="ChannelListView" apple-part-locked="true">
+                        <div id="Footer" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.592156887,0.65882355,0.741176486,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;">
+                            <div id="IdentityButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                            <div id="text2" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                            <div id="IdentityKeyFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                        </div>
+                        <div id="rectangleShape" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;">
+                            <div id="button" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                            <div id="button1" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                        </div>
+                        <ul id="ChannelList" apple-part="com.apple.Dashcode.part.edgeToEdgeList" class="">
+                            <li id="listRowTemplate" apple-template="true" class="listRowTemplate_template first" style="" onclick="channelSelected(event)">
+                                <div id="label" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children label_template" apple-text-overflow="ellipsis"></div>
+                                <div id="arrow" apple-part="com.apple.Dashcode.part.box" class="arrow_template">
+                                </div>
+                            </li>
+                        </ul>
+                    </div><div id="ChannelDetailsView" apple-part-locked="true">
+                        <div id="ButtonBox" apple-part="com.apple.Dashcode.part.box">
+                            <div id="MessagesButton" apple-part="com.apple.Dashcode.part.roundedleftpushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 5; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,-1,5,-1; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                            <div id="PeersButton" apple-part="com.apple.Dashcode.part.roundedrightpushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 6; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: -1,5,-1,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                        </div>
+                        <div id="ChannelStack" apple-part="com.apple.Dashcode.part.StackLayout"><div id="MessagesView" apple-part-locked="true">
+                                <div id="box" apple-part="com.apple.Dashcode.part.box">
+                                    <div id="MessageText" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                                    <div id="SendMessageBox" apple-part="com.apple.Dashcode.part.box">
+                                        <input id="MessageTextField" type="text" name="" value="" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.textfield" onkeypress="sendMessageOnEnter(event)">
+                                        <div id="SendMessageButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                                    </div>
+                                </div>
+                            </div><div id="PeersView" apple-part-locked="true">
+                                <div id="SignMessagesCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox">
+                                    <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="SignMessagesCheckboxInput" apple-group="checkbox">
+                                    <div id="div">Sign Messages</div>
+                                </div>
+                                <ul id="PeersList" apple-part="com.apple.Dashcode.part.roundedRectangleList" class="">
+                                    <li id="listRowTemplate2" apple-template="true" class="listRowTemplate2_template first" style="border-top-width: 0px; " onclick="showPeerDetailView(event)">
+                                        <div id="PeerNameLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children PeerNameLabel_template" apple-text-overflow="ellipsis"></div>
+                                        <div id="PeerKeyFingerprintLabel" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children PeerKeyFingerprintLabel_template" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                        <div id="EncryptToCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="EncryptToCheckbox_template">
+                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox" class="input_template">
+                                        </div>
+                                        <div id="IsTrustedCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox1" class="IsTrustedCheckbox_template">
+                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input1" apple-group="checkbox1" class="input1_template">
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div id="Footer1" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 0; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="Footer1">
+                                    <div id="text4" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                    <div id="IdentityKeyFingerprintLabel1" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="image" apple-group="image"><img class="apple-hidden" src="../Images/decrypted.png" id="inner_image" apple-group="image"></div>
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="image1" apple-group="image1"><img class="apple-hidden" src="../Images/trusted.png" id="inner_image1" apple-group="image1"></div>
+                                </div>
+                            </div></div>
+                    </div></div>
+            </div>
+        </div><div id="AboutView" apple-part-locked="true">
+            <div id="AboutBrowser" apple-part="com.apple.Dashcode.part.browser">
+                <div apple-part="com.apple.Dashcode.part.header" apple-part-locked="true" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.592156887,0.65882355,0.741176486,1; image-bottom-color: 0.411764711,0.513725519,0.635294139,1; image-radius: 0,0,0,0; image-border: 0; image-border-color: 0.529399991,0.529399991,0.529399991,1; image-border-width: 1; shine-on: 1; shine-strength: 0.08; shine-alpha-level: 0.00; shine-height: 0.50; glass-arc-height: 0.00; shadow-include-shadow: 0;" id="div2" apple-group="div2">
+                    <div apple-part="com.apple.Dashcode.part.gobackbutton" apple-part-locked="true" class="apple-no-children dashcode-header-backbutton div3_template" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 11; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;" apple-template="true" id="div3"></div>
+                    <div id="AboutDoneButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
+                </div>
+                <div apple-part="com.apple.Dashcode.part.StackLayout" apple-part-locked="true" id="div4"><div id="AboutListView" apple-part-locked="true">
+                        <ul id="AboutList" apple-part="com.apple.Dashcode.part.roundedRectangleList" class="">
+                            <li id="listRowTemplate1" apple-template="true" class="listRowTemplate1_template first" style="border-top-width: 0px; " onclick="showAboutDetailView(event)">
+                                <div id="label1" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children label1_template" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
+                                <div id="arrow1" apple-part="com.apple.Dashcode.part.box" class="arrow1_template">
+                                </div>
+                            </li>
+                        </ul>
+                    </div><div id="AboutDetailView" apple-part-locked="true">
+                        <div id="AboutTitle" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                        <div id="AboutDetail" apple-part="com.apple.Dashcode.part.webtext" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                    </div></div>
+            </div>
+        </div></div>
+</body>
+</html>
