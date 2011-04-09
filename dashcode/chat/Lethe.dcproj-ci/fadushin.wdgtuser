@@ -21,8 +21,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {936, 182}}</string>
-			<string>{{0, 192}, {936, 464}}</string>
+			<string>{{0, 0}, {936, 599}}</string>
+			<string>{{0, 609}, {936, 47}}</string>
 		</array>
 	</dict>
 	<key>ContentViewType</key>
@@ -581,7 +581,18 @@
 			</array>
 		</array>
 		<key>Objects view last selections</key>
-		<array/>
+		<array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+				<integer>4</integer>
+			</array>
+		</array>
 		<key>Visible StackLayout Views</key>
 		<array>
 			<string>ChannelsView</string>
@@ -590,7 +601,7 @@
 			<string>mainView</string>
 			<string>EditIdentityView</string>
 			<string>MessageView</string>
-			<string>MessagesView</string>
+			<string>PeersView</string>
 			<string>PeerView</string>
 			<string>editIdentityView</string>
 			<string>MainView</string>
@@ -1183,8 +1194,8 @@
 		<integer>0</integer>
 		<key>sizes</key>
 		<array>
-			<string>{{0, 0}, {300, 277}}</string>
-			<string>{{0, 287}, {300, 369}}</string>
+			<string>{{0, 0}, {300, 453}}</string>
+			<string>{{0, 463}, {300, 193}}</string>
 		</array>
 	</dict>
 </dict>
