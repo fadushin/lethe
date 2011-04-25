@@ -47,8 +47,8 @@ var dashcodePartSpecs = {
     "LetheStack": { "subviewsTransitions": [{ "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "dissolve" }, { "direction": "right-left", "duration": "", "timing": "ease-in-out", "type": "push" }], "view": "DC.StackLayout" },
     "MessagesButton": { "initialHeight": 30, "initialWidth": 101, "leftImageWidth": 5, "onclick": "showMessagesView", "rightImageWidth": 1, "text": "Messages", "view": "DC.PushButton" },
     "MessageText": { "propertyValues": { "htmlBinding": { "keypath": "ChannelList.selection.messages", "transformer": "messagesToHtml" } }, "text": "Message Text", "view": "DC.Text" },
-    "PeerKeyFingerprintLabel": { "propertyValues": { "textBinding": { "keypath": "*.pubKey", "transformer": "pubKeyFingerprint" } }, "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
-    "PeerNameLabel": { "propertyValues": { "textBinding": { "keypath": "*.name" } }, "text": "Peer", "view": "DC.Text" },
+    "PeerKeyFingerprintLabel": { "text": "54 C9 1C 74 81 00 37 38 83 DD 6E 7C 03 15 4E 49 4C 94 89 9E", "view": "DC.Text" },
+    "PeerNameLabel": { "text": "Peer", "view": "DC.Text" },
     "PeersButton": { "initialHeight": 30, "initialWidth": 76, "leftImageWidth": 1, "onclick": "showPeersView", "rightImageWidth": 5, "text": "Peers", "view": "DC.PushButton" },
     "PeersList": { "allowsEmptySelection": true, "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "PeerNameLabel", "listStyle": "List.ROUNDED_RECTANGLE", "propertyValues": { "dataArrayBinding": { "keypath": "ChannelList.selection.peers", "transformer": "filterIdentity" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
     "SendMessageButton": { "initialHeight": 21, "initialWidth": 58, "leftImageWidth": 5, "onclick": "sendMessage", "rightImageWidth": 5, "text": "send", "view": "DC.PushButton" },
@@ -59,6 +59,7 @@ var dashcodePartSpecs = {
     "text4": { "propertyValues": { "textBinding": { "keypath": "lethe.content.identity.name" } }, "text": "Identity", "view": "DC.Text" },
     "Title": { "text": "Lethe 0.1-SNASPHOT", "view": "DC.Text" }
 };
+
 
 
 

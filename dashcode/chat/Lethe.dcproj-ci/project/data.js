@@ -8,10 +8,11 @@
         pubKey: ""
     },
     channels: [
-        /*
+        
         { 
             name: "Acadia",
             signMessages: true,
+            encryptToSelf: false,
             peers: [
                 {
                     name: "Margot",
@@ -37,7 +38,6 @@
                 }
             ]
         }
-        */
     ],
     
     tmp: {

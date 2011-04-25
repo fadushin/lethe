@@ -30,6 +30,12 @@
 //
 
 function load() {
+    //
+    // Firefox workaround
+    //
+    localizedStrings = {};
+    document.blur=function(){};
+
     dashcode.setupParts();
     setTimeout(
         function() {
@@ -261,13 +267,13 @@ messagesToHtml = Class.create(
                         s += "<hr>";
                     }
                     s += message.toHtml(
-                        "../Images/lethe/trusted.png",
-                        "../Images/lethe/plaintext.png",
-                        "../Images/lethe/encrypted.png",
-                        "../Images/lethe/decrypted.png",
-                        "../Images/lethe/unsigned.png",
-                        "../Images/lethe/verified.png",
-                        "../Images/lethe/unverified.png"
+                        "../Images/lethe/trusted.png",    // trusted peer icon
+                        "../Images/lethe/unencrypted.png",  // plaintext message icon
+                        "../Images/lethe/encrypted.png",  // encrypted message icon
+                        "../Images/lethe/encrypted.png",  // decrypted message icon
+                        "../Images/lethe/unsigned.png",   // unsigned message icon
+                        "../Images/lethe/verified.png",   // verified message icon
+                        "../Images/lethe/unverified.png"  // failed verification icon
                     );
                 }
             }

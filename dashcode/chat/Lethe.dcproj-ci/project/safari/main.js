@@ -27,3 +27,21 @@
 
 
 
+
+
+atMostOneEncryptTo = Class.create(DC.ValueTransformer,{
+    transformedValue: function(value){
+        // Insert Code Here
+        console.info(value);
+        /*
+		return net_dushin_foundation.Lists.any(
+            function(elt) {
+                return elt.valueForKey('encryptTo');
+            },
+            value
+        );
+        */
+        return value;
+    }
+});
+

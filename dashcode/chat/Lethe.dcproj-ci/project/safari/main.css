@@ -23,13 +23,13 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -moz-user-select: none;
-    margin-left: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
+    margin-top: 0px;
+    margin-left: 0px;
     position: relative;
     width: auto;
-    margin-right: -2px;
-    margin-top: 0px;
+    margin-right: 0px;
 }
 
 .listRowTemplate_template {
@@ -92,7 +92,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     height: auto;
 }
 
-#ChannelSelectionBox {
+#ChannelSelectionList {
     min-width: 57px;
     margin-top: 0px;
     -webkit-margin-top-collapse: separate;
@@ -101,7 +101,6 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     top: 0px;
     right: auto;
     height: 488px;
-    overflow: auto;
 }
 
 #ChannelBox {
@@ -119,7 +118,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
 
 #splitter {
     overflow: hidden;
-    width: 8px;
+    width: 10px;
     background-image: url(Parts/Images/splitter.png);
     background-repeat: no-repeat repeat;
 }
@@ -179,16 +178,16 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
-    -webkit-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
-    -moz-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
-    margin-top: 0px;
     margin-left: 0px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     position: relative;
-    width: auto;
-    margin-right: -2px;
     height: 30px;
+    margin-top: 0px;
+    width: auto;
+    margin-right: 0px;
+    -webkit-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/ChannelHeader.png) 0 1 0 1 stretch stretch;
 }
 
 #ChannelLabel {
@@ -255,42 +254,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     font-size: 10px;
 }
 
-#ChannelStack {
-    overflow: hidden;
-    z-index: 0;
-    margin-top: 0px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    left: 0px;
-    top: 75px;
-    right: 22px;
-    width: auto;
-    bottom: -1px;
-    height: auto;
-}
-
-#MessagesView {
-    width: 100%;
-    display: none;
-    position: relative;
-    height: auto;
-    min-height: 414px;
-}
-
-#PeersView {
-    width: 100%;
-    display: none;
-    position: relative;
-    min-height: 414px;
-    height: auto;
-}
-
 #MessageTextField {
     color: black;
     font-family: HelveticaNeue;
     font-size: 10pt;
-    width: 637px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     display: block;
@@ -298,8 +265,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 4px;
+    top: 8px;
     left: 0px;
+    width: 603px;
+    margin-right: auto;
 }
 
 #SendMessageButton {
@@ -318,8 +287,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     width: 71px;
     height: 21px;
-    left: 656px;
-    top: 4px;
+    top: 8px;
+    right: 8px;
+    margin-left: auto;
 }
 
 #IdentityBar {
@@ -349,7 +319,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     left: 77px;
     top: 10px;
-    width: auto;
+    margin-right: auto;
+    width: 41px;
+    height: 16px;
 }
 
 .selected #IdentityNameLabel {
@@ -377,6 +349,7 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     width: 61px;
     left: 6px;
     top: 6px;
+    margin-right: auto;
 }
 
 #KeyFingerprintLabel {
@@ -387,8 +360,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     position: absolute;
     margin-top: 0px;
     height: 16px;
-    top: 10px;
-    right: 589px;
+    top: 8px;
+    right: 440px;
     margin-left: auto;
     width: 101px;
 }
@@ -405,10 +378,10 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     font-size: 12px;
     font-weight: bold;
     font-family: 'Courier New';
-    height: 15px;
-    width: 441px;
-    top: 12px;
-    right: 143px;
+    height: 16px;
+    width: 432px;
+    top: 10px;
+    right: 4px;
     margin-left: auto;
 }
 
@@ -426,10 +399,12 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     opacity: 1;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    margin-left: 4px;
-    margin-top: 103px;
-    width: 693px;
+    position: absolute;
+    left: 0px;
+    height: 72px;
+    top: -16px;
+    right: 15px;
+    width: auto;
 }
 
 .listRowTemplate1_template {
@@ -442,9 +417,9 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
     margin-left: 0px;
-    margin-top: 3px;
     margin-right: 0px;
-    height: 24px;
+    height: 23px;
+    margin-top: 0px;
     width: auto;
 }
 
@@ -482,9 +457,9 @@ body.DC_windowInactive .listRowTemplate1_template.selected {
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 0px;
     width: 23px;
-    left: 16px;
+    left: 7px;
+    top: 2px;
 }
 
 .PeerNameLabel_template {
@@ -495,9 +470,9 @@ body.DC_windowInactive .listRowTemplate1_template.selected {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    top: 0px;
-    left: 99px;
-    right: 487px;
+    left: 66px;
+    top: 3px;
+    right: 500px;
     width: auto;
 }
 
@@ -513,11 +488,11 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     font-size: 12px;
     font-weight: bold;
     font-family: 'Courier New';
-    top: 0px;
     left: 204px;
+    top: 4px;
     right: 52px;
     width: auto;
-    bottom: 8px;
+    bottom: 4px;
     height: auto;
 }
 
@@ -534,17 +509,17 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     bottom: auto;
     margin-top: 0px;
     width: 120px;
-    left: 19px;
-    top: 13px;
+    top: 10px;
+    left: 14px;
 }
 
 #div1 {
     position: absolute;
     text-align: left;
     vertical-align: middle;
-    left: 22px;
     top: 0px;
-    right: -36px;
+    left: 21px;
+    right: -35px;
     width: auto;
     bottom: 0px;
     height: auto;
@@ -557,31 +532,12 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: 51px;
+    top: 0px;
+    left: 0px;
+    margin-right: auto;
+    width: 28px;
     -webkit-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/EncryptToHeader.png) 0 1 0 1 stretch stretch;
-    left: 4px;
-    top: 38px;
-}
-
-#EncryptToLabel {
-    font-size: 13px;
-    font-family: 'Lucida Grande', Arial, sans-serif;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    height: 16px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
-    top: 7px;
-    left: 0px;
-    width: auto;
-}
-
-.selected #EncryptToLabel {
-    color: white;
 }
 
 #PeerNameHeader {
@@ -591,11 +547,12 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    width: 104px;
+    top: 0px;
+    width: 141px;
+    left: 58px;
+    margin-right: auto;
     -webkit-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerNameHeader.png) 0 1 0 1 stretch stretch;
-    top: 38px;
-    left: 99px;
 }
 
 #PeerNameHeaderLabel {
@@ -611,7 +568,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     margin-top: 0px;
     top: 7px;
     left: 6px;
-    width: auto;
+    width: 68px;
 }
 
 .selected #PeerNameHeaderLabel {
@@ -625,11 +582,12 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
+    left: 200px;
+    top: 0px;
     -webkit-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
     -moz-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
-    top: 38px;
-    left: 204px;
-    width: 490px;
+    right: 0px;
+    width: auto;
 }
 
 #PeerFingerprintHeaderLabel {
@@ -645,8 +603,7 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     margin-top: 0px;
     top: 7px;
     left: 4px;
-    right: 291px;
-    width: auto;
+    width: 213px;
 }
 
 .selected #PeerFingerprintHeaderLabel {
@@ -875,10 +832,9 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     margin-top: 0px;
     top: 10px;
     left: 121px;
-    right: 714px;
-    width: auto;
-    bottom: 6px;
-    height: auto;
+    margin-right: auto;
+    width: 108px;
+    height: 16px;
 }
 
 .selected #IdentityNameTextLabel {
@@ -1232,52 +1188,6 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     margin-right: auto;
 }
 
-#MessagesButton {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    height: 30px;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    width: 101px;
-    top: 8px;
-    left: 64px;
-}
-
-#PeersButton {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 12px;
-    color: rgb(255, 255, 255);
-    text-shadow: rgba(0, 0, 0, 0.589844) 0px -1px 0px;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    height: 30px;
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    cursor: default;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    width: 76px;
-    top: 8px;
-    left: 165px;
-}
-
 #StepLabel {
     color: black;
     text-overflow: ellipsis;
@@ -1371,51 +1281,39 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     margin-right: 69px;
 }
 
-#box2 {
-    border-color: black;
-    border-width: 1px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    height: 47px;
-    margin-top: 28px;
-    width: 306px;
-    margin-right: auto;
-    margin-left: auto;
-}
-
 #SendMessageBox {
     border-color: black;
     border-width: 1px;
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    height: 30px;
-    width: 728px;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    left: 5px;
-    top: 378px;
-    margin-right: auto;
+    margin-top: 447px;
+    position: relative;
+    height: 38px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #MessageTextBox {
     -webkit-margin-top-collapse: separate;
     -webkit-margin-bottom-collapse: separate;
-    position: relative;
-    margin-left: 9px;
-    margin-top: 6px;
     font-family: 'Courier New';
-    font-size: 14px;
     padding: 12px;
     background-color: rgb(245, 238, 205);
-    width: auto;
-    height: 331px;
     border-color: rgb(200, 200, 200);
     overflow: auto;
     border-style: solid;
     border-width: 1px;
+    margin-top: 0px;
+    position: absolute;
+    height: auto;
+    width: auto;
+    top: -1px;
+    left: -1px;
+    bottom: -1px;
+    right: -1px;
+    font-size: 12px;
+    line-height: 12px;
 }
 
 #box3 {
@@ -1715,115 +1613,19 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     color: white;
 }
 
-#PeerFingerprintHeader2 {
+#TrustHeader {
     position: absolute;
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 0px;
     border-bottom-width: 0px;
     height: 30px;
-    top: 38px;
-    left: 56px;
-    width: 42px;
-    -webkit-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
-    -moz-border-image: url(Parts/Images/PeerFingerprintHeader2.png) 0 1 0 1 stretch stretch;
-}
-
-#PeerFingerprintHeaderLabel2 {
-    font-size: 13px;
-    font-family: 'Lucida Grande', Arial, sans-serif;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    height: 16px;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    position: absolute;
-    bottom: auto;
-    margin-top: 0px;
-    top: 7px;
-    width: 43px;
-    left: 3px;
-}
-
-.selected #PeerFingerprintHeaderLabel2 {
-    color: white;
-}
-
-#KeyFingerprint2 {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    font-size: 12px;
-    height: 15px;
-    width: 441px;
-    font-weight: bold;
-    font-style: italic;
-    font-family: 'Courier New';
-    color: rgb(168, 168, 168);
-    top: 75px;
-    left: 208px;
-}
-
-.selected #KeyFingerprint2 {
-    color: white;
-}
-
-#IdentityNameTextLabel1 {
-    font-size: 13px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: absolute;
-    margin-top: 0px;
-    color: rgb(168, 168, 168);
-    width: 82px;
-    font-style: italic;
-    font-family: 'Lucida Bright';
-    left: 102px;
-    top: 75px;
-    height: 17px;
-}
-
-.selected #IdentityNameTextLabel1 {
-    color: white;
-}
-
-#image {
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    height: 12px;
-    width: 24px;
-    top: 75px;
-    left: 66px;
-}
-
-#inner_image1 {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    left: 0px;
     top: 0px;
-    margin: auto;
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-}
-
-#box5 {
-    border-width: 1px;
-    position: absolute;
-    margin-top: 0px;
-    height: 0px;
-    width: 691px;
-    min-height: 1px;
-    font-size: 16px;
-    border-color: rgb(168, 168, 168);
-    border-style: solid;
-    left: 4px;
-    top: 97px;
+    left: 29px;
+    margin-right: auto;
+    width: 28px;
+    -webkit-border-image: url(Parts/Images/TrustHeader.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/TrustHeader.png) 0 1 0 1 stretch stretch;
 }
 
 #ModifyIdentityNameButton1 {
@@ -1860,19 +1662,141 @@ body:not(.DC_windowInactive) .listRowTemplate3_template.selected .PeerNameLabel1
     bottom: auto;
     margin-top: 0px;
     width: 24px;
-    top: 0px;
-    left: 62px;
+    left: 36px;
+    top: 2px;
 }
 
-#image2 {
+#splitLayout {
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(150, 150, 150);
+    position: absolute;
+    margin-top: 0px;
+    top: 35px;
+    bottom: 43px;
+    height: auto;
+    width: auto;
+    right: 10px;
+    left: 10px;
+}
+
+#PeersView {
+    bottom: 263px;
+}
+
+#MessagesView {
+    right: 0px;
+    height: 303px;
+    bottom: 0px;
+    width: auto;
+}
+
+#splitter2 {
+    overflow: hidden;
+    height: 10px;
+    background-image: url(Parts/Images/splitter2.png);
+    background-repeat: repeat no-repeat;
+}
+
+#splitThumb2 {
+    width: 4px;
+    height: 4px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    background-image: url(../Images/SplitThumb.png);
+    background-repeat: no-repeat no-repeat;
+}
+
+#box2 {
+    border-color: black;
+    border-width: 1px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    overflow: auto;
+    position: absolute;
+    margin-top: 0px;
+    right: 0px;
+    width: auto;
+    height: auto;
+    bottom: 0px;
+    left: 0px;
+    top: 30px;
+}
+
+#ChannelSelectionBox {
+    border-color: black;
+    border-width: 1px;
+    position: relative;
+    margin-left: 0px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-right: 0px;
+    width: auto;
+    overflow: auto;
+    height: 457px;
+}
+
+#EncryptToSelfButton {
+    font-family: HelveticaNeue;
+    font-size: 10pt;
+    height: 18px;
+    position: absolute;
+    right: auto;
+    bottom: auto;
+    margin-top: 0px;
+    width: 120px;
+    top: 10px;
+    left: 188px;
+}
+
+#div2 {
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    top: 0px;
+    left: 21px;
+    right: -35px;
+    width: auto;
+    bottom: 0px;
+    height: auto;
+}
+
+#EncryptImage {
     width: 11px;
     height: 11px;
     position: absolute;
     right: auto;
     bottom: auto;
     margin-top: 0px;
-    top: 75px;
-    left: 24px;
+    top: 9px;
+    left: 8px;
+}
+
+#inner_image1 {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+#TrustImage {
+    width: 11px;
+    height: 11px;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    margin-left: 8px;
+    margin-top: 9px;
 }
 
 #inner_image2 {
