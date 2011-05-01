@@ -26,13 +26,13 @@
 		</array>
 	</dict>
 	<key>ContentViewType</key>
-	<integer>0</integer>
+	<integer>5</integer>
 	<key>DeploymentOptions</key>
 	<dict>
 		<key>CompressJavaScript</key>
 		<false/>
 		<key>Date</key>
-		<date>2010-10-08T01:48:57Z</date>
+		<date>2011-04-30T22:47:08Z</date>
 		<key>Destination</key>
 		<string>localhost.default</string>
 		<key>EmailToNotifyAddress</key>
@@ -523,15 +523,6 @@
 				<integer>0</integer>
 				<integer>2</integer>
 				<integer>1</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>1</integer>
-			</array>
-			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
 				<integer>0</integer>
 			</array>
 			<array>
@@ -573,6 +564,24 @@
 			<array>
 				<integer>0</integer>
 				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>1</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>1</integer>
+				<integer>0</integer>
+			</array>
+			<array>
+				<integer>0</integer>
+				<integer>0</integer>
+				<integer>2</integer>
+				<integer>1</integer>
 				<integer>2</integer>
 				<integer>1</integer>
 				<integer>1</integer>
@@ -581,12 +590,7 @@
 		<key>Objects view last selections</key>
 		<array>
 			<array>
-				<integer>0</integer>
-				<integer>0</integer>
-				<integer>2</integer>
-				<integer>1</integer>
-				<integer>0</integer>
-				<integer>1</integer>
+				<integer>4</integer>
 			</array>
 		</array>
 		<key>Visible StackLayout Views</key>
@@ -620,7 +624,7 @@
 		</array>
 	</dict>
 	<key>MainWindowFrame</key>
-	<string>43 59 1235 719 0 0 1280 778 </string>
+	<string>45 59 1235 719 0 0 1280 778 </string>
 	<key>MobileWeb</key>
 	<dict>
 		<key>Objects view expanded items</key>

@@ -1305,12 +1305,13 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     margin-top: 0px;
     font-size: 12px;
     line-height: 12px;
-    min-height: 313px;
-    height: auto;
-    margin-left: 0px;
-    position: relative;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: -2px;
     width: auto;
-    margin-right: -2px;
+    bottom: -2px;
+    height: auto;
 }
 
 #box3 {
@@ -1410,7 +1411,6 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
 #MessagesView {
     right: 0px;
     height: 303px;
-    bottom: 0px;
     width: auto;
 }
 
