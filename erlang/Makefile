@@ -76,12 +76,12 @@ clean:
 # test targets
 # 
 
-test: test-compile $(patsubst %, runtest/%, $(TEST_MODULES))
+test: test-compile $(TEST_MODULES)
 
 test-compile: compile $(TEST_EBIN_DIR) $(TEST_TARGETS)
 
-runtest/%: $(TEST_EBIN_DIR)/%.beam
-	erl -noshell -pa ebin -pa test-ebin -s $(subst runtest/, , $@) test -s erlang halt
+net_dushin_lethe_%_test: $(TEST_EBIN_DIR)/net_dushin_lethe_%_test.beam
+	erl -noshell -pa ebin -pa test-ebin -s $@ test -s erlang halt
 
 $(TEST_EBIN_DIR)/%.beam: $(TEST_DIR)/%.erl $(INCLUDES)
 	erlc $(TEST_ERLC_OPTS) $<
@@ -96,6 +96,8 @@ test-clean:
 
 dist: compile
 	mkdir -p $(DIST_DIR)
+	mkdir -p $(DIST_DIR)/logs
+	mkdir -p $(DIST_DIR)/content
 	cp -r ebin bin $(DIST_DIR)
 	zip -r $(DIST_DIR).zip $(DIST_DIR)
 
