@@ -1,1 +1,30 @@
-Sample README
+Welcome to the source distribution of the Lethe Private Messaging system.
+
+Overview
+========
+
+Lethe is an HTML5 web application, designed to allow two or more parties to communicate securely and easily without the use of web browser plugins or non-standard technologies.  Lethe provides strong cryptography between 
+
+
+Build Instructions
+==================
+
+Erlang Backend
+--------------
+
+Software Requirements:
+    * GNU Make
+    * Erlang/OTS R14b or later
+    * Yaws 1.88
+
+To build the Erlang backend, cd into the erlang directory and issue make:
+
+> make
+
+An Erlang distribution archive (ZIP format) will be created in the erlang directory.
+
+Javascript Frontend
+-------------------
+
+Software requirements:
+    * Apple Dashcode (part of XCode)

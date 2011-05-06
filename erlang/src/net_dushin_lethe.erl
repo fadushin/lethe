@@ -58,8 +58,12 @@ stop(_State) ->
 start_yaws(Options) ->
     %process_flag(trap_exit, true), 
     case application:start(yaws) of
-        ok -> set_conf(Options); 
-        Error -> {stop, Error}
+        ok -> 
+            set_conf(Options),
+            io:format("Yaws started with options: ~p~n", [Options]);
+        Error -> 
+            io:format("Error: ~p~n", [Error]),
+            {stop, Error}
     end.
 
 set_conf(Options) -> 
@@ -89,6 +93,7 @@ set_conf(Options) ->
             Options, scs, [[]]
         )
     ),
+    io:format("Calling yaws_api:setconf(~p, [~p])~n", [GC, SCS]),
     case catch yaws_api:setconf(GC, [SCS]) of
         ok -> {ok, started}; 
         Error -> {stop, Error}

@@ -40,7 +40,7 @@ ERLC_OPTS=-I $(INCLUDE_DIR) -o $(EBIN_DIR) -Wall +debug_info # +native -v
 TEST_DIR=test
 TEST_EBIN_DIR=test-ebin
 TEST_SOURCES=$(wildcard $(TEST_DIR)/net_dushin_lethe*.erl)
-TEST_MODULES=$(patsubst $(TEST_DIR)/%.erl, %, $(TEST_SOURCES))
+TEST_MODULES=$(patsubst $(TEST_DIR)/%.erl, $(TEST_EBIN_DIR)/%.done, $(TEST_SOURCES))
 TEST_TARGETS=$(patsubst $(TEST_DIR)/%.erl, $(TEST_EBIN_DIR)/%.beam, $(TEST_SOURCES))
 TEST_ERLC_OPTS=-I $(INCLUDE_DIR) -o $(TEST_EBIN_DIR) -Wall +debug_info # +native -v
 
@@ -80,8 +80,9 @@ test: test-compile $(TEST_MODULES)
 
 test-compile: compile $(TEST_EBIN_DIR) $(TEST_TARGETS)
 
-net_dushin_lethe_%_test: $(TEST_EBIN_DIR)/net_dushin_lethe_%_test.beam
-	erl -noshell -pa ebin -pa test-ebin -s $@ test -s erlang halt
+$(TEST_EBIN_DIR)/net_dushin_lethe_%_test.done: $(TEST_EBIN_DIR)/net_dushin_lethe_%_test.beam
+	erl -noshell -pa ebin -pa test-ebin -s $(subst $(TEST_EBIN_DIR)/, , $(subst .done, , $@)) test -s erlang halt
+	@touch $@
 
 $(TEST_EBIN_DIR)/%.beam: $(TEST_DIR)/%.erl $(INCLUDES)
 	erlc $(TEST_ERLC_OPTS) $<
@@ -94,7 +95,9 @@ test-clean:
 # dist targets
 # 
 
-dist: compile
+dist: $(DIST_DIR).zip
+
+$(DIST_DIR).zip: compile
 	mkdir -p $(DIST_DIR)
 	mkdir -p $(DIST_DIR)/logs
 	mkdir -p $(DIST_DIR)/content
