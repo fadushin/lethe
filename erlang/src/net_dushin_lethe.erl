@@ -96,5 +96,7 @@ set_conf(Options) ->
     io:format("Calling yaws_api:setconf(~p, [~p])~n", [GC, SCS]),
     case catch yaws_api:setconf(GC, [SCS]) of
         ok -> {ok, started}; 
-        Error -> {stop, Error}
+        Error -> 
+            io:format("Error on yaws_api:setconf: ~p~n", [Error]),
+            {stop, Error}
     end.

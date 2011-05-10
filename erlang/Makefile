@@ -30,12 +30,13 @@ VERSION=1.0-SNAPSHOT
 
 SOURCE_DIR=src
 EBIN_DIR=ebin
+YAWS_INCLUDE_DIR=/opt/yaws/lib/yaws/include
 INCLUDE_DIR=include
 INCLUDES=$(wildcard $(INCLUDE_DIR)/*.hrl)
 SOURCES=$(wildcard $(SOURCE_DIR)/*.erl)
 TARGETS=$(patsubst $(SOURCE_DIR)/%.erl, $(EBIN_DIR)/%.beam, $(SOURCES))
 APPFILES=$(patsubst $(SOURCE_DIR)/%.app, $(EBIN_DIR)/%.app, $(wildcard $(SOURCE_DIR)/*.app))
-ERLC_OPTS=-I $(INCLUDE_DIR) -o $(EBIN_DIR) -Wall +debug_info # +native -v
+ERLC_OPTS=-I $(INCLUDE_DIR) -I $(YAWS_INCLUDE_DIR) -o $(EBIN_DIR) -Wall +debug_info # +native -v
 
 TEST_DIR=test
 TEST_EBIN_DIR=test-ebin
