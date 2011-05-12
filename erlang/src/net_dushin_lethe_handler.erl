@@ -60,8 +60,8 @@ handle_request(_, Path, Arg) -> % catchall
 %% handler for all of the JSON RPC operations.
 %%
 
-handle_rpc(_State, {call, Method, Params} = _Request, Session) ->  
-    % ?LETHE_DEBUG("Request = ~p", [Request]),
+handle_rpc(_State, {call, Method, {array, Params}} = _Request, Session) ->  
+    ?LETHE_DEBUG("Method=~p Params=~p", [Method, Params]),
     Response = 
             try get_response(Method, Params)
             catch
@@ -69,19 +69,10 @@ handle_rpc(_State, {call, Method, Params} = _Request, Session) ->
                     net_dushin_lethe_log:debug("Exception = ~p", [Exception]),
                     Exception
             end,
-    % ?LETHE_DEBUG("Response = ~p", [Response]),
+    ?LETHE_DEBUG("Response = ~p", [Response]),
     {true, 0, Session, {response, Response}}.
-%
-% input args:
-%   ChannelId,
-%   PeerName,
-%   {
-%       update_peers: [peerid, ..., peerid],
-%       update_messages: since
-%   }
-%
-%
-%
+
+
 get_response(
     update, 
     [
@@ -89,9 +80,9 @@ get_response(
         {
             struct,
             [
-                {ping, PeerName},
-                {update_peers, UpdatePeers},
-                {update_messages, Since}
+                {"ping", PeerName},
+                {"update_peers", UpdatePeers},
+                {"update_messages", Since}
             ]
         }
     ]
@@ -102,7 +93,7 @@ get_response(
     )),
     case Ping of
         {error, peer_does_not_exist} ->
-            {struct, [{error, "PEER_DOES_NOT_EXIST"}]};
+            {struct, [{"error", "PEER_DOES_NOT_EXIST"}]};
         _ ->
             PeerUpdate = get_response(get_peers, [ChannelId, UpdatePeers]),
             MessageUpdate = case Since of
@@ -114,8 +105,8 @@ get_response(
             {
                 struct,
                 [
-                    {peer_update, PeerUpdate},
-                    {message_update, MessageUpdate}
+                    {"peer_update", PeerUpdate},
+                    {"message_update", MessageUpdate}
                 ]
             }
     end;
@@ -224,8 +215,8 @@ peers_to_json(PeerList) ->
                 {
                     struct,
                     [
-                        {id, atom_to_list(Peer#peer.name)},
-                        {blob, Peer#peer.blob}
+                        {"id", atom_to_list(Peer#peer.name)},
+                        {"blob", Peer#peer.blob}
                     ]
                 }
             end,
@@ -241,9 +232,9 @@ messages_to_json(MessageList) ->
                 {
                     struct,
                     [
-                        {timestamp, Message#message.timestamp},
-                        {blob, Message#message.blob},
-                        {uuid, Message#message.uuid}
+                        {"timestamp", Message#message.timestamp},
+                        {"blob", Message#message.blob},
+                        {"uuid", Message#message.uuid}
                     ]
                 }
             end,
@@ -253,14 +244,14 @@ messages_to_json(MessageList) ->
 
 json_to_peer({struct, PropertyList}) ->
     #peer {
-        name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, id)),
-        blob = net_dushin_lethe_lists:find_value(PropertyList, blob, "")
+        name = list_to_atom(net_dushin_lethe_lists:find_value(PropertyList, "id")),
+        blob = net_dushin_lethe_lists:find_value(PropertyList, "blob", "")
     }.
 
 json_to_message({struct, PropertyList}) ->
     #message {
-        blob = net_dushin_lethe_lists:find_value(PropertyList, blob),
-        uuid = net_dushin_lethe_lists:find_value(PropertyList, uuid)
+        blob = net_dushin_lethe_lists:find_value(PropertyList, "blob"),
+        uuid = net_dushin_lethe_lists:find_value(PropertyList, "uuid")
     }.
 
 %%
