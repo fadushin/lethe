@@ -110,8 +110,8 @@ body.DC_windowInactive .listRowTemplate_template.selected {
     margin-top: 0px;
     left: 150px;
     top: 0px;
-    bottom: auto;
-    right: 6px;
+    right: 0px;
+    bottom: 0px;
     height: auto;
 }
 
@@ -498,31 +498,6 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     color: white;
 }
 
-#SignMessagesButton {
-    font-family: HelveticaNeue;
-    font-size: 10pt;
-    height: 18px;
-    position: absolute;
-    right: auto;
-    bottom: auto;
-    margin-top: 0px;
-    width: 120px;
-    top: 10px;
-    left: 14px;
-}
-
-#div1 {
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    top: 0px;
-    left: 21px;
-    right: -35px;
-    width: auto;
-    bottom: 0px;
-    height: auto;
-}
-
 #EncryptToHeader {
     position: absolute;
     border-left-width: 1px;
@@ -582,10 +557,10 @@ body:not(.DC_windowInactive) .listRowTemplate1_template.selected .PeerNameLabel_
     height: 30px;
     left: 200px;
     top: 0px;
-    -webkit-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
-    -moz-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
     right: 0px;
     width: auto;
+    -webkit-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
+    -moz-border-image: url(Parts/Images/PeerFingerprintHeader.png) 0 1 0 1 stretch stretch;
 }
 
 #PeerFingerprintHeaderLabel {
@@ -1286,10 +1261,10 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     -webkit-margin-bottom-collapse: separate;
     position: relative;
     height: 38px;
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 487px;
+    margin-top: 489px;
     width: auto;
+    margin-right: 21px;
+    margin-left: 0px;
 }
 
 #MessageTextBox {
@@ -1389,7 +1364,7 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     top: 2px;
 }
 
-#splitLayout {
+#ChannelDisplaySplitLayout {
     overflow: hidden;
     border-width: 1px;
     border-style: solid;
@@ -1397,11 +1372,11 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     position: absolute;
     margin-top: 0px;
     top: 35px;
+    right: 21px;
+    width: auto;
     bottom: 43px;
     height: auto;
-    width: auto;
-    right: 10px;
-    left: 10px;
+    left: 0px;
 }
 
 #PeersView {
@@ -1506,5 +1481,62 @@ body.DC_windowInactive .listRowTemplate2_template.selected {
     max-width: 100%;
     max-height: 100%;
     width: auto;
+    height: auto;
+}
+
+#ChannelNameLabel {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    margin-top: 0px;
+    top: 9px;
+    font-weight: bold;
+    font-family: Verdana;
+    right: 594px;
+    width: auto;
+    bottom: 504px;
+    height: auto;
+    left: 0px;
+}
+
+.selected #ChannelNameLabel {
+    color: white;
+}
+
+#ChannelNameLabel1 {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-margin-top-collapse: separate;
+    -webkit-margin-bottom-collapse: separate;
+    position: absolute;
+    margin-top: 0px;
+    font-family: Verdana;
+    top: 9px;
+    left: 127px;
+    right: 466px;
+    width: auto;
+    bottom: 504px;
+    height: auto;
+}
+
+.selected #ChannelNameLabel1 {
+    color: white;
+}
+
+#ChannelBox1 {
+    border-color: black;
+    border-width: 1px;
+    position: absolute;
+    margin-top: 0px;
+    top: 0px;
+    left: 0px;
+    font-size: 16px;
+    right: 0px;
+    width: auto;
+    bottom: 0px;
     height: auto;
 }

@@ -14,11 +14,14 @@ var dashcodePartSpecs = {
     "activityIndicator": { "propertyValues": { "animatingBinding": { "keypath": "lethe.content.starting" }, "visibleBinding": { "keypath": "lethe.content.starting" } }, "view": "DC.ActivityIndicator" },
     "AddChannelButton": { "initialHeight": 20, "initialWidth": 20, "leftImageWidth": 5, "onclick": "addChannel", "rightImageWidth": 5, "text": "+", "view": "DC.PushButton" },
     "box3": { "propertyValues": { "htmlBinding": { "keypath": "AboutList.selection.text" } }, "view": "DC.View" },
+    "ChannelBox1": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "view": "DC.View" },
+    "ChannelDisplaySplitLayout": { "flexibleViewIndex": 1, "initialSize": 450, "initialSplitterSize": 10, "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "splitterPosition": 103, "view": "DC.SplitLayout" },
     "ChannelLabel": { "text": "Channels", "view": "DC.Text" },
     "ChannelList": { "dataArray": ["Item 1", "Item 2", "Item 3"], "labelElementId": "rowLabel", "listStyle": "List.DESKTOP_LIST", "propertyValues": { "dataArrayBinding": { "keypath": "lethe.content.channels" } }, "sampleRows": 3, "selectionEnabled": true, "useDataSource": true, "view": "DC.List" },
+    "ChannelNameLabel": { "text": "Channel Name:", "view": "DC.Text" },
+    "ChannelNameLabel1": { "propertyValues": { "textBinding": { "keypath": "ChannelList.selection.name" } }, "text": "name", "view": "DC.Text" },
     "ChannelSplitLayout": { "flexibleViewIndex": 1, "initialSize": 918, "initialSplitterSize": 15, "isVertical": true, "splitterPosition": 178, "view": "DC.SplitLayout" },
     "DescriptionLabel": { "text": "Enter a name (optional), and generate a key.  The key will be used to sign and encrypt messages.", "view": "DC.Text" },
-    "div1": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "view": "DC.Text" },
     "EditIdentityCancelButton": { "initialHeight": 30, "initialWidth": 80, "leftImageWidth": 5, "onclick": "identityViewCancel", "propertyValues": { "enabledBinding": { "keypath": "lethe.content.identity.pubKey" } }, "rightImageWidth": 5, "text": "cancel", "view": "DC.PushButton" },
     "EditIdentityOkButton": { "initialHeight": 30, "initialWidth": 56, "leftImageWidth": 5, "onclick": "identityViewOk", "propertyValues": { "enabledBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "editIdentityDoneButtonEnableable" } }, "rightImageWidth": 5, "text": "ok", "view": "DC.PushButton" },
     "EncryptImage": { "view": "DC.ImageLayout" },
@@ -45,9 +48,8 @@ var dashcodePartSpecs = {
     "rowLabel": { "propertyValues": { "textBinding": { "keypath": "*.name" } }, "text": "Item", "view": "DC.Text" },
     "rowLabel1": { "propertyValues": { "textBinding": { "keypath": "*.title" } }, "text": "Item", "view": "DC.Text" },
     "SendMessageBox": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "view": "DC.View" },
-    "SendMessageButton": { "initialHeight": 21, "initialWidth": 71, "leftImageWidth": 5, "onclick": "sendMessage", "rightImageWidth": 5, "text": "Send", "view": "DC.PushButton" },
+    "SendMessageButton": { "initialHeight": 21, "initialWidth": 63, "leftImageWidth": 5, "onclick": "sendMessage", "rightImageWidth": 5, "text": "Send", "view": "DC.PushButton" },
     "SignMessagesCheckbox": { "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "view": "DC.ToggleButton" },
-    "splitLayout": { "flexibleViewIndex": 1, "initialSize": 408, "initialSplitterSize": 10, "propertyValues": { "visibleBinding": { "keypath": "ChannelList.hasSelection" } }, "splitterPosition": 103, "view": "DC.SplitLayout" },
     "StepLabel": { "propertyValues": { "textBinding": { "keypath": "lethe.content.tmp.step" }, "visibleBinding": { "keypath": "lethe.content.tmp.id.pubKey", "transformer": "showGeneratingActivityMonitor" } }, "text": "step", "view": "DC.Text" },
     "text": { "text": "Name:", "view": "DC.Text" },
     "text2": { "text": "Built with Dashcode", "view": "DC.Text" },
@@ -58,6 +60,7 @@ var dashcodePartSpecs = {
     "TrustImage": { "view": "DC.ImageLayout" },
     "ViewPeersButton1": { "initialHeight": 24, "initialWidth": 77, "leftImageWidth": 12, "rightImageWidth": 12, "text": "Peers...", "view": "DC.PushButton" }
 };
+
 
 
 

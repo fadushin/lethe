@@ -98,50 +98,50 @@
                     <div apple-part="com.apple.Dashcode.part.box" id="splitThumb"></div>
                 </div>
                 <div id="ChannelBox" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
-                    <div id="SignMessagesButton" title="Sign Messages" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox">
-                        <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="SignMessagesCheckbox" apple-group="checkbox">
-                        <div id="div1">Sign Messages</div>
-                    </div>
-                    <div id="splitLayout" apple-part="com.apple.Dashcode.part.splitlayout">
-                        <div id="PeersView" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
-                            <div id="EncryptToHeader" title="Encrypt messages to this peer" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="ChannelHeader1">
-                                <div apple-part="com.apple.Dashcode.part.imageLayout" id="EncryptImage" apple-group="image"><img class="apple-hidden" src="../Images/encrypted.png" id="inner_image1" apple-group="image"></div>
+                    <div id="ChannelBox1" apple-part="com.apple.Dashcode.part.box">
+                        <div id="ChannelNameLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                        <div id="ChannelNameLabel1" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                        <div id="ChannelDisplaySplitLayout" apple-part="com.apple.Dashcode.part.splitlayout">
+                            <div id="PeersView" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
+                                <div id="EncryptToHeader" title="Encrypt messages to this peer" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="ChannelHeader1">
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="EncryptImage" apple-group="image"><img class="apple-hidden" src="../Images/encrypted.png" id="inner_image1" apple-group="image"></div>
+                                </div>
+                                <div id="TrustHeader" title="Trust this peer.  Only trust peers who's keys you have verified." apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerFingerprintHeader2">
+                                    <div apple-part="com.apple.Dashcode.part.imageLayout" id="TrustImage" apple-group="image2"><img class="apple-hidden" src="../Images/trusted.png" id="inner_image2" apple-group="image2"></div>
+                                </div>
+                                <div id="PeerNameHeader" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerListHeader1">
+                                    <div id="PeerNameHeaderLabel" title="The name of the peer in this channel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
+                                </div>
+                                <div id="PeerFingerprintHeader" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerNameHeader1">
+                                    <div id="PeerFingerprintHeaderLabel" title="The key fingerprint of the peer in this channel.  You should verify this key fingerprint using email, the phone, or a dark alley.  Lethe provides no mechanism for verifying key fingerprints." apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
+                                </div>
+                                <div id="box2" apple-part="com.apple.Dashcode.part.box">
+                                    <ul id="PeersList" apple-part="com.apple.Dashcode.part.widgetList" class="">
+                                        <li id="listRowTemplate1" apple-template="true" class="listRowTemplate1_template first" style="">
+                                            <div id="EncryptToheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="EncryptToheckbox_template checkbox1_template">
+                                                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox" class="input_template input_template">
+                                            </div>
+                                            <div id="PeerNameLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children PeerNameLabel_template" apple-text-overflow="ellipsis"></div>
+                                            <div id="PeerFingerprintLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children PeerFingerprintLabel_template" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
+                                            <div id="TrustCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="TrustCheckbox_template">
+                                                <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input2" apple-group="checkbox" class="input2_template">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div id="TrustHeader" title="Trust this peer.  Only trust peers who's keys you have verified." apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerFingerprintHeader2">
-                                <div apple-part="com.apple.Dashcode.part.imageLayout" id="TrustImage" apple-group="image2"><img class="apple-hidden" src="../Images/trusted.png" id="inner_image2" apple-group="image2"></div>
+                            <div id="splitter2" apple-part="com.apple.Dashcode.part.splitlayoutdivider" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.98,0.98,0.98,1; image-bottom-color: 0.87,0.87,0.87,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.587518096,0.587518096,0.587518096,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="splitter2">
+                                <div apple-part="com.apple.Dashcode.part.box" id="splitThumb2"></div>
                             </div>
-                            <div id="PeerNameHeader" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerListHeader1">
-                                <div id="PeerNameHeaderLabel" title="The name of the peer in this channel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;part-width-dependent: true;"></div>
-                            </div>
-                            <div id="PeerFingerprintHeader" apple-part="com.apple.Dashcode.part.rectanglewebshape" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 1,1,1,1; image-bottom-color: 0.6154,0.6154,0.6154,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.5294,0.5294,0.5294,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="PeerNameHeader1">
-                                <div id="PeerFingerprintHeaderLabel" title="The key fingerprint of the peer in this channel.  You should verify this key fingerprint using email, the phone, or a dark alley.  Lethe provides no mechanism for verifying key fingerprints." apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis" apple-style="part-height-dependent: true;"></div>
-                            </div>
-                            <div id="box2" apple-part="com.apple.Dashcode.part.box">
-                                <ul id="PeersList" apple-part="com.apple.Dashcode.part.widgetList" class="">
-                                    <li id="listRowTemplate1" apple-template="true" class="listRowTemplate1_template first" style="">
-                                        <div id="EncryptToheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="EncryptToheckbox_template checkbox1_template">
-                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input" apple-group="checkbox" class="input_template input_template">
-                                        </div>
-                                        <div id="PeerNameLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children PeerNameLabel_template" apple-text-overflow="ellipsis"></div>
-                                        <div id="PeerFingerprintLabel" apple-part="com.apple.Dashcode.part.text" class="apple-text apple-no-children PeerFingerprintLabel_template" apple-default-image-visibility="hidden" apple-text-overflow="ellipsis"></div>
-                                        <div id="TrustCheckbox" apple-part="com.apple.Dashcode.part.checkboxbutton" apple-group="checkbox" class="TrustCheckbox_template">
-                                            <input type="checkbox" name="Checkbox" checked="checked" apple-part="com.apple.Dashcode.part.input" id="input2" apple-group="checkbox" class="input2_template">
-                                        </div>
-                                    </li>
-                                </ul>
+                            <div id="MessagesView" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
+                                <div id="MessageTextBox" apple-part="com.apple.Dashcode.part.box">
+                                </div>
                             </div>
                         </div>
-                        <div id="splitter2" apple-part="com.apple.Dashcode.part.splitlayoutdivider" apple-style="image-theme: 1; image-shape: 3; image-button-type: 3; image-opacity: 1.00; image-top-color: 0.98,0.98,0.98,1; image-bottom-color: 0.87,0.87,0.87,1; image-radius: 0,0,0,0; image-border: 1; image-border-color: 0.587518096,0.587518096,0.587518096,1; image-border-width: 1; shine-strength: 0.90; shine-alpha-level: 0.67; shine-height: 0.50; glass-arc-height: 0.06; shadow-include-shadow: 0;" apple-group="splitter2">
-                            <div apple-part="com.apple.Dashcode.part.box" id="splitThumb2"></div>
+                        <div id="SendMessageBox" apple-part="com.apple.Dashcode.part.box">
+                            <input id="MessageTextField" type="text" name="" value="" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.textfield" onkeypress="sendMessageOnEnter(event)">
+                            <div id="SendMessageButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
                         </div>
-                        <div id="MessagesView" apple-part="com.apple.Dashcode.part.box" apple-part-locked="true">
-                            <div id="MessageTextBox" apple-part="com.apple.Dashcode.part.box">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="SendMessageBox" apple-part="com.apple.Dashcode.part.box">
-                        <input id="MessageTextField" type="text" name="" value="" class="apple-textfield apple-no-children" apple-part="com.apple.Dashcode.part.textfield" onkeypress="sendMessageOnEnter(event)">
-                        <div id="SendMessageButton" apple-part="com.apple.Dashcode.part.pushbutton" class="apple-no-children" apple-text-overflow="ellipsis" apple-style="image-theme: 0; image-shape: 3; image-button-type: 0; image-opacity: 1.00; image-top-color: 0.290196091,0.423529416,0.607843161,1; image-bottom-color: 1,1,1,1; image-radius: 5,5,5,5; image-border: 1; image-border-color: 0,0,0,0.2; image-border-width: 1; shine-on: 1; shine-strength: 0.17; shine-alpha-level: 0.04; shine-height: 0.50; glass-arc-height: 0.00; embossed-on: 1; embossed-depth: 1; embossed-shadow: 0.68; embossed-highlight: 0.3; shadow-include-shadow: 0;"></div>
                     </div>
                 </div>
             </div>

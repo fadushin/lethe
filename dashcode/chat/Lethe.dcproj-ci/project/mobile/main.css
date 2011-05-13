@@ -544,18 +544,6 @@ body {
     margin-left: 6px;
 }
 
-#SignMessagesCheckbox {
-    font-family: HelveticaNeue;
-    font-size: 10pt;
-    position: relative;
-    -webkit-margin-top-collapse: separate;
-    -webkit-margin-bottom-collapse: separate;
-    margin-top: 10px;
-    width: 112px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 #rectangleShape {
     border-left-width: 1px;
     border-right-width: 1px;
@@ -1150,12 +1138,12 @@ body {
     position: absolute;
     bottom: auto;
     left: 9px;
-    top: 39px;
-    right: 9px;
-    width: auto;
     -webkit-border-image: url(Parts/Images/Footer1.png) 0 5 0 5 stretch stretch;
     border-left-width: 5px;
     border-right-width: 5px;
+    top: 22px;
+    right: 9px;
+    width: auto;
 }
 
 #text4 {
@@ -1271,18 +1259,6 @@ body {
     margin-left: 36px;
     width: auto;
     margin-right: 235px;
-}
-
-#div {
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    left: 21px;
-    top: 0px;
-    right: -8px;
-    width: auto;
-    bottom: 0px;
-    height: auto;
 }
 
 .EncryptToCheckbox_template {
