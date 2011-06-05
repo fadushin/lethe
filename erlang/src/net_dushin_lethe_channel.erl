@@ -498,7 +498,7 @@ tail([_H|T]) ->
 
 stamp_message(Message) ->
     Message#message {
-        timestamp = current_ms()
+        timestamp = net_dushin_lethe_time:current_ms()
     }.
 
 
@@ -555,7 +555,7 @@ filter_stale_messages(Messages, TimeoutMs) ->
     ).
 
 stamp_peer(Peer) ->
-    Ret = Peer#peer{last_update = current_ms()},
+    Ret = Peer#peer{last_update = net_dushin_lethe_time:current_ms()},
     ?LETHE_DEBUG("Stamped Peer: ~p, ~p~n", [Ret#peer.name, Ret#peer.last_update]),
     Ret.
 
@@ -609,9 +609,4 @@ filter_stale_peers(Peers, TimeoutMs) ->
     ).
 
 is_not_stale(TestMs, TimeoutMs) ->
-    (current_ms() - TestMs) < TimeoutMs.
-
-current_ms() ->
-    {Megasecs, Secs, MicroSecs} = erlang:now(),
-    Val = (Megasecs * 1000000000 + Secs * 1000 + erlang:trunc(MicroSecs / 1000.0)),
-    Val.
+    (net_dushin_lethe_time:current_ms() - TestMs) < TimeoutMs.

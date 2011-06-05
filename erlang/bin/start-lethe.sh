@@ -30,7 +30,11 @@ LETHE_ROOT=$(dirname $0)/..
 
 if [ -z "${YAWS_ROOT}" ]
 then
-    echo "YAWS_ROOT must be set to the root of your Yaws installation"
+    YAWS_ROOT=/opt/yaws
+fi
+if [ ! -e "${YAWS_ROOT}" ]
+then
+    echo "YAWS_ROOT (${YAWS_ROOT}) must be set to the root of your Yaws installation."
     exit 1
 fi
 
@@ -40,4 +44,5 @@ exec erl \
     -pa ${LETHE_ROOT}/ebin \
     -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
     -s net_dushin_lethe_launcher start \
+    -noshell \
     -yaws embedded true

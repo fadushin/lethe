@@ -34,7 +34,7 @@
             modules, 
             [
                 net_dushin_lethe_launcher, net_dushin_lethe, net_dushin_lethe_sup, net_dushin_lethe_server, net_dushin_lethe_channel,
-                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid,
+                net_dushin_lethe_timer, net_dushin_lethe_rpc, net_dushin_lethe_lists, net_dushin_lethe_uuid, net_dushin_lethe_timer,
                 net_dushin_lethe_handler, net_dushin_lethe_log, net_dushin_lethe_mailbox
             ]
         },

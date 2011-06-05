@@ -218,7 +218,12 @@ code_change(_OldVsn, State, _Extra) -> {ok, State}.
 
 create_mailbox(Peer, _State) ->
     PeerId = Peer#peer.name,
-    Mailbox = set_mailbox(#mailbox{id = PeerId, peer = Peer}),
+    Mailbox = set_mailbox(
+        #mailbox{
+            id = PeerId, 
+            peer = Peer
+        }
+    ),
     ?LETHE_INFO("Created Mailbox: ", [Mailbox]),
     Mailbox.
 

@@ -46,6 +46,7 @@
 start(_Type, Options) ->
     net_dushin_lethe_log:start(net_dushin_lethe_lists:find_value(Options, log_args, [])),
     start_yaws(net_dushin_lethe_lists:find_value(Options, yaws_args, [])),
+    % net_dushin_mailbox:start(net_dushin_lethe_lists:find_value(Options, mailbox_args, [])),
     net_dushin_lethe_sup:start(net_dushin_lethe_lists:find_value(Options, lethe_args, [])).
 
 stop(_State) ->

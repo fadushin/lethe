@@ -43,6 +43,7 @@
     {
         id,
         peer,
-        messages = []
+        messages = [],
+        created_ms = net_dushin_lethe_time:current_ms()
     }
 ).
