@@ -27,7 +27,7 @@
 
 -module(net_dushin_lethe_handler).
 
--include("yaws.hrl"). 
+-include("yaws.hrl").
 -include("yaws_api.hrl"). 
 -include("net_dushin_lethe_channel.hrl"). 
 -include("net_dushin_lethe_log.hrl").
