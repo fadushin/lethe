@@ -79,7 +79,7 @@ case $1 in
             -s net_dushin_lethe_launcher ping lethe@localhost
         ;;
     
-    help)
+    *)
         echo "Syntax: $0 (start | stop | status)"
         ;;
 
