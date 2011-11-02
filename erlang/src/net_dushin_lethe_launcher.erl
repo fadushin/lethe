@@ -60,8 +60,18 @@ ping([Node]) ->
 stop([Node]) ->
     case net_adm:ping(Node) of
         pong -> 
-            io:format("~p~n", [rpc:call(Node, init, stop, [])]);
+            io:format("~s~n", [
+                case rpc:call(Node, init, stop, []) of
+                    ok ->
+                        "Lethe stopped";
+                    {badrpc, Reason} ->
+                        io_lib:format(
+                            "An error occurred attempting to stop Lethe at ~p: ~p~n",
+                            [Node, Reason]
+                        )
+                end
+            ]);
         pang ->
-            io:format("There is no node with this name~n")
+            io:format("There is no node with the name ~p~n", [Node])
     end,
     init:stop().

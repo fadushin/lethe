@@ -45,38 +45,53 @@ then
     exit 1
 fi
 
+function start_lethe() {
+    erl \
+        -boot start_sasl \
+        -sname lethe@localhost \
+        -pa ${LETHE_ROOT}/etc \
+        -pa ${LETHE_ROOT}/ebin \
+        -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+        -s net_dushin_lethe_launcher start \
+        -kernel error_logger "{file, \"${LETHE_ROOT}/logs/console.log\"}" \
+        -yaws embedded true -detached
+}
+
+function stop_lethe() {
+    erl \
+        -sname lethe_stop \
+        -noshell \
+        -pa ${LETHE_ROOT}/etc \
+        -pa ${LETHE_ROOT}/ebin \
+        -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+        -s net_dushin_lethe_launcher stop lethe@localhost
+}
+
+function lethe_status() {
+    erl \
+        -sname lethe_status \
+        -noshell \
+        -pa ${LETHE_ROOT}/etc \
+        -pa ${LETHE_ROOT}/ebin \
+        -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+        -s net_dushin_lethe_launcher ping lethe@localhost
+}
+
+
 case $1 in
 
     start)
-        exec erl \
-            -boot start_sasl \
-            -sname lethe@localhost \
-            -pa ${LETHE_ROOT}/etc \
-            -pa ${LETHE_ROOT}/ebin \
-            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
-            -s net_dushin_lethe_launcher start \
-            -kernel error_logger "{file, \"${LETHE_ROOT}/logs/console.log\"}" \
-            -yaws embedded true -detached
+        start_lethe
+        sleep 1
+        lethe_status
         ;;
     
     stop)
-        exec erl \
-            -sname lethe_stop \
-            -noshell \
-            -pa ${LETHE_ROOT}/etc \
-            -pa ${LETHE_ROOT}/ebin \
-            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
-            -s net_dushin_lethe_launcher stop lethe@localhost
+        stop_lethe
         ;;
     
     status)
-        exec erl \
-            -sname lethe_stop \
-            -noshell \
-            -pa ${LETHE_ROOT}/etc \
-            -pa ${LETHE_ROOT}/ebin \
-            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
-            -s net_dushin_lethe_launcher ping lethe@localhost
+        lethe_status
         ;;
     
     *)
