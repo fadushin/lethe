@@ -38,11 +38,51 @@ then
     exit 1
 fi
 
-exec erl \
-    -boot start_sasl \
-    -pa ${LETHE_ROOT}/etc \
-    -pa ${LETHE_ROOT}/ebin \
-    -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
-    -s net_dushin_lethe_launcher start \
-    -noshell \
-    -yaws embedded true
+NARGS=$#
+if [ "${NARGS}" -lt 1 ]
+then
+    echo "Syntax: $0 (start | stop | status)"
+    exit 1
+fi
+
+case $1 in
+
+    start)
+        exec erl \
+            -boot start_sasl \
+            -sname lethe@localhost \
+            -pa ${LETHE_ROOT}/etc \
+            -pa ${LETHE_ROOT}/ebin \
+            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+            -s net_dushin_lethe_launcher start \
+            -kernel error_logger "{file, \"${LETHE_ROOT}/logs/console.log\"}" \
+            -yaws embedded true -detached
+        ;;
+    
+    stop)
+        exec erl \
+            -sname lethe_stop \
+            -noshell \
+            -pa ${LETHE_ROOT}/etc \
+            -pa ${LETHE_ROOT}/ebin \
+            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+            -s net_dushin_lethe_launcher stop lethe@localhost
+        ;;
+    
+    status)
+        exec erl \
+            -sname lethe_stop \
+            -noshell \
+            -pa ${LETHE_ROOT}/etc \
+            -pa ${LETHE_ROOT}/ebin \
+            -pa ${YAWS_ROOT}/lib/yaws/ebin/ \
+            -s net_dushin_lethe_launcher ping lethe@localhost
+        ;;
+    
+    help)
+        echo "Syntax: $0 (start | stop | status)"
+        ;;
+
+esac
+
+

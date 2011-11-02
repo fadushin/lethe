@@ -50,7 +50,10 @@ start(_Type, Options) ->
     net_dushin_lethe_sup:start(net_dushin_lethe_lists:find_value(Options, lethe_args, [])).
 
 stop(_State) ->
-    application:stop(yaws).
+    %% For some reason, if we try to stop the application from this app
+    %% (e.g., via appliaction:stop(net_dushin_lethe)), we hang.
+    %% application:stop(yaws).
+    ok. 
 
 %%
 %% Internal functions

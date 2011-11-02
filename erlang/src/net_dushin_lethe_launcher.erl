@@ -34,10 +34,34 @@
 %%
 %% Exported Functions
 %%
--export([start/0]).
+-export([start/0, stop/0, ping/1, stop/1]).
 
 %%
 %% API Functions
 %%
 start() ->
     application:start(net_dushin_lethe).
+
+stop() ->
+    application:stop(net_dushin_lethe).
+
+ping([Node]) ->
+    io:format("Lethe is ~s at node ~p~n", [
+        case net_adm:ping(Node) of
+            pong ->
+                "running";
+            pang ->
+                "not running"
+        end,
+        Node
+    ]),
+    init:stop().
+
+stop([Node]) ->
+    case net_adm:ping(Node) of
+        pong -> 
+            io:format("~p~n", [rpc:call(Node, init, stop, [])]);
+        pang ->
+            io:format("There is no node with this name~n")
+    end,
+    init:stop().

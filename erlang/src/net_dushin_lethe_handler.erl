@@ -70,7 +70,10 @@ handle_rpc(_State, {call, Method, {array, Params}} = _Request, Session) ->
                     Exception
             end,
     ?LETHE_DEBUG("Response = ~p", [Response]),
-    {true, 0, Session, {response, Response}}.
+    {true, 0, Session, {response, Response}};
+handle_rpc(State, Request, Session) -> 
+    io:format("Unhandled request: State=~p; Request=~p; Session=~p~n", [State, Request, Session]),
+    error.
 
 
 get_response(

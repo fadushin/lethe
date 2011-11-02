@@ -157,8 +157,20 @@ is_log(Ets, Module, Level) ->
     end.
 
 default_log(Module, Level, Fmt, Args) ->
-    io:format(date_time() ++ " - ~p - ~p: " ++ Fmt ++ "~n", [Module | [Level | Args]]).
-
+    FmtStr = date_time() ++ " - ~p - ~p: " ++ Fmt ++ "~n", 
+    ArgList = [Module | [Level | Args]],
+    case Level of
+        debug ->
+            error_logger:info_msg(FmtStr, ArgList), io:format("fred");
+        trace ->
+            error_logger:info_msg(FmtStr, ArgList);
+        info ->
+            error_logger:info_msg(FmtStr, ArgList);
+        warning ->
+            error_logger:warning_msg(FmtStr, ArgList);
+        severe ->
+            error_logger:error_msg(FmtStr, ArgList)
+    end.
 
 date_time() ->
     {Year, Month, Day} = erlang:date(),
