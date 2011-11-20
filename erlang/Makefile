@@ -102,7 +102,7 @@ $(DIST_DIR).zip: compile
 	mkdir -p $(DIST_DIR)
 	mkdir -p $(DIST_DIR)/logs
 	mkdir -p $(DIST_DIR)/content
-	cp -r ebin bin $(DIST_DIR)
+	cp -r ebin bin etc $(DIST_DIR)
 	zip -r $(DIST_DIR).zip $(DIST_DIR)
 
 dist-clean:
